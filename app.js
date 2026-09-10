@@ -228,7 +228,13 @@
         ]
       }
     },
-    share: { disclaimer: "Сатира. Не проклятие и не угроза. 18+" },
+    share: {
+      disclaimer: "Сатира. Не проклятие и не угроза. 18+",
+      saved: "Картинка сохранена. Кидай в чат.",
+      savedCopied: "Картинка сохранена, текст скопирован. Кидай в чат.",
+      failed: "Не вышло собрать картинку. Попробуйте ещё раз.",
+      copyFailed: "Не скопировалось. Попробуйте ещё раз или сохраните картинку."
+    },
     net: {
       cdn: "Библиотеки эффектов не загрузились — сеть или блокировка. Ритуал пройдёт в упрощённом режиме.",
       offline: "Нет сети. Приложение работает, история — на устройстве."
@@ -1739,58 +1745,73 @@
     a.remove();
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
   }
-  function downloadPng(canvasEl, filename){
-    canvasEl.toBlob(function(blob){ downloadBlob(blob, filename || "proklinator.png"); }, "image/png");
+  function legacyCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      return !!ok;
+    }catch(e){ return false; }
   }
-
-  async function copyText(text){
+  // Clipboard API first, execCommand second. opts.silent: caller owns the toast.
+  async function copyText(text, opts){
+    let ok = false;
     try{
       if(navigator.clipboard && navigator.clipboard.writeText){
         await navigator.clipboard.writeText(text);
-        showToast(DATA.toastCopy);
-        return true;
+        ok = true;
       }
     }catch(e){}
-    return false;
+    if(!ok) ok = legacyCopy(text);
+    if(ok && !(opts && opts.silent)) showToast(DATA.toastCopy);
+    return ok;
+  }
+  function posterName(v){ return "proklinator-" + ((v && v.sinId) || "card") + ".png"; }
+  async function posterBlob(v){
+    await waitFonts(800);
+    paintPoster(v);
+    return new Promise(function(res){ exportCanvas.toBlob(res, "image/png"); });
   }
 
   // Shares the current result by default; history rows pass their own entry.
+  // 1) Share File: Web Share with the PNG attached (text-only sheet where files can't be shared).
+  // 2) Fallback (no Web Share, or it failed for a reason other than the user dismissing it): save the PNG + copy the caption,
+  //    and the toast states exactly what happened. The blob is reused for the download so the export canvas can never be stale.
   async function shareCard(v){
     v = v || lastVerdict;
     if(!v) return;
     const isCurrent = v === lastVerdict;
     const shareText = buildCurseText(v, true);
-    try{
-      let blob = isCurrent ? shareBlob : null;
-      if(!blob){
-        await waitFonts(800);
-        paintPoster(v);
-        blob = await new Promise(function(res){ exportCanvas.toBlob(res, "image/png"); });
-      }
-      if(blob && navigator.share){
-        const file = new File([blob], "proklinator.png", { type: "image/png" });
-        if(navigator.canShare && navigator.canShare({ files: [file] })){
+    let blob = isCurrent ? shareBlob : null;
+    if(!blob){ try{ blob = await posterBlob(v); }catch(e){ blob = null; } }
+    if(navigator.share){
+      try{
+        const file = blob ? new File([blob], "proklinator.png", { type: "image/png" }) : null;
+        if(file && navigator.canShare && navigator.canShare({ files: [file] })){
           await navigator.share({ files: [file], title: "ПРОКЛИНАТОР", text: shareText, url: APP_URL });
-          showToast(DATA.toastShare);
-          countShare();
-          return;
+        } else {
+          await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText, url: APP_URL });
         }
-        await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText, url: APP_URL });
         showToast(DATA.toastShare);
         countShare();
         return;
+      }catch(e){
+        if(e && e.name === "AbortError") return;   // sheet dismissed — nothing went out, no toast, no count
       }
-    }catch(e){
-      if(e && e.name === "AbortError") return;
     }
-    if(!isCurrent || !shareBlob){
-      await waitFonts(800);
-      paintPoster(v);
-    }
-    downloadPng(exportCanvas, "proklinator-" + (v.sinId || "card") + ".png");
-    const copied = await copyText(shareText);
-    if(!copied) showToast(DATA.toastShare);
-    countShare();
+    if(!blob){ try{ blob = await posterBlob(v); }catch(e){ blob = null; } }
+    const saved = !!blob;
+    if(saved) downloadBlob(blob, posterName(v));
+    const copied = await copyText(shareText, { silent: true });
+    const S = SHELL.share;
+    showToast(saved ? (copied ? S.savedCopied : S.saved) : (copied ? DATA.toastCopy : S.failed));
+    if(saved || copied) countShare();
   }
   // Counted only when a share actually went out (share sheet resolved or the PNG fallback was handed over).
   function countShare(){
@@ -2174,31 +2195,20 @@
     try{ window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); }catch(e){ window.scrollTo(0, 0); }
   });
 
+  // «Сохранить картинку» never touches Web Share: prefetched blob when ready, otherwise a fresh paint.
   $("saveBtn").addEventListener("click", async function(){
     if(!lastVerdict) return;
-    await waitFonts(800);
-    paintPoster();
-    downloadPng(exportCanvas, "proklinator-" + (lastVerdict.sinId || "card") + ".png");
-    showToast(DATA.toastShare);
+    let blob = shareBlob;
+    if(!blob){ try{ blob = await posterBlob(lastVerdict); }catch(e){ blob = null; } }
+    if(!blob){ showToast(SHELL.share.failed); return; }
+    downloadBlob(blob, posterName(lastVerdict));
+    showToast(SHELL.share.saved);
   });
   $("shareBtn").addEventListener("click", function(){ shareCard(); });
   $("copyCurseBtn").addEventListener("click", async function(){
     if(!lastVerdict) return;
-    const text = buildCurseText(lastVerdict, true);
-    const ok = await copyText(text);
-    if(!ok){
-      try{
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        showToast(DATA.toastCopy);
-      }catch(e){}
-    }
+    const ok = await copyText(buildCurseText(lastVerdict, true));
+    if(!ok) showToast(SHELL.share.copyFailed);
   });
   // Reroll inputs: a result opened from history keeps its own who/what; a fresh one prefers the live form.
   function rerollInputs(){
