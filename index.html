@@ -1572,7 +1572,10 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
     if(!saved) saved = lsGet(LS.legacyPrefs, {});
     if(saved && saved.power && powers.some(function(p){ return p.id === saved.power; })) powerId = saved.power;
     if(saved && typeof saved.noMat === "boolean") noMat = saved.noMat;
-    if(saved && saved.ritualId) ritualId = resolveRitualId(saved.ritualId);
+    if(saved && saved.ritualId){
+      ritualId = resolveRitualId(saved.ritualId);
+      if(ritualId !== saved.ritualId) savePrefs();
+    }
   })();
   function savePrefs(){
     lsSet(LS.prefs, { power: powerId, noMat: noMat, ritualId: ritualId });
