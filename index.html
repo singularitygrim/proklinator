@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="theme-color" content="#0b0a12"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="application-name" content="ПРОКЛИНАТОР"/>
+<meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
+<meta name="description" content="Офисный ритуал лёгкой мести. Сарказм по привычкам — не по людям."/>
+<title>ПРОКЛИНАТОР</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23b84dff'/%3E%3Cstop offset='1' stop-color='%23ff4d8d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0a12'/%3E%3Ccircle cx='32' cy='32' r='22' fill='url(%23g)'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='26' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23b84dff'/%3E%3Cstop offset='1' stop-color='%23ff4d8d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='%230b0a12'/%3E%3Ccircle cx='90' cy='90' r='62' fill='url(%23g)'/%3E%3Ctext x='90' y='112' text-anchor='middle' font-size='72' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E"/>
+<style>
+:root{
+  --bg:#0b0a12;--surface:#15131f;--card:rgba(28,25,48,.72);--line:#2e2a45;
+  --fg:#f4efe8;--muted:#9a93b0;--faint:#6b6480;
+  --accent:#b84dff;--accent2:#ff4d8d;--gold:#f0c14b;--ok:#3dd68c;
+  --glow:rgba(184,77,255,.45);
+  --r:18px;--ease:cubic-bezier(.32,.72,0,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+  --cta-h:76px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{margin:0;min-height:100%;min-height:100dvh;background:var(--bg);color:var(--fg)}
+body{
+  overflow-x:hidden;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  padding:var(--safe-t) var(--safe-r) 0 var(--safe-l);
+  background:
+    radial-gradient(900px 500px at 15% -10%,rgba(184,77,255,.22),transparent 60%),
+    radial-gradient(700px 400px at 90% 10%,rgba(255,77,141,.16),transparent 55%),
+    radial-gradient(600px 400px at 50% 120%,rgba(240,193,75,.08),transparent 50%),
+    var(--bg);
+}
+button,input,textarea,select{font:inherit;color:inherit}
+button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input,textarea{font-size:16px;line-height:1.4}
+
+.app{
+  max-width:480px;margin:0 auto;
+  min-height:100dvh;
+  padding:16px 16px calc(var(--cta-h) + var(--safe-b) + 20px);
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+.brand{display:flex;align-items:center;gap:12px}
+.sigil{
+  width:48px;height:48px;min-width:48px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 28px var(--glow);font-size:22px;
+  animation:sigilPulse 2.8s ease-in-out infinite;
+}
+@keyframes sigilPulse{
+  0%,100%{transform:scale(1) rotate(0);box-shadow:0 0 20px var(--glow)}
+  50%{transform:scale(1.06) rotate(3deg);box-shadow:0 0 36px var(--glow)}
+}
+h1{
+  margin:0;font-size:clamp(22px,6vw,30px);letter-spacing:.05em;font-weight:800;
+  background:linear-gradient(90deg,var(--fg),var(--accent),var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tagline{color:var(--muted);margin:0;font-size:13px;line-height:1.45}
+
+.glass{
+  background:linear-gradient(180deg,rgba(28,25,48,.88),rgba(21,19,31,.92));
+  border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+}
+
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.field > span,.section-label{
+  color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+}
+.field input,.field textarea{
+  width:100%;background:rgba(11,10,18,.7);border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px;color:var(--fg);
+  transition:border .2s var(--ease),box-shadow .2s var(--ease);
+  min-height:48px;
+}
+.field textarea{min-height:72px;resize:vertical}
+.field input:focus,.field textarea:focus{
+  border-color:var(--accent);box-shadow:0 0 0 3px rgba(184,77,255,.22);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+
+.sins{
+  display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px;
+}
+.sin{
+  min-height:44px;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(11,10,18,.55);
+  color:var(--muted);font-size:13px;font-weight:600;
+  transition:transform .25s var(--spring),border .2s,background .2s,color .2s,box-shadow .2s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.sin:active{transform:scale(.94)}
+.sin.on{
+  border-color:var(--accent);background:rgba(184,77,255,.18);color:var(--fg);
+  box-shadow:0 0 0 1px rgba(184,77,255,.35),0 8px 24px rgba(184,77,255,.2);
+  transform:scale(1.04);
+}
+.sin .rune{font-size:15px;line-height:1}
+
+.seg{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;
+  background:rgba(11,10,18,.65);border:1px solid var(--line);
+  border-radius:14px;padding:4px;margin-bottom:4px;
+}
+.seg button{
+  min-height:44px;border-radius:11px;color:var(--muted);font-size:13px;font-weight:600;
+  transition:transform .2s var(--spring),background .2s,color .2s,box-shadow .2s;
+}
+.seg button:active{transform:scale(.96)}
+.seg button.on{
+  background:linear-gradient(135deg,rgba(184,77,255,.35),rgba(255,77,141,.28));
+  color:var(--fg);box-shadow:0 4px 16px rgba(184,77,255,.25);
+}
+
+.home-hint{
+  display:flex;flex-direction:column;gap:4px;padding:12px 14px;
+  border-radius:14px;border:1px dashed rgba(240,193,75,.35);
+  background:rgba(240,193,75,.06);margin-top:4px;
+}
+.home-hint strong{font-size:13px;color:var(--gold);font-weight:600}
+.home-hint span{font-size:12px;color:var(--faint);line-height:1.4}
+
+.history-btn{
+  align-self:flex-start;min-height:44px;min-width:44px;padding:0 14px;
+  border-radius:12px;border:1px solid var(--line);color:var(--muted);
+  font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;
+  transition:transform .15s var(--ease),border .2s,color .2s;
+}
+.history-btn:active{transform:scale(.96);border-color:var(--accent);color:var(--fg)}
+
+.verdict-panel{display:none;animation:reveal .55s var(--ease)}
+.verdict-panel.show{display:block}
+@keyframes reveal{
+  from{opacity:0;transform:translateY(18px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:700}
+.verdict-panel h2{margin:0 0 10px;font-size:clamp(18px,5vw,22px);line-height:1.3}
+.verdict-panel p{margin:0 0 14px;color:var(--muted);line-height:1.5;font-size:14px}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi span{
+  padding:12px;border-radius:12px;background:rgba(11,10,18,.65);
+  border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;
+}
+.kpi b{font-size:18px;color:var(--accent2)}.kpi small{color:var(--faint);font-size:11px}
+.actions-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.actions-row button{
+  min-height:44px;border-radius:12px;border:1px solid var(--line);
+  color:var(--muted);font-weight:600;font-size:13px;
+  transition:transform .15s var(--ease),border .2s,color .2s,background .2s;
+}
+.actions-row button:active{transform:scale(.96);border-color:var(--accent);color:var(--fg)}
+
+.disclaimer{margin:4px 0 0;font-size:11px;color:var(--faint);line-height:1.45;text-align:center}
+
+/* Sticky CTA */
+.cta-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  padding:10px 16px calc(10px + var(--safe-b));
+  background:linear-gradient(180deg,transparent,rgba(11,10,18,.92) 28%,rgba(11,10,18,.98));
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.cta-bar-inner{max-width:480px;margin:0 auto}
+.cta{
+  width:100%;min-height:52px;border-radius:16px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;font-size:14px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
+  box-shadow:0 10px 36px var(--glow);
+  transition:transform .15s var(--ease),filter .2s,opacity .2s;
+}
+.cta:active:not(:disabled){transform:scale(.97);filter:brightness(1.08)}
+.cta:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.35);box-shadow:none}
+
+/* Ritual overlay */
+.overlay{
+  position:fixed;inset:0;z-index:80;display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(8,6,16,.92);padding:var(--safe-t) 24px var(--safe-b);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.overlay.on{display:flex}
+.overlay.shake{animation:shake .55s var(--ease)}
+@keyframes shake{
+  0%,100%{transform:translate(0)}
+  20%{transform:translate(-8px,3px) rotate(-1deg)}
+  40%{transform:translate(9px,-4px) rotate(1deg)}
+  60%{transform:translate(-6px,2px)}
+  80%{transform:translate(5px,-2px)}
+}
+.ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pent{
+  width:140px;height:140px;border-radius:50%;border:2px solid var(--accent);
+  display:grid;place-items:center;position:relative;z-index:2;
+  animation:spin 3.6s linear infinite;
+  box-shadow:0 0 48px var(--glow),inset 0 0 36px rgba(184,77,255,.25);
+}
+.pent::before{
+  content:"";position:absolute;inset:12px;border-radius:50%;
+  border:1px dashed var(--accent2);animation:spin 5.5s linear infinite reverse;
+}
+.pent span{font-size:48px;animation:bob 1.2s ease-in-out infinite;z-index:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.chant{position:relative;z-index:2;margin-top:28px;color:var(--muted);font-size:14px;letter-spacing:.04em;text-align:center;min-height:1.4em}
+.progress-wrap{
+  position:relative;z-index:2;width:min(280px,80vw);height:6px;
+  border-radius:999px;background:rgba(255,255,255,.08);margin-top:22px;overflow:hidden;
+}
+.progress-bar{
+  height:100%;width:0%;border-radius:inherit;
+  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));
+  transition:width .35s var(--ease);box-shadow:0 0 12px var(--glow);
+}
+.busy-label{position:relative;z-index:2;margin-top:12px;font-size:12px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+
+.flash{
+  position:fixed;inset:0;pointer-events:none;z-index:90;
+  background:radial-gradient(circle,rgba(255,255,255,.4),transparent 55%);
+  opacity:0;
+}
+.flash.on{animation:flash .45s ease-out}
+@keyframes flash{0%{opacity:.75}100%{opacity:0}}
+
+/* Confetti layer */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+.confetti i{
+  position:absolute;width:8px;height:8px;border-radius:2px;opacity:0;
+  animation:confettiFall 1.8s ease-out forwards;
+}
+@keyframes confettiFall{
+  0%{opacity:1;transform:translateY(0) rotate(0) scale(1)}
+  100%{opacity:0;transform:translateY(100vh) rotate(720deg) scale(.6)}
+}
+
+/* Drawer */
+.drawer-bg{
+  position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;transition:opacity .25s var(--ease);
+}
+.drawer-bg.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;left:0;right:0;bottom:0;z-index:55;
+  max-height:70dvh;border-radius:22px 22px 0 0;
+  background:linear-gradient(180deg,#1c1930,#12101c);
+  border:1px solid var(--line);border-bottom:0;
+  padding:12px 16px calc(20px + var(--safe-b));
+  transform:translateY(110%);transition:transform .35s var(--ease);
+  box-shadow:0 -20px 60px rgba(0,0,0,.45);
+}
+.drawer.open{transform:translateY(0)}
+.drawer-handle{width:40px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 14px}
+.drawer h3{margin:0 0 12px;font-size:16px}
+.hist-empty{color:var(--faint);font-size:13px;padding:12px 0}
+.hist-item{
+  width:100%;text-align:left;padding:12px 14px;min-height:44px;
+  border-radius:14px;border:1px solid var(--line);background:rgba(11,10,18,.5);
+  margin-bottom:8px;color:var(--fg);transition:transform .15s var(--ease);
+}
+.hist-item:active{transform:scale(.98)}
+.hist-item b{display:block;font-size:14px;margin-bottom:2px}
+.hist-item small{color:var(--faint);font-size:12px}
+
+.toast{
+  position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 12px);
+  transform:translateX(-50%) translateY(20px);z-index:95;
+  background:rgba(28,25,48,.95);border:1px solid var(--line);
+  color:var(--fg);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:600;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s var(--ease);
+  white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.shake-card{animation:shake .55s var(--ease)}
+
+@media(min-width:720px){
+  .app{max-width:520px;padding-top:28px}
+  .sins{gap:10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .sigil,.pent,.pent::before,.pent span,.flash,.confetti i,.overlay.shake,.shake-card,.verdict-panel{
+    animation:none!important;
+  }
+  .verdict-panel.show{opacity:1}
+  .cta:active,.sin:active,.seg button:active,.sin.on{transform:none}
+  .drawer,.drawer-bg,.toast{transition:opacity .2s}
+}
+</style>
+</head>
+<body>
+<div class="flash" id="flash" aria-hidden="true"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<main class="app" id="app">
+  <header class="brand">
+    <div class="sigil" aria-hidden="true">✦</div>
+    <div>
+      <h1>ПРОКЛИНАТОР</h1>
+    </div>
+  </header>
+  <p class="tagline">Офисный ритуал лёгкой мести. Не HR. Не магия. Сарказм по привычкам — не по людям.</p>
+
+  <button type="button" class="history-btn" id="historyBtn" aria-haspopup="dialog">☰ История</button>
+
+  <section class="glass" id="formCard">
+    <label class="field">
+      <span>Жертва ритуала</span>
+      <input id="victim" type="text" maxlength="48" placeholder="Имя коллеги (или «Тот из Reply All»)" autocomplete="off" enterkeyhint="done"/>
+    </label>
+
+    <div class="section-label">Грех</div>
+    <div class="sins" id="sins" role="listbox" aria-label="Грех"></div>
+
+    <label class="field">
+      <span>Свой грех</span>
+      <input id="customSin" type="text" maxlength="80" placeholder="Например: «переслал весь тред без контекста»" autocomplete="off"/>
+    </label>
+
+    <div class="section-label" style="margin-bottom:8px">Сила проклятия</div>
+    <div class="seg" id="power" role="radiogroup" aria-label="Сила проклятия"></div>
+
+    <div class="home-hint">
+      <strong>Добавить на Домой — проклинать одной рукой.</strong>
+      <span>В Safari: Поделиться → На экран «Домой».</span>
+    </div>
+  </section>
+
+  <section class="glass verdict-panel" id="result" aria-live="polite">
+    <div class="eyebrow" id="vEyebrow">Вердикт ритуала</div>
+    <h2 id="vTitle"></h2>
+    <p id="vText"></p>
+    <div class="kpi">
+      <span><b id="k1"></b><small id="k1l"></small></span>
+      <span><b id="k2"></b><small id="k2l"></small></span>
+    </div>
+    <div class="actions-row">
+      <button type="button" id="copyBtn">Копировать</button>
+      <button type="button" id="againBtn">Ещё ритуал</button>
+    </div>
+  </section>
+
+  <p class="disclaimer">Не является HR-процедурой. Проклятия не имеют юридической силы. Все совпадения с реальными созвонами случайны, кроме тех, что не случайны.</p>
+</main>
+
+<div class="cta-bar">
+  <div class="cta-bar-inner">
+    <button type="button" class="cta" id="cast" disabled>Сначала выбери грех</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
+  <div class="pent"><span id="rune">⛧</span></div>
+  <div class="chant" id="chant">Шепчем в сторону принтера…</div>
+  <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+  <div class="busy-label">Читаю грехи…</div>
+</div>
+
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-label="История ритуалов">
+  <div class="drawer-handle"></div>
+  <h3>Последние 5</h3>
+  <div id="histList"></div>
+</aside>
+
+<script>
+(function(){
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const HIST_KEY = "proklinator_hist_v1";
+
+  const sins = [
+    {id:"five",title:"Созвон «на пять минут»",hint:"Который уже 47-й",rune:"☎"},
+    {id:"cc14",title:"Письмо с 14 в копии",hint:"И нулём смысла",rune:"✉"},
+    {id:"eyes",title:"«Глянь глазами»",hint:"И файл на 80 слайдов",rune:"👁"},
+    {id:"fri1750",title:"Срочно в пятницу",hint:"В 17:50. Конечно",rune:"🔥"},
+    {id:"hidden",title:"Таблица со скрытым листом",hint:"Правда только там",rune:"📊"},
+    {id:"circles",title:"Согласование кругами",hint:"Пока все «в целом за»",rune:"🔄"},
+    {id:"almost",title:"«Почти готово»",hint:"Третий спринт подряд",rune:"⏳"},
+    {id:"brief",title:"«Я кратко»",hint:"Монолог до обеда",rune:"🎙"}
+  ];
+  const powers = [
+    {id:"mild",label:"Лёгкое",mul:1},
+    {id:"medium",label:"Ощутимое",mul:1.4},
+    {id:"hard",label:"Карьерное",mul:1.9}
+  ];
+  const chants = [
+    "Шепчем в сторону принтера…",
+    "Перекладываем стикеры против часовой…",
+    "Призываем дух непринятого PR…",
+    "Жертвуем слот в календаре…",
+    "Читаем Terms of Service вслух…",
+    "Взываем Outlook проснуться…"
+  ];
+  const successLines = [
+    "Заклинание принято. Пусть календарь смягчится.",
+    "Отправлено в космос бюрократии.",
+    "Грех зафиксирован. Можно жить дальше."
+  ];
+  const emptyHint = "Проклинать пока некого. Выбери грех — или добавь свой.";
+  const shareSubtitle = "Пусть календарь узнает, кого винить.";
+  const toastShare = "Ушло. Пусть смягчится.";
+
+  const verdicts = {
+    five:(n,p)=>[
+      `${n} теперь назначает «пятиминутки» ровно на ${Math.round(47*p)} минут. Без повестки.`,
+      `Каждый созвон ${n} начинается с «нас плохо слышно» и заканчивается «ну ладно, потом».`,
+      `KPI: доля встреч «на пять минут» +${Math.round(30*p)}%. Смысл −${Math.round(25*p)}%.`
+    ],
+    cc14:(n,p)=>[
+      `${n} обречён(а) читать все 14 копий вслух перед отправкой.`,
+      `Письма ${n} теперь открываются с вопросом: «а зачем я здесь?»`,
+      `Эффект: прозрачность +${Math.round(40*p)}%, ясность −${Math.round(35*p)}%.`
+    ],
+    eyes:(n,p)=>[
+      `«Глянь глазами» от ${n} теперь занимает ровно один рабочий день.`,
+      `${n} получает отзывы вида «слайд 73 — особенно» до скончания квартала.`,
+      `KPI: объём «на глаз» +${Math.round(80*p)} слайдов. Внимание то же.`
+    ],
+    fri1750:(n,p)=>[
+      `Все срочные задачи ${n} приходят в пятницу в 17:50. Всегда.`,
+      `${n} видит в календаре только «горит» и «ещё горит».`,
+      `Эффект на KPI: предсказуемость планов −${Math.round(22*p)} пунктов.`
+    ],
+    hidden:(n,p)=>[
+      `${n} находит правду только на скрытом листе. Иногда.`,
+      `Каждая таблица ${n} теперь называется «финал_финал_v${Math.round(7*p)}».`,
+      `KPI: скрытых листов +${Math.round(3*p)}, доверия −${Math.round(40*p)}%.`
+    ],
+    circles:(n,p)=>[
+      `Согласования ${n} кружат, пока все «в целом за» и никто не подписал.`,
+      `${n} получает статус «почти согласовано» вечно.`,
+      `Эффект: круги +${Math.round(5*p)}, решения −${Math.round(50*p)}%.`
+    ],
+    almost:(n,p)=>[
+      `Статус ${n} застрял на «почти готово» на ${Math.round(3*p)} спринта.`,
+      `${n} обязан(а) писать «ещё чуть-чуть» в каждый стендап.`,
+      `KPI готовности: +${Math.round(1*p)}%, ощущение прогресса −${Math.round(60*p)}%.`
+    ],
+    brief:(n,p)=>[
+      `«Я кратко» от ${n} теперь длится до обеда. Без слайдов — ещё дольше.`,
+      `${n} начинает каждое предложение с «и ещё один момент».`,
+      `Эффект на KPI: краткость −${Math.round(70*p)}%, харизма символическая.`
+    ],
+    custom:(n,p,custom)=>[
+      `${n} получает кармический бумеранг за «${custom}». Сила ×${p.toFixed(1)}.`,
+      `Офисный космос зафиксировал грех. Календарь уже знает.`,
+      `Эффект бюрократии: +${Math.round(35*p)}% хаоса, −${Math.round(20*p)}% спокойствия.`
+    ]
+  };
+  const kpiPairs = [
+    ["Эффект на KPI","Сарказм / 10"],
+    ["Шанс «уточнить в чате»","Уровень кармы"],
+    ["Задержка ответа","Офисный вайб"]
+  ];
+
+  let sinId = null;
+  let powerId = "medium";
+  let lastVerdict = null;
+  let mode = "cast"; // cast | share
+
+  const $ = (id) => document.getElementById(id);
+  const sinsEl = $("sins");
+  const powerEl = $("power");
+  const victim = $("victim");
+  const customSin = $("customSin");
+  const cast = $("cast");
+  const overlay = $("overlay");
+  const chant = $("chant");
+  const rune = $("rune");
+  const progress = $("progress");
+  const result = $("result");
+  const formCard = $("formCard");
+  const flash = $("flash");
+  const toast = $("toast");
+  const canvas = $("ritualCanvas");
+  const confettiEl = $("confetti");
+
+  function haptic(ms){
+    try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){}
+  }
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=>toast.classList.remove("show"), 2200);
+  }
+
+  function updateCta(){
+    const hasSin = !!(sinId || customSin.value.trim());
+    if(mode === "share" && lastVerdict){
+      cast.disabled = false;
+      cast.textContent = "Поделиться вердиктом";
+      return;
+    }
+    mode = "cast";
+    if(hasSin){
+      cast.disabled = false;
+      cast.textContent = "Проклинать";
+    } else {
+      cast.disabled = true;
+      cast.textContent = "Сначала выбери грех";
+    }
+  }
+
+  sins.forEach((s)=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "sin";
+    b.dataset.id = s.id;
+    b.setAttribute("role","option");
+    b.setAttribute("aria-selected","false");
+    b.innerHTML = `<span class="rune">${s.rune}</span><span>${s.title}</span>`;
+    b.addEventListener("click",()=>{
+      sinId = s.id;
+      customSin.value = "";
+      sinsEl.querySelectorAll(".sin").forEach(x=>{
+        const on = x.dataset.id === s.id;
+        x.classList.toggle("on", on);
+        x.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      rune.textContent = s.rune;
+      haptic(10);
+      if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; }
+      updateCta();
+    });
+    sinsEl.appendChild(b);
+  });
+
+  powers.forEach((p)=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "pow" + (p.id === powerId ? " on" : "");
+    b.dataset.id = p.id;
+    b.setAttribute("role","radio");
+    b.setAttribute("aria-checked", p.id === powerId ? "true" : "false");
+    b.textContent = p.label;
+    b.addEventListener("click",()=>{
+      powerId = p.id;
+      powerEl.querySelectorAll("button").forEach(x=>{
+        const on = x.dataset.id === p.id;
+        x.classList.toggle("on", on);
+        x.setAttribute("aria-checked", on ? "true" : "false");
+      });
+      haptic(10);
+    });
+    powerEl.appendChild(b);
+  });
+
+  customSin.addEventListener("input",()=>{
+    if(customSin.value.trim()){
+      sinId = null;
+      sinsEl.querySelectorAll(".sin").forEach(x=>{
+        x.classList.remove("on");
+        x.setAttribute("aria-selected","false");
+      });
+      rune.textContent = "✦";
+      if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; }
+    }
+    updateCta();
+  });
+
+  victim.addEventListener("input",()=>{
+    if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; updateCta(); }
+  });
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r, reduced ? Math.min(ms, 40) : ms)); }
+
+  // Particle canvas for ritual
+  let particleRAF = null;
+  let particles = [];
+  function resizeCanvas(){
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
+  function startParticles(){
+    if(reduced) return;
+    resizeCanvas();
+    particles = [];
+    for(let i=0;i<48;i++){
+      particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: (1+Math.random()*3)*devicePixelRatio,
+        vx: (Math.random()-.5)*0.6*devicePixelRatio,
+        vy: (-0.4-Math.random()*1.2)*devicePixelRatio,
+        c: ["#f0c14b","#b84dff","#ff4d8d","#ffffff"][i%4],
+        a: 0.3+Math.random()*0.7
+      });
+    }
+    const ctx = canvas.getContext("2d");
+    function tick(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(const p of particles){
+        p.x += p.vx; p.y += p.vy;
+        if(p.y < -10){ p.y = canvas.height+10; p.x = Math.random()*canvas.width; }
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle = p.c;
+        ctx.globalAlpha = p.a;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      particleRAF = requestAnimationFrame(tick);
+    }
+    particleRAF = requestAnimationFrame(tick);
+  }
+  function stopParticles(){
+    if(particleRAF) cancelAnimationFrame(particleRAF);
+    particleRAF = null;
+    const ctx = canvas.getContext("2d");
+    if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
+  function spawnConfetti(){
+    if(reduced) return;
+    confettiEl.innerHTML = "";
+    for(let i=0;i<36;i++){
+      const el = document.createElement("i");
+      el.style.left = (Math.random()*100) + "%";
+      el.style.top = (-5 + Math.random()*20) + "%";
+      el.style.background = ["#f0c14b","#b84dff","#ff4d8d","#fff","#3dd68c"][i%5];
+      el.style.animationDelay = (Math.random()*0.5) + "s";
+      el.style.width = (5+Math.random()*8) + "px";
+      el.style.height = (5+Math.random()*10) + "px";
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      confettiEl.appendChild(el);
+      setTimeout(()=>el.remove(), 2200);
+    }
+  }
+
+  function loadHist(){
+    try{ return JSON.parse(localStorage.getItem(HIST_KEY)||"[]"); }catch(e){ return []; }
+  }
+  function saveHist(entry){
+    const list = loadHist();
+    list.unshift(entry);
+    localStorage.setItem(HIST_KEY, JSON.stringify(list.slice(0,5)));
+  }
+  function renderHist(){
+    const list = loadHist();
+    const el = $("histList");
+    if(!list.length){
+      el.innerHTML = '<div class="hist-empty">Пока пусто. Прокляни что-нибудь офисное.</div>';
+      return;
+    }
+    el.innerHTML = list.map((h,i)=>`
+      <button type="button" class="hist-item" data-i="${i}">
+        <b>${escapeHtml(h.victim)} — ${escapeHtml(h.sinTitle)}</b>
+        <small>${escapeHtml(h.eyebrow)}</small>
+      </button>`).join("");
+    el.querySelectorAll(".hist-item").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const h = list[+btn.dataset.i];
+        if(!h) return;
+        victim.value = h.victim;
+        closeDrawer();
+        showToast("Подставили жертву из истории.");
+        updateCta();
+      });
+    });
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+  }
+
+  function openDrawer(){ renderHist(); $("drawerBg").classList.add("open"); $("drawer").classList.add("open"); }
+  function closeDrawer(){ $("drawerBg").classList.remove("open"); $("drawer").classList.remove("open"); }
+  $("historyBtn").addEventListener("click", openDrawer);
+  $("drawerBg").addEventListener("click", closeDrawer);
+
+  function buildShareText(v){
+    return `ПРОКЛИНАТОР\n${v.eyebrow}\n\n${v.title}\n${v.text}\n\n${shareSubtitle}`;
+  }
+
+  async function shareVerdict(){
+    if(!lastVerdict) return;
+    const text = buildShareText(lastVerdict);
+    try{
+      if(navigator.share){
+        await navigator.share({ title: "ПРОКЛИНАТОР", text });
+        showToast(toastShare);
+        return;
+      }
+    }catch(e){
+      if(e && e.name === "AbortError") return;
+    }
+    try{
+      await navigator.clipboard.writeText(text);
+      showToast(toastShare);
+    }catch(e){
+      // fallback textarea
+      const ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); showToast(toastShare); }catch(err){ showToast("Скопируй вручную."); }
+      ta.remove();
+    }
+  }
+
+  $("copyBtn").addEventListener("click", async ()=>{
+    if(!lastVerdict) return;
+    const text = buildShareText(lastVerdict);
+    try{
+      await navigator.clipboard.writeText(text);
+      showToast("Скопировано.");
+    }catch(e){
+      showToast("Не удалось скопировать.");
+    }
+  });
+
+  $("againBtn").addEventListener("click",()=>{
+    mode = "cast";
+    lastVerdict = null;
+    result.classList.remove("show");
+    updateCta();
+    victim.focus();
+    window.scrollTo({ top:0, behavior: reduced ? "auto" : "smooth" });
+  });
+
+  cast.addEventListener("click", async ()=>{
+    if(mode === "share"){
+      await shareVerdict();
+      return;
+    }
+
+    const name = victim.value.trim();
+    const custom = customSin.value.trim();
+    const hasSin = !!(sinId || custom);
+
+    if(!hasSin){
+      formCard.classList.add("shake-card");
+      setTimeout(()=>formCard.classList.remove("shake-card"), 600);
+      showToast(emptyHint);
+      return;
+    }
+    if(!name){
+      victim.placeholder = emptyHint;
+      victim.focus();
+      formCard.classList.add("shake-card");
+      setTimeout(()=>formCard.classList.remove("shake-card"), 600);
+      showToast(emptyHint);
+      return;
+    }
+
+    const pow = powers.find(p=>p.id===powerId) || powers[1];
+    const sin = sinId ? sins.find(s=>s.id===sinId) : {id:"custom", title: custom, rune:"✦"};
+    const usingCustom = !sinId;
+
+    cast.disabled = true;
+    result.classList.remove("show");
+    overlay.classList.add("on");
+    overlay.setAttribute("aria-hidden","false");
+    progress.style.width = "0%";
+    rune.textContent = sin.rune || "✦";
+    haptic(10);
+    startParticles();
+
+    if(!reduced){
+      overlay.classList.add("shake");
+      setTimeout(()=>overlay.classList.remove("shake"), 560);
+    }
+
+    for(let i=0;i<chants.length;i++){
+      chant.textContent = chants[i];
+      progress.style.width = ((i+1)/chants.length*100) + "%";
+      if(i === Math.floor(chants.length/2) && !reduced){
+        overlay.classList.add("shake");
+        setTimeout(()=>overlay.classList.remove("shake"), 560);
+      }
+      await sleep(420);
+    }
+    chant.textContent = "Ритуал завершён.";
+    progress.style.width = "100%";
+
+    if(!reduced){
+      flash.classList.add("on");
+      setTimeout(()=>flash.classList.remove("on"), 450);
+    }
+    await sleep(280);
+    stopParticles();
+    overlay.classList.remove("on");
+    overlay.setAttribute("aria-hidden","true");
+
+    const lines = usingCustom
+      ? verdicts.custom(name, pow.mul, custom)
+      : verdicts[sinId](name, pow.mul);
+    const ok = successLines[Math.floor(Math.random()*successLines.length)];
+    const pair = kpiPairs[Math.floor(Math.random()*kpiPairs.length)];
+    const v1 = Math.min(99, Math.round(40 + 20*pow.mul + Math.random()*25));
+    const v2 = (6 + pow.mul + Math.random()*2).toFixed(1);
+
+    $("vEyebrow").textContent = ok;
+    $("vTitle").textContent = lines[0];
+    $("vText").textContent = lines[1] + " " + lines[2];
+    $("k1").textContent = v1 + "%";
+    $("k1l").textContent = pair[0];
+    $("k2").textContent = v2;
+    $("k2l").textContent = pair[1];
+
+    lastVerdict = {
+      eyebrow: ok,
+      title: lines[0],
+      text: lines[1] + " " + lines[2],
+      victim: name,
+      sinTitle: sin.title,
+      power: pow.label
+    };
+    saveHist({
+      victim: name,
+      sinTitle: sin.title,
+      eyebrow: ok,
+      at: Date.now()
+    });
+
+    result.classList.add("show");
+    spawnConfetti();
+    haptic(20);
+    mode = "share";
+    updateCta();
+    result.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+  });
+
+  // Lightweight Web App Manifest via blob URL
+  try{
+    const manifest = {
+      name: "ПРОКЛИНАТОР",
+      short_name: "Проклинатор",
+      description: "Офисный ритуал лёгкой мести",
+      start_url: ".",
+      display: "standalone",
+      background_color: "#0b0a12",
+      theme_color: "#0b0a12",
+      lang: "ru",
+      icons: [{
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230b0a12'/%3E%3Ccircle cx='90' cy='90' r='62' fill='%23b84dff'/%3E%3Ctext x='90' y='112' text-anchor='middle' font-size='72' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E",
+        sizes: "180x180",
+        type: "image/svg+xml",
+        purpose: "any"
+      }]
+    };
+    const blob = new Blob([JSON.stringify(manifest)], {type:"application/manifest+json"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("link");
+    link.rel = "manifest";
+    link.href = url;
+    document.head.appendChild(link);
+  }catch(e){}
+
+  updateCta();
+})();
+</script>
+</body>
+</html>
