@@ -1,21 +1,19 @@
 {
-  "url": "https://proklinator-singularity16.vercel.app",
-  "deploymentId": "dpl_F2UnvJhWwCA2nPWFDH3YYk4Gi5L7",
+  "url": "https://proklinator-live.vercel.app",
+  "deploymentId": "dpl_EBkGVus9edmmDMmbyjNk1i9Gr1oa",
   "sso": "off",
+  "ssoProjectSetting": "Vercel Authentication (Standard Protection) is still enabled at the project level: the public production URL is served without any SSO redirect (HTTP 200), but internal deployment URLs (proklinator-live-<hash>-singularity16.vercel.app, proklinator-live-singularity16.vercel.app) still 302 to vercel.com/sso-api. update_project_deployment_protection returned 404 'Project not found' for projectId=proklinator-live under teamId team_9A6kPxSgwyImFWwEzrJ0tMbi and slug singularity16, so the setting must be disabled in the dashboard (Project Settings -> Deployment Protection -> Vercel Authentication -> Disabled) or after re-authorizing the Vercel MCP with team access.",
   "full": true,
   "target": "production",
-  "project": "proklinator",
+  "project": "proklinator-live",
   "scope": {
     "slug": "singularity16",
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-c86xfirim-singularity16.vercel.app",
-  "inspector": "https://vercel.com/singularity16/proklinator/F2UnvJhWwCA2nPWFDH3YYk4Gi5L7",
-  "previousDeployment": {
-    "id": "dpl_8zmE7RfQjhWWUefCag28QTExR6BF",
-    "url": "https://proklinator-r5u9v762z-singularity16.vercel.app"
-  },
+  "deploymentUrl": "https://proklinator-live-2s95m9bb1-singularity16.vercel.app",
+  "inspector": "https://vercel.com/singularity16/proklinator-live/EBkGVus9edmmDMmbyjNk1i9Gr1oa",
+  "replacedMarkerDeployment": "dpl_4euS4hnNQjf2zTjKE6QB9GeFm6bZ",
   "sourceCommit": "22425ef614ec93da63e70fbd2109642aa7bc7cad",
   "files": {
     "index.html": {
@@ -32,24 +30,30 @@
     }
   },
   "verification": {
-    "checkedAt": "2026-09-10T23:09:50Z",
-    "aliasHttpStatus": 200,
-    "aliasContentLength": 288261,
+    "checkedAt": "2026-09-10T23:16:57Z",
+    "publicUrlHttpStatus": 200,
+    "publicUrlRedirect": null,
+    "publicUrlContentLength": 288261,
     "indexHtmlSha256MatchesRepo": true,
-    "heroAltarSha256MatchesRepo": true,
     "heroAltarHttpStatus": 200,
+    "heroAltarSha256MatchesRepo": true,
     "containsProklinator": 11,
     "containsZapustitRitual": 1,
     "containsContactEmail": 1,
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
     "securityHeadersApplied": ["Referrer-Policy", "X-Content-Type-Options", "Permissions-Policy"],
-    "ssoCheck": "Unauthenticated GET on both the raw deployment URL and the production alias returns HTTP 200 with the full page (no Vercel Authentication challenge)."
+    "buildScaffoldingNotServed": ["build.mjs", "package.json", "vercel.json"]
+  },
+  "alternateDeployment": {
+    "note": "Same content, Vercel Authentication fully off (deployment URLs return 200 unauthenticated).",
+    "project": "proklinator",
+    "url": "https://proklinator-singularity16.vercel.app",
+    "deploymentId": "dpl_F2UnvJhWwCA2nPWFDH3YYk4Gi5L7"
   },
   "notes": [
-    "proklinator.vercel.app is owned by an unrelated account, so Vercel assigned proklinator-singularity16.vercel.app as this project's production alias.",
-    "deploy_to_vercel with an explicit teamId returned 403 (no permission to create Preview/Production Deployment) for every name tried (proklinator, proklinator-static, proklinator-live); deploying to the token's default scope (same slug, singularity16) succeeded under the preferred name.",
-    "Team-scoped MCP tools (get_project, list_projects, get_deployment, update_project_deployment_protection) return 404 for this project, so Vercel Authentication was verified off by direct unauthenticated requests rather than toggled through the API.",
-    "The ~386 KB of site files were not inlined in the deployment request; the deployment's build step (build.mjs) fetches index.html and hero-altar.jpg and fails unless their SHA-256 digests match the pinned values above. The final deployment sources them from the immutable first deployment URL; temporary mirrors (litterbox.catbox.moe, temp.sh, expiring within 72h) were used only for the first build.",
+    "deploy_to_vercel with an explicit teamId (team_9A6kPxSgwyImFWwEzrJ0tMbi) returned 403 'You don't have permission to create a Production Deployment for this project' for proklinator-live as well as proklinator and proklinator-static; deploying to the token's default scope (same slug, singularity16) succeeded.",
+    "Team-scoped MCP tools (list_projects, get_project, get_deployment, update_project_deployment_protection) cannot see these projects (404 / empty) under either the team id or the slug, and the tools reject an empty teamId.",
+    "The ~386 KB of site files were not inlined in the deployment request; the deployment's build step (build.mjs, outputDirectory=public) fetches index.html and hero-altar.jpg and fails unless their SHA-256 digests match the pinned values above, so the deployment can only contain the exact repo bytes. Sources are the immutable proklinator deployments (same bytes) with short-lived mirrors as fallback.",
     "create_git_project failed because the Vercel account has no GitHub Login Connection; adding one (vercel.com/account/login-connections) would allow linking this private repo for automatic deploys from main."
   ]
 }
