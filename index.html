@@ -2,7 +2,8 @@
 <html lang="ru" data-power="seal">
 <head>
 <meta charset="UTF-8"/>
-<!-- GitHub Pages cannot set response headers, so the policy ships in the document. Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. -->
+<!-- The CSP ships in the document so it holds on any static host; vercel.json adds the header-only protections (X-Frame-Options, Permissions-Policy, nosniff, HSTS).
+     Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. v21 (Supabase) must extend connect-src here. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'"/>
 <meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
@@ -17,12 +18,12 @@
 <meta property="og:title" content="ПРОКЛИНАТОР — Новый ритуал"/>
 <meta property="og:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота."/>
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://singularitygrim.github.io/proklinator/"/>
-<meta property="og:image" content="https://singularitygrim.github.io/proklinator/hero-altar.jpg"/>
+<!-- Production domain is not fixed yet (Vercel). Relative image URLs resolve against the page for most scrapers; switch to absolute once the domain is final. -->
+<meta property="og:image" content="hero-altar.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="ПРОКЛИНАТОР — Новый ритуал"/>
 <meta name="twitter:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота."/>
-<meta name="twitter:image" content="https://singularitygrim.github.io/proklinator/hero-altar.jpg"/>
+<meta name="twitter:image" content="hero-altar.jpg"/>
 <title>ПРОКЛИНАТОР — Новый ритуал</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0908'/%3E%3Cpath d='M12 44 16.5 22l11 9.6L32 14l4.5 17.6 11-9.6L52 44Z' fill='%23C9A24A'/%3E%3Crect x='12' y='46' width='40' height='4.5' rx='2' fill='%23C9A24A'/%3E%3C/svg%3E"/>
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
