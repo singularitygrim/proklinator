@@ -1,0 +1,55 @@
+{
+  "url": "https://proklinator-singularity16.vercel.app",
+  "deploymentId": "dpl_F2UnvJhWwCA2nPWFDH3YYk4Gi5L7",
+  "sso": "off",
+  "full": true,
+  "target": "production",
+  "project": "proklinator",
+  "scope": {
+    "slug": "singularity16",
+    "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
+    "plan": "hobby"
+  },
+  "deploymentUrl": "https://proklinator-c86xfirim-singularity16.vercel.app",
+  "inspector": "https://vercel.com/singularity16/proklinator/F2UnvJhWwCA2nPWFDH3YYk4Gi5L7",
+  "previousDeployment": {
+    "id": "dpl_8zmE7RfQjhWWUefCag28QTExR6BF",
+    "url": "https://proklinator-r5u9v762z-singularity16.vercel.app"
+  },
+  "sourceCommit": "22425ef614ec93da63e70fbd2109642aa7bc7cad",
+  "files": {
+    "index.html": {
+      "bytes": 288261,
+      "sha256": "8169dfc442054f1769b3a6e2ee12779fb0172e75aba423f798e3afd6053a0f21"
+    },
+    "hero-altar.jpg": {
+      "bytes": 97618,
+      "sha256": "7b145496fbd6aac18189c5087265e0db0b461e06f944e2324e36a7cb347156b4"
+    },
+    "vercel.json": {
+      "bytes": 354,
+      "sha256": "1b992db47ddb92e98287b17f5cc7f2e67826025cfb777ee41caff6b0df9eb87c"
+    }
+  },
+  "verification": {
+    "checkedAt": "2026-09-10T23:09:50Z",
+    "aliasHttpStatus": 200,
+    "aliasContentLength": 288261,
+    "indexHtmlSha256MatchesRepo": true,
+    "heroAltarSha256MatchesRepo": true,
+    "heroAltarHttpStatus": 200,
+    "containsProklinator": 11,
+    "containsZapustitRitual": 1,
+    "containsContactEmail": 1,
+    "cleanUrlsRedirect": "/index.html -> 308 -> /",
+    "securityHeadersApplied": ["Referrer-Policy", "X-Content-Type-Options", "Permissions-Policy"],
+    "ssoCheck": "Unauthenticated GET on both the raw deployment URL and the production alias returns HTTP 200 with the full page (no Vercel Authentication challenge)."
+  },
+  "notes": [
+    "proklinator.vercel.app is owned by an unrelated account, so Vercel assigned proklinator-singularity16.vercel.app as this project's production alias.",
+    "deploy_to_vercel with an explicit teamId returned 403 (no permission to create Preview/Production Deployment) for every name tried (proklinator, proklinator-static, proklinator-live); deploying to the token's default scope (same slug, singularity16) succeeded under the preferred name.",
+    "Team-scoped MCP tools (get_project, list_projects, get_deployment, update_project_deployment_protection) return 404 for this project, so Vercel Authentication was verified off by direct unauthenticated requests rather than toggled through the API.",
+    "The ~386 KB of site files were not inlined in the deployment request; the deployment's build step (build.mjs) fetches index.html and hero-altar.jpg and fails unless their SHA-256 digests match the pinned values above. The final deployment sources them from the immutable first deployment URL; temporary mirrors (litterbox.catbox.moe, temp.sh, expiring within 72h) were used only for the first build.",
+    "create_git_project failed because the Vercel account has no GitHub Login Connection; adding one (vercel.com/account/login-connections) would allow linking this private repo for automatic deploys from main."
+  ]
+}
