@@ -8,33 +8,20 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
 <meta name="application-name" content="ПРОКЛИНАТОР"/>
-<meta name="description" content="Серная канцелярия принимает заявки."/>
+<meta name="description" content="Канцелярия печати. Без смайлов — только приговор."/>
 <title>ПРОКЛИНАТОР</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230E0C0B'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23C45C26' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='none' stroke='%23C45C26' stroke-width='1' opacity='.7'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23C45C26'/%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230E0C0B'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23C45C26' stroke-width='3'/%3E%3Ccircle cx='90' cy='90' r='28' fill='none' stroke='%23C45C26' stroke-width='2' opacity='.7'/%3E%3Ccircle cx='90' cy='90' r='7' fill='%23C45C26'/%3E%3C/svg%3E"/>
 <style>
 :root{
-  --bg:#0E0C0B;
-  --bg-elev:#161210;
-  --soot:#1A1714;
-  --soot-2:#141210;
-  --bone:rgba(242,235,224,.12);
-  --bone-text:#F2EBE0;
-  --muted:rgba(242,235,224,.68);
-  --faint:rgba(242,235,224,.42);
-  --amber:#C45C26;
-  --amber-hot:#D4783A;
-  --amber-dim:rgba(196,92,38,.28);
-  --amber-glow:rgba(196,92,38,.4);
-  --ink:#0E0C0B;
-  --line:rgba(242,235,224,.1);
-  --radius:16px;
-  --safe-t:env(safe-area-inset-top,0px);
-  --safe-b:env(safe-area-inset-bottom,0px);
-  --safe-l:env(safe-area-inset-left,0px);
-  --safe-r:env(safe-area-inset-right,0px);
-  --cta-h:80px;
-  --ease:cubic-bezier(.32,.72,0,1);
+  --bg:#0E0C0B;--bg-elev:#161210;--soot:#1A1714;--soot-2:#141210;
+  --bone:rgba(242,235,224,.12);--bone-text:#F2EBE0;
+  --muted:rgba(242,235,224,.68);--faint:rgba(242,235,224,.42);
+  --amber:#C45C26;--amber-hot:#D4783A;--amber-dim:rgba(196,92,38,.28);--amber-glow:rgba(196,92,38,.4);
+  --ink:#0E0C0B;--line:rgba(242,235,224,.1);--radius:16px;
+  --safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px);--safe-r:env(safe-area-inset-right,0px);
+  --cta-h:80px;--ease:cubic-bezier(.32,.72,0,1);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,"Helvetica Neue",sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -61,11 +48,12 @@ body::after{
 button,input{font:inherit;color:inherit}
 button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+button:active:not(:disabled){transform:scale(.97)}
 input{
   font-size:17px;line-height:1.4;width:100%;
   background:var(--soot-2);border:1px solid var(--bone);border-radius:14px;
   padding:16px 18px;color:var(--bone-text);letter-spacing:.01em;
-  transition:border-color .25s,box-shadow .25s;
+  transition:border-color .2s,box-shadow .2s;
 }
 input::placeholder{color:var(--faint)}
 input:focus{border-color:rgba(196,92,38,.55);box-shadow:0 0 0 3px rgba(196,92,38,.14)}
@@ -75,23 +63,11 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   30%{box-shadow:0 0 0 4px rgba(196,92,38,.3);border-color:var(--amber)}
   60%{box-shadow:0 0 0 2px rgba(196,92,38,.16);border-color:var(--amber-hot)}
 }
-
 .app{
   max-width:440px;margin:0 auto;min-height:100dvh;
   padding:28px 22px calc(var(--cta-h) + var(--safe-b) + 32px);
   display:flex;flex-direction:column;position:relative;z-index:1;
 }
-
-.hero-stage{
-  position:relative;margin:0 0 8px;min-height:96px;
-  display:flex;align-items:center;justify-content:flex-start;
-}
-#threeHero{
-  position:absolute;top:-12px;right:0;width:120px;height:120px;
-  pointer-events:none;opacity:.45;z-index:0;
-  overflow:hidden;
-}
-.hero-stage{position:relative;overflow:hidden;margin:0 -4px 0 0;}
 .brand{display:flex;align-items:center;gap:14px;margin-bottom:12px;position:relative;z-index:1}
 .mark{width:44px;height:44px;min-width:44px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
@@ -105,7 +81,6 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   margin:0 0 32px;font-size:16px;line-height:1.55;color:var(--muted);
   letter-spacing:.01em;max-width:28em;position:relative;z-index:1;
 }
-
 .field{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .field > span,.section-label{
   font-size:12px;letter-spacing:.18em;text-transform:uppercase;
@@ -114,27 +89,21 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .section-label{margin:0 0 14px;display:block}
 .empty-hint{
   margin:6px 0 0;font-size:14px;color:var(--amber);opacity:0;
-  letter-spacing:.02em;transition:opacity .25s;min-height:1.2em;
+  letter-spacing:.02em;transition:opacity .2s;min-height:1.2em;
 }
 .empty-hint.show{opacity:1}
-
-.gender{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;
-}
+.gender{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
 .gen{
   min-height:96px;border-radius:var(--radius);border:1px solid var(--bone);
   background:var(--soot);display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:10px;color:var(--muted);
-  transition:border-color .25s,color .25s,background .25s,box-shadow .25s,transform .35s var(--ease);
+  transition:border-color .2s,color .2s,background .2s,box-shadow .2s,transform .2s var(--ease);
   position:relative;overflow:hidden;padding:18px 12px;
 }
-.gen .g-seal{
-  width:48px;height:48px;display:grid;place-items:center;
-}
+.gen .g-seal{width:48px;height:48px;display:grid;place-items:center}
 .gen .g-seal svg{width:100%;height:100%}
 .gen b{font-size:22px;font-weight:700;letter-spacing:.14em;color:inherit}
 .gen small{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.gen:active{opacity:.92}
 .gen.on{
   border-color:var(--amber);color:var(--bone-text);
   background:linear-gradient(160deg,rgba(196,92,38,.18),var(--soot) 60%);
@@ -143,21 +112,19 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .gen.on .g-seal .dot{fill:var(--amber)}
 .gen.on .g-seal .ring-s{stroke:var(--amber);opacity:1}
 .gen.pulse-err{animation:pulseInner .7s var(--ease)}
-
 .power{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:8px}
 .pow{
   min-height:80px;border-radius:var(--radius);border:1px solid var(--bone);
   background:var(--soot);display:grid;grid-template-columns:40px 1fr;
   gap:16px;align-items:center;padding:16px 18px;text-align:left;
-  color:var(--muted);transition:border-color .25s,color .25s,background .25s,box-shadow .25s,transform .35s var(--ease);
-  position:relative;overflow:hidden;
+  color:var(--muted);transition:border-color .2s,color .2s,background .2s,box-shadow .2s,transform .2s var(--ease);
+  position:relative;overflow:hidden;scroll-margin-bottom:calc(var(--cta-h) + var(--safe-b) + 16px);
 }
 .pow .seal{width:40px;height:40px;display:grid;place-items:center;position:relative}
 .pow .seal svg{width:100%;height:100%}
 .pow .meta{display:flex;flex-direction:column;gap:5px;min-width:0}
 .pow b{font-size:17px;font-weight:650;letter-spacing:.03em;color:inherit}
 .pow small{font-size:14px;line-height:1.4;color:var(--faint);font-weight:400}
-.pow:active{opacity:.92}
 .pow.on{
   border-color:var(--amber);color:var(--bone-text);
   background:linear-gradient(105deg,rgba(196,92,38,.14),var(--soot) 55%);
@@ -171,13 +138,11 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 @keyframes innerPulse{0%,100%{opacity:.35}50%{opacity:.9}}
 .pow.on .seal .dot{fill:var(--amber)}
 .pow.on .seal .ring-s{stroke:var(--amber);opacity:1}
-
 .home-hint{
   margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
   font-size:14px;color:var(--faint);line-height:1.5;
 }
 .home-hint strong{display:block;color:var(--muted);margin-bottom:6px;font-size:14px;font-weight:600;letter-spacing:.03em}
-
 .verdict{
   display:none;margin-top:8px;position:relative;padding:28px 22px 24px;
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
@@ -191,7 +156,6 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 body.is-result .cta-bar{display:none!important}
 body.is-result .app{padding-bottom:calc(28px + var(--safe-b))}
 body.is-result .overlay{display:none!important;opacity:0!important;pointer-events:none!important}
-.pow{scroll-margin-bottom:calc(var(--cta-h) + var(--safe-b) + 16px)}
 @media (max-height:900px){
   .home-hint{display:none}
   .pow{min-height:72px;padding:14px 16px}
@@ -202,25 +166,29 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .verdict::before{
   content:"";position:absolute;right:-24px;top:-24px;width:150px;height:150px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity:.1;pointer-events:none;
+  opacity:.08;pointer-events:none;
 }
-.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-weight:700}
-.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
-.sin-tag,.gender-tag{
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;font-weight:700}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.gender-tag,.power-tag{
   display:inline-block;padding:6px 12px;border-radius:999px;
-  border:1px solid rgba(196,92,38,.4);color:var(--amber);font-size:13px;
+  border:1px solid rgba(242,235,224,.22);color:var(--muted);font-size:13px;
   letter-spacing:.04em;font-weight:600;
 }
-.gender-tag{border-color:rgba(242,235,224,.22);color:var(--muted)}
-.verdict h2{margin:0 0 14px;font-size:20px;line-height:1.4;font-weight:600;letter-spacing:.01em;color:var(--bone-text)}
-.verdict p{margin:0 0 20px;color:var(--muted);font-size:16px;line-height:1.55}
-.sev-row{margin:0 0 20px;font-size:14px;color:var(--faint);letter-spacing:.04em}
-.sev-row b{color:var(--amber);font-weight:650;letter-spacing:.08em;text-transform:uppercase}
-.actions{display:grid;grid-template-columns:1fr;gap:10px}
+.power-tag{border-color:rgba(196,92,38,.4);color:var(--amber)}
+.block{margin:0 0 18px;padding:14px 0 0;border-top:1px solid var(--line)}
+.block:first-of-type{border-top:0;padding-top:0}
+.block-label{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--amber);font-weight:700;margin:0 0 8px;
+}
+.block-body{margin:0;font-size:17px;line-height:1.5;color:var(--bone-text);font-weight:500}
+.block.lift .block-body{color:var(--muted);font-size:16px;font-weight:400}
+.actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
 .actions button{
   min-height:52px;border-radius:14px;border:1px solid var(--bone);
   color:var(--muted);font-weight:600;font-size:15px;letter-spacing:.04em;
-  background:transparent;transition:border-color .2s,color .2s;
+  background:transparent;transition:border-color .2s,color .2s,transform .15s;
 }
 .actions button.primary{
   background:var(--amber);color:var(--ink);border-color:var(--amber);
@@ -229,7 +197,6 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .actions button:active{border-color:var(--amber);color:var(--bone-text)}
 .actions button.primary:active{filter:brightness(1.06);color:var(--ink)}
 .disclaimer{margin:32px 0 0;font-size:13px;color:var(--faint);line-height:1.55;text-align:left}
-
 .cta-bar{
   position:fixed;left:0;right:0;bottom:0;z-index:30;
   padding:14px 22px calc(14px + var(--safe-b));
@@ -248,7 +215,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:14px;
   background:var(--amber);color:var(--ink);
   box-shadow:0 4px 28px rgba(196,92,38,.28);
-  transition:opacity .2s,filter .2s;
+  transition:opacity .2s,filter .2s,transform .15s;
 }
 .cta::before{
   content:"";position:absolute;left:50%;top:50%;width:76px;height:76px;
@@ -258,16 +225,12 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .cta:active:not(:disabled){filter:brightness(1.08)}
 .cta:disabled{opacity:.32;cursor:not-allowed;filter:none;box-shadow:none}
 .cta.busy{opacity:.72;letter-spacing:.1em}
-
 .overlay{
   position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
   flex-direction:column;gap:20px;background:rgba(14,12,11,.97);padding:28px;
   opacity:0;
 }
 .overlay.on{display:flex}
-#threeRitual{
-  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.85;
-}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .seal-stage{
   width:132px;height:132px;position:relative;z-index:2;display:grid;place-items:center;
@@ -275,7 +238,6 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 }
 .seal-stage svg{width:100%;height:100%}
 .seal-stage .spin{animation:sealSpin 8s linear infinite;transform-origin:center}
-.seal-stage.css-fallback{display:grid}
 .chant{
   position:relative;z-index:2;color:var(--muted);font-size:16px;
   text-align:center;min-height:1.4em;letter-spacing:.02em;max-width:300px;line-height:1.45;
@@ -284,39 +246,19 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   position:relative;z-index:2;width:min(240px,65vw);height:2px;
   background:rgba(242,235,224,.1);overflow:hidden;
 }
-.progress-bar{height:100%;width:0%;background:var(--amber);transition:width .25s linear}
+.progress-bar{height:100%;width:0%;background:var(--amber);transition:width .2s linear}
 .busy-label{position:relative;z-index:2;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
-
-.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(196,92,38,.4),transparent 55%)}
-.flash.on{animation:flash .45s ease-out}
-@keyframes flash{0%{opacity:.75}100%{opacity:0}}
-.shake-root.shake{animation:shake .55s var(--ease)}
-@keyframes shake{
-  0%,100%{transform:translate(0)}
-  20%{transform:translate(-4px,2px)}
-  40%{transform:translate(5px,-2px)}
-  60%{transform:translate(-3px,1px)}
-  80%{transform:translate(2px,-1px)}
-}
-.rain{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden}
-.drop{position:absolute;top:-30px;font-size:14px;animation:fall linear forwards;opacity:.65;color:var(--amber)}
-@keyframes fall{to{transform:translateY(110vh);opacity:0}}
-.bolt{position:fixed;inset:0;pointer-events:none;z-index:54;opacity:0}
-.bolt.on{animation:bolt .3s ease-out}
-@keyframes bolt{0%{opacity:0}25%{opacity:1;background:radial-gradient(ellipse at 50% 40%,rgba(196,92,38,.24),transparent 50%)}100%{opacity:0}}
-
 .toast{
   position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 12px);
   transform:translateX(-50%) translateY(12px);opacity:0;z-index:70;
   padding:12px 18px;border-radius:14px;background:var(--bg-elev);
   border:1px solid var(--bone);color:var(--bone-text);font-size:15px;
   max-width:min(400px,88vw);text-align:center;
-  transition:opacity .25s,transform .25s;pointer-events:none;
+  transition:opacity .2s,transform .2s;pointer-events:none;
 }
+body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
 .screen-cast.hidden,.screen-result.hidden{display:none}
-
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .mark .ring,.seal-stage .spin{animation:none!important}
@@ -324,61 +266,55 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   input.pulse-inner,.gen.pulse-err{box-shadow:0 0 0 3px rgba(196,92,38,.32);border-color:var(--amber)}
   .verdict.show{opacity:1;transform:none}
   .overlay.on{opacity:1}
-  #threeHero,#threeRitual{display:none!important}
+  button:active:not(:disabled){transform:none}
 }
 </style>
 </head>
-<body class="shake-root" id="root">
-<div class="flash" id="flash" aria-hidden="true"></div>
-<div class="bolt" id="bolt" aria-hidden="true"></div>
-<div class="rain" id="rain" aria-hidden="true"></div>
+<body id="root">
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <main class="app">
-  <div class="hero-stage">
-    <canvas id="threeHero" aria-hidden="true"></canvas>
-    <header class="brand">
-      <div class="mark" aria-hidden="true">
-        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle class="ring" cx="20" cy="20" r="16.5" stroke="#C45C26" stroke-width="1" opacity=".75"/>
-          <circle cx="20" cy="20" r="10" stroke="#C45C26" stroke-width=".85" opacity=".5"/>
-          <circle cx="20" cy="20" r="2.5" fill="#C45C26"/>
-          <line x1="20" y1="3.5" x2="20" y2="8" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-          <line x1="20" y1="32" x2="20" y2="36.5" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-          <line x1="3.5" y1="20" x2="8" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-          <line x1="32" y1="20" x2="36.5" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-        </svg>
-      </div>
-      <div class="brand-text"><h1>Проклинатор</h1></div>
-    </header>
-  </div>
-  <p class="atmosphere">Серная канцелярия принимает заявки.</p>
+  <header class="brand">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring" cx="20" cy="20" r="16.5" stroke="#C45C26" stroke-width="1" opacity=".75"/>
+        <circle cx="20" cy="20" r="10" stroke="#C45C26" stroke-width=".85" opacity=".5"/>
+        <circle cx="20" cy="20" r="2.5" fill="#C45C26"/>
+        <line x1="20" y1="3.5" x2="20" y2="8" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="20" y1="32" x2="20" y2="36.5" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="3.5" y1="20" x2="8" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="32" y1="20" x2="36.5" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+      </svg>
+    </div>
+    <div class="brand-text"><h1>Проклинатор</h1></div>
+  </header>
+  <p class="atmosphere" id="atmosphere"></p>
 
   <section class="screen-cast" id="castScreen">
     <label class="field">
-      <span>Имя жертвы</span>
-      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true" placeholder="Кого скрепляем?"/>
-      <span class="empty-hint" id="emptyHint">Сначала имя.</span>
+      <span>Имя</span>
+      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true"/>
+      <span class="empty-hint" id="emptyHint"></span>
     </label>
 
     <div class="section-label">Пол</div>
-    <div class="gender" id="gender" role="radiogroup" aria-label="Пол жертвы">
+    <div class="gender" id="gender" role="radiogroup" aria-label="Пол">
       <button type="button" class="gen" data-g="M" role="radio" aria-checked="false">
         <span class="g-seal" aria-hidden="true">
           <svg viewBox="0 0 48 48" fill="none"><circle class="ring-s" cx="24" cy="24" r="18" stroke="#C45C26" stroke-width="1.2" opacity=".4"/><circle class="ring-s" cx="24" cy="24" r="11" stroke="#C45C26" stroke-width=".9" opacity=".35"/><circle class="dot" cx="24" cy="24" r="3.5" fill="rgba(242,235,224,.28)"/><line x1="24" y1="4" x2="24" y2="10" stroke="#C45C26" stroke-width="1.1" opacity=".5"/><line x1="24" y1="38" x2="24" y2="44" stroke="#C45C26" stroke-width="1.1" opacity=".5"/></svg>
         </span>
         <b>М</b>
-        <small>Мужской</small>
+        <small id="gMLabel"></small>
       </button>
       <button type="button" class="gen" data-g="F" role="radio" aria-checked="false">
         <span class="g-seal" aria-hidden="true">
           <svg viewBox="0 0 48 48" fill="none"><circle class="ring-s" cx="24" cy="24" r="18" stroke="#C45C26" stroke-width="1.2" opacity=".4"/><circle class="ring-s" cx="24" cy="24" r="11" stroke="#C45C26" stroke-width=".9" opacity=".35"/><circle class="dot" cx="24" cy="24" r="3.5" fill="rgba(242,235,224,.28)"/><line x1="4" y1="24" x2="10" y2="24" stroke="#C45C26" stroke-width="1.1" opacity=".5"/><line x1="38" y1="24" x2="44" y2="24" stroke="#C45C26" stroke-width="1.1" opacity=".5"/></svg>
         </span>
         <b>Ж</b>
-        <small>Женский</small>
+        <small id="gFLabel"></small>
       </button>
     </div>
-    <span class="empty-hint" id="genderHint" style="margin-top:-18px;margin-bottom:22px">Выбери пол — так печать грамотнее ляжет.</span>
+    <span class="empty-hint" id="genderHint" style="margin-top:-18px;margin-bottom:22px"></span>
 
     <div class="section-label">Сила печати</div>
     <div class="power" id="power" role="radiogroup" aria-label="Сила печати"></div>
@@ -390,18 +326,27 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   </section>
 
   <section class="verdict screen-result hidden" id="result" aria-live="polite">
-    <div class="eyebrow" id="vEyebrow">Вердикт</div>
+    <div class="eyebrow">Приговор</div>
     <div class="meta-row">
-      <div class="sin-tag" id="vSin"></div>
       <div class="gender-tag" id="vGender"></div>
+      <div class="power-tag" id="vPower"></div>
     </div>
-    <h2 id="vTitle"></h2>
-    <p id="vText"></p>
-    <div class="sev-row">Сила: <b id="vSev"></b></div>
+    <div class="block">
+      <div class="block-label" id="lblSin"></div>
+      <p class="block-body" id="vSin"></p>
+    </div>
+    <div class="block">
+      <div class="block-label" id="lblPunch"></div>
+      <p class="block-body" id="vPunch"></p>
+    </div>
+    <div class="block lift">
+      <div class="block-label" id="lblLift"></div>
+      <p class="block-body" id="vLift"></p>
+    </div>
     <div class="actions">
-      <button type="button" class="primary" id="saveBtn">Сохранить картинку</button>
-      <button type="button" id="shareBtn">Поделиться</button>
-      <button type="button" id="againBtn">Ещё ритуал</button>
+      <button type="button" class="primary" id="saveBtn"></button>
+      <button type="button" id="shareBtn"></button>
+      <button type="button" id="againBtn"></button>
     </div>
   </section>
 
@@ -410,14 +355,13 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 
 <div class="cta-bar" id="ctaBar">
   <div class="cta-bar-inner">
-    <button type="button" class="cta" id="cast">Скрепить печатью</button>
+    <button type="button" class="cta" id="cast"></button>
   </div>
 </div>
 
 <div class="overlay" id="overlay" aria-hidden="true">
-  <canvas id="threeRitual" aria-hidden="true"></canvas>
   <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
-  <div class="seal-stage css-fallback" id="sealStage" aria-hidden="true">
+  <div class="seal-stage" id="sealStage" aria-hidden="true">
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle class="spin" cx="60" cy="60" r="48" stroke="#C45C26" stroke-width="1.2" opacity=".75"/>
       <circle cx="60" cy="60" r="32" stroke="#C45C26" stroke-width="1" opacity=".45"/>
@@ -428,138 +372,41 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
       <line x1="96" y1="60" x2="108" y2="60" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
     </svg>
   </div>
-  <div class="chant" id="chant">Имя и пол приняты. Дышим ровнее.</div>
+  <div class="chant" id="chant"></div>
   <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
-  <div class="busy-label">Печать тлеет…</div>
+  <div class="busy-label" id="busyLabel"></div>
 </div>
 
 <canvas id="exportCanvas" width="720" height="1280" style="display:none" aria-hidden="true"></canvas>
 
 <script>
-window.__THREE_OK=false; window.__ANIME_OK=false;
-</script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"
-  onload="window.__THREE_OK=true"
-  onerror="window.__THREE_OK=false"></script>
-<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"
-  onload="window.__ANIME_OK=true"
-  onerror="window.__ANIME_OK=false"></script>
-<script>
 (function(){
+  const DATA = {"sins":[{"id":1,"title":"Пятиминутка","blurb":"созвон «на пять минут», который съел час"},{"id":2,"title":"Письмо всем","blurb":"кинул(а) в копию пол-отдела без нужды"},{"id":3,"title":"Глянь глазами","blurb":"скинул(а) простыню «на быстрый взгляд»"},{"id":4,"title":"Пятница вечер","blurb":"объявил(а) срочное, когда все уже в куртках"},{"id":5,"title":"Скрытый лист","blurb":"правда сидит в невидимой вкладке таблицы"},{"id":6,"title":"Круг согласований","blurb":"гоняет одних и тех же по кругу"},{"id":7,"title":"Почти готово","blurb":"«почти» третий месяц"},{"id":8,"title":"Я кратко","blurb":"монолог до потёмков"},{"id":9,"title":"Тихий перенос","blurb":"сдвинул(а) срок и молчит"},{"id":10,"title":"Планёрка-пустышка","blurb":"собрал(а) людей вместо решения"},{"id":11,"title":"Финал_точно","blurb":"седьмая версия «окончательного» файла"},{"id":12,"title":"Ну как?","blurb":"три дня тишины, потом этот вопрос"},{"id":13,"title":"Правки после утверждения","blurb":"вернул(а) правки, когда уже «да»"},{"id":14,"title":"Созвон без повестки","blurb":"всех созвал(а), темы нет"},{"id":15,"title":"Пять минут в конце дня","blurb":"«на минутку» перед выходом"},{"id":16,"title":"Таблица вместо ответа","blurb":"вместо «да/нет» прислал(а) файл"},{"id":17,"title":"На месте","blurb":"статус «на месте», человека нет"},{"id":18,"title":"Секундочку","blurb":"«секунду» растянул(а) на вечность"},{"id":19,"title":"Пересыл без строки","blurb":"переслал(а) тред без своего слова"},{"id":20,"title":"Зал ради одного","blurb":"собрал(а) толпу, чтобы спросить одного"},{"id":21,"title":"Кажется, решали","blurb":"открыл(а) заново то, что уже закрыли"},{"id":22,"title":"Срок в день сдачи","blurb":"сообщил(а) срок, когда уже поздно"},{"id":23,"title":"Скинь в чат","blurb":"вместо ясности кинул(а) в общий чат"},{"id":24,"title":"Коридорные правки","blurb":"правил(а) голосом в проходе, без записи"},{"id":25,"title":"Срочно без сути","blurb":"орёт «срочно», не говорит что"},{"id":26,"title":"Открыл и пропал","blurb":"поднял(а) тему и исчез(ла)"},{"id":27,"title":"Согласуй со всеми","blurb":"отправил(а) на «всех», кто не нужен"},{"id":28,"title":"Ещё один кружок","blurb":"добавил(а) лишний круг «на всякий»"},{"id":29,"title":"Голос вместо файла","blurb":"важный итог только голосом, следа нет"},{"id":30,"title":"Переиграл вчерашнее","blurb":"переиграл(а) договорённость утра"}],"verdictsN":[{"id":1,"punch":"{имя} снова завёл(а) «пятиминутку» — час ушёл в унитаз.","lift":"Снять: когда закончит созвон ровно за пять минут по таймеру на виду у всех."},{"id":2,"punch":"{имя} разослал(а) письмо всем — теперь пусть стоит у туалета и лично извиняется перед каждым из копии.","lift":"Снять: когда отправит одно письмо одному человеку и получит ответ."},{"id":3,"punch":"{имя} скинул(а) «глянь глазами» — глаза теперь красные, как после поезда.","lift":"Снять: когда пришлёт одну страницу с тремя пометками, не простыню."},{"id":4,"punch":"{имя} объявил(а) срочное в пятницу вечером — пусть сидит в лифте между этажами, пока все доедут домой.","lift":"Снять: когда срочное объявит до обеда рабочего дня."},{"id":5,"punch":"у {имя} правда в скрытом листе — пусть ищет её на четвереньках под столом.","lift":"Снять: когда вынесет правду на первый лист крупным шрифтом."},{"id":6,"punch":"{имя} гоняет согласование по кругу — ноги стёрты, круг всё тот же.","lift":"Снять: когда закроет вопрос с двумя подписями, не с двенадцатью."},{"id":7,"punch":"«почти готово» от {имя} уже отрастило бороду. Пусть стоит у микроволновки и смотрит, как крутится чужой обед.","lift":"Снять: когда скажет честную дату и попадёт в неё."},{"id":8,"punch":"{имя} начал(а) «кратко» — слушатели окоченели.","lift":"Снять: когда уложится в одну минуту без «ещё чуть-чуть»."},{"id":9,"punch":"{имя} тихо утащил(а) срок — пусть теперь стоит в пробке ровно столько, на сколько сдвинул(а).","lift":"Снять: когда предупредит о переносе за сутки."},{"id":10,"punch":"планёрка от {имя} без решения — все посидели, как на унитазе без бумаги.","lift":"Снять: когда закончит встречу одним решением вслух."},{"id":11,"punch":"{имя} прислал(а) седьмой «финал_точно» — пусть переименовывает файлы до посинения.","lift":"Снять: когда один файл останется один и не изменится сутки."},{"id":12,"punch":"три дня тишины, потом «ну как?» от {имя} — собеседник уже поседел в туалете.","lift":"Снять: когда ответит в тот же день одним сообщением."},{"id":13,"punch":"после «утвердили» {имя} притащил(а) правки — пусть стоит под дверью и ждёт, пока его/её впустят обратно.","lift":"Снять: когда правки принесёт до утверждения."},{"id":14,"punch":"созвон без повестки от {имя} — час висит в наушниках, пока пустой стул напротив не обрастёт пылью.","lift":"Снять: когда пришлёт три пункта повестки до звонка."},{"id":15,"punch":"«на минутку» в конце дня от {имя} — люди пропустили автобус.","lift":"Снять: когда «минутка» закончится за минуту."},{"id":16,"punch":"{имя} кинул(а) таблицу вместо «да/нет» — мозг скрипит, как дверь сортира.","lift":"Снять: когда сначала ответит словом, таблицу — потом."},{"id":17,"punch":"статус «на месте», а {имя} в бездне — пусть сидит на стуле у пустого стола, пока не вернётся телом.","lift":"Снять: когда статус совпадёт с реальностью час подряд."},{"id":18,"punch":"«секундочку» от {имя} длится, пока ноги затекли.","lift":"Снять: когда «секунда» станет секундой по секундомеру."},{"id":19,"punch":"{имя} переслал(а) тред без своей строки — получатель орёт в пустоту.","lift":"Снять: когда добавит одно своё предложение сверху."},{"id":20,"punch":"{имя} собрал(а) толпу ради одного вопроса — зал вспотел зря.","lift":"Снять: когда спросит одного в личке."},{"id":21,"punch":"{имя} снова открыл(а) «уже решали» — коллективно хочется орать в вентилятор.","lift":"Снять: когда найдёт старое решение и приложит ссылкой."},{"id":22,"punch":"срок в день сдачи от {имя} — ноги ватные, как после ночной смены.","lift":"Снять: когда срок скажет хотя бы за три дня."},{"id":23,"punch":"«скинь в чат» от {имя} вместо ясности — хаос, как очередь в один сортир.","lift":"Снять: когда напишет, кому и что нужно, по именам."},{"id":24,"punch":"коридорные правки от {имя} — все кивают, никто не помнит.","lift":"Снять: когда продублирует правку одним сообщением."},{"id":25,"punch":"«срочно!» без сути от {имя} — пульс скачет, дело ноль.","lift":"Снять: когда в первом предложении будет глагол и предмет."},{"id":26,"punch":"{имя} поднял(а) тему и пропал(а) — тред гниёт.","lift":"Снять: когда доведёт тему до «закрыто» лично."},{"id":27,"punch":"{имя} отправил(а) «согласуй со всеми» — пусть стоит у каждой двери из списка и лично спрашивает: вы вообще тут зачем?","lift":"Снять: когда укажет двух конкретных согласующих."},{"id":28,"punch":"лишний кружок «на всякий» от {имя} — ещё один круг топтания в коридоре.","lift":"Снять: когда уберёт лишний круг и подпишет сам(а)."}],"verdictsM":[{"id":1,"punch":"{имя} сказал «сейчас» — отдел простоял у туалета до завтра.","lift":"Снять: когда «сейчас» случится в течение десяти минут."},{"id":2,"punch":"{имя} собрал всех, чтобы спросить одного — устроил стадион ради шёпота.","lift":"Снять: когда напишет этому одному в личку."},{"id":3,"punch":"{имя} «на месте» и испарился — стул пустой, уши горят.","lift":"Снять: когда час будет реально на месте без статуса-вранья."},{"id":4,"punch":"{имя} кинул письмо всем — пусть лично раздаёт бумажные извинения у двери.","lift":"Снять: когда разошлёт точечно и без лишней копии."},{"id":5,"punch":"{имя} «кратко» полчаса — ноги затекли, смысл ушёл.","lift":"Снять: когда уложится в минуту с таймером на столе."},{"id":6,"punch":"три дня молчал {имя}, потом «ну как?» — собеседник уже поседел в очереди.","lift":"Снять: когда ответит сам, не спрашивая «ну как»."},{"id":7,"punch":"{имя} утащил срок молча — коллеги стоят, как в лифте без кнопок.","lift":"Снять: когда предупредит о переносе вслух и письмом."},{"id":8,"punch":"открыл тему и свалил — {имя} оставил чат вонять.","lift":"Снять: когда вернётся и закроет тему одной фразой."},{"id":9,"punch":"седьмой «финал_точно» от {имя} — глаз дёргается.","lift":"Снять: когда один файл проживёт сутки без правок."},{"id":10,"punch":"срок в день сдачи от {имя} — ноги ватные, автобус уже ушёл.","lift":"Снять: когда срок скажет заранее и не переиграет."},{"id":11,"punch":"«это срочно» без сути — {имя} поднял пульс залу зря.","lift":"Снять: когда срочность начнёт с «нужно сделать вот что»."},{"id":12,"punch":"{имя} правил в коридоре — голос осип, а в чате по-прежнему пусто.","lift":"Снять: когда пришлёт правку текстом в течение часа."},{"id":13,"punch":"{имя} добавил лишний круг согласования «на всякий» — люди топчутся у двери.","lift":"Снять: когда сам поставит последнюю подпись."},{"id":14,"punch":"итог только голосом от {имя} — через час все спорят, что именно он сказал.","lift":"Снять: когда надиктует итог тремя строками в чат."}],"verdictsF":[{"id":1,"punch":"{имя} сказала «сейчас» — отдел простоял у туалета до завтра.","lift":"Снять: когда «сейчас» случится в течение десяти минут."},{"id":2,"punch":"{имя} собрала всех, чтобы спросить одного — устроила стадион ради шёпота.","lift":"Снять: когда напишет этому одному в личку."},{"id":3,"punch":"{имя} «на месте» и испарилась — стул пустой, уши горят.","lift":"Снять: когда час будет реально на месте без статуса-вранья."},{"id":4,"punch":"{имя} кинула письмо всем — пусть лично раздаёт бумажные извинения у двери.","lift":"Снять: когда разошлёт точечно и без лишней копии."},{"id":5,"punch":"{имя} «кратко» полчаса — ноги затекли, смысл ушёл.","lift":"Снять: когда уложится в минуту с таймером на столе."},{"id":6,"punch":"три дня молчала {имя}, потом «ну как?» — собеседник уже поседел в очереди.","lift":"Снять: когда ответит сама, не спрашивая «ну как»."},{"id":7,"punch":"{имя} утащила срок молча — коллеги стоят, как в лифте без кнопок.","lift":"Снять: когда предупредит о переносе вслух и письмом."},{"id":8,"punch":"открыла тему и свалила — чат воняет без неё.","lift":"Снять: когда вернётся и закроет тему одной фразой."},{"id":9,"punch":"седьмой «финал_точно» от {имя} — глаз дёргается.","lift":"Снять: когда один файл проживёт сутки без правок."},{"id":10,"punch":"срок в день сдачи от {имя} — ноги ватные, автобус уже ушёл.","lift":"Снять: когда срок скажет заранее и не переиграет."},{"id":11,"punch":"«это срочно» без сути — подняла пульс залу зря.","lift":"Снять: когда срочность начнёт с «нужно сделать вот что»."},{"id":12,"punch":"{имя} правила в коридоре — голос осип, а в чате по-прежнему пусто.","lift":"Снять: когда пришлёт правку текстом в течение часа."},{"id":13,"punch":"{имя} добавила лишний круг «на всякий» — люди топчутся у двери.","lift":"Снять: когда сама поставит последнюю подпись."},{"id":14,"punch":"итог только голосом от {имя} — через час все спорят, что именно она сказала.","lift":"Снять: когда надиктует итог тремя строками в чат."}],"powers":[{"id":"whisper","label":"Шёпот","desc":"лёгкая порча: коллеги узнают, но ещё можно отмахнуться","mul":1},{"id":"seal","label":"Печать","desc":"приговор на бумаге: привычку уже не спрятать","mul":1.5},{"id":"anathema","label":"Анафема","desc":"полная фиксация: имя и грех ходят по этажу","mul":2}],"ritual":["Открываем дело на {имя}…","Сверяем пол — чтобы приговор читался грамотно.","Выбираем силу удара…","Достаём грех из общих привычек…","Печать нагревается.","Пишем, что сделал(а)…","Пишем, чем это аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно читать вслух."],"ui":{"header":"Канцелярия печати. Без смайлов — только приговор.","namePh":"Кого скрепляем?","genderM":"Мужской","genderF":"Женский","emptyName":"Сначала имя.","emptyGender":"Выбери пол — так строки сойдутся.","cta":"Скрепить печатью","busy":"Печать тлеет…","toastOk":"Печать легла.","toastShare":"Ушло. Пусть читают.","save":"Сохранить картинку","share":"Поделиться","again":"Ещё ритуал","blocks":["Грех","Приговор","Снять"]}};
+  const ui = DATA.ui;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const rainMarks = ["😈","🔥","👹","🥀","·","†","🔥"];
-  const hasAnime = () => !!(window.__ANIME_OK && typeof anime === "function");
-  const hasThree = () => !!(window.__THREE_OK && typeof THREE !== "undefined");
+  const $ = id => document.getElementById(id);
 
-  const sins = [
-    "Созвон «на пять минут»",
-    "Письмо сразу всем",
-    "«Глянь глазами» на простыню",
-    "Срочно в пятницу вечером",
-    "Правда в скрытом листе",
-    "Согласование по кругу",
-    "«Почти готово» третий месяц",
-    "«Я кратко» до потёмков",
-    "Срок уехал без билета",
-    "Планёрка вместо решения",
-    "Седьмой «финал_точно»",
-    "Три дня молчания, потом «ну как?»",
-    "Правки после «утвердили»",
-    "Созвон без повестки",
-    "«На пять минут» в конце дня",
-    "Таблица вместо ответа",
-    "«На месте» и в бездне",
-    "«Секундочку» на вечность",
-    "Переслал(а) без строки от себя",
-    "Собрал(а) зал ради одного вопроса",
-    "«Кажется, решали» — и снова то же",
-    "Срок узнал(а) в день сдачи",
-    "«Скинь в чат» вместо ясности",
-    "Правки голосом в коридоре",
-    "«Это срочно» без сути",
-    "Открыл(а) тему и сжёг(сожгла) след"
-  ];
+  const sins = DATA.sins;
+  const verdictsN = DATA.verdictsN;
+  const verdictsM = DATA.verdictsM;
+  const verdictsF = DATA.verdictsF;
+  const powers = DATA.powers;
+  const chants = DATA.ritual;
 
-  const powers = [
-    {id:"whisper",label:"Шёпот",desc:"чёрт на ухо отделу",mul:1},
-    {id:"seal",label:"Печать",desc:"уже в аду на контроле",mul:1.45},
-    {id:"anathema",label:"Анафема",desc:"имя в котле планёрок",mul:2}
-  ];
-
-  const chants = [
-    "Имя принято. Чертила открыли папку.",
-    "Пол учтён — грамматика ада точная.",
-    "Силу греем на углях…",
-    "Грех сам выполз из общей привычки…",
-    "Мажем печать серной желчью…",
-    "Кидаем копию всей лестнице…",
-    "Будим мёртвый чат плетью…",
-    "Готово. Можно грешить дальше."
-  ];
-
-  /* Refined UX verdicts — setup→punch. N always; M/F by gender. */
-  const verdictsN = [
-    "{имя} снова «на пять минут» — черти уже завели таймер.",
-    "Письмо всем от {имя}: ада мало, получателей много.",
-    "{имя} сказал(а) «глянь» — прислал(а) простыню. Бесы аплодируют.",
-    "У {имя} срочно в пятницу вечером. У срока нервный тик.",
-    "Правда {имя} живёт в скрытом листе. Как в аду — под полом.",
-    "{имя} гоняет согласование по кругу. Круг уже дымится.",
-    "«Почти готово» от {имя} старше некоторых стажёров.",
-    "{имя} начал(а) «кратко» — обед сгорел, черти сыты.",
-    "Срок уехал. Водитель — {имя}. Направление — в пекло.",
-    "Планёрка от {имя}: народу полный котёл, решений ноль.",
-    "Седьмой «финал» от {имя}. Даже печать закатила глаза.",
-    "Три дня тишины, потом «ну как?» — почерк {имя}, запах серы.",
-    "Утвердили. Потом явился(ась) {имя} с правками. Классика ада.",
-    "Созвон без повестки. Ведущий хаоса — {имя}.",
-    "«На пять минут» вечером от {имя} = бесплатный сверхурочный ад.",
-    "{имя} кинул(а) таблицу вместо ответа. Смело, бесовски.",
-    "{имя} «на месте» и канул(а) в бездну. Статус орёт в пустоту.",
-    "«Секундочку» от {имя} длится как чистилище.",
-    "Переслал(а) без строки от себя — {имя}, даже черти пишут комментарий.",
-    "{имя} собрал(а) всех ради одного. Зал кипит, смысл — ноль.",
-    "«Кажется, решали» — и {имя} снова открыл(а) тот же котёл.",
-    "Срок в день сдачи? {имя}, это не сюрприз, это подлость.",
-    "«Скинь в чат» от {имя} вместо ясности. Хаос оформлен.",
-    "Правки в коридоре от {имя}: документа нет, серы полно."
-  ];
-  const verdictsM = [
-    "{имя} сказал «сейчас» — отдел ждал до завтра. Чёрт бы с таким «сейчас».",
-    "{имя} собрал зал ради одного вопроса. Браво, дирижёр ада.",
-    "{имя} «на месте» и испарился. Статус врёт лучше него.",
-    "{имя} кинул письмо всем — туши сам, герой серной почты.",
-    "{имя} «кратко» полчаса. Хронометраж подал в ад жалобу.",
-    "Три дня молчал, потом «ну как?» — {имя}, смелость уровня беса.",
-    "{имя} утащил срок молча. Сюрприз с рогами.",
-    "{имя} открыл тему и свалил. Тема воет в чате.",
-    "Седьмой «финал_точно» от {имя}. Верим уже на серной кислоте.",
-    "Срок узнал в день сдачи. {имя}, талант или издевательство?",
-    "«Это срочно» от {имя}: сути ноль, паники — легион.",
-    "Правил в коридоре. {имя}, документ в аду, стресс — у нас."
-  ];
-  const verdictsF = [
-    "{имя} сказала «сейчас» — отдел ждал до завтра. Чёрт бы с таким «сейчас».",
-    "{имя} собрала зал ради одного вопроса. Браво, дирижёр ада.",
-    "{имя} «на месте» и испарилась. Статус врёт лучше неё.",
-    "{имя} кинула письмо всем — туши сама, героиня серной почты.",
-    "{имя} «кратко» полчаса. Хронометраж подал в ад жалобу.",
-    "Три дня молчала, потом «ну как?» — {имя}, смелость уровня беса.",
-    "{имя} утащила срок молча. Сюрприз с рогами.",
-    "{имя} открыла тему и свалила. Тема воет в чате.",
-    "Седьмой «финал_точно» от {имя}. Верим уже на серной кислоте.",
-    "Срок узнала в день сдачи. {имя}, талант или издевательство?",
-    "«Это срочно» от {имя}: сути ноль, паники — легион.",
-    "Правила в коридоре. {имя}, документ в аду, стресс — у нас."
-  ];
-
-  const flavorLines = [
-    "Печать держится. Черти уже шепчутся у кофемашины.",
-    "Ритуал закрыт. Можно вернуться к своим письмам — если ад отпустит.",
-    "Сера осела. Имя в протоколе канцелярии.",
-    "Лестничная клетка всё слышала. И записала.",
-    "Кофемашина подтверждает приговор. С рогами."
-  ];
+  $("atmosphere").textContent = ui.header;
+  $("victim").placeholder = ui.namePh;
+  $("emptyHint").textContent = ui.emptyName;
+  $("genderHint").textContent = ui.emptyGender;
+  $("gMLabel").textContent = ui.genderM;
+  $("gFLabel").textContent = ui.genderF;
+  $("cast").textContent = ui.cta;
+  $("busyLabel").textContent = ui.busy;
+  $("lblSin").textContent = ui.blocks[0];
+  $("lblPunch").textContent = ui.blocks[1];
+  $("lblLift").textContent = ui.blocks[2];
+  $("saveBtn").textContent = ui.save;
+  $("shareBtn").textContent = ui.share;
+  $("againBtn").textContent = ui.again;
 
   function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
@@ -568,145 +415,124 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
     const m = gender === "M";
     return String(str)
       .replace(/ушёл\(ушла\)/g, m ? "ушёл" : "ушла")
-      .replace(/сжёг\(сожгла\)/g, m ? "сжёг" : "сожгла")
-      .replace(/явился\(ась\)/g, m ? "явился" : "явилась")
-      .replace(/канул\(а\)/g, m ? "канул" : "канула")
-      .replace(/принёс\(ла\)/g, m ? "принёс" : "принесла")
+      .replace(/исчез\(ла\)/g, m ? "исчез" : "исчезла")
+      .replace(/его\/её/g, m ? "его" : "её")
       .replace(/([А-Яа-яЁё]+)л\(а\)/g, (_, stem) => stem + (m ? "л" : "ла"))
       .replace(/\(а\)/g, m ? "" : "а")
       .replace(/\(ла\)/g, m ? "" : "ла");
   }
 
-  function fillVerdict(tpl, name, gender){
-    return conjugate(tpl.replace(/\{имя\}/g, name).replace(/\{грех\}/g, ""), gender).replace(/\s+/g," ").trim();
+  function fillName(tpl, name){
+    return String(tpl).replace(/\{имя\}/g, name);
+  }
+
+  function fillChant(tpl, name, gender){
+    return conjugate(fillName(tpl, name), gender);
   }
 
   function genderLabel(g){ return g === "M" ? "М" : g === "F" ? "Ж" : ""; }
-  function genderLong(g){ return g === "M" ? "Мужской" : g === "F" ? "Женский" : ""; }
+  function genderLong(g){ return g === "M" ? ui.genderM : g === "F" ? ui.genderF : ""; }
 
   function eligibleVerdicts(gender){
     const pool = verdictsN.slice();
-    if(gender === "M") pool.push(...verdictsM);
-    if(gender === "F") pool.push(...verdictsF);
+    if(gender === "M") pool.push.apply(pool, verdictsM);
+    if(gender === "F") pool.push.apply(pool, verdictsF);
     return pool;
   }
 
-  let powerId="seal", gender=null, lastVerdict=null, casting=false;
-  const $ = id => document.getElementById(id);
-  const victim=$("victim"), cast=$("cast"), emptyHint=$("emptyHint"), genderHint=$("genderHint");
-  const overlay=$("overlay"), chant=$("chant"), progress=$("progress");
-  const result=$("result"), castScreen=$("castScreen"), toast=$("toast");
-  const flash=$("flash"), bolt=$("bolt"), rain=$("rain");
-  const canvas=$("ritualCanvas"), root=$("root"), ctaBar=$("ctaBar");
-  const exportCanvas=$("exportCanvas"), sealStage=$("sealStage");
+  let powerId = "seal", gender = null, lastVerdict = null, casting = false;
+  let ritualRaf = 0;
+
+  const victim = $("victim"), cast = $("cast"), emptyHint = $("emptyHint"), genderHint = $("genderHint");
+  const overlay = $("overlay"), chant = $("chant"), progress = $("progress");
+  const result = $("result"), castScreen = $("castScreen"), toast = $("toast");
+  const canvas = $("ritualCanvas"), ctaBar = $("ctaBar");
+  const exportCanvas = $("exportCanvas"), sealStage = $("sealStage");
+  const genderEl = $("gender"), powerEl = $("power");
 
   function haptic(pattern){
     try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
   }
+
   function showToast(msg){
-    toast.textContent=msg; toast.classList.add("show");
-    clearTimeout(showToast._t); showToast._t=setTimeout(()=>toast.classList.remove("show"), 2400);
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, 2400);
   }
-  function sleep(ms){ return new Promise(r=>setTimeout(r, reduced?0:ms)); }
+
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r, reduced ? 0 : ms); }); }
 
   function safeFileName(name){
-    return String(name||"имя")
-      .replace(/[\\/:*?"<>|]+/g,"")
-      .replace(/\s+/g,"-")
-      .slice(0,40) || "имя";
+    return String(name || "имя").replace(/[\\/:*?"<>|]+/g, "").replace(/\s+/g, "-").slice(0, 40) || "имя";
   }
 
-  function anim(opts){
-    if(reduced){
-      if(opts && opts.complete) opts.complete();
+  function waapi(el, keyframes, opts){
+    if(reduced || !el || !el.animate){
+      if(opts && opts.onfinish) opts.onfinish();
       return null;
     }
-    if(hasAnime()) return anime(opts);
-    /* CSS fallback: snap end state if targets known */
-    if(opts && opts.complete) setTimeout(opts.complete, opts.duration||300);
-    return null;
+    try{
+      const a = el.animate(keyframes, Object.assign({ fill: "forwards" }, opts || {}));
+      if(opts && opts.onfinish) a.onfinish = opts.onfinish;
+      return a;
+    }catch(e){
+      if(opts && opts.onfinish) opts.onfinish();
+      return null;
+    }
   }
 
-  /* —— Gender seals —— */
-  const genderEl=$("gender");
-  genderEl.querySelectorAll(".gen").forEach(b=>{
-    b.addEventListener("click",()=>{
+  genderEl.querySelectorAll(".gen").forEach(function(b){
+    b.addEventListener("click", function(){
       if(casting) return;
-      gender=b.dataset.g;
-      genderEl.querySelectorAll(".gen").forEach(x=>{
-        const on=x.dataset.g===gender;
+      gender = b.dataset.g;
+      genderEl.querySelectorAll(".gen").forEach(function(x){
+        var on = x.dataset.g === gender;
         x.classList.toggle("on", on);
-        x.setAttribute("aria-checked", on?"true":"false");
+        x.setAttribute("aria-checked", on ? "true" : "false");
       });
       genderHint.classList.remove("show");
       haptic(10);
-      anim({
-        targets:b,
-        scale:[1,1.06,1],
-        duration:420,
-        easing:"easeOutElastic(1, .6)"
-      });
+      waapi(b, [{ transform: "scale(1)" }, { transform: "scale(1.04)" }, { transform: "scale(1)" }], { duration: 220, easing: "ease-out" });
     });
   });
 
-  /* —— Power —— */
-  const powerEl=$("power");
-  powers.forEach(p=>{
-    const b=document.createElement("button");
-    b.type="button"; b.className="pow"+(p.id===powerId?" on":""); b.dataset.id=p.id;
-    b.setAttribute("role","radio"); b.setAttribute("aria-checked", p.id===powerId?"true":"false");
-    b.innerHTML=
-      `<span class="seal" aria-hidden="true">`+
-      `<svg viewBox="0 0 36 36" fill="none"><circle class="ring-s" cx="18" cy="18" r="14" stroke="#C45C26" stroke-width="1" opacity=".45"/>`+
-      `<circle class="dot" cx="18" cy="18" r="3.2" fill="rgba(242,235,224,.28)"/></svg></span>`+
-      `<span class="meta"><b>${p.label}</b><small>${p.desc}</small></span>`;
-    b.addEventListener("click",()=>{
+  powers.forEach(function(p){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "pow" + (p.id === powerId ? " on" : "");
+    b.dataset.id = p.id;
+    b.setAttribute("role", "radio");
+    b.setAttribute("aria-checked", p.id === powerId ? "true" : "false");
+    b.innerHTML =
+      '<span class="seal" aria-hidden="true">' +
+      '<svg viewBox="0 0 36 36" fill="none"><circle class="ring-s" cx="18" cy="18" r="14" stroke="#C45C26" stroke-width="1" opacity=".45"/>' +
+      '<circle class="dot" cx="18" cy="18" r="3.2" fill="rgba(242,235,224,.28)"/></svg></span>' +
+      '<span class="meta"><b></b><small></small></span>';
+    b.querySelector("b").textContent = p.label;
+    b.querySelector("small").textContent = p.desc;
+    b.addEventListener("click", function(){
       if(casting) return;
-      powerId=p.id;
-      powerEl.querySelectorAll(".pow").forEach(x=>{
-        const on=x.dataset.id===p.id;
+      powerId = p.id;
+      powerEl.querySelectorAll(".pow").forEach(function(x){
+        var on = x.dataset.id === p.id;
         x.classList.toggle("on", on);
-        x.setAttribute("aria-checked", on?"true":"false");
+        x.setAttribute("aria-checked", on ? "true" : "false");
       });
       haptic(10);
-      anim({
-        targets:b,
-        scale:[1,1.04,1],
-        duration:480,
-        easing:"easeOutElastic(1, .65)"
-      });
+      waapi(b, [{ transform: "scale(1)" }, { transform: "scale(1.03)" }, { transform: "scale(1)" }], { duration: 200, easing: "ease-out" });
     });
     powerEl.appendChild(b);
   });
 
-  /* CTA pulse via anime (or CSS ember fallback) */
-  function startCtaPulse(){
-    if(reduced || !hasAnime()) return;
-    anime({
-      targets:cast,
-      boxShadow:[
-        "0 4px 28px rgba(196,92,38,.28)",
-        "0 4px 36px rgba(196,92,38,.48)",
-        "0 4px 28px rgba(196,92,38,.28)"
-      ],
-      duration:2600,
-      easing:"easeInOutSine",
-      loop:true
-    });
-  }
-  setTimeout(startCtaPulse, 400);
-
   function failEmpty(kind){
-    const isGender = kind==="gender";
-    const hint = isGender ? genderHint : emptyHint;
-    const msg = isGender ? "Выбери пол — так печать грамотнее ляжет." : "Сначала имя.";
+    var isGender = kind === "gender";
+    var hint = isGender ? genderHint : emptyHint;
+    var msg = isGender ? ui.emptyGender : ui.emptyName;
     hint.classList.add("show");
     showToast(msg);
-    root.classList.remove("shake");
-    void root.offsetWidth;
-    root.classList.add("shake");
     if(isGender){
-      genderEl.querySelectorAll(".gen").forEach(g=>{
+      genderEl.querySelectorAll(".gen").forEach(function(g){
         g.classList.remove("pulse-err");
         void g.offsetWidth;
         g.classList.add("pulse-err");
@@ -717,99 +543,122 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
       victim.classList.add("pulse-inner");
       victim.focus();
     }
-    haptic([18,40,18]);
-    setTimeout(()=>{
-      root.classList.remove("shake");
+    haptic([18, 40, 18]);
+    setTimeout(function(){
       victim.classList.remove("pulse-inner");
-      genderEl.querySelectorAll(".gen").forEach(g=>g.classList.remove("pulse-err"));
-    },700);
+      genderEl.querySelectorAll(".gen").forEach(function(g){ g.classList.remove("pulse-err"); });
+    }, 700);
   }
 
-  victim.addEventListener("input",()=>{
+  victim.addEventListener("input", function(){
     if(victim.value.trim()) emptyHint.classList.remove("show");
   });
 
-  function spawnRain(){
-    if(reduced) return;
-    for(let i=0;i<14;i++){
-      const d=document.createElement("span");
-      d.className="drop";
-      d.textContent=rainMarks[i%rainMarks.length];
-      d.style.left=(Math.random()*100)+"%";
-      d.style.fontSize=(11+Math.random()*8)+"px";
-      d.style.opacity=String(0.35+Math.random()*0.4);
-      d.style.animationDuration=(1.4+Math.random()*1.6)+"s";
-      d.style.animationDelay=(Math.random()*0.4)+"s";
-      rain.appendChild(d);
-      setTimeout(()=>d.remove(), 3200);
-    }
+  function stopRitualLoop(){
+    if(ritualRaf){ cancelAnimationFrame(ritualRaf); ritualRaf = 0; }
+    try{
+      var ctx = canvas.getContext("2d");
+      if(ctx) ctx.clearRect(0, 0, canvas.width || 0, canvas.height || 0);
+    }catch(e){}
   }
 
-  function particlesBurst(duration){
+  function hardCloseOverlay(){
+    stopRitualLoop();
+    overlay.classList.remove("on");
+    overlay.setAttribute("aria-hidden", "true");
+    overlay.style.opacity = "0";
+    overlay.style.display = "none";
+  }
+
+  function embersBurst(duration){
     if(reduced) return;
-    const ctx=canvas.getContext("2d");
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    const w=canvas.width=Math.floor(innerWidth*dpr);
-    const h=canvas.height=Math.floor(innerHeight*dpr);
-    canvas.style.width=innerWidth+"px"; canvas.style.height=innerHeight+"px";
-    const parts=[];
-    for(let i=0;i<52;i++){
+    stopRitualLoop();
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = canvas.width = Math.floor(innerWidth * dpr);
+    var h = canvas.height = Math.floor(innerHeight * dpr);
+    canvas.style.width = innerWidth + "px";
+    canvas.style.height = innerHeight + "px";
+    var parts = [];
+    for(var i = 0; i < 56; i++){
       parts.push({
-        x:w/2, y:h*0.42,
-        vx:(Math.random()-0.5)*3.2*dpr, vy:(Math.random()-0.8)*4*dpr,
-        life:1, r:(1+Math.random()*2.2)*dpr,
-        c: Math.random()>.4 ? `rgba(196,92,38,${0.5+Math.random()*0.4})` : `rgba(242,235,224,${0.25+Math.random()*0.3})`
+        x: w / 2, y: h * 0.42,
+        vx: (Math.random() - 0.5) * 3.4 * dpr,
+        vy: (Math.random() - 0.85) * 4.2 * dpr,
+        life: 1,
+        r: (1 + Math.random() * 2.4) * dpr,
+        c: Math.random() > 0.35
+          ? "rgba(196,92,38," + (0.45 + Math.random() * 0.45) + ")"
+          : "rgba(242,235,224," + (0.2 + Math.random() * 0.3) + ")"
       });
     }
-    const t0=performance.now();
+    var ash = [];
+    for(var j = 0; j < 28; j++){
+      ash.push({
+        x: w * (0.2 + Math.random() * 0.6),
+        y: h * (0.55 + Math.random() * 0.35),
+        vx: (Math.random() - 0.5) * 0.6 * dpr,
+        vy: -0.4 * dpr - Math.random() * 0.8 * dpr,
+        life: 0.5 + Math.random() * 0.5,
+        r: (0.6 + Math.random() * 1.4) * dpr
+      });
+    }
+    var t0 = performance.now();
     function frame(t){
-      const elapsed=t-t0;
-      ctx.clearRect(0,0,w,h);
-      parts.forEach(p=>{
-        p.x+=p.vx; p.y+=p.vy; p.vy+=0.04*dpr; p.life-=0.01;
-        ctx.globalAlpha=Math.max(0,p.life);
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.c; ctx.fill();
-      });
-      if(elapsed<duration && parts.some(p=>p.life>0)) requestAnimationFrame(frame);
-      else ctx.clearRect(0,0,w,h);
+      var elapsed = t - t0;
+      ctx.clearRect(0, 0, w, h);
+      var alive = false;
+      for(var i = 0; i < parts.length; i++){
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.045 * dpr; p.life -= 0.012;
+        if(p.life <= 0) continue;
+        alive = true;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c; ctx.fill();
+      }
+      for(var k = 0; k < ash.length; k++){
+        var a = ash[k];
+        a.x += a.vx; a.y += a.vy; a.life -= 0.008;
+        if(a.life <= 0) continue;
+        alive = true;
+        ctx.globalAlpha = Math.max(0, a.life * 0.55);
+        ctx.fillStyle = "rgba(180,160,140,0.7)";
+        ctx.fillRect(a.x, a.y, a.r, a.r);
+      }
+      ctx.globalAlpha = 1;
+      if(elapsed < duration && alive) ritualRaf = requestAnimationFrame(frame);
+      else { ritualRaf = 0; ctx.clearRect(0, 0, w, h); }
     }
-    requestAnimationFrame(frame);
-  }
-
-  function ritualFlash(){
-    if(reduced) return;
-    spawnRain();
-    flash.classList.add("on"); setTimeout(()=>flash.classList.remove("on"),450);
-    bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),300);
-    root.classList.add("shake"); setTimeout(()=>root.classList.remove("shake"),560);
+    ritualRaf = requestAnimationFrame(frame);
   }
 
   function wrapText(ctx, text, x, y, maxW, lineH){
-    const words=String(text).split(/\s+/);
-    let line="", cy=y;
-    for(let i=0;i<words.length;i++){
-      const test=line?line+" "+words[i]:words[i];
-      if(ctx.measureText(test).width>maxW && line){
-        ctx.fillText(line,x,cy); cy+=lineH; line=words[i];
-      } else line=test;
+    var words = String(text).split(/\s+/);
+    var line = "", cy = y;
+    for(var i = 0; i < words.length; i++){
+      var test = line ? line + " " + words[i] : words[i];
+      if(ctx.measureText(test).width > maxW && line){
+        ctx.fillText(line, x, cy); cy += lineH; line = words[i];
+      } else line = test;
     }
-    if(line){ ctx.fillText(line,x,cy); cy+=lineH; }
+    if(line){ ctx.fillText(line, x, cy); cy += lineH; }
     return cy;
   }
 
   function drawSigil(ctx, cx, cy, r, alpha){
     ctx.save();
-    ctx.globalAlpha=alpha;
-    ctx.strokeStyle="#C45C26";
-    ctx.fillStyle="#C45C26";
-    ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx,cy,r*0.66,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx,cy,r*0.12,0,Math.PI*2); ctx.fill();
-    [[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>{
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = "#C45C26";
+    ctx.fillStyle = "#C45C26";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.66, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.12, 0, Math.PI * 2); ctx.fill();
+    [[0, -1], [0, 1], [-1, 0], [1, 0]].forEach(function(d){
       ctx.beginPath();
-      ctx.moveTo(cx+dx*r*0.85, cy+dy*r*0.85);
-      ctx.lineTo(cx+dx*r*0.55, cy+dy*r*0.55);
+      ctx.moveTo(cx + d[0] * r * 0.85, cy + d[1] * r * 0.85);
+      ctx.lineTo(cx + d[0] * r * 0.55, cy + d[1] * r * 0.55);
       ctx.stroke();
     });
     ctx.restore();
@@ -817,98 +666,91 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
 
   function buildExportPng(){
     if(!lastVerdict) return null;
-    const W=720, H=1280;
-    const c=exportCanvas;
-    c.width=W; c.height=H;
-    const ctx=c.getContext("2d");
+    var W = 720, H = 1280;
+    var c = exportCanvas;
+    c.width = W; c.height = H;
+    var ctx = c.getContext("2d");
 
-    ctx.fillStyle="#0E0C0B";
-    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = "#0E0C0B";
+    ctx.fillRect(0, 0, W, H);
 
-    const g=ctx.createRadialGradient(W/2, H*0.2, 40, W/2, H*0.45, H*0.7);
-    g.addColorStop(0,"rgba(196,92,38,0.11)");
-    g.addColorStop(0.5,"rgba(14,12,11,0)");
-    g.addColorStop(1,"rgba(0,0,0,0.58)");
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,W,H);
+    var g = ctx.createRadialGradient(W / 2, H * 0.2, 40, W / 2, H * 0.45, H * 0.7);
+    g.addColorStop(0, "rgba(196,92,38,0.11)");
+    g.addColorStop(0.5, "rgba(14,12,11,0)");
+    g.addColorStop(1, "rgba(0,0,0,0.58)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
 
-    const img=ctx.createImageData(W,H);
-    for(let i=0;i<img.data.length;i+=4){
-      const n=Math.random()*255;
-      img.data[i]=n; img.data[i+1]=n; img.data[i+2]=n; img.data[i+3]=15;
+    var img = ctx.createImageData(W, H);
+    for(var i = 0; i < img.data.length; i += 4){
+      var n = Math.random() * 255;
+      img.data[i] = n; img.data[i + 1] = n; img.data[i + 2] = n; img.data[i + 3] = 14;
     }
-    ctx.putImageData(img,0,0);
+    ctx.putImageData(img, 0, 0);
 
-    const vig=ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H*0.72);
-    vig.addColorStop(0,"rgba(0,0,0,0)");
-    vig.addColorStop(1,"rgba(0,0,0,0.58)");
-    ctx.fillStyle=vig;
-    ctx.fillRect(0,0,W,H);
+    var vig = ctx.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, H * 0.72);
+    vig.addColorStop(0, "rgba(0,0,0,0)");
+    vig.addColorStop(1, "rgba(0,0,0,0.58)");
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
 
-    ctx.strokeStyle="rgba(196,92,38,0.38)";
-    ctx.lineWidth=2;
-    ctx.strokeRect(36,36,W-72,H-72);
-    ctx.strokeStyle="rgba(242,235,224,0.1)";
-    ctx.lineWidth=1;
-    ctx.strokeRect(48,48,W-96,H-96);
+    ctx.strokeStyle = "rgba(196,92,38,0.38)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(36, 36, W - 72, H - 72);
+    ctx.strokeStyle = "rgba(242,235,224,0.1)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(48, 48, W - 96, H - 96);
 
-    drawSigil(ctx, W/2, 200, 78, 0.55);
-    drawSigil(ctx, W-110, H-160, 90, 0.08);
+    drawSigil(ctx, W / 2, 168, 70, 0.5);
+    drawSigil(ctx, W - 110, H - 150, 88, 0.08);
 
-    ctx.textAlign="center";
-    ctx.fillStyle="#C45C26";
-    ctx.font="700 14px system-ui,sans-serif";
-    ctx.fillText("ПРОКЛИНАТОР", W/2, 320);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#C45C26";
+    ctx.font = "700 13px system-ui,sans-serif";
+    ctx.fillText("ПРОКЛИНАТОР", W / 2, 280);
 
-    ctx.fillStyle="#F2EBE0";
-    ctx.font="600 42px system-ui,sans-serif";
-    let y=390;
-    y=wrapText(ctx, lastVerdict.name, W/2, y, W-120, 50);
+    ctx.fillStyle = "#F2EBE0";
+    ctx.font = "600 40px system-ui,sans-serif";
+    var y = 340;
+    y = wrapText(ctx, lastVerdict.name, W / 2, y, W - 120, 48);
 
-    ctx.fillStyle="rgba(242,235,224,0.55)";
-    ctx.font="600 15px system-ui,sans-serif";
-    y+=10;
-    ctx.fillText("Пол: "+lastVerdict.genderLabel, W/2, y);
-    y+=28;
+    ctx.fillStyle = "rgba(242,235,224,0.55)";
+    ctx.font = "600 15px system-ui,sans-serif";
+    y += 8;
+    ctx.fillText("Пол: " + lastVerdict.genderLabel + "  ·  " + lastVerdict.sevLabel, W / 2, y);
+    y += 36;
 
-    ctx.fillStyle="#C45C26";
-    ctx.font="600 15px system-ui,sans-serif";
-    y=wrapText(ctx, lastVerdict.sin, W/2, y, W-140, 22);
+    function block(label, text, color){
+      ctx.fillStyle = "#C45C26";
+      ctx.font = "700 12px system-ui,sans-serif";
+      ctx.fillText(label.toUpperCase(), W / 2, y);
+      y += 28;
+      ctx.fillStyle = color;
+      ctx.font = "400 20px system-ui,sans-serif";
+      y = wrapText(ctx, text, W / 2, y, W - 130, 30);
+      y += 28;
+    }
 
-    ctx.fillStyle="rgba(242,235,224,0.14)";
-    ctx.fillRect(W/2-40, y+10, 80, 1);
+    block(ui.blocks[0], lastVerdict.sin, "rgba(242,235,224,0.95)");
+    block(ui.blocks[1], lastVerdict.punch, "rgba(242,235,224,0.92)");
+    block(ui.blocks[2], lastVerdict.lift, "rgba(242,235,224,0.62)");
 
-    ctx.fillStyle="rgba(242,235,224,0.92)";
-    ctx.font="400 22px system-ui,sans-serif";
-    y+=48;
-    y=wrapText(ctx, lastVerdict.title, W/2, y, W-130, 32);
-
-    ctx.fillStyle="rgba(242,235,224,0.58)";
-    ctx.font="400 18px system-ui,sans-serif";
-    y+=24;
-    y=wrapText(ctx, lastVerdict.text, W/2, y, W-130, 28);
-
-    ctx.fillStyle="#C45C26";
-    ctx.font="700 13px system-ui,sans-serif";
-    y+=48;
-    ctx.fillText("СИЛА: "+lastVerdict.sevLabel.toUpperCase(), W/2, y);
-
-    ctx.fillStyle="rgba(242,235,224,0.32)";
-    ctx.font="400 12px system-ui,sans-serif";
-    wrapText(ctx, "Это шутка. Не кадровая процедура и не юридический документ.", W/2, H-78, W-120, 18);
+    ctx.fillStyle = "rgba(242,235,224,0.32)";
+    ctx.font = "400 12px system-ui,sans-serif";
+    wrapText(ctx, "Это шутка. Не кадровая процедура и не юридический документ.", W / 2, H - 72, W - 120, 18);
 
     return c;
   }
 
   function downloadPng(canvasEl, filename){
-    return new Promise((resolve,reject)=>{
-      canvasEl.toBlob(blob=>{
+    return new Promise(function(resolve, reject){
+      canvasEl.toBlob(function(blob){
         if(!blob){ reject(new Error("blob")); return; }
-        const url=URL.createObjectURL(blob);
-        const a=document.createElement("a");
-        a.href=url; a.download=filename;
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = filename;
         document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(()=>URL.revokeObjectURL(url), 1500);
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
         resolve(blob);
       }, "image/png");
     });
@@ -917,10 +759,9 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
   async function saveCard(){
     if(!lastVerdict) return;
     try{
-      const c=buildExportPng();
-      const fname="proklinator-"+safeFileName(lastVerdict.name)+".png";
-      await downloadPng(c, fname);
-      showToast("Печать легла.");
+      var c = buildExportPng();
+      await downloadPng(c, "proklinator-" + safeFileName(lastVerdict.name) + ".png");
+      showToast(ui.toastOk);
     }catch(e){
       showToast("Не удалось сохранить картинку.");
     }
@@ -929,363 +770,184 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
   async function shareCard(){
     if(!lastVerdict) return;
     try{
-      const c=buildExportPng();
-      const fname="proklinator-"+safeFileName(lastVerdict.name)+".png";
-      const blob=await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("blob")),"image/png"));
-      const file=new File([blob], fname, {type:"image/png"});
-      if(navigator.canShare && navigator.canShare({files:[file]})){
-        await navigator.share({
-          files:[file],
-          title:"ПРОКЛИНАТОР",
-          text: lastVerdict.title
-        });
-        showToast("Ушло к чертям — пусть читают.");
+      var c = buildExportPng();
+      var fname = "proklinator-" + safeFileName(lastVerdict.name) + ".png";
+      var blob = await new Promise(function(res, rej){ c.toBlob(function(b){ b ? res(b) : rej(new Error("blob")); }, "image/png"); });
+      var file = new File([blob], fname, { type: "image/png" });
+      var shareText = lastVerdict.sin + "\n\n" + lastVerdict.punch + "\n\n" + lastVerdict.lift;
+      if(navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({ files: [file], title: "ПРОКЛИНАТОР", text: shareText });
+        showToast(ui.toastShare);
         return;
       }
       if(navigator.share){
-        await navigator.share({
-          title:"ПРОКЛИНАТОР",
-          text: `${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`
-        });
-        showToast("Ушло к чертям — пусть читают.");
+        await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText + "\n— ПРОКЛИНАТОР" });
+        showToast(ui.toastShare);
         return;
       }
       await downloadPng(c, fname);
-      showToast("Печать легла.");
+      showToast(ui.toastOk);
     }catch(e){
-      if(e && e.name==="AbortError") return;
+      if(e && e.name === "AbortError") return;
       try{
-        const text=`${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`;
-        await navigator.clipboard.writeText(text);
-        showToast("Ушло к чертям — пусть читают.");
+        await navigator.clipboard.writeText(lastVerdict.sin + "\n\n" + lastVerdict.punch + "\n\n" + lastVerdict.lift + "\n— ПРОКЛИНАТОР");
+        showToast(ui.toastShare);
       }catch(e2){
         showToast("Не вышло поделиться. Сохрани картинку.");
       }
     }
   }
 
-  /* —— Three.js seal scenes —— */
-  const threeState = { hero:null, ritual:null, raf:0 };
-
-  function makeSealGroup(THREE, scale){
-    const g = new THREE.Group();
-    const amber = new THREE.Color(0xC45C26);
-    const bone = new THREE.Color(0xF2EBE0);
-    const mat = new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.78, wireframe:true});
-    const matDim = new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.35, wireframe:true});
-    const matBone = new THREE.MeshBasicMaterial({color:bone, transparent:true, opacity:0.22, wireframe:true});
-
-    const torus = new THREE.Mesh(new THREE.TorusGeometry(1.15*scale, 0.035*scale, 8, 64), mat);
-    const torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.78*scale, 0.022*scale, 6, 48), matDim);
-    torus2.rotation.x = Math.PI/2.4;
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.48*scale, 0.018*scale, 6, 40), matBone);
-    ring.rotation.y = Math.PI/3;
-
-    const lines = new THREE.Group();
-    const lineMat = new THREE.LineBasicMaterial({color:amber, transparent:true, opacity:0.55});
-    [[0,1,0],[0,-1,0],[1,0,0],[-1,0,0]].forEach(([x,y,z])=>{
-      const pts = [
-        new THREE.Vector3(x*1.35*scale, y*1.35*scale, z*1.35*scale),
-        new THREE.Vector3(x*0.55*scale, y*0.55*scale, z*0.55*scale)
-      ];
-      const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      lines.add(new THREE.Line(geo, lineMat));
-    });
-
-    const core = new THREE.Mesh(
-      new THREE.SphereGeometry(0.08*scale, 10, 10),
-      new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.9})
-    );
-
-    g.add(torus, torus2, ring, lines, core);
-    g.userData = {torus, torus2, ring};
-    return g;
+  function forceResultVisible(){
+    result.style.display = "block";
+    result.style.opacity = "1";
+    result.style.transform = "none";
+    result.style.visibility = "visible";
+    result.removeAttribute("hidden");
   }
-
-  function makeEmbers(THREE, count, spread){
-    const positions = new Float32Array(count*3);
-    const velocities = [];
-    for(let i=0;i<count;i++){
-      positions[i*3]=(Math.random()-0.5)*spread;
-      positions[i*3+1]=(Math.random()-0.5)*spread;
-      positions[i*3+2]=(Math.random()-0.5)*spread*0.4;
-      velocities.push({
-        vx:(Math.random()-0.5)*0.004,
-        vy:0.003+Math.random()*0.006,
-        vz:(Math.random()-0.5)*0.003,
-        life:Math.random()
-      });
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    const mat = new THREE.PointsMaterial({
-      color:0xC45C26, size:0.045, transparent:true, opacity:0.7,
-      depthWrite:false, sizeAttenuation:true
-    });
-    const pts = new THREE.Points(geo, mat);
-    pts.userData = {velocities, spread};
-    return pts;
-  }
-
-  function initThreeScene(canvasEl, opts){
-    if(reduced || !hasThree() || !canvasEl) return null;
-    const THREE = window.THREE;
-    const renderer = new THREE.WebGLRenderer({canvas:canvasEl, alpha:true, antialias:true, powerPreference:"low-power"});
-    renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
-    camera.position.z = opts.camZ || 4.2;
-    const seal = makeSealGroup(THREE, opts.scale || 1);
-    scene.add(seal);
-    let embers = null;
-    if(opts.embers){
-      embers = makeEmbers(THREE, opts.emberCount||40, opts.emberSpread||2.4);
-      scene.add(embers);
-    }
-    function resize(){
-      const w = canvasEl.clientWidth || opts.w || 160;
-      const h = canvasEl.clientHeight || opts.h || 160;
-      renderer.setSize(w, h, false);
-      camera.aspect = w/Math.max(h,1);
-      camera.updateProjectionMatrix();
-    }
-    resize();
-    return {renderer, scene, camera, seal, embers, resize, active:true};
-  }
-
-  function tickThree(t){
-    threeState.raf = requestAnimationFrame(tickThree);
-    if(reduced) return;
-    const scenes = [threeState.hero, threeState.ritual];
-    scenes.forEach(s=>{
-      if(!s || !s.active) return;
-      const seal = s.seal;
-      seal.rotation.y += 0.0032;
-      seal.rotation.x = Math.sin(t*0.00035)*0.12;
-      if(seal.userData.torus2) seal.userData.torus2.rotation.z += 0.004;
-      if(seal.userData.ring) seal.userData.ring.rotation.x += 0.0025;
-      if(s.embers){
-        const pos = s.embers.geometry.attributes.position;
-        const vels = s.embers.userData.velocities;
-        const spread = s.embers.userData.spread;
-        for(let i=0;i<vels.length;i++){
-          let x=pos.getX(i)+vels[i].vx;
-          let y=pos.getY(i)+vels[i].vy;
-          let z=pos.getZ(i)+vels[i].vz;
-          vels[i].life += 0.004;
-          if(y > spread*0.55 || vels[i].life>1){
-            x=(Math.random()-0.5)*spread;
-            y=-spread*0.45;
-            z=(Math.random()-0.5)*spread*0.35;
-            vels[i].life=0;
-          }
-          pos.setXYZ(i,x,y,z);
-        }
-        pos.needsUpdate=true;
-      }
-      s.renderer.render(s.scene, s.camera);
-    });
-  }
-
-  function bootThree(){
-    if(reduced) return;
-    /* wait a tick for CDN onload flags */
-    const tryInit = (attempt)=>{
-      if(hasThree()){
-        threeState.hero = initThreeScene($("threeHero"), {scale:0.85, camZ:3.6, w:160, h:160, embers:false});
-        threeState.ritual = initThreeScene($("threeRitual"), {scale:1.35, camZ:4.8, embers:true, emberCount:48, emberSpread:3.2});
-        if(threeState.ritual) threeState.ritual.active=false;
-        if(threeState.hero || threeState.ritual){
-          cancelAnimationFrame(threeState.raf);
-          threeState.raf = requestAnimationFrame(tickThree);
-          /* hide CSS seal when Three ritual is available */
-          if(threeState.ritual) sealStage.style.opacity = "0.35";
-        }
-        return;
-      }
-      if(attempt < 12) setTimeout(()=>tryInit(attempt+1), 120);
-      /* else: CSS fallback already visible */
-    };
-    tryInit(0);
-    addEventListener("resize", ()=>{
-      if(threeState.hero) threeState.hero.resize();
-      if(threeState.ritual) threeState.ritual.resize();
-    }, {passive:true});
-  }
-  bootThree();
 
   async function runRitual(){
     if(casting) return;
-    const name=victim.value.trim();
+    var name = victim.value.trim();
     if(!name){ failEmpty("name"); return; }
     if(!gender){ failEmpty("gender"); return; }
 
-    casting=true;
-    cast.disabled=true;
+    casting = true;
+    cast.disabled = true;
     cast.classList.add("busy");
-    cast.textContent="Печать тлеет…";
+    cast.textContent = ui.busy;
     emptyHint.classList.remove("show");
     genderHint.classList.remove("show");
 
-    const pow=powers.find(p=>p.id===powerId)||powers[1];
-    const sinRaw=pick(sins);
-    const sin=conjugate(sinRaw, gender);
+    var pow = powers.find(function(p){ return p.id === powerId; }) || powers[1];
+    var sinObj = pick(sins);
+    var sinTitle = sinObj.title;
+    var verd = pick(eligibleVerdicts(gender));
+    var punch = conjugate(fillName(verd.punch, name), gender);
+    var lift = conjugate(fillName(verd.lift, name), gender);
 
-    overlay.style.display="";
-    overlay.style.opacity="0";
-    overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
-    if(threeState.ritual){ threeState.ritual.active=true; threeState.ritual.resize(); }
-    anim({
-      targets:overlay,
-      opacity:[0,1],
-      duration:420,
-      easing:"easeOutQuad"
-    });
-    anim({
-      targets:sealStage,
-      scale:[0.72,1.08,1],
-      opacity:[0.5,1],
-      duration:900,
-      easing:"easeOutElastic(1, .7)"
-    });
-    progress.style.width="0%";
-    haptic([30,40,30]);
-    particlesBurst(reduced?0:2200);
+    overlay.style.display = "";
+    overlay.style.opacity = "0";
+    overlay.classList.add("on");
+    overlay.setAttribute("aria-hidden", "false");
 
-    for(let i=0;i<chants.length;i++){
-      chant.textContent=chants[i];
-      progress.style.width=Math.round(((i+1)/chants.length)*100)+"%";
-      if(!reduced && i%3===0){ bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),280); haptic(20); }
-      if(!reduced && i===2) spawnRain();
-      await sleep(380);
+    if(reduced){
+      progress.style.width = "100%";
+      chant.textContent = fillChant(chants[chants.length - 1], name, gender);
+      await sleep(0);
+    } else {
+      waapi(overlay, [{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease-out" });
+      overlay.style.opacity = "1";
+      waapi(sealStage, [
+        { transform: "scale(0.78)", opacity: 0.55 },
+        { transform: "scale(1.06)", opacity: 1 },
+        { transform: "scale(1)", opacity: 1 }
+      ], { duration: 520, easing: "cubic-bezier(.32,.72,0,1)" });
+      progress.style.width = "0%";
+      haptic([30, 40, 30]);
+      embersBurst(2400);
+
+      var step = Math.min(240, Math.floor(2400 / chants.length));
+      for(var i = 0; i < chants.length; i++){
+        chant.textContent = fillChant(chants[i], name, gender);
+        progress.style.width = Math.round(((i + 1) / chants.length) * 100) + "%";
+        if(i === 8) haptic([20, 30, 40]);
+        await sleep(step);
+      }
+      await sleep(180);
     }
-    ritualFlash();
-    haptic([20,30,20,30,60]);
-    await sleep(280);
 
-    await new Promise(resolve=>{
-      anim({
-        targets:overlay,
-        opacity:[1,0],
-        duration:380,
-        easing:"easeInQuad",
-        complete:resolve
-      });
-      if(reduced || !hasAnime()) resolve();
-    });
-    overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
-    overlay.style.opacity="";
-    if(threeState.ritual) threeState.ritual.active=false;
-
-    const tpl = pick(eligibleVerdicts(gender));
-    const title = fillVerdict(tpl, name, gender);
-    const text = pick(flavorLines);
-    $("vEyebrow").textContent = Math.random() < 0.55 ? "Вердикт 😈" : (Math.random() < 0.5 ? "Вердикт 🔥" : "Вердикт");
-    $("vSin").textContent=sin;
-    $("vGender").textContent="Пол: "+genderLabel(gender);
-    $("vTitle").textContent=title;
-    $("vText").textContent=text;
-    $("vSev").textContent=pow.label;
-
-    lastVerdict={
-      name, sin, title, text,
-      gender, genderLabel: genderLabel(gender)+" · "+genderLong(gender),
-      sevLabel:pow.label, sevId:pow.id, mul:pow.mul
+    lastVerdict = {
+      name: name,
+      sin: sinTitle,
+      punch: punch,
+      lift: lift,
+      gender: gender,
+      genderLabel: genderLabel(gender) + " · " + genderLong(gender),
+      sevLabel: pow.label,
+      sevId: pow.id
     };
 
-    /* Hard-close ritual chrome first — never leave a black full-screen layer */
-    overlay.classList.remove("on");
-    overlay.setAttribute("aria-hidden","true");
-    overlay.style.opacity="0";
-    overlay.style.display="none";
-    if(threeState.ritual) threeState.ritual.active=false;
+    $("vGender").textContent = "Пол: " + genderLabel(gender);
+    $("vPower").textContent = pow.label;
+    $("vSin").textContent = sinTitle;
+    $("vPunch").textContent = punch;
+    $("vLift").textContent = lift;
+
+    hardCloseOverlay();
 
     castScreen.classList.add("hidden");
     result.classList.remove("hidden");
     result.classList.add("show");
     document.body.classList.add("is-result");
-    ctaBar.style.display="none";
+    ctaBar.style.display = "none";
+    forceResultVisible();
 
-    /* Force readable card immediately (anime is optional polish only) */
-    const reveal = ()=>{
-      result.style.display="block";
-      result.style.opacity="1";
-      result.style.transform="none";
-      result.style.visibility="visible";
-      result.removeAttribute("hidden");
-    };
-    reveal();
-    if(!reduced && hasAnime()){
-      try{
-        result.style.opacity="0.01";
-        anime({
-          targets:result,
-          opacity:[0.01,1],
-          translateY:[12,0],
-          duration:420,
-          easing:"easeOutCubic",
-          complete:reveal
-        });
-        setTimeout(reveal, 500);
-      }catch(e){ reveal(); }
+    if(!reduced){
+      waapi(result, [
+        { opacity: 0.01, transform: "translateY(10px)" },
+        { opacity: 1, transform: "translateY(0)" }
+      ], { duration: 280, easing: "ease-out", onfinish: forceResultVisible });
+      setTimeout(forceResultVisible, 320);
     }
 
-    casting=false;
-    cast.disabled=false;
+    casting = false;
+    cast.disabled = false;
     cast.classList.remove("busy");
-    cast.textContent="Скрепить печатью";
-    showToast("Печать легла.");
-    requestAnimationFrame(()=>{
+    cast.textContent = ui.cta;
+    showToast(ui.toastOk);
+    requestAnimationFrame(function(){
       window.scrollTo(0, 0);
-      result.scrollIntoView({behavior:"auto", block:"start"});
-      setTimeout(()=>{
-        window.scrollTo({top:0, behavior:"auto"});
-        result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"start"});
+      result.scrollIntoView({ behavior: "auto", block: "start" });
+      setTimeout(function(){
+        window.scrollTo({ top: 0, behavior: "auto" });
+        result.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
       }, 30);
     });
   }
 
-  cast.addEventListener("click",()=>runRitual());
-  victim.addEventListener("keydown",e=>{
-    if(e.key==="Enter"){ e.preventDefault(); runRitual(); }
+  cast.addEventListener("click", function(){ runRitual(); });
+  victim.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); runRitual(); }
   });
 
-  $("saveBtn").onclick=()=>saveCard();
-  $("shareBtn").onclick=()=>shareCard();
-  $("againBtn").onclick=()=>{
-    lastVerdict=null;
+  $("saveBtn").onclick = function(){ saveCard(); };
+  $("shareBtn").onclick = function(){ shareCard(); };
+  $("againBtn").onclick = function(){
+    lastVerdict = null;
+    stopRitualLoop();
     result.classList.remove("show");
     result.classList.add("hidden");
-    result.style.display="";
-    result.style.opacity="";
-    result.style.transform="";
-    result.style.visibility="";
+    result.style.display = "";
+    result.style.opacity = "";
+    result.style.transform = "";
+    result.style.visibility = "";
     castScreen.classList.remove("hidden");
     document.body.classList.remove("is-result");
-    overlay.style.display="";
-    overlay.style.opacity="";
-    ctaBar.style.display="";
-    victim.value="";
-    gender=null;
-    genderEl.querySelectorAll(".gen").forEach(x=>{
+    overlay.style.display = "";
+    overlay.style.opacity = "";
+    ctaBar.style.display = "";
+    victim.value = "";
+    gender = null;
+    genderEl.querySelectorAll(".gen").forEach(function(x){
       x.classList.remove("on");
-      x.setAttribute("aria-checked","false");
+      x.setAttribute("aria-checked", "false");
     });
     emptyHint.classList.remove("show");
     genderHint.classList.remove("show");
-    cast.textContent="Скрепить печатью";
+    cast.textContent = ui.cta;
     victim.focus();
   };
 
-  /* Expose build markers for QA */
-  window.__PROKLINATOR_V8 = {
-    version:8,
-    sins:sins.length,
-    verdictsN:verdictsN.length,
-    verdictsM:verdictsM.length,
-    verdictsF:verdictsF.length,
-    three:()=>hasThree(),
-    anime:()=>hasAnime()
+  window.__PROKLINATOR_V9 = {
+    version: 9,
+    sins: sins.length,
+    verdictsN: verdictsN.length,
+    verdictsM: verdictsM.length,
+    verdictsF: verdictsF.length,
+    ritual: chants.length,
+    powers: powers.length,
+    idleRaf: function(){ return ritualRaf; }
   };
 })();
 </script>
