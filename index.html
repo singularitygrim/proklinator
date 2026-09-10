@@ -471,7 +471,404 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .screen-cast.hidden,.screen-result.hidden{display:none}
 
+/* =========================================================
+   v19 PRODUCT SHELL — tabs, splash, lists, profile, paywall
+   ========================================================= */
+.app{padding-bottom:calc(96px + var(--safe-b))}
+.toast{bottom:calc(94px + var(--safe-b))}
+body.is-casting .toast,body.is-splash .toast{bottom:calc(24px + var(--safe-b))}
+.tab{position:relative;z-index:1}
+.tab.hidden,.page.hidden{display:none}
+body:not([data-tab="ritual"]) .hero-bg,body:not([data-tab="ritual"]) .close-btn{display:none}
+.hidden{display:none!important}
+
+/* ---- Bottom nav ---- */
+.tabbar{
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;z-index:40;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:2px;
+  padding:8px 8px calc(10px + var(--safe-b));
+  background:linear-gradient(180deg,rgba(16,11,10,.94),rgba(9,7,6,.985));
+  border-top:1px solid var(--line);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 -14px 34px rgba(0,0,0,.5);
+}
+.tabbar::before{content:"";position:absolute;left:8%;right:8%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,74,.4),transparent)}
+.tab-btn{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  min-height:52px;padding:6px 2px 4px;border-radius:14px;color:var(--bone-mute);
+  font-size:10px;letter-spacing:.02em;font-weight:600;transition:color var(--dur),background var(--dur);
+}
+.tab-btn svg{width:22px;height:22px;display:block}
+.tab-btn.on{color:var(--blood-hot)}
+.tab-btn.on svg{filter:drop-shadow(0 0 8px rgba(229,38,47,.6))}
+.tab-btn.on::after{content:"";position:absolute;top:0;left:50%;width:18px;height:2px;border-radius:2px;background:var(--blood-hot);transform:translateX(-50%);box-shadow:0 0 10px rgba(229,38,47,.8)}
+.tab-btn:active{transform:none;background:rgba(237,228,214,.04)}
+body.is-splash .tabbar,body.is-casting .tabbar{display:none}
+
+/* ---- Splash ---- */
+.splash{
+  position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--soot-950);cursor:pointer;overflow:hidden;transition:opacity 480ms ease;user-select:none;-webkit-user-select:none;
+}
+.splash.out{opacity:0;pointer-events:none}
+.splash-art{
+  position:absolute;inset:0;background:url("hero-altar.jpg") center 28%/cover no-repeat;opacity:.5;filter:saturate(.85) contrast(1.08);
+  -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
+  mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
+}
+.splash-veil{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 46% at 50% 44%,rgba(179,18,31,.32),transparent 66%),
+    linear-gradient(180deg,rgba(7,5,5,.55) 0,rgba(7,5,5,.1) 36%,rgba(7,5,5,.9) 76%,#070505 100%);
+}
+.splash-sigil{position:relative;width:min(58vw,224px);height:auto;margin:0 0 20px;filter:drop-shadow(0 0 34px rgba(179,18,31,.5))}
+.splash-sigil .spin{animation:sealSpin 16s linear infinite;transform-origin:center}
+.splash-sigil .spin-r{animation:sealSpin 24s linear infinite reverse;transform-origin:center}
+.splash-brand{
+  position:relative;font-family:var(--serif);font-size:clamp(30px,9.2vw,38px);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--bone);text-shadow:0 2px 26px rgba(0,0,0,.75);line-height:1;
+}
+.splash-brand::first-letter{font-size:1.14em}
+.splash-tag{position:relative;margin-top:10px;font-family:var(--serif);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 24px}
+.splash-prog{position:relative;width:min(220px,60vw);height:2px;background:rgba(237,228,214,.12);margin:40px 0 12px;overflow:hidden}
+.splash-prog i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--blood),var(--ember));box-shadow:0 0 14px rgba(229,38,47,.7)}
+.splash-load{position:relative;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--bone-mute);text-align:center;padding:0 24px}
+.splash-quote{
+  position:absolute;left:28px;right:28px;bottom:calc(70px + var(--safe-b));text-align:center;
+  font-family:var(--serif);font-style:italic;font-size:14px;line-height:1.45;color:var(--bone-dim);
+}
+.splash-skip{position:absolute;left:0;right:0;bottom:calc(28px + var(--safe-b));text-align:center;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-mute);opacity:.75}
+
+/* ---- Page head / segmented / cards ---- */
+.page-head{
+  position:relative;z-index:1;display:grid;grid-template-columns:40px minmax(0,1fr) 40px;align-items:center;
+  padding:calc(14px + var(--safe-t)) 0 16px;
+}
+.page-title{
+  grid-column:2;margin:0;text-align:center;font-family:var(--serif);font-weight:400;font-size:15px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--bone);line-height:1.3;
+}
+.page-title::first-letter{font-size:1.15em}
+.icon-round{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(20,15,13,.78);border:1px solid var(--line-strong);color:var(--bone);
+  transition:border-color var(--dur),background var(--dur);
+}
+.icon-round svg{width:16px;height:16px}
+.icon-round:hover{border-color:rgba(237,228,214,.3)}
+.page-head .back{grid-column:1}
+.page-head .right{grid-column:3}
+.page-sub{margin:-6px 0 18px;text-align:center;font-size:12.5px;line-height:1.45;color:var(--bone-mute)}
+.seg{
+  display:grid;gap:4px;padding:4px;border-radius:var(--r-pill);border:1px solid var(--line);margin:0 0 16px;
+  background:linear-gradient(180deg,#151110,#0F0C0B);box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.seg[data-n="2"]{grid-template-columns:1fr 1fr}
+.seg[data-n="3"]{grid-template-columns:1fr 1fr 1fr}
+.seg button{
+  min-height:36px;border-radius:var(--r-pill);font-size:13px;font-weight:600;color:var(--bone-dim);border:1px solid transparent;
+  transition:background var(--dur),color var(--dur),border-color var(--dur);
+}
+.seg button.on{background:linear-gradient(180deg,#2C1917,#1B110F);color:var(--bone);border-color:rgba(229,38,47,.38);box-shadow:0 0 14px rgba(179,18,31,.18)}
+.card{
+  border-radius:var(--r-card);border:1px solid var(--line);
+  background:linear-gradient(180deg,#171312,#100D0C);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 8px 24px rgba(0,0,0,.28);
+  transition:border-color var(--dur),box-shadow var(--dur),transform 150ms var(--ease);
+}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:var(--r-pill);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;line-height:1;white-space:nowrap}
+.tag svg{width:11px;height:11px}
+.tag.gold{color:var(--gold-hot);border:1px solid rgba(201,162,74,.45);background:rgba(201,162,74,.1)}
+.tag.blood{color:#F2A7A7;border:1px solid rgba(229,38,47,.5);background:rgba(179,18,31,.14)}
+.empty{padding:34px 20px 30px;text-align:center;color:var(--bone-mute);font-size:14px;line-height:1.5}
+.empty .sig{width:64px;height:48px;margin:0 auto 12px;opacity:.55}
+.empty button{
+  margin-top:16px;min-height:44px;padding:0 22px;border-radius:var(--r-pill);
+  background:rgba(179,18,31,.14);border:1px solid rgba(229,38,47,.45);color:var(--bone);font-weight:600;font-size:13px;
+}
+.list{display:flex;flex-direction:column;gap:10px;margin:0 0 20px}
+.thumb{
+  width:48px;height:48px;border-radius:12px;display:grid;place-items:center;flex:none;
+  background:radial-gradient(120% 110% at 50% 0%,#2A1210,#140D0C);border:1px solid rgba(179,18,31,.35);color:#E39A9A;
+}
+.thumb svg{width:22px;height:22px}
+.thumb[data-power="whisper"]{border-color:rgba(166,90,85,.45);color:#DCAAA4}
+.thumb[data-power="anathema"]{border-color:rgba(255,59,47,.6);color:#FFB8AE;box-shadow:0 0 14px rgba(255,59,47,.25)}
+.thumb.gold{border-color:rgba(201,162,74,.4);color:var(--gold-hot);background:radial-gradient(120% 110% at 50% 0%,#2A1F10,#140F0C)}
+.heart{
+  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute);
+  transition:color var(--dur),transform 150ms var(--ease);
+}
+.heart svg{width:18px;height:18px}
+.heart.on{color:var(--blood-hot);filter:drop-shadow(0 0 8px rgba(229,38,47,.55))}
+.heart.on svg path{fill:currentColor}
+.chev{width:30px;height:36px;display:grid;place-items:center;color:var(--bone-mute)}
+.chev svg{width:16px;height:16px}
+
+/* ---- Ritual tab: context pills ---- */
+.ctx-row{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 16px;position:relative;z-index:1}
+.ctx-row:empty{display:none}
+.ctx-pill{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 7px 6px 12px;border-radius:var(--r-pill);max-width:100%;
+  border:1px solid rgba(201,162,74,.38);background:rgba(201,162,74,.09);color:var(--gold-hot);font-size:12px;font-weight:600;
+}
+.ctx-pill.blood{border-color:rgba(229,38,47,.42);background:rgba(179,18,31,.13);color:#F2A7A7}
+.ctx-pill small{font-weight:500;opacity:.72;font-size:12px}
+.ctx-pill .x{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:rgba(237,228,214,.12);color:var(--bone);flex:none}
+.ctx-pill .x svg{width:9px;height:9px}
+
+/* ---- Categories ---- */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 20px}
+.cat-card{
+  position:relative;min-height:132px;padding:18px 12px 14px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--bone);overflow:hidden;
+}
+.cat-card .ico{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin-bottom:2px;
+  background:rgba(237,228,214,.05);border:1px solid var(--line);color:var(--bone-dim);transition:color var(--dur),border-color var(--dur),background var(--dur);
+}
+.cat-card .ico svg{width:20px;height:20px}
+.cat-card b{font-family:var(--serif);font-weight:400;font-size:17px;line-height:1.15}
+.cat-card small{font-size:10.5px;line-height:1.35;color:var(--bone-mute);text-wrap:balance}
+.cat-card .check{
+  position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;display:none;place-items:center;
+  background:var(--blood-hot);color:#fff;border:1.5px solid rgba(255,255,255,.35);
+}
+.cat-card .check svg{width:10px;height:10px}
+.cat-card.on{border-color:rgba(229,38,47,.55);box-shadow:inset 0 0 0 1px rgba(229,38,47,.16),0 0 26px rgba(179,18,31,.22)}
+.cat-card.on .ico{color:var(--bone);border-color:rgba(229,38,47,.45);background:rgba(179,18,31,.2)}
+.cat-card.on .check{display:grid}
+.cat-card.on::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(229,38,47,.2),transparent 70%)}
+
+/* ---- History ---- */
+.hist-item{padding:12px;display:grid;grid-template-columns:48px minmax(0,1fr) 34px 30px;gap:10px;align-items:center;text-align:left;color:var(--bone)}
+.hist-main{min-width:0;text-align:left;color:inherit}
+.hist-punch{margin:0;font-family:var(--serif);font-size:14.5px;line-height:1.35;color:var(--bone);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hist-meta{margin:5px 0 0;font-size:11px;color:var(--bone-mute);display:flex;align-items:baseline;min-width:0}
+.hist-meta b{color:var(--bone-dim);font-weight:600;flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-meta .dot{margin:0 5px;opacity:.6;flex:none}
+.hist-meta .dt,.hist-meta .pw{flex:none;white-space:nowrap}
+.hist-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:10px;border-top:1px solid var(--line);margin-top:2px}
+.hist-actions button{
+  min-height:38px;border-radius:12px;font-size:12.5px;font-weight:600;color:var(--bone-dim);
+  background:rgba(237,228,214,.05);border:1px solid var(--line);
+}
+.hist-actions button.danger{color:#F2A7A7;border-color:rgba(229,38,47,.3)}
+.hist-item[aria-expanded="false"] .hist-actions{display:none}
+.hist-item[aria-expanded="true"]{border-color:var(--line-strong)}
+
+/* ---- Rituals ---- */
+.rit-featured{
+  position:relative;overflow:hidden;padding:20px 18px;margin:0 0 12px;display:grid;grid-template-columns:minmax(0,1fr) 76px;gap:14px;align-items:center;
+  text-align:left;color:var(--bone);width:100%;
+  background:radial-gradient(120% 140% at 12% 0%,#3D1114 0%,#1B0D0C 52%,#100C0B 100%);border-color:rgba(229,38,47,.38);
+}
+.rit-featured::before{content:"";position:absolute;right:-30px;top:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(229,38,47,.32),transparent 68%);pointer-events:none}
+.rit-featured .eyebrow{display:block;font-family:var(--serif);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.rit-featured b{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.05;display:block}
+.rit-featured small{display:block;margin-top:6px;font-size:11.5px;line-height:1.35;color:var(--bone-dim)}
+.rit-featured .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.rit-featured .moon{width:76px;height:76px;position:relative;z-index:1;color:#F1E3C6;filter:drop-shadow(0 0 22px rgba(229,38,47,.55))}
+.rit-featured .rt{min-width:0;text-align:left;color:inherit;position:relative;z-index:1;padding-right:8px}
+.rit-featured .heart{position:absolute;top:8px;right:8px;z-index:2}
+.rit-featured.on{border-color:var(--blood-hot);box-shadow:0 0 30px rgba(179,18,31,.3)}
+.rit-item{padding:12px;display:grid;grid-template-columns:48px minmax(0,1fr) 34px 30px;gap:10px;align-items:center;text-align:left;color:var(--bone);width:100%}
+.rit-item .rt{min-width:0;text-align:left;color:inherit}
+.rit-item b{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.rit-item small{display:block;font-size:11px;color:var(--bone-mute);margin-top:3px;line-height:1.3}
+.rit-item .tags{display:flex;gap:6px;margin-top:6px}
+.rit-item.on{border-color:rgba(229,38,47,.55);box-shadow:0 0 22px rgba(179,18,31,.18)}
+.rit-item.on .chev{color:var(--blood-hot)}
+.rit-item.locked .thumb{border-color:rgba(201,162,74,.35);color:var(--gold-dim)}
+.rit-item.locked .chev{color:var(--gold-dim)}
+
+/* ---- Profile ---- */
+.prof-head{text-align:center;padding:4px 0 18px;position:relative;z-index:1}
+.avatar{
+  width:96px;height:96px;margin:0 auto 12px;border-radius:50%;position:relative;display:grid;place-items:center;
+  background:radial-gradient(120% 120% at 50% 0%,#2C1614,#120D0C);border:1px solid rgba(201,162,74,.4);
+  box-shadow:0 0 30px rgba(179,18,31,.22),inset 0 1px 0 rgba(255,255,255,.05);transition:border-color var(--dur),box-shadow var(--dur);
+}
+.avatar svg.hood{width:54px;height:54px;color:var(--bone-dim)}
+.avatar .crown-badge{
+  position:absolute;top:-8px;right:-6px;width:32px;height:32px;border-radius:50%;background:#0B0908;
+  border:1px solid rgba(201,162,74,.55);display:none;place-items:center;box-shadow:0 0 14px rgba(201,162,74,.35);
+}
+.avatar .crown-badge svg{width:17px;height:13px}
+body.is-pro .avatar .crown-badge{display:grid}
+body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74,.3)}
+.nick-row{display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;flex-wrap:wrap}
+.nick{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--bone);margin:0;word-break:break-word;font-weight:400}
+.nick-edit-btn{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute);background:rgba(237,228,214,.06);border:1px solid var(--line)}
+.nick-edit-btn svg{width:13px;height:13px}
+.nick-form{display:none;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin:10px 0 0}
+.nick-form.on{display:grid}
+.nick-form input{
+  width:100%;min-height:46px;font-size:16px;color:var(--bone);background:linear-gradient(180deg,#1B1615,#151110);
+  border:1px solid var(--line-strong);border-radius:14px;padding:0 14px;outline:none;-webkit-appearance:none;appearance:none;
+}
+.nick-form input:focus{border-color:rgba(229,38,47,.55)}
+.nick-form button{min-height:46px;padding:0 16px;border-radius:14px;background:linear-gradient(180deg,#D21B26,#9F0F1A);color:#fff;font-weight:600;font-size:14px}
+.since{margin:8px 0 0;font-size:12px;color:var(--bone-mute);display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
+.prof-quote{margin:12px auto 0;max-width:290px;font-family:var(--serif);font-style:italic;font-size:13px;line-height:1.45;color:var(--bone-dim)}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 12px}
+.counter-card{padding:14px 6px 12px;text-align:center}
+.counter-card b{display:block;font-family:var(--serif);font-size:24px;line-height:1;color:var(--bone);font-weight:400}
+.counter-card small{display:block;margin-top:7px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-mute)}
+.worse{padding:14px 16px;margin:0 0 12px;display:flex;flex-direction:column;gap:9px}
+.worse-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;color:var(--bone-dim)}
+.worse-label b{color:var(--blood-hot);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.worse-bar{height:6px;border-radius:3px;background:rgba(237,228,214,.08);overflow:hidden}
+.worse-bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--blood-deep),var(--blood-hot));box-shadow:0 0 10px rgba(229,38,47,.55);transition:width 600ms var(--ease)}
+.pro-banner{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;margin:0 0 12px;width:100%;
+  border:1px solid rgba(201,162,74,.45);border-radius:var(--r-card);text-align:left;color:var(--bone);
+  background:linear-gradient(90deg,rgba(201,162,74,.16),rgba(201,162,74,.04));box-shadow:0 8px 24px rgba(0,0,0,.28);
+}
+.pro-banner .crown{width:28px;height:21px}
+.pro-banner b{display:block;font-size:14px;line-height:1.2}
+.pro-banner small{display:block;font-size:11px;color:var(--bone-dim);margin-top:2px}
+.pro-banner .go{padding:9px 13px;border-radius:var(--r-pill);background:linear-gradient(180deg,#E6C77A,#B08A38);color:#1A130A;font-size:12px;font-weight:700;white-space:nowrap}
+.menu{display:flex;flex-direction:column;overflow:hidden;margin:0 0 20px;padding:0}
+.menu-item{
+  display:grid;grid-template-columns:36px minmax(0,1fr) auto 16px;gap:12px;align-items:center;min-height:56px;padding:8px 14px;width:100%;
+  text-align:left;color:var(--bone);font-size:15px;font-weight:500;border-top:1px solid var(--line);
+}
+.menu-item:first-child{border-top:0}
+.menu-item:active{background:rgba(237,228,214,.03);transform:none}
+.menu-item .mi{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(237,228,214,.05);border:1px solid var(--line);color:var(--bone-dim)}
+.menu-item .mi svg{width:17px;height:17px}
+.menu-item .val{font-size:12px;color:var(--bone-mute);white-space:nowrap}
+.menu-item .val.gold{color:var(--gold-hot)}
+.menu-item .chev{width:16px;height:16px}
+.menu-item .chev svg{width:14px;height:14px}
+
+/* ---- Badges ---- */
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 20px}
+.badge{padding:14px 8px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.badge .bi{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(237,228,214,.04);border:1px solid var(--line);color:var(--bone-mute)}
+.badge .bi svg{width:20px;height:20px}
+.badge b{font-size:12px;font-weight:600;line-height:1.2;color:var(--bone-dim)}
+.badge small{font-size:10px;line-height:1.3;color:var(--bone-mute)}
+.badge.on .bi{color:var(--gold-hot);border-color:rgba(201,162,74,.6);background:rgba(201,162,74,.12);box-shadow:0 0 18px rgba(201,162,74,.25)}
+.badge.on b{color:var(--bone)}
+.badge .lock{position:absolute;top:8px;right:8px;width:13px;height:13px;color:var(--bone-mute);opacity:.7}
+.badge.on .lock{display:none}
+
+/* ---- Stats ---- */
+.stat-hero{padding:22px 18px 18px;text-align:center;margin:0 0 12px;position:relative;overflow:hidden}
+.stat-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(179,18,31,.16),transparent 70%)}
+.eyebrow{font-family:var(--serif);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.stat-hero .big{font-family:var(--serif);font-size:clamp(28px,8.6vw,38px);line-height:1.08;color:var(--bone);margin:8px 0 2px;position:relative;z-index:1}
+.stat-hero .big b{color:var(--blood-hot);font-weight:400}
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:end;height:84px;margin:18px 0 6px;position:relative;z-index:1}
+.bars i{display:block;border-radius:4px 4px 2px 2px;background:linear-gradient(180deg,var(--blood-hot),var(--blood-deep));min-height:3px;box-shadow:0 0 10px rgba(229,38,47,.3)}
+.bars i.zero{background:rgba(237,228,214,.08);box-shadow:none}
+.bars-labels{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone-mute);text-align:center;position:relative;z-index:1}
+.bars-cap{margin:10px 0 0;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-mute)}
+.stat-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 12px}
+.stat-card{padding:14px}
+.stat-card b{display:block;font-family:var(--serif);font-size:26px;color:var(--bone);line-height:1;font-weight:400}
+.stat-card small{display:block;margin-top:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone-mute)}
+.pbars{padding:14px 16px;margin:0 0 12px;display:flex;flex-direction:column;gap:10px}
+.pbars .group-label{margin:0 0 2px}
+.pbar{display:grid;grid-template-columns:118px minmax(0,1fr) 36px;gap:10px;align-items:center;font-size:12.5px;color:var(--bone-dim)}
+.pbar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbar .track{height:6px;border-radius:3px;background:rgba(237,228,214,.08);overflow:hidden}
+.pbar .track i{display:block;height:100%;border-radius:3px;background:var(--bar,var(--blood))}
+.pbar em{font-style:normal;text-align:right;color:var(--bone);font-variant-numeric:tabular-nums}
+.quote-line{margin:8px 0 22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:13px;line-height:1.5;color:var(--bone-dim)}
+
+/* ---- Paywall ---- */
+.pay-hero{
+  position:relative;text-align:center;padding:30px 16px 24px;margin:0 0 16px;overflow:hidden;
+  background:radial-gradient(120% 120% at 50% 0%,#33200D 0%,#17110C 52%,#0F0C0B 100%);border-color:rgba(201,162,74,.42);
+}
+.pay-hero::before{
+  content:"";position:absolute;left:50%;top:-60%;width:170%;aspect-ratio:1;transform:translateX(-50%);pointer-events:none;opacity:.55;
+  background:repeating-conic-gradient(from 0deg,rgba(201,162,74,.09) 0 6deg,transparent 6deg 18deg);
+  -webkit-mask-image:radial-gradient(circle,#000 0,transparent 60%);mask-image:radial-gradient(circle,#000 0,transparent 60%);
+  animation:sealSpin 90s linear infinite;
+}
+.pay-hero .crown-big{position:relative;width:94px;height:72px;filter:drop-shadow(0 0 28px rgba(201,162,74,.6))}
+.pay-title{position:relative;font-family:var(--serif);font-size:clamp(22px,6.6vw,26px);letter-spacing:.14em;text-transform:uppercase;color:var(--bone);margin:12px 0 0;line-height:1.1;font-weight:400}
+.pay-title small{display:block;font-size:11px;letter-spacing:.3em;color:var(--gold);margin-top:8px}
+.pay-head{font-family:var(--serif);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone);text-align:center;margin:18px 0 12px;line-height:1.4;font-weight:400}
+.perks{display:flex;flex-direction:column;margin:0 0 18px;overflow:hidden}
+.perk{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line);font-size:14px;color:var(--bone);line-height:1.35}
+.perk:first-child{border-top:0}
+.perk .pi{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--gold-hot);background:rgba(201,162,74,.1);border:1px solid rgba(201,162,74,.35)}
+.perk .pi svg{width:17px;height:17px}
+.cta-gold{
+  width:100%;min-height:60px;border-radius:var(--r-pill);font-family:var(--serif);font-size:21px;color:#1A130A;position:relative;
+  background:radial-gradient(120% 170% at 50% 0%,#F2DB94 0%,#C9A24A 55%,#8F7538 100%);border:1px solid rgba(255,235,180,.6);
+  box-shadow:0 0 36px rgba(201,162,74,.4),0 12px 30px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.4);margin:0 0 10px;
+  transition:filter var(--dur),opacity var(--dur);
+}
+.cta-gold:active:not(:disabled){filter:brightness(1.06)}
+.cta-gold:disabled{cursor:default;filter:saturate(.6);opacity:.92}
+.link-btn{display:block;width:100%;text-align:center;color:var(--bone-dim);font-size:13px;text-decoration:underline;text-decoration-color:rgba(237,228,214,.25);text-underline-offset:4px;padding:8px}
+.fine{margin:12px 0 22px;text-align:center;font-size:11px;color:var(--bone-mute);line-height:1.55}
+
+/* ---- Leaderboard ---- */
+.lb{display:flex;flex-direction:column;overflow:hidden;margin:0 0 12px}
+.lb-row{display:grid;grid-template-columns:26px 36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 14px;border-top:1px solid var(--line);font-size:14px;color:var(--bone)}
+.lb-row:first-child{border-top:0}
+.lb-row .rank{font-family:var(--serif);color:var(--bone-mute);text-align:center;font-size:15px;font-variant-numeric:tabular-nums}
+.lb-row.top .rank{color:var(--gold-hot)}
+.lb-row .av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(237,228,214,.06);border:1px solid var(--line);font-family:var(--serif);font-size:15px;color:var(--bone-dim)}
+.lb-row .nm{min-width:0;display:flex;align-items:center;gap:6px}
+.lb-row .nm span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-row .nm svg{width:16px;height:12px;flex:none}
+.lb-row .nm .you{font-size:11px;color:var(--bone-mute);flex:none}
+.lb-row .kv{font-variant-numeric:tabular-nums;color:var(--bone-dim);font-weight:600;font-size:13px;white-space:nowrap}
+.lb-row.me{background:linear-gradient(90deg,rgba(179,18,31,.2),rgba(179,18,31,.04))}
+.lb-row.me .av{border-color:rgba(229,38,47,.5);color:var(--bone)}
+.lb-row.me .kv{color:#F2A7A7}
+
+/* ---- Settings / about ---- */
+.group-label{margin:4px 0 8px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-dim);font-weight:600}
+.settings .toggle-row{margin:0 0 10px}
+.settings .group{margin:0 0 18px}
+.btn-row{width:100%;display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:center;padding:12px 14px 12px 12px;margin:0 0 10px;text-align:left;color:var(--bone)}
+.btn-row .toggle-text b{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.btn-row .toggle-text small{display:block;font-size:11px;color:var(--bone-mute);margin-top:2px;line-height:1.3}
+.btn-row.danger{border-color:rgba(229,38,47,.3)}
+.btn-row.danger .toggle-text b{color:#F2A7A7}
+.btn-row.danger .toggle-ico{color:#F2A7A7;border-color:rgba(229,38,47,.3)}
+.btn-row.armed{border-color:var(--blood-hot);background:linear-gradient(180deg,#3A0F14,#1E0A0D);box-shadow:0 0 22px rgba(179,18,31,.3)}
+.switch[aria-disabled="true"]{opacity:.55;cursor:default}
+.about-brand{text-align:center;padding:8px 0 4px}
+.about-brand .crown{width:36px;height:27px;display:block;margin:0 auto 8px;filter:drop-shadow(0 0 10px rgba(201,162,74,.4))}
+.about-brand .brand-name{font-size:20px}
+.about-brand .ver{margin-top:6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-mute)}
+.about-lines{padding:6px 16px;margin:14px 0 12px}
+.about-lines p{margin:0;padding:11px 0;border-top:1px solid var(--line);font-size:13.5px;line-height:1.5;color:var(--bone-dim)}
+.about-lines p:first-child{border-top:0}
+.about-lines p b{color:var(--bone);font-weight:600}
+
+/* ---- Result: fav + harder + ritual line ---- */
+.action-icons{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.icon-btn{
+  min-height:64px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 6px;min-width:0;
+  background:rgba(237,228,214,.05);border:1px solid var(--line-strong);color:var(--bone-dim);font-size:10.5px;font-weight:600;letter-spacing:0;
+  transition:color var(--dur),border-color var(--dur),background var(--dur),transform 150ms var(--ease);
+}
+.icon-btn span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.icon-btn svg{width:20px;height:20px}
+.icon-btn.on{color:var(--blood-hot);border-color:rgba(229,38,47,.5);background:rgba(179,18,31,.12)}
+.icon-btn.on svg path{fill:currentColor}
+.actions .btn-primary .flame{width:20px;height:20px;margin-right:8px;vertical-align:-3px}
+.block.ritual-line{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(201,162,74,.14)}
+.block.ritual-line[hidden]{display:none}
+.rl{display:inline-flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--gold-hot);line-height:1.4;text-align:left;max-width:100%}
+.rl svg{width:16px;height:16px;flex:none;margin-top:2px}
+.rl b{font-weight:600}
+.rl span{color:var(--bone-dim)}
+
 @media(prefers-reduced-motion:reduce){
+  .splash-sigil .spin,.splash-sigil .spin-r,.pay-hero::before{animation:none!important}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .seal-stage .spin{animation:none!important}
   .pow[data-id="anathema"].on,.pow.on::after{animation:none!important;transform:none!important}
@@ -484,7 +881,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 }
 </style>
 </head>
-<body id="root">
+<body id="root" data-tab="ritual">
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <main class="app">
@@ -522,6 +919,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
   </button>
 
+  <section class="tab" data-tab="ritual" id="tabRitual">
   <header class="head">
     <div class="brand">
       <svg class="crown" viewBox="0 0 32 24" aria-hidden="true">
@@ -539,6 +937,8 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     <h1 class="title" id="title"></h1>
     <p class="sub" id="subhead"></p>
     <div class="altar-space" aria-hidden="true"></div>
+
+    <div class="ctx-row" id="ctxRow"></div>
 
     <div class="field">
       <label class="field-label" for="who" id="whoLabel"></label>
@@ -609,17 +1009,201 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
         <div class="block-label" id="lblLift"></div>
         <p class="block-body" id="vLift"></p>
       </div>
+      <div class="block ritual-line" id="vRitualLine" hidden>
+        <div class="rl"><span id="vRitualIco" aria-hidden="true"></span><span><b id="vRitualName"></b> <span id="vRitualFlavor"></span></span></div>
+      </div>
     </div>
     <div class="actions">
-      <button type="button" class="btn-primary" id="copyCurseBtn"></button>
+      <div class="action-icons">
+        <button type="button" class="icon-btn" id="copyCurseBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M15 9V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15H9"/></svg>
+          <span></span>
+        </button>
+        <button type="button" class="icon-btn" id="shareBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13"/><path d="m7 8 5-5 5 5"/><path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5"/></svg>
+          <span></span>
+        </button>
+        <button type="button" class="icon-btn" id="favBtn" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z"/></svg>
+          <span></span>
+        </button>
+      </div>
+      <button type="button" class="btn-primary" id="harderBtn"><svg class="flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><span id="harderText"></span></button>
       <button type="button" class="btn-secondary" id="saveBtn"></button>
-      <button type="button" class="btn-secondary" id="shareBtn"></button>
-      <button type="button" class="btn-ghost" id="againBtn"></button>
+      <button type="button" class="btn-secondary" id="againBtn"></button>
+      <button type="button" class="btn-ghost" id="newBtn"></button>
     </div>
     <p class="disclaimer" id="disclaimer"></p>
   </section>
+  </section>
+
+  <!-- ===== Categories ===== -->
+  <section class="tab hidden" data-tab="categories" id="tabCategories">
+    <header class="page-head"><h1 class="page-title" id="catTitle"></h1></header>
+    <p class="page-sub" id="catHint"></p>
+    <div class="cat-grid" id="catGrid"></div>
+  </section>
+
+  <!-- ===== History ===== -->
+  <section class="tab hidden" data-tab="history" id="tabHistory">
+    <header class="page-head"><h1 class="page-title" id="histTitle"></h1></header>
+    <div class="seg" data-n="2" id="histSeg" role="tablist"></div>
+    <div class="list" id="histList"></div>
+  </section>
+
+  <!-- ===== Rituals catalog ===== -->
+  <section class="tab hidden" data-tab="rituals" id="tabRituals">
+    <header class="page-head"><h1 class="page-title" id="ritTitle"></h1></header>
+    <p class="page-sub" id="ritHint"></p>
+    <div class="seg" data-n="2" id="ritSeg" role="tablist"></div>
+    <div id="ritFeatured"></div>
+    <div class="list" id="ritList"></div>
+  </section>
+
+  <!-- ===== Profile + sub-pages ===== -->
+  <section class="tab hidden" data-tab="profile" id="tabProfile">
+    <div class="page" data-page="home">
+      <header class="page-head"><h1 class="page-title" id="profTitle"></h1></header>
+      <div class="prof-head">
+        <div class="avatar" aria-hidden="true">
+          <svg class="hood" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 58c0-16 4-30 18-38 14 8 18 22 18 38"/><path d="M14 58h36"/><path d="M24 40c2-8 5-12 8-14 3 2 6 6 8 14"/><path d="M26 44c2 3 4 4 6 4s4-1 6-4"/><circle cx="28" cy="38" r="1.2" fill="currentColor"/><circle cx="36" cy="38" r="1.2" fill="currentColor"/></svg>
+          <span class="crown-badge"><svg viewBox="0 0 32 24"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg></span>
+        </div>
+        <div class="nick-row">
+          <h2 class="nick" id="nickText"></h2>
+          <button type="button" class="nick-edit-btn" id="nickEditBtn" aria-label="Изменить ник">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+        </div>
+        <form class="nick-form" id="nickForm" autocomplete="off">
+          <input id="nickInput" type="text" maxlength="24" autocomplete="off" autocapitalize="words" enterkeyhint="done"/>
+          <button type="submit" id="nickSave"></button>
+        </form>
+        <p class="since"><span class="tag gold hidden" id="proTag"></span><span id="since"></span></p>
+        <p class="prof-quote" id="profQuote"></p>
+      </div>
+      <div class="counters" id="profCounters"></div>
+      <div class="card worse" id="profWorse">
+        <div class="worse-label"><span id="worseText"></span><b id="worsePct"></b></div>
+        <div class="worse-bar"><i id="worseBar"></i></div>
+      </div>
+      <button type="button" class="pro-banner" id="proBanner">
+        <svg class="crown" viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>
+        <span><b id="proBannerTitle"></b><small id="proBannerSub"></small></span>
+        <span class="go" id="proBannerCta"></span>
+      </button>
+      <div class="card menu" id="profMenu"></div>
+    </div>
+
+    <div class="page hidden" data-page="badges">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title" id="badgesTitle"></h1>
+      </header>
+      <p class="page-sub" id="badgesProgress"></p>
+      <div class="badge-grid" id="badgeGrid"></div>
+    </div>
+
+    <div class="page hidden" data-page="stats">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title" id="statsTitle"></h1>
+      </header>
+      <div id="statsBody"></div>
+    </div>
+
+    <div class="page hidden" data-page="leaderboard">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title" id="lbTitle"></h1>
+      </header>
+      <div class="seg" data-n="3" id="lbSeg" role="tablist"></div>
+      <div class="card lb" id="lbList"></div>
+      <p class="fine" id="lbFooter"></p>
+    </div>
+
+    <div class="page hidden" data-page="premium">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title">Premium</h1>
+      </header>
+      <div class="card pay-hero">
+        <svg class="crown-big" viewBox="0 0 32 24" aria-hidden="true">
+          <defs><linearGradient id="gqp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2DB94"/><stop offset="1" stop-color="#9C7A2E"/></linearGradient></defs>
+          <path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="url(#gqp)"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="url(#gqp)"/>
+          <circle cx="16" cy="3" r="1.5" fill="#FFF2C2"/><circle cx="5.4" cy="7.2" r="1.2" fill="#FFF2C2"/><circle cx="26.6" cy="7.2" r="1.2" fill="#FFF2C2"/>
+        </svg>
+        <h2 class="pay-title">Проклинатор<small id="payTitleSmall"></small></h2>
+      </div>
+      <h3 class="pay-head" id="payHeadline"></h3>
+      <div class="card perks" id="perkList"></div>
+      <button type="button" class="cta-gold" id="proCta"></button>
+      <button type="button" class="link-btn" id="proRestore"></button>
+      <p class="fine"><span id="proFooter"></span><br/><span id="proDemo"></span></p>
+    </div>
+
+    <div class="page hidden settings" data-page="settings">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title" id="settingsTitle"></h1>
+      </header>
+      <div id="settingsBody"></div>
+    </div>
+
+    <div class="page hidden" data-page="about">
+      <header class="page-head">
+        <button type="button" class="icon-round back" data-back aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <h1 class="page-title" id="aboutTitle"></h1>
+      </header>
+      <div class="about-brand">
+        <svg class="crown" viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>
+        <div class="brand-name">Проклинатор</div>
+        <div class="ver" id="aboutVer"></div>
+      </div>
+      <div class="card about-lines" id="aboutLines"></div>
+      <p class="fine" id="aboutDisclaimer"></p>
+      <a class="link-btn" id="aboutLink" href="#" target="_blank" rel="noopener"></a>
+    </div>
+  </section>
+
   <div class="red-flash" id="redFlash" aria-hidden="true"></div>
 </main>
+
+<nav class="tabbar" id="tabbar" aria-label="Разделы"></nav>
+
+<div class="splash" id="splash" role="button" aria-label="Пропустить заставку">
+  <div class="splash-art" aria-hidden="true"></div>
+  <div class="splash-veil" aria-hidden="true"></div>
+  <svg class="splash-sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="spG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#E5262F" stop-opacity=".55"/><stop offset="1" stop-color="#B3121F" stop-opacity="0"/></radialGradient>
+      <linearGradient id="spGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2DB94"/><stop offset="1" stop-color="#9C7A2E"/></linearGradient>
+    </defs>
+    <circle cx="100" cy="100" r="96" fill="url(#spG)"/>
+    <g class="spin">
+      <circle cx="100" cy="100" r="86" stroke="#D6202B" stroke-width="1.2" opacity=".9"/>
+      <circle cx="100" cy="100" r="80" stroke="#FF5A4F" stroke-width=".6" opacity=".7" stroke-dasharray="3 6"/>
+      <path d="M100 14 108 30 92 30Z M100 186 92 170 108 170Z M14 100 30 92 30 108Z M186 100 170 108 170 92Z" fill="#FF5A4F" opacity=".8"/>
+    </g>
+    <g class="spin-r">
+      <circle cx="100" cy="100" r="64" stroke="#D6202B" stroke-width="1" opacity=".8"/>
+      <polygon points="100,42 150,129 50,129" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+      <polygon points="100,158 50,71 150,71" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+    </g>
+    <circle cx="100" cy="100" r="40" stroke="#D6202B" stroke-width="1.4" opacity=".95"/>
+    <g transform="translate(100 102)">
+      <path d="M-24 10 -19-8l8 7L0-14l11 13 8-7 5 18Z" fill="url(#spGold)"/>
+      <rect x="-24" y="12" width="48" height="4" rx="1.6" fill="url(#spGold)"/>
+      <circle cx="0" cy="-14" r="1.8" fill="#FFF2C2"/><circle cx="-19" cy="-8" r="1.4" fill="#FFF2C2"/><circle cx="19" cy="-8" r="1.4" fill="#FFF2C2"/>
+    </g>
+  </svg>
+  <div class="splash-brand">Проклинатор</div>
+  <div class="splash-tag" id="splashTag"></div>
+  <div class="splash-prog"><i id="splashBar"></i></div>
+  <div class="splash-load" id="splashLoad"></div>
+  <p class="splash-quote" id="splashQuote"></p>
+  <div class="splash-skip" id="splashSkip"></div>
+</div>
 
 <div class="overlay" id="overlay" aria-hidden="true">
   <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
@@ -643,7 +1227,216 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 
 <script>
 (function(){
-  const DATA = {"version":"v18","owner":"Мия","date":"2026-09-10","formula":"кто → что случилось → сила сарказма → грех → проклятие → Снять:","notes":"v18: НОВЫЙ РИТУАЛ — occult-premium form: «Кто отличился?» + «Что случилось?», силы Ехидно/Жёстко/Апокалипсис (engine ids whisper/seal/anathema), тумблер «Без мата», blood CTA «Запустить ритуал», hero altar. Situation→sin scoring (name+blurb+sinKeywords). «Без мата» runtime filter on Freya stems (whole words / long stems, no bare еб/ёб/конч): selected power → whisper same card → seal same card → clean stub; lift with mat → clean lift. Catalog unchanged. Gender inferred from text (no М/Ж; N first, M/F silent fallback). Card subs per Freya canon. Freya punches, three/anime ritual, 1080×1920 Stories-safe poster, Share File + fonts.ready, WebGL context-loss handling kept from v17.","header":"Новый ритуал","subheader":"Опиши ситуацию. Остальное — наша забота.","tagline":"Слова тоже имеют власть","whoLabel":"Кто отличился?","whoPlaceholder":"Повелитель созвонов","whoMax":60,"whatLabel":"Что случилось?","whatPlaceholder":"Назначил встречу, чтобы обсудить следующую встречу.","whatMax":200,"powerLabel":"Сила сарказма","noMat":{"label":"Без мата","desc":"Едкий сарказм, без мата."},"emptyName":"Сначала скажи, кто отличился.","cta":"Запустить ритуал","busy":"Ритуал идёт…","footer":"Пусть мир станет чуть терпимее","resultEyebrow":"Твоё проклятие готово","disclaimer":"Проклинатор не несёт ответственности за последствия. Но мы в тебя верим.","toastOk":"Ритуал завершён.","toastShare":"Карточка готова. Кидай в чат.","toastCopy":"Скопировано.","after":["Сохранить картинку","Поделиться","Ещё ритуал"],"copyCurse":"Скопировать проклятие","appUrl":"https://singularitygrim.github.io/proklinator/","verdictBlocks":["Грех","Проклятие","Снять"],"powers":[{"id":"whisper","label":"Ехидно","desc":"Колет тихо. Можно отмахнуться.","fx":"soft"},{"id":"seal","label":"Жёстко","desc":"Печать на виду. Привычку не спрятать.","fx":"mid"},{"id":"anathema","label":"Апокалипсис","desc":"В полный рост. Имя и грех гуляют.","fx":"hard"}],"ritual":["Открываем дело на {имя}…","Читаем, что случилось.","Сила: жёстко.","Достаём грех из живых привычек…","Печать греется.","Пишем, чем аукнется…","Пишем, как снять…","Без пощады…","Ставим печать.","Готово. Можно кинуть в чат."],"sins":[{"id":1,"category":"byt","name":"Постоянный пиздеж","blurb":"хлещет словами, дела не видно"},{"id":2,"category":"byt","name":"Пустые обещания","blurb":"пообещал(а) — и забил(а)"},{"id":3,"category":"byt","name":"Уже выхожу","blurb":"пишет «уже выхожу», а ещё в душе"},{"id":4,"category":"byt","name":"Вечно «щас»","blurb":"говорит «сейчас» и исчезает на час"},{"id":5,"category":"byt","name":"Прочитал — молчит","blurb":"две галочки, ответа нет днями"},{"id":6,"category":"byt","name":"Громко жуёт","blurb":"хруст на весь вагон"},{"id":7,"category":"byt","name":"Перебивает","blurb":"не даёт договорить вторую фразу"},{"id":8,"category":"byt","name":"Спойлерит","blurb":"убивает финал чужого фильма"},{"id":9,"category":"byt","name":"На день","blurb":"взял(а) «на день», держит неделями"},{"id":10,"category":"byt","name":"Басы наружу","blurb":"наушники орют на три сиденья"},{"id":11,"category":"byt","name":"Фото еды","blurb":"снимает вечность, суп стынет"},{"id":12,"category":"byt","name":"Мокрый пол","blurb":"после душа пол — каток"},{"id":13,"category":"byt","name":"Кружка «потом»","blurb":"не моет, растёт археология"},{"id":14,"category":"byt","name":"Сортир без бумаги","blurb":"ушёл(ушла), рулона нет"},{"id":15,"category":"byt","name":"Звонок в три","blurb":"«ты не спишь?» среди ночи"},{"id":16,"category":"byt","name":"Чужой контейнер","blurb":"«чуть-чуть» — контейнер пуст"},{"id":17,"category":"byt","name":"Ответил «ок»","blurb":"на абзац души — две буквы"},{"id":18,"category":"byt","name":"Ломает планы","blurb":"«давай завтра» в последний миг"},{"id":19,"category":"byt","name":"Голосовое на три минуты","blurb":"вместо двух строк"},{"id":20,"category":"byt","name":"Стикером на серьёзное","blurb":"картинкой на боль"},{"id":21,"category":"byt","name":"Видео без наушников","blurb":"короткие ролики вслух, сосед в заложниках"},{"id":22,"category":"byt","name":"Будильник орёт — спит","blurb":"всех поднял(а), сам(а) дальше спит"},{"id":23,"category":"byt","name":"Пятиминутка","blurb":"созвон «на пять» съел час"},{"id":24,"category":"byt","name":"Почти готово","blurb":"«почти» третий месяц"},{"id":25,"category":"byt","name":"Спорит до победы","blurb":"даже когда уже не прав(а)"},{"id":26,"category":"byt","name":"Нытик","blurb":"погода, люди, судьба — всё против"},{"id":27,"category":"byt","name":"Письмо всем","blurb":"копия пол-отдела без нужды"},{"id":28,"category":"byt","name":"Правки после «да»","blurb":"вернул(а) правки после утверждения"},{"id":29,"category":"ovik","name":"Временная схема","blurb":"времянка на годы, уже в паспорте"},{"id":30,"category":"ovik","name":"В смету не влезло","blurb":"фильтры вырезали первыми"},{"id":31,"category":"ovik","name":"Это не наша зона","blurb":"мяч по кругу: вентиляция ↔ электрика"},{"id":32,"category":"ovik","name":"По проекту можно","blurb":"на бумаге — да, на монтаже — лыжи"},{"id":33,"category":"ovik","name":"Включили — шумит","blurb":"пуск без замеров, «характер» установки"},{"id":34,"category":"ovik","name":"Фильтры потом","blurb":"криво / забыли / «поменяем после сдачи»"},{"id":35,"category":"ovik","name":"Короб пошёл не туда","blurb":"в проекте прямо, по факту — змея"},{"id":36,"category":"ovik","name":"Ручной режим навсегда","blurb":"щит есть, логики нет"},{"id":37,"category":"ovik","name":"Конденсат на чужой","blurb":"капает на соседний потолок"},{"id":38,"category":"ovik","name":"Зимой на кровле","blurb":"срок горит — лезьте в мороз"},{"id":39,"category":"ovik","name":"Решётки задом","blurb":"вставили наоборот, «тяга есть»"},{"id":40,"category":"ovik","name":"Пуск перед комиссией","blurb":"завтра приёмка — сегодня схема"}],"sinKeywords":{"1":"болтает болтовня треплется трепло балабол наговорил наобещал пустословие языком рассказывает красиво говорит слова","2":"обещал обещала обещание пообещал пообещала забыл забыла забил слово сделаю кинул подвёл подвела не сделал","3":"выхожу выходит опоздал опоздала опаздывает задерживается задержался задержалась ждём ждали пробки еду подъезжаю поздно","4":"сейчас щас минутку секунду погоди подожди скоро исчез исчезла пропал пропала","5":"прочитал прочитала молчит игнорирует игнор не отвечает галочки онлайн ответа сообщение тишина забыл ответить пропал","6":"жуёт жует чавкает хрустит чипсы ест громко ртом жвачка","7":"перебивает перебил перебила договорить вставляет слово не даёт сказать затыкает","8":"спойлер спойлерит финал концовку сериал фильм рассказал кто убийца книга серия","9":"взял взяла одолжил одолжила занял заняла вернуть не вернул на день зарядку книгу деньги зажал должен","10":"музыка громко колонка басы наушники метро автобус слушает трек звук на весь вагон","11":"фото фотографирует еду сторис инстаграм снимает кадр ракурс остыло селфи","12":"пол мокрый душ ванная лужа брызги коврик каток вода","13":"кружка посуда чашка не моет раковина грязная тарелка плесень мыть","14":"туалет бумага рулон сортир унитаз закончилась","15":"ночью звонит звонок разбудил разбудила спишь три часа полночь пишет по ночам","16":"съел съела еда холодильник контейнер обед чужое йогурт откусил доел доела","17":"ок окей ответил ответила коротко сухо одним словом угу ага понял отписался","18":"отменил отменила планы перенёс перенесла кинул слился слилась не пришёл не пришла в последний момент завтра","19":"голосовое голосовые войс аудио записал наговорил минут вместо текста","20":"стикер мем картинка смайлик эмодзи гифка на серьёзное ответил","21":"видео тикток рилс ролики без наушников смотрит вслух звук телефон","22":"будильник проспал проспала спит просыпается утро звенит откладывает","23":"созвон созвоны встреча встречу встречи совещание митинг зум звонок планёрка синк обсудить час затянул созвониться колл","24":"почти готово доделываю скоро дедлайн срок затянул затянула не сдал не сдала задержал неделя месяц завтра","25":"спорит спор доказывает прав неправ упёрся упёрлась упирается последнее слово принципа","26":"ноет нытьё жалуется жалобы плохо устал устала несправедливо виноваты все против","27":"письмо копия всем рассылка почта отдел ответить всем чат тегнул всех","28":"правки правка утвердил согласовал переделать переделай ещё раз финальная версия макет","29":"временно времянка временная схема потом переделаем на неделю навсегда","30":"смета бюджет вырезали удешевили экономия дёшево дешевле не влезло","31":"не наша зона ответственности не мы смежники электрики подрядчик перекидывает","32":"проект проектировщик чертёж по проекту на бумаге монтаж не сходится","33":"шумит шум гудит вибрация включили запустили пуск замеры","34":"фильтры фильтр забыли поменяем после сдачи грязные","35":"короб воздуховод труба пошёл не туда змея кривой обход","36":"автоматика ручной режим щит контроллер логика вручную кнопка","37":"конденсат капает течёт потолок соседи дренаж лужа","38":"кровля крыша зима мороз срок горит лезьте холод","39":"решётки решётка вставили наоборот задом тяга дует","40":"комиссия приёмка сдача завтра пуск в панике за ночь"},"verdicts":{"N":[{"id":"N1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"N2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал(а)."},{"id":"N3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а тело всё ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"N4","sinId":4,"setup":"Сказал(а) «щас».","punch":{"whisper":"Проклятие вечного «щас» — минута растянется в час ожидания.","seal":"Проклятие вечного «щас» — ожидание сожрёт нервы.","anathema":"Проклятие вечного «щас» — ожидание выжрет нервы к хуям, останется пустой чат."},"lift":"Снять: явиться за десять минут."},{"id":"N5","sinId":5,"setup":"Прочитано. Тишина.","punch":{"whisper":"Проклятие двух галочек — ответ придёт, но совесть уже чешется.","seal":"Проклятие двух галочек без ответа — совесть орёт громче уведомлений.","anathema":"Проклятие двух галочек без ответа — совесть орёт, пальцы в жопе, дни летят."},"lift":"Снять: ответить в тот же день."},{"id":"N6","sinId":6,"setup":"Хруст на весь вагон.","punch":{"whisper":"Проклятие — челюсть щёлкнет громче хруста, когда рядом люди.","seal":"Проклятие — челюсть заедает на каждом хрусте при людях.","anathema":"Проклятие — челюсть клинит на каждом хрусте, пока весь вагон не встанет смотреть."},"lift":"Снять: жевать с закрытым ртом."},{"id":"N7","sinId":7,"setup":"Не дал(а) договорить.","punch":{"whisper":"Проклятие перебивалы — мысль оборвётся ровно на интересном месте.","seal":"Проклятие перебивалы — собственная мысль обрывается на полуслове.","anathema":"Проклятие перебивалы — язык сам обломается на полуслове, сам(а) себя перебьёшь в пустоту."},"lift":"Снять: дослушать до точки."},{"id":"N8","sinId":8,"setup":"Финал вслух.","punch":{"whisper":"Проклятие спойлера — финал узнают раньше титров, и смотреть стыдно.","seal":"Проклятие спойлера — все чужие финалы узнают раньше него/неё.","anathema":"Проклятие спойлера — финал плюнет ему/ей в лицо раньше титров, и всем заодно."},"lift":"Снять: рот на замок до титров."},{"id":"N9","sinId":9,"setup":"Взял(а) «на день».","punch":{"whisper":"Проклятие «на день» — чужое задержится, своё начнёт пропадать.","seal":"Проклятие чужой вещи «на день» — своё пропадёт навсегда.","anathema":"Проклятие чужой вещи «на день» — своё сгинет нахуй и всплывёт у того, кому «на денёк»."},"lift":"Снять: вернуть лично и в срок."},{"id":"N10","sinId":10,"setup":"Басы на три сиденья.","punch":{"whisper":"Проклятие басов наружу — соседи крутанут громкость за него/неё.","seal":"Проклятие басов наружу — соседи решат громкость за него/неё.","anathema":"Проклятие басов наружу — соседи выкрутят громкость, пока уши не сдадут смену."},"lift":"Снять: звук только себе."},{"id":"N11","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"N12","sinId":12,"setup":"После душа — каток.","punch":{"whisper":"Проклятие мокрого пола — сам(а) первым(ой) поскользнёшься на своём катке.","seal":"Проклятие мокрого пола — сам(а) первым(ой) поскользнётся.","anathema":"Проклятие мокрого пола — сам(а) ёбнешься на своём катке при полном зале свидетелей."},"lift":"Снять: вытереть досуха."},{"id":"N13","sinId":13,"setup":"Кружка третий день.","punch":{"whisper":"Проклятие «потом» — кружка дождётся плесени раньше мытья.","seal":"Проклятие «потом» — плесень подпишет приговор.","anathema":"Проклятие «потом» — плесень подпишет приговор и запрёт кружку в музей срама."},"lift":"Снять: помыть сегодня."},{"id":"N14","sinId":14,"setup":"Рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — застанет без бумаги в самый момент.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"N15","sinId":15,"setup":"Звонок в три.","punch":{"whisper":"Проклятие ночного «ты не спишь?» — сон станет редким гостем.","seal":"Проклятие ночного «ты не спишь?» — сон уйдёт насовсем.","anathema":"Проклятие ночного «ты не спишь?» — сон сдохнет; сам(а) станешь этим звонком в три."},"lift":"Снять: писать днём."},{"id":"N16","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — свой всегда будет пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену."},{"id":"N17","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетят две буквы вместо мысли.","seal":"Проклятие ответа «ок» — на важное приходит одна пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"N18","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — его/её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — его/её самого(у) кинут в последний миг.","anathema":"Проклятие ломаных планов — его/её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"N19","sinId":19,"setup":"Голосовое на три минуты.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — суть тонет в ветре и кашле.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"N20","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"N21","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"N22","sinId":22,"setup":"Будильник орёт — спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его/её — последним(ей).","seal":"Проклятие чужого будильника — сам(а) не проспит ни разу спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"N23","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"N24","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание в неё."},{"id":"N25","sinId":25,"setup":"Спорит из принципа.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — победит тишина и все уйдут.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: один раз сказать «ладно, ты прав(а)»."},{"id":"N26","sinId":26,"setup":"Всё против.","punch":{"whisper":"Проклятие нытья — жалобы вернутся эхом без одного сочувствия.","seal":"Проклятие нытья — жалобы вернутся бумерангом без слушателя.","anathema":"Проклятие нытья — жалобы вернутся бумерангом: слушателей ноль, пиздеца полно."},"lift":"Снять: день без жалобы вслух."},{"id":"N27","sinId":27,"setup":"Копия пол-отдела.","punch":{"whisper":"Проклятие письма «всем» — ответит толпа, а делать будет некому.","seal":"Проклятие письма «всем» — ответит толпа, а дела — ноль.","anathema":"Проклятие письма «всем» — ответит толпа пиздежом, дела — ноль целых ноль десятых."},"lift":"Снять: одному адресату."},{"id":"N28","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — «да» всегда будет черновиком.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"N29","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — она впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"N30","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"N31","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа останется общей и вечной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону на себя."},{"id":"N32","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо него/неё.","seal":"Проклятие пуска без замеров — шум станет единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."}],"M":[{"id":"M1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"M2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал."},{"id":"M3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а он ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"M4","sinId":14,"setup":"Вышел — рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — его застанет без бумаги.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"M5","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — его холодильник всегда пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену в тот же день."},{"id":"M6","sinId":19,"setup":"Голосовое вместо двух строк.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — его суть тонет в ветре.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"M7","sinId":22,"setup":"Будильник орёт — он спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его — последним.","seal":"Проклятие чужого будильника — сам не проспит спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"M8","sinId":25,"setup":"Спорит, хотя неправ.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — все уйдут, а он останется с правотой.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: сказать «ладно, ты права» и замолчать."},{"id":"M9","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"M10","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа будет его личной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону и вытереть."},{"id":"M11","sinId":32,"setup":"По бумаге можно.","punch":{"whisper":"Проклятие «по проекту можно» — на бумаге да, на монтаже — сюрприз.","seal":"Проклятие «по проекту можно» — на монтаже встанет в лыжи.","anathema":"Проклятие «по проекту можно» — на монтаже уедет в лыжи, «можно» останется в пдф."},"lift":"Снять: чертёж, который можно смонтировать."},{"id":"M12","sinId":35,"setup":"Короб — змея.","punch":{"whisper":"Проклятие короба не туда — метр тихо соврёт чертежу.","seal":"Проклятие короба не туда — каждый метр врёт чертежу.","anathema":"Проклятие короба не туда — змея пойдёт мимо чертежа, метр соврёт в лицо."},"lift":"Снять: короб по проекту."},{"id":"M13","sinId":36,"setup":"Щит без логики.","punch":{"whisper":"Проклятие ручного режима — палец устанет думать за щит.","seal":"Проклятие ручного режима навсегда — палец устанет за систему.","anathema":"Проклятие ручного режима — палец отвалится жать за систему, щит отомстит ночью."},"lift":"Снять: щит думает сам."},{"id":"M14","sinId":38,"setup":"Мороз, кровля, «лезьте».","punch":{"whisper":"Проклятие зимы на кровле — график утащит в минус вместе с пальцами.","seal":"Проклятие зимы на кровле — график сам полезет в минус.","anathema":"Проклятие зимы на кровле — график в минус, пальцы дубеют, героизм никто не оплатит."},"lift":"Снять: монтаж без героизма в мороз."},{"id":"M15","sinId":39,"setup":"Решётки задом.","punch":{"whisper":"Проклятие решёток задом — тяга будет, воздуха — в стену.","seal":"Проклятие решёток задом — «тяга есть» дует в стену.","anathema":"Проклятие решёток задом — тяга дует в стену; свежий воздух только для бетона."},"lift":"Снять: лицом к воздуху."},{"id":"M16","sinId":40,"setup":"Завтра комиссия.","punch":{"whisper":"Проклятие пуска перед комиссией — схема соберётся в панике и вспотеет.","seal":"Проклятие пуска перед комиссией — схема родится в панике.","anathema":"Проклятие пуска перед комиссией — схема соберётся в панике за ночь и развалится на глазах."},"lift":"Снять: пуск за день, с замерами."}],"F":[{"id":"F1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"F2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещала."},{"id":"F3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а она ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"F4","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше её кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"F5","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетит пустота в две буквы.","seal":"Проклятие ответа «ок» — на важное ей приходит пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"F6","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — её кинут в последний миг.","anathema":"Проклятие ломаных планов — её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"F7","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"F8","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — её алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"F9","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — её час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"F10","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание."},{"id":"F11","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — её «да» всегда черновик.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"F12","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"F13","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на её пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"F14","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо неё.","seal":"Проклятие пуска без замеров — шум станет её единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."},{"id":"F15","sinId":34,"setup":"Фильтры «потом».","punch":{"whisper":"Проклятие фильтров «потом» — «потом» приедет уже с претензией.","seal":"Проклятие фильтров потом — «потом» придёт после потопа.","anathema":"Проклятие фильтров потом — «потом» припрётся после потопа и чужого потолка."},"lift":"Снять: фильтры до пуска."},{"id":"F16","sinId":37,"setup":"Капает на чужой.","punch":{"whisper":"Проклятие конденсата на чужой — капля найдёт соседний потолок.","seal":"Проклятие конденсата на чужой — лужа придёт к ней домой.","anathema":"Проклятие конденсата на чужой — лужа приползёт к ней домой и устроит потоп лично ей."},"lift":"Снять: в свою трубу до чужого потолка."}]},"shareCaptions":{"bySinId":{"1":{"top":"ПОСТОЯННЫЙ ПИЗДЕЖ","mid":"ОСТАНОВИЛСЯ ЖЕЛУДОК","bottom":"Снять: заткнуться и сделать"},"2":{"top":"ПУСТЫЕ ОБЕЩАНИЯ","mid":"НЕ ВЫПОЛНЕННЫХ ЗАДАЧ","bottom":"Снять: сделать обещанное"},"3":{"top":"УЖЕ ВЫХОЖУ","mid":"УЖЕ — НА ЯЗЫКЕ","bottom":"Снять: текст с улицы"},"4":{"top":"ВЕЧНО «ЩАС»","mid":"ОЖИДАНИЕ СОЖРЁТ НЕРВЫ","bottom":"Снять: за 10 минут"},"5":{"top":"ПРОЧИТАЛ — МОЛЧИТ","mid":"ГАЛОЧКИ БЕЗ ОТВЕТА","bottom":"Снять: ответ в тот же день"},"6":{"top":"ГРОМКО ЖУЁТ","mid":"ЧЕЛЮСТЬ ЗАЕДАЕТ","bottom":"Снять: закрытый рот"},"7":{"top":"ПЕРЕБИВАЕТ","mid":"МЫСЛЬ ОБРЫВАЕТСЯ","bottom":"Снять: до точки"},"8":{"top":"СПОЙЛЕРИТ","mid":"ФИНАЛ РАНЬШЕ ВСЕХ","bottom":"Снять: рот до титров"},"9":{"top":"НА ДЕНЬ","mid":"ЧУЖОЕ НАВСЕГДА","bottom":"Снять: вернуть в срок"},"10":{"top":"БАСЫ НАРУЖУ","mid":"ГРОМКОСТЬ ЗА НЕГО","bottom":"Снять: только себе"},"11":{"top":"ФОТО ЕДЫ","mid":"ЕДА ОСТЫНЕТ РАНЬШЕ","bottom":"Снять: один кадр — и есть"},"12":{"top":"МОКРЫЙ ПОЛ","mid":"ПЕРВЫМ ПОСКОЛЬЗНЁТСЯ","bottom":"Снять: вытереть досуха"},"13":{"top":"КРУЖКА «ПОТОМ»","mid":"ПЛЕСЕНЬ ПОДПИШЕТ","bottom":"Снять: помыть сегодня"},"14":{"top":"СОРТИР БЕЗ БУМАГИ","mid":"ЗАСТАНЕТ БЕЗ БУМАГИ","bottom":"Снять: глянуть на рулон"},"15":{"top":"ЗВОНОК В ТРИ","mid":"СОН УЙДЁТ НАСОВСЕМ","bottom":"Снять: писать днём"},"16":{"top":"ЧУЖОЙ КОНТЕЙНЕР","mid":"СВОЙ ВСЕГДА ПУСТ","bottom":"Снять: купить замену"},"17":{"top":"ОТВЕТИЛ «ОК»","mid":"НА ВАЖНОЕ — ПУСТОТА","bottom":"Снять: целое предложение"},"18":{"top":"ЛОМАЕТ ПЛАНЫ","mid":"КИНУТ В ПОСЛЕДНИЙ МИГ","bottom":"Снять: за три часа"},"19":{"top":"ГОЛОСОВОЕ НА ТРИ","mid":"СУТЬ ТОНЕТ В ВЕТРЕ","bottom":"Снять: сначала две строки"},"20":{"top":"СТИКЕРОМ НА БОЛЬ","mid":"В ОТВЕТ — ПОШЛОСТЬ","bottom":"Снять: словами"},"21":{"top":"ВИДЕО БЕЗ НАУШНИКОВ","mid":"АЛГОРИТМ ОРЁТ","bottom":"Снять: наушники"},"22":{"top":"БУДИЛЬНИК ОРЁТ","mid":"САМ НЕ ПРОСПИТ","bottom":"Снять: с первым сигналом"},"23":{"top":"ПЯТИМИНУТКА","mid":"ЧАС СГОРИТ БЕЗ ИТОГА","bottom":"Снять: пять по таймеру"},"24":{"top":"ПОЧТИ ГОТОВО","mid":"ГОТОВОЕ НЕ НАСТУПИТ","bottom":"Снять: честная дата"},"25":{"top":"СПОРИТ ДО ПОБЕДЫ","mid":"ПОБЕДИТ ТИШИНА","bottom":"Снять: «ладно, ты прав(а)»"},"26":{"top":"НЫТИК","mid":"ЖАЛОБЫ БУМЕРАНГОМ","bottom":"Снять: день без жалобы"},"27":{"top":"ПИСЬМО ВСЕМ","mid":"ТОЛПА БЕЗ ДЕЛА","bottom":"Снять: одному"},"28":{"top":"ПРАВКИ ПОСЛЕ «ДА»","mid":"«ДА» — ЧЕРНОВИК","bottom":"Снять: правки до «да»"},"29":{"top":"ВРЕМЕННАЯ СХЕМА","mid":"В ПАСПОРТ НАВЕКИ","bottom":"Снять: нормальный пуск"},"30":{"top":"В СМЕТУ НЕ ВЛЕЗЛО","mid":"ЗАДОХНЁТСЯ НА ПУСКЕ","bottom":"Снять: вернуть в смету"},"31":{"top":"ЭТО НЕ НАША ЗОНА","mid":"ЛУЖА ОБЩАЯ И ВЕЧНАЯ","bottom":"Снять: взять зону"},"32":{"top":"ПО ПРОЕКТУ МОЖНО","mid":"НА МОНТАЖЕ — В ЛЫЖИ","bottom":"Снять: чертёж = монтаж"},"33":{"top":"ВКЛЮЧИЛИ — ШУМИТ","mid":"ШУМ — ЕДИНСТВЕННЫЙ АКТ","bottom":"Снять: пуск с замерами"},"34":{"top":"ФИЛЬТРЫ ПОТОМ","mid":"ПОТОМ = ПОСЛЕ ПОТОПА","bottom":"Снять: фильтры до пуска"},"35":{"top":"КОРОБ ПОШЁЛ НЕ ТУДА","mid":"МЕТР ВРЁТ ЧЕРТЕЖУ","bottom":"Снять: по проекту"},"36":{"top":"РУЧНОЙ РЕЖИМ","mid":"ПАЛЕЦ УСТАНЕТ ЗА СИСТЕМУ","bottom":"Снять: щит думает сам"},"37":{"top":"КОНДЕНСАТ НА ЧУЖОЙ","mid":"ЛУЖА ПРИДЁТ ДОМОЙ","bottom":"Снять: в свою трубу"},"38":{"top":"ЗИМОЙ НА КРОВЛЕ","mid":"ГРАФИК В МИНУС","bottom":"Снять: без героизма в мороз"},"39":{"top":"РЕШЁТКИ ЗАДОМ","mid":"ТЯГА ДУЕТ В СТЕНУ","bottom":"Снять: лицом к воздуху"},"40":{"top":"ПУСК ПЕРЕД КОМИССИЕЙ","mid":"СХЕМА В ПАНИКЕ","bottom":"Снять: за день, с замерами"}},"byCategory":{"byt":{"top":"ГРЕХ БЫТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: исправиться при людях"},"ovik":{"top":"ГРЕХ ОБЪЕКТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: нормальный пуск"},"generic":{"top":"ПРОКЛИНАТОР","mid":"ПРИГОВОР","bottom":"Снять: по условию ниже"}}},"ritualByPower":{"whisper":["Тихо открываем дело на {имя}…","Читаем, что случилось.","Сила: ехидно.","Достаём мелкий грех…","Печать едва греется.","Пишем, чем аукнется…","Лёгкий укол…","Как снять…","Ставим тихую печать.","Готово. Можно кинуть в чат."],"seal":["Открываем дело на {имя}…","Читаем, что случилось.","Сила: жёстко.","Достаём грех из живых привычек…","Печать греется.","Пишем, чем аукнется…","Пишем, как снять…","Без пощады…","Ставим печать.","Готово. Можно кинуть в чат."],"anathema":["Ломаем дело на {имя}.","Читаем, что натворено.","Сила: апокалипсис.","Достаём грех с корнем…","Печать орёт от жара.","Бьём наотмашь…","Снятие — только через дело…","Когда уже поздно…","Ставим клеймо.","Готово. Пусть все видят."]},"fx":{"whisper":{"spin":0.4,"glow":0.35,"particles":24,"shake":2,"duration":2200,"rings":2,"vibrate":[12],"color":"#A65A55","orbScale":0.95},"seal":{"spin":1.0,"glow":0.7,"particles":56,"shake":6,"duration":3200,"rings":4,"vibrate":[18,40,18],"color":"#B3121F","orbScale":1.2},"anathema":{"spin":2.6,"glow":1.15,"particles":160,"shake":18,"duration":5000,"rings":8,"vibrate":[30,50,30,50,40],"color":"#FF3B2F","orbScale":1.55}}};
+  const DATA = {"version":"v19","owner":"Мия","date":"2026-09-10","formula":"кто → что случилось → сила сарказма → грех → проклятие → Снять:","notes":"v19: FULL PRODUCT SHELL — splash once per session, 5-tab bottom nav (Ритуал/Категории/История/Ритуалы/Профиль), 8 categories with sin tags biasing situation→sin scoring, localStorage history (cap 100, fav/delete/share/reopen), rituals catalog (6, flavor line on result+poster+chant, Полнолуние PRO-gated), result «В избранное» + «Ещё жёстче» (power bump + reroll), profile (editable nick, counters, «мир хуже на N%»), local badges, stats, settings, about, PRO mock paywall (local pro=true), leaderboard (seeds + local karma). Shell copy lives in SHELL. Core v18 flow unchanged below. v18: НОВЫЙ РИТУАЛ — occult-premium form: «Кто отличился?» + «Что случилось?», силы Ехидно/Жёстко/Апокалипсис (engine ids whisper/seal/anathema), тумблер «Без мата», blood CTA «Запустить ритуал», hero altar. Situation→sin scoring (name+blurb+sinKeywords). «Без мата» runtime filter on Freya stems (whole words / long stems, no bare еб/ёб/конч): selected power → whisper same card → seal same card → clean stub; lift with mat → clean lift. Catalog unchanged. Gender inferred from text (no М/Ж; N first, M/F silent fallback). Card subs per Freya canon. Freya punches, three/anime ritual, 1080×1920 Stories-safe poster, Share File + fonts.ready, WebGL context-loss handling kept from v17.","header":"Новый ритуал","subheader":"Опиши ситуацию. Остальное — наша забота.","tagline":"Слова тоже имеют власть","whoLabel":"Кто отличился?","whoPlaceholder":"Повелитель созвонов","whoMax":60,"whatLabel":"Что случилось?","whatPlaceholder":"Назначил встречу, чтобы обсудить следующую встречу.","whatMax":200,"powerLabel":"Сила сарказма","noMat":{"label":"Без мата","desc":"Едкий сарказм, без мата."},"emptyName":"Сначала скажи, кто отличился.","cta":"Запустить ритуал","busy":"Ритуал идёт…","footer":"Пусть мир станет чуть терпимее","resultEyebrow":"Твоё проклятие готово","disclaimer":"Проклинатор не несёт ответственности за последствия. Но мы в тебя верим.","toastOk":"Ритуал завершён.","toastShare":"Карточка готова. Кидай в чат.","toastCopy":"Скопировано.","after":["Сохранить картинку","Поделиться","Ещё ритуал"],"copyCurse":"Скопировать проклятие","appUrl":"https://singularitygrim.github.io/proklinator/","verdictBlocks":["Грех","Проклятие","Снять"],"powers":[{"id":"whisper","label":"Ехидно","desc":"Колет тихо. Можно отмахнуться.","fx":"soft"},{"id":"seal","label":"Жёстко","desc":"Печать на виду. Привычку не спрятать.","fx":"mid"},{"id":"anathema","label":"Апокалипсис","desc":"В полный рост. Имя и грех гуляют.","fx":"hard"}],"ritual":["Открываем дело на {имя}…","Читаем, что случилось.","Сила: жёстко.","Достаём грех из живых привычек…","Печать греется.","Пишем, чем аукнется…","Пишем, как снять…","Без пощады…","Ставим печать.","Готово. Можно кинуть в чат."],"sins":[{"id":1,"category":"byt","name":"Постоянный пиздеж","blurb":"хлещет словами, дела не видно"},{"id":2,"category":"byt","name":"Пустые обещания","blurb":"пообещал(а) — и забил(а)"},{"id":3,"category":"byt","name":"Уже выхожу","blurb":"пишет «уже выхожу», а ещё в душе"},{"id":4,"category":"byt","name":"Вечно «щас»","blurb":"говорит «сейчас» и исчезает на час"},{"id":5,"category":"byt","name":"Прочитал — молчит","blurb":"две галочки, ответа нет днями"},{"id":6,"category":"byt","name":"Громко жуёт","blurb":"хруст на весь вагон"},{"id":7,"category":"byt","name":"Перебивает","blurb":"не даёт договорить вторую фразу"},{"id":8,"category":"byt","name":"Спойлерит","blurb":"убивает финал чужого фильма"},{"id":9,"category":"byt","name":"На день","blurb":"взял(а) «на день», держит неделями"},{"id":10,"category":"byt","name":"Басы наружу","blurb":"наушники орют на три сиденья"},{"id":11,"category":"byt","name":"Фото еды","blurb":"снимает вечность, суп стынет"},{"id":12,"category":"byt","name":"Мокрый пол","blurb":"после душа пол — каток"},{"id":13,"category":"byt","name":"Кружка «потом»","blurb":"не моет, растёт археология"},{"id":14,"category":"byt","name":"Сортир без бумаги","blurb":"ушёл(ушла), рулона нет"},{"id":15,"category":"byt","name":"Звонок в три","blurb":"«ты не спишь?» среди ночи"},{"id":16,"category":"byt","name":"Чужой контейнер","blurb":"«чуть-чуть» — контейнер пуст"},{"id":17,"category":"byt","name":"Ответил «ок»","blurb":"на абзац души — две буквы"},{"id":18,"category":"byt","name":"Ломает планы","blurb":"«давай завтра» в последний миг"},{"id":19,"category":"byt","name":"Голосовое на три минуты","blurb":"вместо двух строк"},{"id":20,"category":"byt","name":"Стикером на серьёзное","blurb":"картинкой на боль"},{"id":21,"category":"byt","name":"Видео без наушников","blurb":"короткие ролики вслух, сосед в заложниках"},{"id":22,"category":"byt","name":"Будильник орёт — спит","blurb":"всех поднял(а), сам(а) дальше спит"},{"id":23,"category":"byt","name":"Пятиминутка","blurb":"созвон «на пять» съел час"},{"id":24,"category":"byt","name":"Почти готово","blurb":"«почти» третий месяц"},{"id":25,"category":"byt","name":"Спорит до победы","blurb":"даже когда уже не прав(а)"},{"id":26,"category":"byt","name":"Нытик","blurb":"погода, люди, судьба — всё против"},{"id":27,"category":"byt","name":"Письмо всем","blurb":"копия пол-отдела без нужды"},{"id":28,"category":"byt","name":"Правки после «да»","blurb":"вернул(а) правки после утверждения"},{"id":29,"category":"ovik","name":"Временная схема","blurb":"времянка на годы, уже в паспорте"},{"id":30,"category":"ovik","name":"В смету не влезло","blurb":"фильтры вырезали первыми"},{"id":31,"category":"ovik","name":"Это не наша зона","blurb":"мяч по кругу: вентиляция ↔ электрика"},{"id":32,"category":"ovik","name":"По проекту можно","blurb":"на бумаге — да, на монтаже — лыжи"},{"id":33,"category":"ovik","name":"Включили — шумит","blurb":"пуск без замеров, «характер» установки"},{"id":34,"category":"ovik","name":"Фильтры потом","blurb":"криво / забыли / «поменяем после сдачи»"},{"id":35,"category":"ovik","name":"Короб пошёл не туда","blurb":"в проекте прямо, по факту — змея"},{"id":36,"category":"ovik","name":"Ручной режим навсегда","blurb":"щит есть, логики нет"},{"id":37,"category":"ovik","name":"Конденсат на чужой","blurb":"капает на соседний потолок"},{"id":38,"category":"ovik","name":"Зимой на кровле","blurb":"срок горит — лезьте в мороз"},{"id":39,"category":"ovik","name":"Решётки задом","blurb":"вставили наоборот, «тяга есть»"},{"id":40,"category":"ovik","name":"Пуск перед комиссией","blurb":"завтра приёмка — сегодня схема"}],"sinKeywords":{"1":"болтает болтовня треплется трепло балабол наговорил наобещал пустословие языком рассказывает красиво говорит слова","2":"обещал обещала обещание пообещал пообещала забыл забыла забил слово сделаю кинул подвёл подвела не сделал","3":"выхожу выходит опоздал опоздала опаздывает задерживается задержался задержалась ждём ждали пробки еду подъезжаю поздно","4":"сейчас щас минутку секунду погоди подожди скоро исчез исчезла пропал пропала","5":"прочитал прочитала молчит игнорирует игнор не отвечает галочки онлайн ответа сообщение тишина забыл ответить пропал","6":"жуёт жует чавкает хрустит чипсы ест громко ртом жвачка","7":"перебивает перебил перебила договорить вставляет слово не даёт сказать затыкает","8":"спойлер спойлерит финал концовку сериал фильм рассказал кто убийца книга серия","9":"взял взяла одолжил одолжила занял заняла вернуть не вернул на день зарядку книгу деньги зажал должен","10":"музыка громко колонка басы наушники метро автобус слушает трек звук на весь вагон","11":"фото фотографирует еду сторис инстаграм снимает кадр ракурс остыло селфи","12":"пол мокрый душ ванная лужа брызги коврик каток вода","13":"кружка посуда чашка не моет раковина грязная тарелка плесень мыть","14":"туалет бумага рулон сортир унитаз закончилась","15":"ночью звонит звонок разбудил разбудила спишь три часа полночь пишет по ночам","16":"съел съела еда холодильник контейнер обед чужое йогурт откусил доел доела","17":"ок окей ответил ответила коротко сухо одним словом угу ага понял отписался","18":"отменил отменила планы перенёс перенесла кинул слился слилась не пришёл не пришла в последний момент завтра","19":"голосовое голосовые войс аудио записал наговорил минут вместо текста","20":"стикер мем картинка смайлик эмодзи гифка на серьёзное ответил","21":"видео тикток рилс ролики без наушников смотрит вслух звук телефон","22":"будильник проспал проспала спит просыпается утро звенит откладывает","23":"созвон созвоны встреча встречу встречи совещание митинг зум звонок планёрка синк обсудить час затянул созвониться колл","24":"почти готово доделываю скоро дедлайн срок затянул затянула не сдал не сдала задержал неделя месяц завтра","25":"спорит спор доказывает прав неправ упёрся упёрлась упирается последнее слово принципа","26":"ноет нытьё жалуется жалобы плохо устал устала несправедливо виноваты все против","27":"письмо копия всем рассылка почта отдел ответить всем чат тегнул всех","28":"правки правка утвердил согласовал переделать переделай ещё раз финальная версия макет","29":"временно времянка временная схема потом переделаем на неделю навсегда","30":"смета бюджет вырезали удешевили экономия дёшево дешевле не влезло","31":"не наша зона ответственности не мы смежники электрики подрядчик перекидывает","32":"проект проектировщик чертёж по проекту на бумаге монтаж не сходится","33":"шумит шум гудит вибрация включили запустили пуск замеры","34":"фильтры фильтр забыли поменяем после сдачи грязные","35":"короб воздуховод труба пошёл не туда змея кривой обход","36":"автоматика ручной режим щит контроллер логика вручную кнопка","37":"конденсат капает течёт потолок соседи дренаж лужа","38":"кровля крыша зима мороз срок горит лезьте холод","39":"решётки решётка вставили наоборот задом тяга дует","40":"комиссия приёмка сдача завтра пуск в панике за ночь"},"verdicts":{"N":[{"id":"N1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"N2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал(а)."},{"id":"N3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а тело всё ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"N4","sinId":4,"setup":"Сказал(а) «щас».","punch":{"whisper":"Проклятие вечного «щас» — минута растянется в час ожидания.","seal":"Проклятие вечного «щас» — ожидание сожрёт нервы.","anathema":"Проклятие вечного «щас» — ожидание выжрет нервы к хуям, останется пустой чат."},"lift":"Снять: явиться за десять минут."},{"id":"N5","sinId":5,"setup":"Прочитано. Тишина.","punch":{"whisper":"Проклятие двух галочек — ответ придёт, но совесть уже чешется.","seal":"Проклятие двух галочек без ответа — совесть орёт громче уведомлений.","anathema":"Проклятие двух галочек без ответа — совесть орёт, пальцы в жопе, дни летят."},"lift":"Снять: ответить в тот же день."},{"id":"N6","sinId":6,"setup":"Хруст на весь вагон.","punch":{"whisper":"Проклятие — челюсть щёлкнет громче хруста, когда рядом люди.","seal":"Проклятие — челюсть заедает на каждом хрусте при людях.","anathema":"Проклятие — челюсть клинит на каждом хрусте, пока весь вагон не встанет смотреть."},"lift":"Снять: жевать с закрытым ртом."},{"id":"N7","sinId":7,"setup":"Не дал(а) договорить.","punch":{"whisper":"Проклятие перебивалы — мысль оборвётся ровно на интересном месте.","seal":"Проклятие перебивалы — собственная мысль обрывается на полуслове.","anathema":"Проклятие перебивалы — язык сам обломается на полуслове, сам(а) себя перебьёшь в пустоту."},"lift":"Снять: дослушать до точки."},{"id":"N8","sinId":8,"setup":"Финал вслух.","punch":{"whisper":"Проклятие спойлера — финал узнают раньше титров, и смотреть стыдно.","seal":"Проклятие спойлера — все чужие финалы узнают раньше него/неё.","anathema":"Проклятие спойлера — финал плюнет ему/ей в лицо раньше титров, и всем заодно."},"lift":"Снять: рот на замок до титров."},{"id":"N9","sinId":9,"setup":"Взял(а) «на день».","punch":{"whisper":"Проклятие «на день» — чужое задержится, своё начнёт пропадать.","seal":"Проклятие чужой вещи «на день» — своё пропадёт навсегда.","anathema":"Проклятие чужой вещи «на день» — своё сгинет нахуй и всплывёт у того, кому «на денёк»."},"lift":"Снять: вернуть лично и в срок."},{"id":"N10","sinId":10,"setup":"Басы на три сиденья.","punch":{"whisper":"Проклятие басов наружу — соседи крутанут громкость за него/неё.","seal":"Проклятие басов наружу — соседи решат громкость за него/неё.","anathema":"Проклятие басов наружу — соседи выкрутят громкость, пока уши не сдадут смену."},"lift":"Снять: звук только себе."},{"id":"N11","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"N12","sinId":12,"setup":"После душа — каток.","punch":{"whisper":"Проклятие мокрого пола — сам(а) первым(ой) поскользнёшься на своём катке.","seal":"Проклятие мокрого пола — сам(а) первым(ой) поскользнётся.","anathema":"Проклятие мокрого пола — сам(а) ёбнешься на своём катке при полном зале свидетелей."},"lift":"Снять: вытереть досуха."},{"id":"N13","sinId":13,"setup":"Кружка третий день.","punch":{"whisper":"Проклятие «потом» — кружка дождётся плесени раньше мытья.","seal":"Проклятие «потом» — плесень подпишет приговор.","anathema":"Проклятие «потом» — плесень подпишет приговор и запрёт кружку в музей срама."},"lift":"Снять: помыть сегодня."},{"id":"N14","sinId":14,"setup":"Рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — застанет без бумаги в самый момент.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"N15","sinId":15,"setup":"Звонок в три.","punch":{"whisper":"Проклятие ночного «ты не спишь?» — сон станет редким гостем.","seal":"Проклятие ночного «ты не спишь?» — сон уйдёт насовсем.","anathema":"Проклятие ночного «ты не спишь?» — сон сдохнет; сам(а) станешь этим звонком в три."},"lift":"Снять: писать днём."},{"id":"N16","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — свой всегда будет пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену."},{"id":"N17","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетят две буквы вместо мысли.","seal":"Проклятие ответа «ок» — на важное приходит одна пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"N18","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — его/её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — его/её самого(у) кинут в последний миг.","anathema":"Проклятие ломаных планов — его/её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"N19","sinId":19,"setup":"Голосовое на три минуты.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — суть тонет в ветре и кашле.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"N20","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"N21","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"N22","sinId":22,"setup":"Будильник орёт — спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его/её — последним(ей).","seal":"Проклятие чужого будильника — сам(а) не проспит ни разу спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"N23","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"N24","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание в неё."},{"id":"N25","sinId":25,"setup":"Спорит из принципа.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — победит тишина и все уйдут.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: один раз сказать «ладно, ты прав(а)»."},{"id":"N26","sinId":26,"setup":"Всё против.","punch":{"whisper":"Проклятие нытья — жалобы вернутся эхом без одного сочувствия.","seal":"Проклятие нытья — жалобы вернутся бумерангом без слушателя.","anathema":"Проклятие нытья — жалобы вернутся бумерангом: слушателей ноль, пиздеца полно."},"lift":"Снять: день без жалобы вслух."},{"id":"N27","sinId":27,"setup":"Копия пол-отдела.","punch":{"whisper":"Проклятие письма «всем» — ответит толпа, а делать будет некому.","seal":"Проклятие письма «всем» — ответит толпа, а дела — ноль.","anathema":"Проклятие письма «всем» — ответит толпа пиздежом, дела — ноль целых ноль десятых."},"lift":"Снять: одному адресату."},{"id":"N28","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — «да» всегда будет черновиком.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"N29","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — она впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"N30","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"N31","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа останется общей и вечной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону на себя."},{"id":"N32","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо него/неё.","seal":"Проклятие пуска без замеров — шум станет единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."}],"M":[{"id":"M1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"M2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал."},{"id":"M3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а он ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"M4","sinId":14,"setup":"Вышел — рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — его застанет без бумаги.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"M5","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — его холодильник всегда пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену в тот же день."},{"id":"M6","sinId":19,"setup":"Голосовое вместо двух строк.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — его суть тонет в ветре.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"M7","sinId":22,"setup":"Будильник орёт — он спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его — последним.","seal":"Проклятие чужого будильника — сам не проспит спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"M8","sinId":25,"setup":"Спорит, хотя неправ.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — все уйдут, а он останется с правотой.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: сказать «ладно, ты права» и замолчать."},{"id":"M9","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"M10","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа будет его личной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону и вытереть."},{"id":"M11","sinId":32,"setup":"По бумаге можно.","punch":{"whisper":"Проклятие «по проекту можно» — на бумаге да, на монтаже — сюрприз.","seal":"Проклятие «по проекту можно» — на монтаже встанет в лыжи.","anathema":"Проклятие «по проекту можно» — на монтаже уедет в лыжи, «можно» останется в пдф."},"lift":"Снять: чертёж, который можно смонтировать."},{"id":"M12","sinId":35,"setup":"Короб — змея.","punch":{"whisper":"Проклятие короба не туда — метр тихо соврёт чертежу.","seal":"Проклятие короба не туда — каждый метр врёт чертежу.","anathema":"Проклятие короба не туда — змея пойдёт мимо чертежа, метр соврёт в лицо."},"lift":"Снять: короб по проекту."},{"id":"M13","sinId":36,"setup":"Щит без логики.","punch":{"whisper":"Проклятие ручного режима — палец устанет думать за щит.","seal":"Проклятие ручного режима навсегда — палец устанет за систему.","anathema":"Проклятие ручного режима — палец отвалится жать за систему, щит отомстит ночью."},"lift":"Снять: щит думает сам."},{"id":"M14","sinId":38,"setup":"Мороз, кровля, «лезьте».","punch":{"whisper":"Проклятие зимы на кровле — график утащит в минус вместе с пальцами.","seal":"Проклятие зимы на кровле — график сам полезет в минус.","anathema":"Проклятие зимы на кровле — график в минус, пальцы дубеют, героизм никто не оплатит."},"lift":"Снять: монтаж без героизма в мороз."},{"id":"M15","sinId":39,"setup":"Решётки задом.","punch":{"whisper":"Проклятие решёток задом — тяга будет, воздуха — в стену.","seal":"Проклятие решёток задом — «тяга есть» дует в стену.","anathema":"Проклятие решёток задом — тяга дует в стену; свежий воздух только для бетона."},"lift":"Снять: лицом к воздуху."},{"id":"M16","sinId":40,"setup":"Завтра комиссия.","punch":{"whisper":"Проклятие пуска перед комиссией — схема соберётся в панике и вспотеет.","seal":"Проклятие пуска перед комиссией — схема родится в панике.","anathema":"Проклятие пуска перед комиссией — схема соберётся в панике за ночь и развалится на глазах."},"lift":"Снять: пуск за день, с замерами."}],"F":[{"id":"F1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"F2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещала."},{"id":"F3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а она ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"F4","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше её кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"F5","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетит пустота в две буквы.","seal":"Проклятие ответа «ок» — на важное ей приходит пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"F6","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — её кинут в последний миг.","anathema":"Проклятие ломаных планов — её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"F7","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"F8","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — её алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"F9","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — её час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"F10","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание."},{"id":"F11","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — её «да» всегда черновик.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"F12","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"F13","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на её пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"F14","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо неё.","seal":"Проклятие пуска без замеров — шум станет её единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."},{"id":"F15","sinId":34,"setup":"Фильтры «потом».","punch":{"whisper":"Проклятие фильтров «потом» — «потом» приедет уже с претензией.","seal":"Проклятие фильтров потом — «потом» придёт после потопа.","anathema":"Проклятие фильтров потом — «потом» припрётся после потопа и чужого потолка."},"lift":"Снять: фильтры до пуска."},{"id":"F16","sinId":37,"setup":"Капает на чужой.","punch":{"whisper":"Проклятие конденсата на чужой — капля найдёт соседний потолок.","seal":"Проклятие конденсата на чужой — лужа придёт к ней домой.","anathema":"Проклятие конденсата на чужой — лужа приползёт к ней домой и устроит потоп лично ей."},"lift":"Снять: в свою трубу до чужого потолка."}]},"shareCaptions":{"bySinId":{"1":{"top":"ПОСТОЯННЫЙ ПИЗДЕЖ","mid":"ОСТАНОВИЛСЯ ЖЕЛУДОК","bottom":"Снять: заткнуться и сделать"},"2":{"top":"ПУСТЫЕ ОБЕЩАНИЯ","mid":"НЕ ВЫПОЛНЕННЫХ ЗАДАЧ","bottom":"Снять: сделать обещанное"},"3":{"top":"УЖЕ ВЫХОЖУ","mid":"УЖЕ — НА ЯЗЫКЕ","bottom":"Снять: текст с улицы"},"4":{"top":"ВЕЧНО «ЩАС»","mid":"ОЖИДАНИЕ СОЖРЁТ НЕРВЫ","bottom":"Снять: за 10 минут"},"5":{"top":"ПРОЧИТАЛ — МОЛЧИТ","mid":"ГАЛОЧКИ БЕЗ ОТВЕТА","bottom":"Снять: ответ в тот же день"},"6":{"top":"ГРОМКО ЖУЁТ","mid":"ЧЕЛЮСТЬ ЗАЕДАЕТ","bottom":"Снять: закрытый рот"},"7":{"top":"ПЕРЕБИВАЕТ","mid":"МЫСЛЬ ОБРЫВАЕТСЯ","bottom":"Снять: до точки"},"8":{"top":"СПОЙЛЕРИТ","mid":"ФИНАЛ РАНЬШЕ ВСЕХ","bottom":"Снять: рот до титров"},"9":{"top":"НА ДЕНЬ","mid":"ЧУЖОЕ НАВСЕГДА","bottom":"Снять: вернуть в срок"},"10":{"top":"БАСЫ НАРУЖУ","mid":"ГРОМКОСТЬ ЗА НЕГО","bottom":"Снять: только себе"},"11":{"top":"ФОТО ЕДЫ","mid":"ЕДА ОСТЫНЕТ РАНЬШЕ","bottom":"Снять: один кадр — и есть"},"12":{"top":"МОКРЫЙ ПОЛ","mid":"ПЕРВЫМ ПОСКОЛЬЗНЁТСЯ","bottom":"Снять: вытереть досуха"},"13":{"top":"КРУЖКА «ПОТОМ»","mid":"ПЛЕСЕНЬ ПОДПИШЕТ","bottom":"Снять: помыть сегодня"},"14":{"top":"СОРТИР БЕЗ БУМАГИ","mid":"ЗАСТАНЕТ БЕЗ БУМАГИ","bottom":"Снять: глянуть на рулон"},"15":{"top":"ЗВОНОК В ТРИ","mid":"СОН УЙДЁТ НАСОВСЕМ","bottom":"Снять: писать днём"},"16":{"top":"ЧУЖОЙ КОНТЕЙНЕР","mid":"СВОЙ ВСЕГДА ПУСТ","bottom":"Снять: купить замену"},"17":{"top":"ОТВЕТИЛ «ОК»","mid":"НА ВАЖНОЕ — ПУСТОТА","bottom":"Снять: целое предложение"},"18":{"top":"ЛОМАЕТ ПЛАНЫ","mid":"КИНУТ В ПОСЛЕДНИЙ МИГ","bottom":"Снять: за три часа"},"19":{"top":"ГОЛОСОВОЕ НА ТРИ","mid":"СУТЬ ТОНЕТ В ВЕТРЕ","bottom":"Снять: сначала две строки"},"20":{"top":"СТИКЕРОМ НА БОЛЬ","mid":"В ОТВЕТ — ПОШЛОСТЬ","bottom":"Снять: словами"},"21":{"top":"ВИДЕО БЕЗ НАУШНИКОВ","mid":"АЛГОРИТМ ОРЁТ","bottom":"Снять: наушники"},"22":{"top":"БУДИЛЬНИК ОРЁТ","mid":"САМ НЕ ПРОСПИТ","bottom":"Снять: с первым сигналом"},"23":{"top":"ПЯТИМИНУТКА","mid":"ЧАС СГОРИТ БЕЗ ИТОГА","bottom":"Снять: пять по таймеру"},"24":{"top":"ПОЧТИ ГОТОВО","mid":"ГОТОВОЕ НЕ НАСТУПИТ","bottom":"Снять: честная дата"},"25":{"top":"СПОРИТ ДО ПОБЕДЫ","mid":"ПОБЕДИТ ТИШИНА","bottom":"Снять: «ладно, ты прав(а)»"},"26":{"top":"НЫТИК","mid":"ЖАЛОБЫ БУМЕРАНГОМ","bottom":"Снять: день без жалобы"},"27":{"top":"ПИСЬМО ВСЕМ","mid":"ТОЛПА БЕЗ ДЕЛА","bottom":"Снять: одному"},"28":{"top":"ПРАВКИ ПОСЛЕ «ДА»","mid":"«ДА» — ЧЕРНОВИК","bottom":"Снять: правки до «да»"},"29":{"top":"ВРЕМЕННАЯ СХЕМА","mid":"В ПАСПОРТ НАВЕКИ","bottom":"Снять: нормальный пуск"},"30":{"top":"В СМЕТУ НЕ ВЛЕЗЛО","mid":"ЗАДОХНЁТСЯ НА ПУСКЕ","bottom":"Снять: вернуть в смету"},"31":{"top":"ЭТО НЕ НАША ЗОНА","mid":"ЛУЖА ОБЩАЯ И ВЕЧНАЯ","bottom":"Снять: взять зону"},"32":{"top":"ПО ПРОЕКТУ МОЖНО","mid":"НА МОНТАЖЕ — В ЛЫЖИ","bottom":"Снять: чертёж = монтаж"},"33":{"top":"ВКЛЮЧИЛИ — ШУМИТ","mid":"ШУМ — ЕДИНСТВЕННЫЙ АКТ","bottom":"Снять: пуск с замерами"},"34":{"top":"ФИЛЬТРЫ ПОТОМ","mid":"ПОТОМ = ПОСЛЕ ПОТОПА","bottom":"Снять: фильтры до пуска"},"35":{"top":"КОРОБ ПОШЁЛ НЕ ТУДА","mid":"МЕТР ВРЁТ ЧЕРТЕЖУ","bottom":"Снять: по проекту"},"36":{"top":"РУЧНОЙ РЕЖИМ","mid":"ПАЛЕЦ УСТАНЕТ ЗА СИСТЕМУ","bottom":"Снять: щит думает сам"},"37":{"top":"КОНДЕНСАТ НА ЧУЖОЙ","mid":"ЛУЖА ПРИДЁТ ДОМОЙ","bottom":"Снять: в свою трубу"},"38":{"top":"ЗИМОЙ НА КРОВЛЕ","mid":"ГРАФИК В МИНУС","bottom":"Снять: без героизма в мороз"},"39":{"top":"РЕШЁТКИ ЗАДОМ","mid":"ТЯГА ДУЕТ В СТЕНУ","bottom":"Снять: лицом к воздуху"},"40":{"top":"ПУСК ПЕРЕД КОМИССИЕЙ","mid":"СХЕМА В ПАНИКЕ","bottom":"Снять: за день, с замерами"}},"byCategory":{"byt":{"top":"ГРЕХ БЫТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: исправиться при людях"},"ovik":{"top":"ГРЕХ ОБЪЕКТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: нормальный пуск"},"generic":{"top":"ПРОКЛИНАТОР","mid":"ПРИГОВОР","bottom":"Снять: по условию ниже"}}},"ritualByPower":{"whisper":["Тихо открываем дело на {имя}…","Читаем, что случилось.","Сила: ехидно.","Достаём мелкий грех…","Печать едва греется.","Пишем, чем аукнется…","Лёгкий укол…","Как снять…","Ставим тихую печать.","Готово. Можно кинуть в чат."],"seal":["Открываем дело на {имя}…","Читаем, что случилось.","Сила: жёстко.","Достаём грех из живых привычек…","Печать греется.","Пишем, чем аукнется…","Пишем, как снять…","Без пощады…","Ставим печать.","Готово. Можно кинуть в чат."],"anathema":["Ломаем дело на {имя}.","Читаем, что натворено.","Сила: апокалипсис.","Достаём грех с корнем…","Печать орёт от жара.","Бьём наотмашь…","Снятие — только через дело…","Когда уже поздно…","Ставим клеймо.","Готово. Пусть все видят."]},"fx":{"whisper":{"spin":0.4,"glow":0.35,"particles":24,"shake":2,"duration":2200,"rings":2,"vibrate":[12],"color":"#A65A55","orbScale":0.95},"seal":{"spin":1.0,"glow":0.7,"particles":56,"shake":6,"duration":3200,"rings":4,"vibrate":[18,40,18],"color":"#B3121F","orbScale":1.2},"anathema":{"spin":2.6,"glow":1.15,"particles":160,"shake":18,"duration":5000,"rings":8,"vibrate":[30,50,30,50,40],"color":"#FF3B2F","orbScale":1.55}}};
+  /* ---------- v19 product shell copy/data (Russian dark sarcasm; punch voice stays in DATA) ---------- */
+  const SHELL = {
+    splash: {
+      tagline: "Добрые слова — для слабых",
+      loading: "Загружаем ваши тёмные помыслы…",
+      quote: "«Мир становится лучше, когда ты говоришь, что думаешь»",
+      skip: "Коснись, чтобы пропустить",
+      duration: 2200
+    },
+    nav: [
+      { id: "ritual", label: "Ритуал" },
+      { id: "categories", label: "Категории" },
+      { id: "history", label: "История" },
+      { id: "rituals", label: "Ритуалы" },
+      { id: "profile", label: "Профиль" }
+    ],
+    categories: {
+      title: "Категории проклятий",
+      hint: "Категория подсказывает, откуда брать грех. Текст всё равно главнее.",
+      pill: "Категория",
+      toast: "Категория «{name}». Грехи подобраны — опиши ситуацию.",
+      cleared: "Категория снята.",
+      items: [
+        { id: "people", name: "Люди", desc: "Бывшие, коллеги, начальники и все остальные", who: "Бывший с новым хобби", what: "Написал «привет» через три года молчания." },
+        { id: "work", name: "Работа", desc: "Совещания, дедлайны, бесполезные задачи", who: "Повелитель созвонов", what: "Назначил встречу, чтобы обсудить следующую встречу." },
+        { id: "love", name: "Отношения", desc: "Любовь, молчание, «прочитано» без ответа", who: "Тот, кто «видел»", what: "Прочитал в 14:02. Ответил в четверг." },
+        { id: "study", name: "Учёба", desc: "Экзамены, преподы, групповые проекты", who: "Староста группы", what: "Скинул методичку за час до экзамена." },
+        { id: "byt", name: "Быт", desc: "Пробки, очереди, соседи, ЖКХ", who: "Сосед сверху", what: "Начал ремонт в субботу в семь утра." },
+        { id: "tech", name: "Технологии", desc: "Глючные гаджеты, обновления, пароли", who: "Обновление системы", what: "Установилось само и переставило все иконки." },
+        { id: "situations", name: "Ситуации", desc: "Когда всё идёт не по плану", who: "Понедельник", what: "Пришёл без предупреждения. Опять." },
+        { id: "world", name: "Весь мир", desc: "Иногда хочется, чтобы страдали все", who: "Всё человечество", what: "Продолжает отвечать «ок» на абзацы души." }
+      ]
+    },
+    // Existing sins → shell categories (multi-tag). byt catalog → Быт/Люди/Отношения/Технологии/Ситуации, ovik catalog → Работа.
+    sinTags: {
+      "1": ["people","work"], "2": ["people","work","love","study"], "3": ["people","love","situations"], "4": ["people","love","situations"],
+      "5": ["people","love","tech"], "6": ["byt","people"], "7": ["people","work"], "8": ["people","study"], "9": ["people","study","byt"],
+      "10": ["byt","tech"], "11": ["byt","tech","love"], "12": ["byt"], "13": ["byt","work"], "14": ["byt","situations"], "15": ["people","love","byt"],
+      "16": ["byt","work"], "17": ["love","people","tech"], "18": ["people","love","situations"], "19": ["tech","people","love"], "20": ["love","tech","people"],
+      "21": ["byt","tech"], "22": ["byt","study"], "23": ["work","situations"], "24": ["work","study","situations"], "25": ["people","study"],
+      "26": ["people","world"], "27": ["work","tech","study"], "28": ["work"],
+      "29": ["work"], "30": ["work"], "31": ["work"], "32": ["work"], "33": ["work"], "34": ["work"], "35": ["work"], "36": ["work","tech"],
+      "37": ["work","byt"], "38": ["work","situations"], "39": ["work"], "40": ["work","situations"]
+    },
+    rituals: {
+      title: "Ритуалы",
+      hint: "Ритуал не меняет грех. Он меняет, как это запомнят.",
+      tabs: ["Все", "Избранные"],
+      selected: "Выбран",
+      select: "Выбрать",
+      unselect: "Снять",
+      locked: "Premium",
+      toastOn: "Ритуал «{name}» выбран. Проведи его во вкладке Ритуал.",
+      toastOff: "Ритуал снят. Печать будет обычной.",
+      toastLocked: "«{name}» — только для легенд.",
+      emptyFav: "Избранных ритуалов нет. Сердце — справа на карточке.",
+      featuredEyebrow: "Умножает эффект",
+      lineLabel: "Ритуал",
+      items: [
+        { id: "burn", name: "Сожги и отпусти", desc: "Классический ритуал очищения", flavor: "Сожжено и отпущено. Пепел — в чат.", chant: "Поджигаем бумагу с именем {имя}…", icon: "fire" },
+        { id: "water", name: "Вода заберёт", desc: "Для тех, кто хочет забыть", flavor: "Вода унесла. Осадок остался.", chant: "Опускаем имя в холодную воду…", icon: "water" },
+        { id: "mirror", name: "Зеркальный возврат", desc: "Пусть всё вернётся отправителю", flavor: "Отражено и возвращено отправителю.", chant: "Ставим зеркало. Пусть {имя} смотрит…", icon: "mirror" },
+        { id: "candle", name: "Чёрная свеча", desc: "Усиление любого проклятия", flavor: "Свеча догорела. Эффект удвоен.", chant: "Зажигаем чёрную свечу…", icon: "candle" },
+        { id: "salt", name: "Соляной круг", desc: "Чтобы больше не подходили близко", flavor: "Круг замкнут. Ближе не подойдут.", chant: "Замыкаем соляной круг…", icon: "salt" },
+        { id: "fullmoon", name: "Полнолуние", desc: "Умножает эффект любого проклятия", flavor: "Луна полная. Эффект умножен.", chant: "Луна полная. Умножаем…", icon: "moon", pro: true, featured: true }
+      ]
+    },
+    history: {
+      title: "История",
+      tabs: ["Все", "Избранные"],
+      empty: "Пока пусто. Первый ритуал — в соседней вкладке.",
+      emptyFav: "Избранного нет. Сердце на результате — оно для этого.",
+      emptyCta: "К ритуалу",
+      open: "Открыть", share: "Поделиться", del: "Удалить",
+      deleted: "Удалено. Как будто и не было.",
+      favOn: "В избранном.", favOff: "Из избранного убрано.",
+      today: "сегодня", yesterday: "вчера",
+      cap: 100
+    },
+    result: {
+      fav: "В избранное", favOn: "В избранном",
+      harder: "Ещё жёстче", harderMax: "Наотмашь ещё раз",
+      newRitual: "Новый ритуал",
+      copy: "Копировать", share: "Поделиться",
+      harderToast: "Сила поднята. Печать греется."
+    },
+    profile: {
+      title: "Профиль",
+      defaultNick: "Тёмный Пользователь",
+      anonNick: "Аноним",
+      since: "Проклинаю с {year}",
+      quote: "«Здесь мои добрые мысли наконец-то звучат честно»",
+      counters: ["Отправлено", "Карма зла", "В избранном"],
+      worseZero: "Мир пока целый. Это временно.",
+      editNick: "Изменить ник", saveNick: "Сохранить", nickPlaceholder: "Твой тёмный ник", nickMax: 24,
+      nickSaved: "Ник записан кровью.",
+      proTag: "Легенда",
+      proBanner: { title: "Больше силы. Больше зла.", cta: "Стать легендой" },
+      menu: [
+        { id: "badges", label: "Мои достижения" },
+        { id: "stats", label: "Статистика" },
+        { id: "leaderboard", label: "Топ проклинаторов" },
+        { id: "premium", label: "Premium" },
+        { id: "settings", label: "Настройки" },
+        { id: "about", label: "О приложении" }
+      ]
+    },
+    badges: {
+      title: "Мои достижения",
+      progress: "Открыто {n} из {total}",
+      unlocked: "Достижение открыто: {name}",
+      locked: "Закрыто",
+      items: [
+        { id: "first", name: "Первая кровь", desc: "Первый ритуал проведён", icon: "drop" },
+        { id: "ten", name: "Серийник", desc: "10 ритуалов", icon: "skull" },
+        { id: "beast", name: "Число зверя", desc: "66 ритуалов", icon: "flame" },
+        { id: "anathema", name: "Апокалипсис сегодня", desc: "Первый ритуал на полной силе", icon: "bolt" },
+        { id: "whisper5", name: "Тихий яд", desc: "5 ритуалов «Ехидно»", icon: "feather" },
+        { id: "clean10", name: "Чистый рот", desc: "10 ритуалов без мата", icon: "shield" },
+        { id: "fav5", name: "Коллекционер", desc: "5 проклятий в избранном", icon: "heart" },
+        { id: "rituals3", name: "Ритуалист", desc: "3 разных ритуала из каталога", icon: "candle" },
+        { id: "night", name: "Полуночник", desc: "Ритуал между полуночью и четырьмя утра", icon: "moon" },
+        { id: "cats4", name: "Обходчик", desc: "Проклятия в 4 разных категориях", icon: "grid" },
+        { id: "work5", name: "Прораб ада", desc: "5 проклятий в категории «Работа»", icon: "briefcase" },
+        { id: "legend", name: "Легенда", desc: "Premium разблокирован", icon: "crown" }
+      ]
+    },
+    stats: {
+      title: "Статистика",
+      worse: "Мир стал хуже",
+      worseSuffix: "на {n}%",
+      chartLabel: "Последние 7 дней",
+      cards: ["Отправлено", "Апокалипсисов", "Без мата", "В избранном"],
+      byPower: "По силе",
+      byCategory: "По категориям",
+      noCategory: "Без категории",
+      quote: "«Чем больше ты проклинаешь, тем добрее становишься. Парадокс? Нет. Баланс.»",
+      empty: "Статистики нет. Мир пока держится."
+    },
+    settings: {
+      title: "Настройки",
+      groups: { ritual: "Ритуал", profile: "Профиль", data: "Данные", look: "Внешний вид", demo: "Демо" },
+      noMat: { label: "Без мата по умолчанию", desc: "Едкий сарказм без мата. На форме можно снять." },
+      anon: { label: "Анонимный режим", desc: "В профиле и топе — «Аноним»." },
+      dark: { label: "Тёмная тема", desc: "Другой не будет." },
+      clear: { label: "Очистить историю", desc: "Проклятий в истории: {n}. Статистика останется.", confirm: "Точно? Нажми ещё раз", done: "История сожжена.", empty: "История и так пуста." },
+      proOff: { label: "Отключить Premium", desc: "Только для демо. Корона снимется.", done: "Premium отключён. Ты снова смертный." }
+    },
+    about: {
+      title: "О приложении",
+      version: "Версия {v}",
+      lines: [
+        "Слова тоже имеют власть. Опиши ситуацию — остальное наша забота.",
+        "Один ритуал — одна картинка на телефон. 1080×1920, безопасная зона Stories.",
+        "Формула: кто → что случилось → сила сарказма → грех → проклятие → Снять:",
+        "Всё хранится на этом устройстве. Никаких аккаунтов, никакой рекламы, никаких реальных проклятий."
+      ],
+      disclaimer: "Не является HR-процедурой. Проклинатор не несёт ответственности за последствия. Но мы в тебя верим.",
+      link: "Открыть сайт"
+    },
+    pro: {
+      title: "Проклинатор Premium",
+      headline: "Больше тьмы. Больше возможностей.",
+      perks: [
+        { icon: "moon", text: "Эксклюзивный ритуал «Полнолуние»" },
+        { icon: "crown", text: "Золотая корона в топе проклинаторов" },
+        { icon: "star", text: "Метка «Легенда» в профиле" },
+        { icon: "bolt", text: "Ранний доступ к новым грехам" },
+        { icon: "shield", text: "Без рекламы. Её и так нет, но приятно." }
+      ],
+      cta: "Стать легендой",
+      ctaDone: "Ты — легенда",
+      restore: "Уже легенда? Восстановить",
+      restored: "Легенда на месте.",
+      notFound: "Легенды не найдено. Пока.",
+      footer: "Тьма внутри тебя заслуживает большего.",
+      demo: "Демо-режим: без реальных платежей.",
+      unlocked: "Ты — легенда. Тьма довольна.",
+      lockedToast: "Это для легенд. Открой Premium."
+    },
+    leaderboard: {
+      title: "Топ проклинаторов",
+      tabs: ["Неделя", "Месяц", "Всё время"],
+      you: "ты",
+      footer: "Карма зла начисляется за каждый ритуал. Апокалипсис — дороже. Избранное — плюс.",
+      periodScale: { week: 0.12, month: 0.42, all: 1 },
+      seeds: [
+        { name: "Владыка сарказма", karma: 18420 },
+        { name: "Злая булочка", karma: 12050 },
+        { name: "Кармический бухгалтер", karma: 9810 },
+        { name: "Прокрастинатор", karma: 7640 },
+        { name: "Тёмный HR", karma: 7120 },
+        { name: "Мистер Недовольство", karma: 6690 },
+        { name: "Кофейный мститель", karma: 5430 },
+        { name: "Собиратель обид", karma: 4870 },
+        { name: "Ведьма с 9 этажа", karma: 4410 },
+        { name: "Гуру пятиминуток", karma: 3110 },
+        { name: "Сосед с перфоратором", karma: 2480 },
+        { name: "Хранитель дедлайнов", karma: 1960 },
+        { name: "Молчаливый читатель", karma: 1240 },
+        { name: "Кот на клавиатуре", karma: 880 },
+        { name: "Стажёр тьмы", karma: 420 }
+      ]
+    },
+    karma: { whisper: 120, seal: 210, anathema: 350, fav: 40, ritual: 25 },
+    worseK: 75,
+    common: { back: "Назад", close: "Закрыть" }
+  };
+
   function formatLift(L){
     L = String(L || "").trim();
     if(!L) return "";
@@ -712,9 +1505,12 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   $("lblPunch").textContent = blocks[1];
   $("lblLift").textContent = blocks[2];
   $("saveBtn").textContent = after[0];
-  $("shareBtn").textContent = after[1];
   $("againBtn").textContent = after[2];
-  $("copyCurseBtn").textContent = DATA.copyCurse || "Скопировать проклятие";
+  $("copyCurseBtn").querySelector("span").textContent = SHELL.result.copy;
+  $("shareBtn").querySelector("span").textContent = SHELL.result.share || after[1];
+  $("favBtn").querySelector("span").textContent = SHELL.result.fav;
+  $("harderText").textContent = SHELL.result.harder;
+  $("newBtn").textContent = SHELL.result.newRitual;
 
   /* ---------- hero image readiness (fallback sigil if the asset is missing) ---------- */
   (function(){
@@ -728,16 +1524,84 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     if(img.complete && img.naturalWidth === 0) bad();
   })();
 
-  /* ---------- prefs ---------- */
+  /* ---------- storage: v19 namespace (v18 prefs migrate silently) ---------- */
+  const LS = {
+    prefs: "proklinator.v19.prefs",
+    history: "proklinator.v19.history",
+    profile: "proklinator.v19.profile",
+    stats: "proklinator.v19.stats",
+    legacyPrefs: "proklinator.v18.prefs",
+    splash: "proklinator.v19.splash"
+  };
+  function lsGet(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      if(raw == null) return fallback;
+      const v = JSON.parse(raw);
+      return v == null ? fallback : v;
+    }catch(e){ return fallback; }
+  }
+  function lsSet(key, val){
+    try{ localStorage.setItem(key, JSON.stringify(val)); return true; }catch(e){ return false; }
+  }
+  function fmt(tpl, vars){
+    return String(tpl || "").replace(/\{(\w+)\}/g, function(m, k){ return vars && vars[k] != null ? vars[k] : m; });
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  const sinTags = SHELL.sinTags || {};
+  const CATS = SHELL.categories.items;
+  const RITUALS = SHELL.rituals.items;
+  function catById(id){ for(let i=0;i<CATS.length;i++) if(CATS[i].id === id) return CATS[i]; return null; }
+  function ritualById(id){ for(let i=0;i<RITUALS.length;i++) if(RITUALS[i].id === id) return RITUALS[i]; return null; }
+
   let powerId = "seal", noMat = true, lastVerdict = null, casting = false;
-  try{
-    const saved = JSON.parse(localStorage.getItem("proklinator.v18.prefs") || "{}");
+  let ritualId = null;     // catalog ritual, persisted
+  let categoryId = null;   // category bias, session only
+  (function loadPrefs(){
+    let saved = lsGet(LS.prefs, null);
+    if(!saved) saved = lsGet(LS.legacyPrefs, {});
     if(saved && saved.power && powers.some(function(p){ return p.id === saved.power; })) powerId = saved.power;
     if(saved && typeof saved.noMat === "boolean") noMat = saved.noMat;
-  }catch(e){}
+    if(saved && saved.ritualId && ritualById(saved.ritualId)) ritualId = saved.ritualId;
+  })();
   function savePrefs(){
-    try{ localStorage.setItem("proklinator.v18.prefs", JSON.stringify({ power: powerId, noMat: noMat })); }catch(e){}
+    lsSet(LS.prefs, { power: powerId, noMat: noMat, ritualId: ritualId });
   }
+
+  const profile = Object.assign(
+    { nick: "", anon: false, pro: false, createdAt: Date.now(), favRituals: [], badges: [] },
+    lsGet(LS.profile, {}) || {}
+  );
+  if(!Array.isArray(profile.favRituals)) profile.favRituals = [];
+  if(!Array.isArray(profile.badges)) profile.badges = [];
+  function saveProfile(){ lsSet(LS.profile, profile); }
+
+  const stats = Object.assign(
+    { total: 0, byPower: {}, clean: 0, byCategory: {}, byRitual: {}, byDay: {}, night: 0, lastAt: 0 },
+    lsGet(LS.stats, {}) || {}
+  );
+  stats.byPower = Object.assign({ whisper: 0, seal: 0, anathema: 0 }, stats.byPower || {});
+  stats.byCategory = stats.byCategory || {};
+  stats.byRitual = stats.byRitual || {};
+  stats.byDay = stats.byDay || {};
+  function saveStats(){ lsSet(LS.stats, stats); }
+
+  let history = lsGet(LS.history, []);
+  if(!Array.isArray(history)) history = [];
+  const HISTORY_CAP = SHELL.history.cap || 100;
+  function saveHistory(){ lsSet(LS.history, history); }
+  function historyPush(entry){
+    history.unshift(entry);
+    if(history.length > HISTORY_CAP) history.length = HISTORY_CAP;
+    saveHistory();
+  }
+  function historyFind(id){
+    for(let i=0;i<history.length;i++) if(history[i].id === id) return history[i];
+    return null;
+  }
+  function favCount(){ let n = 0; for(let i=0;i<history.length;i++) if(history[i].fav) n++; return n; }
+  if(profile.pro) document.body.classList.add("is-pro");
 
   let ashRaf = 0, ashActive = false;
   let threeState = null;
@@ -801,11 +1665,24 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     tokenize(sinKeywords[s.id] || sinKeywords[String(s.id)] || "").forEach(function(t){ terms.push({ s: stem(t), w: 1.2 }); });
     return { sin: s, terms: terms, nameNorm: norm(s.name).replace(/[«»"]/g, "").trim() };
   });
-  function matchSin(situation, whoText, clean){
+  // Category bias: tagged sins get a multiplier on their text score; without text they become the random pool.
+  const CAT_BOOST = 1.35;
+  function sinInCategory(sinId, catId){
+    if(!catId || catId === "world") return true;
+    const tags = sinTags[sinId] || sinTags[String(sinId)] || [];
+    return tags.indexOf(catId) >= 0;
+  }
+  function sinsForCategory(catId){
+    if(!catId || catId === "world") return sins.slice();
+    const out = sins.filter(function(s){ return sinInCategory(s.id, catId); });
+    return out.length ? out : sins.slice();
+  }
+  function matchSin(situation, whoText, clean, catId){
     const sTok = tokenize(situation).map(stem);
     const wTok = tokenize(whoText).map(stem);
     if(!sTok.length && !wTok.length) return null;
     const sitNorm = norm(situation);
+    const biased = !!(catId && catId !== "world");
     let best = [], bestScore = 0;
     for(let i=0;i<sinIndex.length;i++){
       const entry = sinIndex[i];
@@ -822,6 +1699,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
       sTok.forEach(function(t){ scoreTok(t, 1); });
       wTok.forEach(function(t){ scoreTok(t, 0.6); });
       if(entry.nameNorm && sitNorm.indexOf(entry.nameNorm) >= 0) score += 3;
+      if(biased && score > 0 && sinInCategory(entry.sin.id, catId)) score *= CAT_BOOST;
       if(score > bestScore + 1e-9){ bestScore = score; best = [entry.sin]; }
       else if(score > 0 && Math.abs(score - bestScore) < 1e-9) best.push(entry.sin);
     }
@@ -937,7 +1815,11 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     const g = opts.gender, pid = opts.powerId, clean = !!opts.clean;
     let sin = opts.sin || null;
     if(!sin){
-      const cands = clean ? sins.filter(function(s){ return !isVulgar(s.name); }) : sins;
+      let cands = (opts.pool && opts.pool.length) ? opts.pool : sins;
+      if(clean){
+        const cleanCands = cands.filter(function(s){ return !isVulgar(s.name); });
+        if(cleanCands.length) cands = cleanCands;
+      }
       sin = pick(cands.length ? cands : sins);
     }
     let pool = verdictPool(sin.id, g);
@@ -1353,6 +2235,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     overlay.style.opacity = "0";
     overlay.style.display = "none";
     overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("is-casting");
     progress.style.width = "0%";
     progress.style.background = "";
     cast.classList.remove("busy");
@@ -1370,6 +2253,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     overlay.style.display = "flex";
     overlay.classList.add("on");
     overlay.setAttribute("aria-hidden", "false");
+    document.body.classList.add("is-casting");
     progress.style.background = fx.color || "#B3121F";
     sealStage.querySelectorAll("[stroke]").forEach(function(el){ el.setAttribute("stroke", fx.color || "#B3121F"); });
     sealStage.querySelectorAll("circle[fill]").forEach(function(el){ el.setAttribute("fill", fx.color || "#B3121F"); });
@@ -1503,24 +2387,35 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     return (sp > Math.floor(lim * 0.45) ? cut.slice(0, sp) : cut) + "…";
   }
 
+  function currentVerdict(){ return lastVerdict; }
+  function ritualLineText(v){
+    const r = v ? ritualById(v.ritualId) : null;
+    return r ? (r.name + " — " + r.flavor) : "";
+  }
   function buildCurseText(v, withUrl){
     if(!v) return "";
     const lines = [v.name + " · " + v.powerLabel];
     if(v.situation) lines.push("«" + v.situation + "»");
-    lines.push(v.punch, formatLift(v.lift), "", "ПРОКЛИНАТОР");
+    lines.push(v.punch, formatLift(v.lift));
+    const rl = ritualLineText(v);
+    if(rl) lines.push(rl);
+    lines.push("", "ПРОКЛИНАТОР");
     if(withUrl) lines.push(APP_URL);
     return lines.join("\n");
   }
 
-  function paintPoster(){
+  function paintPoster(v){
     const W = 1080, H = 1920;
     exportCanvas.width = W;
     exportCanvas.height = H;
     const ctx = exportCanvas.getContext("2d");
+    const lastVerdict = v || currentVerdict();  // shadows the module state on purpose: history/share can paint any entry
     if(!ctx || !lastVerdict) return exportCanvas;
 
     const powerColor = powerColorOf(lastVerdict.powerId);
     const glow = lastVerdict.powerId === "anathema" ? 1.4 : lastVerdict.powerId === "whisper" ? 0.7 : 1;
+    const ritualLine = ritualLineText(lastVerdict);
+    const reserve = ritualLine ? 42 : 0;
 
     const bg = ctx.createLinearGradient(0, 0, 0, H);
     bg.addColorStop(0, "#110C0B");
@@ -1617,18 +2512,18 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     let punchFont = 44, punchLH = 56;
     ctx.font = "400 " + punchFont + "px " + SERIF_CANVAS;
     let punchLines = wrapText(ctx, fullPunch, textW);
-    if(punchLines.length > 5 || y + punchLines.length * punchLH > maxY - 170){
+    if(punchLines.length > 5 || y + punchLines.length * punchLH > maxY - 170 - reserve){
       punchFont = 36; punchLH = 46;
       ctx.font = "400 " + punchFont + "px " + SERIF_CANVAS;
       punchLines = wrapText(ctx, fullPunch, textW);
     }
-    if(punchLines.length > 6 || y + Math.min(punchLines.length, 7) * punchLH > maxY - 150){
+    if(punchLines.length > 6 || y + Math.min(punchLines.length, 7) * punchLH > maxY - 150 - reserve){
       punchFont = 30; punchLH = 38;
       ctx.font = "400 " + punchFont + "px " + SERIF_CANVAS;
       punchLines = wrapText(ctx, fullPunch, textW);
     }
     let maxPunchLines = 7;
-    while(maxPunchLines > 3 && y + maxPunchLines * punchLH > maxY - 140){
+    while(maxPunchLines > 3 && y + maxPunchLines * punchLH > maxY - 140 - reserve){
       maxPunchLines--;
     }
     for(let pi=0; pi<Math.min(punchLines.length, maxPunchLines); pi++){
@@ -1645,6 +2540,19 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
       if(y + 30 > maxY) break;
       ctx.fillText(botLines[bi], W/2, y);
       y += 30;
+    }
+
+    // Catalog ritual flavor (gold italic, ≤2 lines, stays in the safe band)
+    if(ritualLine){
+      y += 8;
+      ctx.fillStyle = "rgba(201,162,74,.82)";
+      ctx.font = "italic 400 22px " + SERIF_CANVAS;
+      const rLines = wrapText(ctx, ritualLine, textW);
+      for(let ri=0; ri<Math.min(rLines.length, 2); ri++){
+        if(y + 28 > maxY) break;
+        ctx.fillText(rLines[ri], W/2, y);
+        y += 28;
+      }
     }
     y += 22;
 
@@ -1700,7 +2608,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   }
 
   // Landscape OG card 1200×630 — downloadable companion; static Pages og:image is hero-altar.jpg
-  function paintOgCard(){
+  function paintOgCard(v){
     const W = 1200, H = 630;
     if(!ogCanvas){
       ogCanvas = document.createElement("canvas");
@@ -1709,6 +2617,7 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     ogCanvas.width = W;
     ogCanvas.height = H;
     const ctx = ogCanvas.getContext("2d");
+    const lastVerdict = v || currentVerdict();
     if(!ctx || !lastVerdict) return ogCanvas;
 
     const powerColor = powerColorOf(lastVerdict.powerId);
@@ -1809,14 +2718,17 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     return false;
   }
 
-  async function shareCard(){
-    if(!lastVerdict) return;
-    const shareText = buildCurseText(lastVerdict, true);
+  // Shares the current result by default; history rows pass their own entry.
+  async function shareCard(v){
+    v = v || lastVerdict;
+    if(!v) return;
+    const isCurrent = v === lastVerdict;
+    const shareText = buildCurseText(v, true);
     try{
-      let blob = shareBlob;
+      let blob = isCurrent ? shareBlob : null;
       if(!blob){
         await waitFonts(800);
-        paintPoster();
+        paintPoster(v);
         blob = await new Promise(function(res){ exportCanvas.toBlob(res, "image/png"); });
       }
       if(blob && navigator.share){
@@ -1833,11 +2745,11 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     }catch(e){
       if(e && e.name === "AbortError") return;
     }
-    if(!shareBlob){
+    if(!isCurrent || !shareBlob){
       await waitFonts(800);
-      paintPoster();
+      paintPoster(v);
     }
-    downloadPng(exportCanvas, "proklinator-" + (lastVerdict.sinId || "card") + ".png");
+    downloadPng(exportCanvas, "proklinator-" + (v.sinId || "card") + ".png");
     const copied = await copyText(shareText);
     if(!copied) showToast(DATA.toastShare);
   }
@@ -1872,16 +2784,46 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     step();
   }
 
-  function showResult(){
+  function renderRitualLine(v){
+    const box = $("vRitualLine");
+    const r = v ? ritualById(v.ritualId) : null;
+    if(!r){ box.hidden = true; return; }
+    box.hidden = false;
+    $("vRitualIco").innerHTML = RIT_ICONS[r.icon] || RIT_ICONS.fire;
+    $("vRitualName").textContent = r.name + ".";
+    $("vRitualFlavor").textContent = r.flavor;
+  }
+  function syncFavBtn(){
+    const b = $("favBtn");
+    const entry = (lastVerdict && lastVerdict.hid) ? historyFind(lastVerdict.hid) : null;
+    const on = !!(entry && entry.fav);
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.querySelector("span").textContent = on ? SHELL.result.favOn : SHELL.result.fav;
+  }
+  function syncHarderBtn(){
+    const atMax = !!(lastVerdict && lastVerdict.powerId === "anathema");
+    $("harderText").textContent = atMax ? SHELL.result.harderMax : SHELL.result.harder;
+  }
+
+  function showResult(opts){
+    opts = opts || {};
     hardCloseOverlay();
     castScreen.classList.add("hidden");
     result.classList.remove("hidden");
     result.classList.add("show");
     document.body.classList.add("is-result");
+    if(lastVerdict.fresh){
+      lastVerdict.fresh = false;
+      recordRitual(lastVerdict);
+    }
     $("vName").textContent = lastVerdict.name;
     $("vPower").textContent = lastVerdict.powerLabel;
     $("vPower").dataset.power = lastVerdict.powerId || "";
     $("vSin").textContent = lastVerdict.sin;
+    renderRitualLine(lastVerdict);
+    syncFavBtn();
+    syncHarderBtn();
 
     const sitEl = $("vSituation");
     if(lastVerdict.situation){
@@ -1965,11 +2907,15 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     }
 
     prefetchShareBlob();
-    showToast(DATA.toastOk);
+    if(!opts.silent) showToast(DATA.toastOk);
     try{ window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); }catch(e){ window.scrollTo(0, 0); }
   }
 
-  function runRitual(name, situation){
+  function runRitual(name, situation, opts){
+    opts = opts || {};
+    const catId = opts.catId !== undefined ? opts.catId : categoryId;
+    const ritId = opts.ritualId !== undefined ? opts.ritualId : ritualId;
+    const ritual = ritualById(ritId);
     casting = true;
     cast.disabled = true;
     cast.classList.add("busy");
@@ -1981,8 +2927,11 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     }, fxTable[powerId] || fxTable.seal || {});
 
     const gender = inferGender(name, situation);
-    const matchedSin = situation ? matchSin(situation, name, noMat) : null;
-    const picked = pickVerdict({ sin: matchedSin, gender: gender, powerId: powerId, clean: noMat });
+    const matchedSin = situation ? matchSin(situation, name, noMat, catId) : null;
+    const picked = pickVerdict({
+      sin: matchedSin, gender: gender, powerId: powerId, clean: noMat,
+      pool: catId ? sinsForCategory(catId) : null
+    });
     const verd = picked.verd;
     const sin = picked.sin;
     const power = powers.find(function(p){ return p.id === powerId; }) || powers[1];
@@ -2011,11 +2960,17 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
       stub: !!picked.stub,
       clean: noMat,
       matched: !!matchedSin,
-      verdId: verd.id
+      verdId: verd.id,
+      catId: catId || null,
+      ritualId: ritual ? ritual.id : null,
+      ts: Date.now(),
+      hid: null,
+      fresh: true
     };
 
     let chants = (ritualByPower[powerId] || DATA.ritual || []).slice();
     if(!chants.length) chants = DATA.ritual || ["Готово."];
+    if(ritual && ritual.chant) chants.splice(Math.min(4, Math.max(0, chants.length - 1)), 0, ritual.chant);
 
     openOverlay(fx);
 
@@ -2196,24 +3151,81 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
       }catch(e){}
     }
   });
-  $("againBtn").addEventListener("click", function(){
-    if(casting) return;
+  // Reroll inputs: a result opened from history keeps its own who/what; a fresh one prefers the live form.
+  function rerollInputs(){
     const f = readForm();
-    const name = f.name || (lastVerdict && lastVerdict.name) || "";
-    const situation = f.situation || (lastVerdict && lastVerdict.situation) || "";
-    if(!name){
-      backToForm();
-      try{ who.focus(); }catch(e){}
-      return;
-    }
-    // Same who/what/power — new verdict only; the overlay covers the stale card until showResult refills it
+    const fromHist = !!(lastVerdict && lastVerdict.fromHistory);
+    const name = fromHist ? (lastVerdict.name || f.name) : (f.name || (lastVerdict && lastVerdict.name) || "");
+    const situation = fromHist ? (lastVerdict.situation || "") : (f.situation || (lastVerdict && lastVerdict.situation) || "");
+    return { name: name, situation: situation };
+  }
+  function prepareReroll(){
+    // Same who/what — new verdict only; the overlay covers the stale card until showResult refills it
     hardCloseOverlay();
     shareBlob = null;
     if(typewriterTimer){ clearTimeout(typewriterTimer); typewriterTimer = 0; }
     result.classList.remove("flash-anathema");
     document.body.classList.remove("is-result");
+  }
+  $("againBtn").addEventListener("click", function(){
+    if(casting) return;
+    const f = rerollInputs();
+    if(!f.name){
+      backToForm();
+      try{ who.focus(); }catch(e){}
+      return;
+    }
+    prepareReroll();
     vibe(VIBE.whisper);
-    runRitual(name, situation);
+    runRitual(f.name, f.situation, {
+      catId: lastVerdict ? lastVerdict.catId : categoryId,
+      ritualId: lastVerdict ? lastVerdict.ritualId : ritualId
+    });
+  });
+
+  const POWER_ORDER = ["whisper", "seal", "anathema"];
+  function nextPower(pid){
+    const i = POWER_ORDER.indexOf(pid);
+    return POWER_ORDER[Math.min(POWER_ORDER.length - 1, i < 0 ? 1 : i + 1)];
+  }
+  // «Ещё жёстче»: bump the power one step (sticks on the form too) and reroll the same case
+  $("harderBtn").addEventListener("click", function(){
+    if(casting || !lastVerdict) return;
+    const f = rerollInputs();
+    if(!f.name){ backToForm(); return; }
+    const np = nextPower(lastVerdict.powerId);
+    const bumped = np !== lastVerdict.powerId;
+    powerId = np;
+    syncPowerUI();
+    savePrefs();
+    prepareReroll();
+    if(bumped) showToast(SHELL.result.harderToast);
+    vibe(VIBE.seal);
+    runRitual(f.name, f.situation, { catId: lastVerdict.catId, ritualId: lastVerdict.ritualId });
+  });
+
+  $("favBtn").addEventListener("click", function(){
+    if(!lastVerdict) return;
+    let entry = lastVerdict.hid ? historyFind(lastVerdict.hid) : null;
+    if(!entry){
+      // Deleted from history while still on screen → resurrect it as a favorite
+      entry = entryFromVerdict(lastVerdict);
+      lastVerdict.hid = entry.id;
+      historyPush(entry);
+    }
+    entry.fav = !entry.fav;
+    saveHistory();
+    syncFavBtn();
+    vibe(VIBE.light);
+    showToast(entry.fav ? SHELL.history.favOn : SHELL.history.favOff);
+    checkBadges();
+  });
+
+  $("newBtn").addEventListener("click", function(){
+    if(casting) return;
+    backToForm();
+    vibe(VIBE.light);
+    try{ window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); }catch(e){ window.scrollTo(0, 0); }
   });
 
   document.addEventListener("visibilitychange", function(){
@@ -2222,13 +3234,951 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
     }
   });
 
+  /* =====================================================================
+     v19 PRODUCT SHELL — icons, records, badges, router, tabs, pages
+     ===================================================================== */
+  function svgo(inner, sw){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+  }
+  const ICO = {
+    grid: svgo('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+    clock: svgo('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+    moon: svgo('<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>'),
+    user: svgo('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+    people: svgo('<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2a5 5 0 0 1 6 4.8"/>'),
+    work: svgo('<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>'),
+    love: svgo('<path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z"/><path d="m12 8.5-1.6 3.5 3 2-1.4 3.5"/>'),
+    study: svgo('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5Z"/><path d="M4 5.5v16"/><path d="M9 8h7M9 12h7"/>'),
+    byt: svgo('<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>'),
+    tech: svgo('<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/><path d="m8.5 9.5 2.5 2.5-2.5 2.5M13 14.5h3"/>'),
+    situations: svgo('<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>'),
+    world: svgo('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18Z"/>'),
+    fire: svgo('<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>'),
+    water: svgo('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/>'),
+    mirror: svgo('<rect x="6" y="2.5" width="12" height="19" rx="6"/><path d="m9.5 6.5 3 4M12.5 5l2 2.8"/>'),
+    candle: svgo('<path d="M9 21h6"/><path d="M10 21v-8a2 2 0 0 1 4 0v8"/><path d="M12 10c-1.6-1.6-1.6-3.2 0-5.5 1.6 2.3 1.6 3.9 0 5.5Z"/>'),
+    salt: svgo('<circle cx="12" cy="12" r="8.5" stroke-dasharray="2.5 3.2"/><circle cx="12" cy="12" r="2"/>'),
+    drop: svgo('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/>'),
+    skull: svgo('<path d="M12 3a8 8 0 0 0-8 8c0 2.6 1.3 4.4 3 5.6V20a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-3.4c1.7-1.2 3-3 3-5.6a8 8 0 0 0-8-8Z"/><circle cx="9" cy="11" r="1.5"/><circle cx="15" cy="11" r="1.5"/><path d="M10 17h4"/>'),
+    bolt: svgo('<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>'),
+    feather: svgo('<path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8 2 22"/><path d="M17.5 15H9"/>'),
+    shield: svgo('<path d="M12 3 4 6v6c0 4.5 3.4 7.8 8 9 4.6-1.2 8-4.5 8-9V6Z"/><path d="m9 12 2 2 4-4"/>'),
+    heart: svgo('<path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z"/>'),
+    crown: svgo('<path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/>'),
+    star: svgo('<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9Z"/>'),
+    award: svgo('<circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"/>'),
+    chart: svgo('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/>'),
+    trophy: svgo('<path d="M8 4h8v5a4 4 0 0 1-8 0Z"/><path d="M8 6H5a2 2 0 0 0 0 4h3M16 6h3a2 2 0 0 1 0 4h-3"/><path d="M12 13v4"/><path d="M8 21h8"/><path d="M10 17h4v4"/>'),
+    gear: svgo('<circle cx="12" cy="12" r="3"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/><circle cx="12" cy="12" r="7"/>'),
+    info: svgo('<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>', 2),
+    eyeOff: svgo('<path d="m3 3 18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.1A10.5 10.5 0 0 1 12 5c5 0 9 4 10 7a12 12 0 0 1-2.6 3.8"/><path d="M6.6 6.6C4.4 8 2.8 10 2 12c1 3 5 7 10 7 1.5 0 2.9-.3 4.1-.9"/>'),
+    trash: svgo('<path d="M4 7h16"/><path d="M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/><path d="m6 7 1 13h10l1-13"/><path d="M10 11v6M14 11v6"/>'),
+    lock: svgo('<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+    dots: svgo('<circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/>'),
+    chevron: svgo('<path d="m9 6 6 6-6 6"/>', 2),
+    check: svgo('<path d="M20 6 9 17l-5-5"/>', 2.6),
+    x: svgo('<path d="M18 6 6 18M6 6l12 12"/>', 2.6),
+    noMat: svgo('<path d="M21 15V5a2 2 0 0 0-2-2H9"/><path d="M3.6 3.6A2 2 0 0 0 3 5v16l4-4h10"/><path d="m2 2 20 20"/>'),
+    sig: '<svg class="sig" viewBox="0 0 64 48" fill="none" aria-hidden="true"><ellipse cx="32" cy="30" rx="30" ry="12" stroke="#B3121F" stroke-width="1.4"/><ellipse cx="32" cy="30" rx="21" ry="8.4" stroke="#B3121F" stroke-width="1" opacity=".75"/><path d="M20 24 23 12l6 5.5L32 6l3 11.5 6-5.5 3 12Z" fill="#C9A24A"/><rect x="20" y="25" width="24" height="2.4" rx="1" fill="#C9A24A"/></svg>',
+    crownGold: '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>'
+  };
+  ICO.flame = ICO.fire;
+  ICO.briefcase = ICO.work;
+  const NAV_ICONS = { ritual: ICONS.seal, categories: ICO.grid, history: ICO.clock, rituals: ICO.moon, profile: ICO.user };
+  const RIT_ICONS = { fire: ICO.fire, water: ICO.water, mirror: ICO.mirror, candle: ICO.candle, salt: ICO.salt, moon: ICO.moon };
+  const MENU_ICONS = { badges: ICO.award, stats: ICO.chart, leaderboard: ICO.trophy, premium: ICO.crown, settings: ICO.gear, about: ICO.info };
+  const K = SHELL.karma;
+
+  /* ---------- records: history entry + stats + badges ---------- */
+  function entryFromVerdict(v){
+    return {
+      id: uid(), ts: v.ts || Date.now(), fav: false,
+      name: v.name, situation: v.situation || "", gender: v.gender,
+      sin: v.sin, sinId: v.sinId, category: v.category, setup: v.setup || "", punch: v.punch, lift: v.lift,
+      powerId: v.powerId, powerLabel: v.powerLabel, usedPower: v.usedPower, stub: !!v.stub, clean: !!v.clean,
+      matched: !!v.matched, verdId: v.verdId, catId: v.catId || null, ritualId: v.ritualId || null
+    };
+  }
+  function verdictFromEntry(h){
+    return Object.assign({}, h, { hid: h.id, fresh: false, fromHistory: true, sinObj: sinById[h.sinId] || null });
+  }
+  function dayKey(d){
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function pruneDays(){
+    const keys = Object.keys(stats.byDay).sort();
+    while(keys.length > 60){ delete stats.byDay[keys.shift()]; }
+  }
+  function recordRitual(v){
+    const entry = entryFromVerdict(v);
+    v.hid = entry.id;
+    historyPush(entry);
+    const d = new Date(entry.ts);
+    stats.total = (stats.total | 0) + 1;
+    stats.byPower[v.powerId] = (stats.byPower[v.powerId] || 0) + 1;
+    if(v.clean) stats.clean = (stats.clean | 0) + 1;
+    const ck = v.catId || "none";
+    stats.byCategory[ck] = (stats.byCategory[ck] || 0) + 1;
+    if(v.ritualId) stats.byRitual[v.ritualId] = (stats.byRitual[v.ritualId] || 0) + 1;
+    const dk = dayKey(d);
+    stats.byDay[dk] = (stats.byDay[dk] || 0) + 1;
+    pruneDays();
+    if(d.getHours() < 4) stats.night = (stats.night | 0) + 1;
+    stats.lastAt = entry.ts;
+    saveStats();
+    checkBadges();
+  }
+  function ritualUses(){
+    let n = 0;
+    for(const k in stats.byRitual) n += stats.byRitual[k] | 0;
+    return n;
+  }
+  function karmaAll(){
+    return (stats.byPower.whisper | 0) * K.whisper + (stats.byPower.seal | 0) * K.seal + (stats.byPower.anathema | 0) * K.anathema
+      + favCount() * K.fav + ritualUses() * K.ritual;
+  }
+  function karmaSince(sinceTs){
+    let n = 0;
+    for(let i=0;i<history.length;i++){
+      const h = history[i];
+      if(h.ts < sinceTs) continue;
+      n += (K[h.powerId] || K.seal) + (h.fav ? K.fav : 0) + (h.ritualId ? K.ritual : 0);
+    }
+    return n;
+  }
+  function worsePct(){
+    if(!stats.total) return 0;
+    return Math.min(99, Math.max(1, Math.round(100 * (1 - Math.exp(-stats.total / (SHELL.worseK || 75))))));
+  }
+  function fmtK(n){
+    n = n | 0;
+    if(n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    if(n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    return String(n);
+  }
+  function displayNick(){
+    return profile.anon ? SHELL.profile.anonNick : (profile.nick || SHELL.profile.defaultNick);
+  }
+
+  const BADGE_COND = {
+    first: function(){ return stats.total >= 1; },
+    ten: function(){ return stats.total >= 10; },
+    beast: function(){ return stats.total >= 66; },
+    anathema: function(){ return (stats.byPower.anathema | 0) >= 1; },
+    whisper5: function(){ return (stats.byPower.whisper | 0) >= 5; },
+    clean10: function(){ return (stats.clean | 0) >= 10; },
+    fav5: function(){ return favCount() >= 5; },
+    rituals3: function(){ return Object.keys(stats.byRitual).filter(function(k){ return stats.byRitual[k] > 0; }).length >= 3; },
+    night: function(){ return (stats.night | 0) >= 1; },
+    cats4: function(){ return Object.keys(stats.byCategory).filter(function(k){ return k !== "none" && stats.byCategory[k] > 0; }).length >= 4; },
+    work5: function(){ return (stats.byCategory.work || 0) >= 5; },
+    legend: function(){ return !!profile.pro; }
+  };
+  function checkBadges(){
+    const newly = [];
+    SHELL.badges.items.forEach(function(b){
+      if(profile.badges.indexOf(b.id) >= 0) return;
+      const cond = BADGE_COND[b.id];
+      if(cond && cond()){ profile.badges.push(b.id); newly.push(b); }
+    });
+    if(newly.length){
+      saveProfile();
+      setTimeout(function(){ showToast(fmt(SHELL.badges.unlocked, { name: newly[0].name })); }, 2000);
+    }
+    return newly;
+  }
+
+  /* ---------- router: 5 tabs + profile sub-pages ---------- */
+  let curTab = "ritual";
+  const pageOf = { profile: "home" };
+  function scrollTop(){ try{ window.scrollTo({ top: 0, behavior: "auto" }); }catch(e){ window.scrollTo(0, 0); } }
+  function renderTabbar(){
+    const bar = $("tabbar");
+    bar.innerHTML = "";
+    SHELL.nav.forEach(function(n){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab-btn" + (n.id === curTab ? " on" : "");
+      b.dataset.tab = n.id;
+      b.innerHTML = (NAV_ICONS[n.id] || ICO.grid) + "<span></span>";
+      b.querySelector("span").textContent = n.label;
+      if(n.id === curTab) b.setAttribute("aria-current", "page");
+      b.addEventListener("click", function(){
+        if(casting) return;
+        vibe(VIBE.light);
+        if(curTab === n.id){
+          if(n.id === "profile" && pageOf.profile !== "home") showPage("profile", "home");
+          scrollTop();
+          return;
+        }
+        showTab(n.id);
+      });
+      bar.appendChild(b);
+    });
+  }
+  function syncTabbar(){
+    $("tabbar").querySelectorAll(".tab-btn").forEach(function(b){
+      const on = b.dataset.tab === curTab;
+      b.classList.toggle("on", on);
+      if(on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+  }
+  // Switching tabs lands on the tab root; only explicit deep links (openProfilePage) keep a sub-page.
+  function showTab(id, opts){
+    if(!SHELL.nav.some(function(n){ return n.id === id; })) id = "ritual";
+    if(id === "profile" && !(opts && opts.keepPage)){
+      pageOf.profile = "home";
+      document.querySelectorAll('.tab[data-tab="profile"] .page').forEach(function(p){ p.classList.toggle("hidden", p.dataset.page !== "home"); });
+    }
+    curTab = id;
+    document.body.dataset.tab = id;
+    document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("hidden", t.dataset.tab !== id); });
+    syncTabbar();
+    renderTab(id);
+    scrollTop();
+  }
+  function showPage(tabId, pageId){
+    const tab = document.querySelector('.tab[data-tab="' + tabId + '"]');
+    if(!tab) return;
+    let found = false;
+    tab.querySelectorAll(".page").forEach(function(p){
+      const on = p.dataset.page === pageId;
+      if(on) found = true;
+      p.classList.toggle("hidden", !on);
+    });
+    if(!found) return;
+    pageOf[tabId] = pageId;
+    renderPage(tabId, pageId);
+    scrollTop();
+  }
+  function openProfilePage(pageId){
+    if(curTab !== "profile") showTab("profile", { keepPage: true });
+    showPage("profile", pageId);
+  }
+  function renderTab(id){
+    if(id === "ritual") renderCtxRow();
+    else if(id === "categories") renderCategories();
+    else if(id === "history") renderHistory();
+    else if(id === "rituals") renderRituals();
+    else if(id === "profile") renderPage("profile", pageOf.profile || "home");
+  }
+  function renderPage(tabId, pageId){
+    if(tabId !== "profile") return;
+    if(pageId === "home") renderProfileHome();
+    else if(pageId === "badges") renderBadges();
+    else if(pageId === "stats") renderStats();
+    else if(pageId === "leaderboard") renderLeaderboard();
+    else if(pageId === "premium") renderPremium();
+    else if(pageId === "settings") renderSettings();
+    else if(pageId === "about") renderAbout();
+  }
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click", function(){ vibe(VIBE.light); showPage("profile", "home"); });
+  });
+
+  /* ---------- small builders ---------- */
+  function renderSeg(el, labels, values, current, onChange){
+    el.innerHTML = "";
+    labels.forEach(function(lab, i){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.textContent = lab;
+      const on = values[i] === current;
+      b.className = on ? "on" : "";
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.addEventListener("click", function(){ if(values[i] !== current){ vibe(VIBE.light); onChange(values[i]); } });
+      el.appendChild(b);
+    });
+  }
+  function emptyState(text, ctaLabel, onCta){
+    const d = document.createElement("div");
+    d.className = "card empty";
+    d.innerHTML = ICO.sig + "<div></div>";
+    d.querySelector("div").textContent = text;
+    if(ctaLabel){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = ctaLabel;
+      b.addEventListener("click", onCta);
+      d.appendChild(b);
+    }
+    return d;
+  }
+  function toggleRow(icon, label, desc, checked, onToggle, disabled){
+    const row = document.createElement("div");
+    row.className = "toggle-row";
+    row.innerHTML = '<span class="toggle-ico" aria-hidden="true">' + icon + '</span><span class="toggle-text"><b></b><small></small></span><button type="button" class="switch" role="switch"></button>';
+    row.querySelector("b").textContent = label;
+    row.querySelector("small").textContent = desc || "";
+    const sw = row.querySelector(".switch");
+    sw.setAttribute("aria-checked", checked ? "true" : "false");
+    sw.setAttribute("aria-label", label);
+    if(disabled){ sw.setAttribute("aria-disabled", "true"); }
+    else sw.addEventListener("click", function(){ vibe(VIBE.light); onToggle(sw.getAttribute("aria-checked") !== "true"); });
+    return row;
+  }
+  function actionRow(icon, label, desc, cls){
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "card btn-row" + (cls ? " " + cls : "");
+    b.innerHTML = '<span class="toggle-ico" aria-hidden="true">' + icon + '</span><span class="toggle-text"><b></b><small></small></span>';
+    b.querySelector("b").textContent = label;
+    b.querySelector("small").textContent = desc || "";
+    return b;
+  }
+  // Two taps within 3s: first arms (label flips to the confirm text), second fires.
+  function armConfirm(btn, confirmText, fn){
+    const labelEl = btn.querySelector("b");
+    const orig = labelEl.textContent;
+    let armed = false, t = 0;
+    btn.addEventListener("click", function(){
+      if(!armed){
+        armed = true;
+        btn.classList.add("armed");
+        labelEl.textContent = confirmText;
+        vibe(VIBE.light);
+        t = setTimeout(function(){ armed = false; btn.classList.remove("armed"); labelEl.textContent = orig; }, 3000);
+        return;
+      }
+      clearTimeout(t);
+      armed = false;
+      btn.classList.remove("armed");
+      labelEl.textContent = orig;
+      fn();
+    });
+  }
+  const MONTHS = ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек"];
+  function pad2(n){ return String(n).padStart(2, "0"); }
+  function sameDay(a, b){ return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
+  function fmtDate(ts){
+    if(!ts || isNaN(new Date(ts).getTime())) return "";
+    const d = new Date(ts), now = new Date();
+    const hm = pad2(d.getHours()) + ":" + pad2(d.getMinutes());
+    if(sameDay(d, now)) return SHELL.history.today + " " + hm;
+    const y = new Date(now); y.setDate(now.getDate() - 1);
+    if(sameDay(d, y)) return SHELL.history.yesterday + " " + hm;
+    return d.getDate() + " " + MONTHS[d.getMonth()] + (d.getFullYear() !== now.getFullYear() ? " " + d.getFullYear() : "");
+  }
+
+  /* ---------- splash (once per session) ---------- */
+  (function initSplash(){
+    const el = $("splash");
+    if(!el) return;
+    let seen = false;
+    try{ seen = sessionStorage.getItem(LS.splash) === "1"; }catch(e){}
+    if(seen){ el.remove(); return; }
+    document.body.classList.add("is-splash");
+    $("splashTag").textContent = SHELL.splash.tagline;
+    $("splashLoad").textContent = SHELL.splash.loading;
+    $("splashQuote").textContent = SHELL.splash.quote;
+    $("splashSkip").textContent = SHELL.splash.skip;
+    const bar = $("splashBar");
+    const dur = reduced ? 300 : (SHELL.splash.duration || 2200);
+    const t0 = performance.now();
+    let done = false;
+    function finish(){
+      if(done) return;
+      done = true;
+      try{ sessionStorage.setItem(LS.splash, "1"); }catch(e){}
+      bar.style.width = "100%";
+      el.classList.add("out");
+      document.body.classList.remove("is-splash");
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 520);
+    }
+    function tick(){
+      if(done) return;
+      const p = Math.min(1, (performance.now() - t0) / dur);
+      bar.style.width = (p * 100).toFixed(1) + "%";
+      if(p < 1) requestAnimationFrame(tick); else finish();
+    }
+    el.addEventListener("click", finish);
+    el.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " " || e.key === "Escape") finish(); });
+    el.tabIndex = 0;
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- ritual tab: context pills ---------- */
+  function ctxPill(label, value, cls, onClear){
+    const s = document.createElement("span");
+    s.className = "ctx-pill" + (cls ? " " + cls : "");
+    s.innerHTML = '<small></small><span></span><button type="button" class="x" aria-label="Снять">' + ICO.x + '</button>';
+    s.querySelector("small").textContent = label + ":";
+    s.querySelector("span").textContent = value;
+    s.querySelector(".x").addEventListener("click", onClear);
+    return s;
+  }
+  function renderCtxRow(){
+    const row = $("ctxRow");
+    row.innerHTML = "";
+    const c = catById(categoryId);
+    if(c) row.appendChild(ctxPill(SHELL.categories.pill, c.name, "", clearCategory));
+    const r = ritualById(ritualId);
+    if(r) row.appendChild(ctxPill(SHELL.rituals.lineLabel, r.name, "blood", function(){ setRitual(null); showToast(SHELL.rituals.toastOff); }));
+  }
+
+  /* ---------- categories ---------- */
+  function selectCategory(id){
+    const c = catById(id);
+    if(!c || casting) return;
+    categoryId = id;
+    who.placeholder = c.who || DATA.whoPlaceholder || "";
+    what.placeholder = c.what || DATA.whatPlaceholder || "";
+    vibe(VIBE.light);
+    if(document.body.classList.contains("is-result")) backToForm();
+    showTab("ritual");
+    showToast(fmt(SHELL.categories.toast, { name: c.name }));
+  }
+  function clearCategory(){
+    categoryId = null;
+    who.placeholder = DATA.whoPlaceholder || "";
+    what.placeholder = DATA.whatPlaceholder || "";
+    renderCtxRow();
+    vibe(VIBE.light);
+    showToast(SHELL.categories.cleared);
+  }
+  function renderCategories(){
+    $("catTitle").textContent = SHELL.categories.title;
+    $("catHint").textContent = SHELL.categories.hint;
+    const grid = $("catGrid");
+    grid.innerHTML = "";
+    CATS.forEach(function(c){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "card cat-card" + (c.id === categoryId ? " on" : "");
+      b.dataset.id = c.id;
+      b.setAttribute("aria-pressed", c.id === categoryId ? "true" : "false");
+      b.innerHTML = '<span class="check" aria-hidden="true">' + CHECK_SVG + '</span><span class="ico" aria-hidden="true">' + (ICO[c.id] || ICO.grid) + '</span><b></b><small></small>';
+      b.querySelector("b").textContent = c.name;
+      b.querySelector("small").textContent = c.desc;
+      b.addEventListener("click", function(){ selectCategory(c.id); });
+      grid.appendChild(b);
+    });
+  }
+
+  /* ---------- history ---------- */
+  let histFilter = "all", histExpanded = null;
+  function openHistoryEntry(id){
+    const h = historyFind(id);
+    if(!h || casting) return;
+    hardCloseOverlay();
+    shareBlob = null;
+    if(typewriterTimer){ clearTimeout(typewriterTimer); typewriterTimer = 0; }
+    lastVerdict = verdictFromEntry(h);
+    showTab("ritual");
+    showResult({ silent: true });
+  }
+  function toggleFavEntry(id){
+    const h = historyFind(id);
+    if(!h) return;
+    h.fav = !h.fav;
+    saveHistory();
+    vibe(VIBE.light);
+    showToast(h.fav ? SHELL.history.favOn : SHELL.history.favOff);
+    if(lastVerdict && lastVerdict.hid === id) syncFavBtn();
+    checkBadges();
+    renderHistory();
+  }
+  function deleteEntry(id){
+    history = history.filter(function(h){ return h.id !== id; });
+    saveHistory();
+    if(lastVerdict && lastVerdict.hid === id){ lastVerdict.hid = null; syncFavBtn(); }
+    if(histExpanded === id) histExpanded = null;
+    vibe(VIBE.light);
+    showToast(SHELL.history.deleted);
+    renderHistory();
+  }
+  function histItem(h){
+    const el = document.createElement("div");
+    el.className = "card hist-item";
+    el.setAttribute("aria-expanded", histExpanded === h.id ? "true" : "false");
+    el.innerHTML =
+      '<span class="thumb" data-power="' + (h.powerId || "seal") + '" aria-hidden="true">' + (ICONS[h.powerId] || ICONS.seal) + '</span>' +
+      '<button type="button" class="hist-main"><p class="hist-punch"></p><p class="hist-meta"><b></b><span class="dot">·</span><span class="dt"></span><span class="pw"></span></p></button>' +
+      '<button type="button" class="heart' + (h.fav ? " on" : "") + '" aria-pressed="' + (h.fav ? "true" : "false") + '" aria-label="В избранное">' + ICO.heart + '</button>' +
+      '<button type="button" class="chev more" aria-label="Ещё">' + ICO.dots + '</button>' +
+      '<div class="hist-actions"><button type="button" class="open"></button><button type="button" class="share"></button><button type="button" class="danger del"></button></div>';
+    el.querySelector(".hist-punch").textContent = h.punch;
+    el.querySelector(".hist-meta b").textContent = h.name;
+    el.querySelector(".dt").textContent = fmtDate(h.ts);
+    el.querySelector(".pw").textContent = h.powerLabel ? " · " + h.powerLabel : "";
+    el.querySelector(".open").textContent = SHELL.history.open;
+    el.querySelector(".share").textContent = SHELL.history.share;
+    el.querySelector(".del").textContent = SHELL.history.del;
+    el.querySelector(".hist-main").addEventListener("click", function(){ openHistoryEntry(h.id); });
+    el.querySelector(".open").addEventListener("click", function(){ openHistoryEntry(h.id); });
+    el.querySelector(".heart").addEventListener("click", function(){ toggleFavEntry(h.id); });
+    el.querySelector(".more").addEventListener("click", function(){
+      histExpanded = histExpanded === h.id ? null : h.id;
+      vibe(VIBE.light);
+      renderHistory();
+    });
+    el.querySelector(".share").addEventListener("click", function(){ shareCard(verdictFromEntry(h)); });
+    el.querySelector(".del").addEventListener("click", function(){ deleteEntry(h.id); });
+    return el;
+  }
+  function renderHistory(){
+    $("histTitle").textContent = SHELL.history.title;
+    renderSeg($("histSeg"), SHELL.history.tabs, ["all", "fav"], histFilter, function(v){ histFilter = v; histExpanded = null; renderHistory(); });
+    const list = $("histList");
+    list.innerHTML = "";
+    const items = histFilter === "fav" ? history.filter(function(h){ return h.fav; }) : history;
+    if(!items.length){
+      list.appendChild(emptyState(histFilter === "fav" ? SHELL.history.emptyFav : SHELL.history.empty, SHELL.history.emptyCta, function(){ showTab("ritual"); }));
+      return;
+    }
+    items.forEach(function(h){ list.appendChild(histItem(h)); });
+  }
+
+  /* ---------- rituals catalog ---------- */
+  let ritFilter = "all";
+  function ritualLocked(r){ return !!(r && r.pro && !profile.pro); }
+  function setRitual(id){
+    ritualId = id;
+    savePrefs();
+    renderCtxRow();
+    if(curTab === "rituals") renderRituals();
+  }
+  function tapRitual(r){
+    if(ritualLocked(r)){
+      vibe(VIBE.light);
+      showToast(fmt(SHELL.rituals.toastLocked, { name: r.name }));
+      openProfilePage("premium");
+      return;
+    }
+    vibe(VIBE.light);
+    if(ritualId === r.id){ setRitual(null); showToast(SHELL.rituals.toastOff); }
+    else { setRitual(r.id); showToast(fmt(SHELL.rituals.toastOn, { name: r.name })); }
+  }
+  function toggleFavRitual(id){
+    const i = profile.favRituals.indexOf(id);
+    if(i >= 0) profile.favRituals.splice(i, 1); else profile.favRituals.push(id);
+    saveProfile();
+    vibe(VIBE.light);
+    renderRituals();
+  }
+  function ritualTags(r){
+    let t = "";
+    if(ritualLocked(r)) t += '<span class="tag gold">' + ICO.lock + SHELL.rituals.locked + '</span>';
+    if(ritualId === r.id) t += '<span class="tag blood">' + SHELL.rituals.selected + '</span>';
+    return t;
+  }
+  function heartBtn(r){
+    const on = profile.favRituals.indexOf(r.id) >= 0;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "heart" + (on ? " on" : "");
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.setAttribute("aria-label", "В избранное");
+    b.innerHTML = ICO.heart;
+    b.addEventListener("click", function(){ toggleFavRitual(r.id); });
+    return b;
+  }
+  function featuredCard(r){
+    const el = document.createElement("div");
+    el.className = "card rit-featured" + (ritualId === r.id ? " on" : "") + (ritualLocked(r) ? " locked" : "");
+    el.innerHTML =
+      '<button type="button" class="rt"><span class="eyebrow"></span><b></b><small></small><span class="tags">' + ritualTags(r) + '</span></button>' +
+      '<svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="rgba(241,227,198,.12)"/><circle cx="8" cy="8" r=".9" fill="currentColor" stroke="none"/><circle cx="6" cy="13" r=".7" fill="currentColor" stroke="none"/><circle cx="10.5" cy="16.5" r=".8" fill="currentColor" stroke="none"/></svg>';
+    el.querySelector(".eyebrow").textContent = SHELL.rituals.featuredEyebrow;
+    el.querySelector("b").textContent = r.name;
+    el.querySelector("small").textContent = r.desc;
+    el.querySelector(".rt").addEventListener("click", function(){ tapRitual(r); });
+    el.appendChild(heartBtn(r));
+    return el;
+  }
+  function ritualItem(r){
+    const locked = ritualLocked(r);
+    const el = document.createElement("div");
+    el.className = "card rit-item" + (ritualId === r.id ? " on" : "") + (locked ? " locked" : "");
+    el.innerHTML =
+      '<span class="thumb' + (locked ? " gold" : "") + '" aria-hidden="true">' + (RIT_ICONS[r.icon] || ICO.fire) + '</span>' +
+      '<button type="button" class="rt"><b></b><small></small>' + (ritualTags(r) ? '<span class="tags">' + ritualTags(r) + '</span>' : "") + '</button>';
+    el.querySelector("b").textContent = r.name;
+    el.querySelector("small").textContent = r.desc;
+    el.querySelector(".rt").addEventListener("click", function(){ tapRitual(r); });
+    el.appendChild(heartBtn(r));
+    const chev = document.createElement("button");
+    chev.type = "button";
+    chev.className = "chev";
+    chev.setAttribute("aria-label", locked ? SHELL.rituals.locked : (ritualId === r.id ? SHELL.rituals.unselect : SHELL.rituals.select));
+    chev.innerHTML = locked ? ICO.lock : (ritualId === r.id ? ICO.check : ICO.chevron);
+    chev.addEventListener("click", function(){ tapRitual(r); });
+    el.appendChild(chev);
+    return el;
+  }
+  function renderRituals(){
+    $("ritTitle").textContent = SHELL.rituals.title;
+    $("ritHint").textContent = SHELL.rituals.hint;
+    renderSeg($("ritSeg"), SHELL.rituals.tabs, ["all", "fav"], ritFilter, function(v){ ritFilter = v; renderRituals(); });
+    const fwrap = $("ritFeatured"), list = $("ritList");
+    fwrap.innerHTML = "";
+    list.innerHTML = "";
+    const favOnly = ritFilter === "fav";
+    const items = RITUALS.filter(function(r){ return !favOnly || profile.favRituals.indexOf(r.id) >= 0; });
+    const feat = favOnly ? null : items.filter(function(r){ return r.featured; })[0];
+    if(feat) fwrap.appendChild(featuredCard(feat));
+    const rest = items.filter(function(r){ return r !== feat; });
+    if(!rest.length && !feat){ list.appendChild(emptyState(SHELL.rituals.emptyFav)); return; }
+    rest.forEach(function(r){ list.appendChild(ritualItem(r)); });
+  }
+
+  /* ---------- profile home ---------- */
+  function userRank(period){
+    const scale = SHELL.leaderboard.periodScale[period || "all"] || 1;
+    const mine = period === "all" || !period ? karmaAll() : karmaSince(Date.now() - (period === "week" ? 7 : 30) * 864e5);
+    let rank = 1;
+    SHELL.leaderboard.seeds.forEach(function(s){ if(Math.round(s.karma * scale) > mine) rank++; });
+    return rank;
+  }
+  function renderProfileHome(){
+    $("profTitle").textContent = SHELL.profile.title;
+    $("nickText").textContent = displayNick();
+    const proTag = $("proTag");
+    proTag.textContent = SHELL.profile.proTag;
+    proTag.classList.toggle("hidden", !profile.pro);
+    $("nickSave").textContent = SHELL.profile.saveNick;
+    $("nickInput").placeholder = SHELL.profile.nickPlaceholder;
+    $("nickInput").maxLength = SHELL.profile.nickMax || 24;
+    $("since").textContent = fmt(SHELL.profile.since, { year: new Date(profile.createdAt || Date.now()).getFullYear() });
+    $("profQuote").textContent = SHELL.profile.quote;
+
+    const counters = $("profCounters");
+    counters.innerHTML = "";
+    [[stats.total | 0, SHELL.profile.counters[0]], [fmtK(karmaAll()), SHELL.profile.counters[1]], [favCount(), SHELL.profile.counters[2]]].forEach(function(c){
+      const d = document.createElement("div");
+      d.className = "card counter-card";
+      d.innerHTML = "<b></b><small></small>";
+      d.querySelector("b").textContent = c[0];
+      d.querySelector("small").textContent = c[1];
+      counters.appendChild(d);
+    });
+
+    const pct = worsePct();
+    $("worseText").textContent = pct ? SHELL.stats.worse : SHELL.profile.worseZero;
+    $("worsePct").textContent = pct ? fmt(SHELL.stats.worseSuffix, { n: pct }) : "";
+    requestAnimationFrame(function(){ $("worseBar").style.width = pct + "%"; });
+
+    const banner = $("proBanner");
+    banner.classList.toggle("hidden", !!profile.pro);
+    $("proBannerTitle").textContent = SHELL.profile.proBanner.title;
+    $("proBannerSub").textContent = SHELL.pro.headline;
+    $("proBannerCta").textContent = SHELL.profile.proBanner.cta;
+
+    const menu = $("profMenu");
+    menu.innerHTML = "";
+    SHELL.profile.menu.forEach(function(m){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "menu-item";
+      b.dataset.page = m.id;
+      let val = "", gold = false;
+      if(m.id === "badges") val = profile.badges.length + "/" + SHELL.badges.items.length;
+      else if(m.id === "stats") val = String(stats.total | 0);
+      else if(m.id === "leaderboard") val = "#" + userRank("all");
+      else if(m.id === "premium"){ val = profile.pro ? SHELL.profile.proTag : ""; gold = profile.pro; }
+      b.innerHTML = '<span class="mi" aria-hidden="true">' + (MENU_ICONS[m.id] || ICO.info) + '</span><span class="lbl"></span><span class="val' + (gold ? " gold" : "") + '"></span><span class="chev" aria-hidden="true">' + ICO.chevron + '</span>';
+      b.querySelector(".lbl").textContent = m.label;
+      b.querySelector(".val").textContent = val;
+      b.addEventListener("click", function(){ vibe(VIBE.light); showPage("profile", m.id); });
+      menu.appendChild(b);
+    });
+    $("nickForm").classList.remove("on");
+  }
+  $("nickEditBtn").addEventListener("click", function(){
+    const f = $("nickForm");
+    const on = !f.classList.contains("on");
+    f.classList.toggle("on", on);
+    if(on){
+      $("nickInput").value = profile.nick || "";
+      try{ $("nickInput").focus(); }catch(e){}
+    }
+    vibe(VIBE.light);
+  });
+  $("nickForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const v = ($("nickInput").value || "").replace(/\s+/g, " ").trim().slice(0, SHELL.profile.nickMax || 24);
+    profile.nick = v;
+    saveProfile();
+    showToast(SHELL.profile.nickSaved);
+    vibe(VIBE.light);
+    renderProfileHome();
+  });
+  $("proBanner").addEventListener("click", function(){ vibe(VIBE.light); showPage("profile", "premium"); });
+
+  /* ---------- badges ---------- */
+  function renderBadges(){
+    $("badgesTitle").textContent = SHELL.badges.title;
+    const items = SHELL.badges.items;
+    $("badgesProgress").textContent = fmt(SHELL.badges.progress, { n: profile.badges.length, total: items.length });
+    const grid = $("badgeGrid");
+    grid.innerHTML = "";
+    items.forEach(function(b){
+      const on = profile.badges.indexOf(b.id) >= 0;
+      const d = document.createElement("div");
+      d.className = "card badge" + (on ? " on" : "");
+      d.innerHTML = '<span class="lock" aria-hidden="true">' + ICO.lock + '</span><span class="bi" aria-hidden="true">' + (ICO[b.icon] || ICO.star) + '</span><b></b><small></small>';
+      d.querySelector("b").textContent = b.name;
+      d.querySelector("small").textContent = b.desc;
+      d.setAttribute("aria-label", b.name + " — " + (on ? b.desc : SHELL.badges.locked));
+      grid.appendChild(d);
+    });
+  }
+
+  /* ---------- stats ---------- */
+  const WEEKDAYS = ["вс","пн","вт","ср","чт","пт","сб"];
+  function renderStats(){
+    $("statsTitle").textContent = SHELL.stats.title;
+    const body = $("statsBody");
+    body.innerHTML = "";
+    const pct = worsePct();
+
+    const hero = document.createElement("div");
+    hero.className = "card stat-hero";
+    hero.innerHTML = '<div class="eyebrow"></div><div class="big"></div><div class="bars"></div><div class="bars-labels"></div><div class="bars-cap"></div>';
+    hero.querySelector(".eyebrow").textContent = SHELL.stats.worse;
+    const big = hero.querySelector(".big");
+    if(pct){ big.innerHTML = "<b></b>"; big.querySelector("b").textContent = fmt(SHELL.stats.worseSuffix, { n: pct }); }
+    else big.textContent = SHELL.stats.empty;
+    const bars = hero.querySelector(".bars"), labels = hero.querySelector(".bars-labels");
+    const days = [];
+    for(let i=6;i>=0;i--){ const d = new Date(); d.setDate(d.getDate() - i); days.push(d); }
+    let max = 0;
+    days.forEach(function(d){ max = Math.max(max, stats.byDay[dayKey(d)] || 0); });
+    days.forEach(function(d){
+      const n = stats.byDay[dayKey(d)] || 0;
+      const i = document.createElement("i");
+      i.style.height = (max ? Math.max(4, Math.round(n / max * 100)) : 4) + "%";
+      if(!n) i.classList.add("zero");
+      i.title = n + "";
+      bars.appendChild(i);
+      const l = document.createElement("span");
+      l.textContent = WEEKDAYS[d.getDay()];
+      labels.appendChild(l);
+    });
+    hero.querySelector(".bars-cap").textContent = SHELL.stats.chartLabel;
+    body.appendChild(hero);
+
+    const cards = document.createElement("div");
+    cards.className = "stat-cards";
+    const cleanPct = stats.total ? Math.round((stats.clean | 0) / stats.total * 100) + "%" : "0%";
+    [[stats.total | 0, SHELL.stats.cards[0]], [stats.byPower.anathema | 0, SHELL.stats.cards[1]], [cleanPct, SHELL.stats.cards[2]], [favCount(), SHELL.stats.cards[3]]].forEach(function(c){
+      const d = document.createElement("div");
+      d.className = "card stat-card";
+      d.innerHTML = "<b></b><small></small>";
+      d.querySelector("b").textContent = c[0];
+      d.querySelector("small").textContent = c[1];
+      cards.appendChild(d);
+    });
+    body.appendChild(cards);
+
+    const pw = document.createElement("div");
+    pw.className = "card pbars";
+    pw.innerHTML = '<div class="group-label"></div>';
+    pw.querySelector(".group-label").textContent = SHELL.stats.byPower;
+    const totalP = Math.max(1, stats.total | 0);
+    powers.forEach(function(p){
+      const n = stats.byPower[p.id] | 0;
+      const row = document.createElement("div");
+      row.className = "pbar";
+      row.style.setProperty("--bar", powerColorOf(p.id));
+      row.innerHTML = "<span></span><div class=\"track\"><i></i></div><em></em>";
+      row.querySelector("span").textContent = p.label;
+      row.querySelector("i").style.width = Math.round(n / totalP * 100) + "%";
+      row.querySelector("em").textContent = n;
+      pw.appendChild(row);
+    });
+    body.appendChild(pw);
+
+    const catKeys = Object.keys(stats.byCategory).filter(function(k){ return stats.byCategory[k] > 0; })
+      .sort(function(a, b){ return stats.byCategory[b] - stats.byCategory[a]; }).slice(0, 5);
+    if(catKeys.length){
+      const pc = document.createElement("div");
+      pc.className = "card pbars";
+      pc.innerHTML = '<div class="group-label"></div>';
+      pc.querySelector(".group-label").textContent = SHELL.stats.byCategory;
+      catKeys.forEach(function(k){
+        const n = stats.byCategory[k] | 0;
+        const c = catById(k);
+        const row = document.createElement("div");
+        row.className = "pbar";
+        row.style.setProperty("--bar", "#C9A24A");
+        row.innerHTML = "<span></span><div class=\"track\"><i></i></div><em></em>";
+        row.querySelector("span").textContent = c ? c.name : SHELL.stats.noCategory;
+        row.querySelector("i").style.width = Math.round(n / totalP * 100) + "%";
+        row.querySelector("em").textContent = n;
+        pc.appendChild(row);
+      });
+      body.appendChild(pc);
+    }
+
+    const q = document.createElement("p");
+    q.className = "quote-line";
+    q.textContent = SHELL.stats.quote;
+    body.appendChild(q);
+  }
+
+  /* ---------- leaderboard ---------- */
+  let lbPeriod = "all";
+  function renderLeaderboard(){
+    $("lbTitle").textContent = SHELL.leaderboard.title;
+    renderSeg($("lbSeg"), SHELL.leaderboard.tabs, ["week", "month", "all"], lbPeriod, function(v){ lbPeriod = v; renderLeaderboard(); });
+    const scale = SHELL.leaderboard.periodScale[lbPeriod] || 1;
+    const mine = lbPeriod === "all" ? karmaAll() : karmaSince(Date.now() - (lbPeriod === "week" ? 7 : 30) * 864e5);
+    const rows = SHELL.leaderboard.seeds.map(function(s){ return { name: s.name, karma: Math.round(s.karma * scale), me: false }; });
+    rows.push({ name: displayNick(), karma: mine, me: true });
+    rows.sort(function(a, b){ return (b.karma - a.karma) || (a.me ? -1 : b.me ? 1 : 0); });
+    const list = $("lbList");
+    list.innerHTML = "";
+    rows.forEach(function(r, i){
+      const row = document.createElement("div");
+      row.className = "lb-row" + (r.me ? " me" : "") + (i < 3 ? " top" : "");
+      row.innerHTML = '<span class="rank"></span><span class="av" aria-hidden="true"></span><span class="nm"><span></span></span><span class="kv"></span>';
+      row.querySelector(".rank").textContent = i + 1;
+      row.querySelector(".av").textContent = (r.name || "?").trim().charAt(0).toUpperCase();
+      row.querySelector(".nm > span").textContent = r.name;
+      if(r.me){
+        if(profile.pro) row.querySelector(".nm").insertAdjacentHTML("beforeend", ICO.crownGold);
+        const you = document.createElement("span");
+        you.className = "you";
+        you.textContent = "(" + SHELL.leaderboard.you + ")";
+        row.querySelector(".nm").appendChild(you);
+        row.setAttribute("aria-current", "true");
+      }
+      row.querySelector(".kv").textContent = fmtK(r.karma);
+      list.appendChild(row);
+    });
+    $("lbFooter").textContent = SHELL.leaderboard.footer;
+  }
+
+  /* ---------- PRO mock paywall ---------- */
+  function setPro(on){
+    profile.pro = !!on;
+    saveProfile();
+    document.body.classList.toggle("is-pro", profile.pro);
+    if(profile.pro) checkBadges();
+    if(!profile.pro && ritualLocked(ritualById(ritualId))) setRitual(null);
+  }
+  function renderPremium(){
+    $("payTitleSmall").textContent = "Premium";
+    $("payHeadline").textContent = SHELL.pro.headline;
+    const list = $("perkList");
+    list.innerHTML = "";
+    SHELL.pro.perks.forEach(function(p){
+      const d = document.createElement("div");
+      d.className = "perk";
+      d.innerHTML = '<span class="pi" aria-hidden="true">' + (ICO[p.icon] || ICO.star) + '</span><span></span>';
+      d.querySelector("span:last-child").textContent = p.text;
+      list.appendChild(d);
+    });
+    const cta = $("proCta");
+    cta.textContent = profile.pro ? SHELL.pro.ctaDone : SHELL.pro.cta;
+    cta.disabled = !!profile.pro;
+    $("proRestore").textContent = SHELL.pro.restore;
+    $("proFooter").textContent = SHELL.pro.footer;
+    $("proDemo").textContent = SHELL.pro.demo;
+  }
+  $("proCta").addEventListener("click", function(){
+    if(profile.pro) return;
+    setPro(true);
+    vibe(VIBE.anathema);
+    showToast(SHELL.pro.unlocked);
+    renderPremium();
+  });
+  $("proRestore").addEventListener("click", function(){
+    vibe(VIBE.light);
+    showToast(profile.pro ? SHELL.pro.restored : SHELL.pro.notFound);
+  });
+
+  /* ---------- settings ---------- */
+  function renderSettings(){
+    const S = SHELL.settings;
+    $("settingsTitle").textContent = S.title;
+    const body = $("settingsBody");
+    body.innerHTML = "";
+    function group(label){
+      const g = document.createElement("div");
+      g.className = "group";
+      g.innerHTML = '<div class="group-label"></div>';
+      g.querySelector(".group-label").textContent = label;
+      body.appendChild(g);
+      return g;
+    }
+    const gR = group(S.groups.ritual);
+    gR.appendChild(toggleRow(ICO.noMat, S.noMat.label, S.noMat.desc, noMat, function(v){
+      noMat = v;
+      noMatBtn.setAttribute("aria-checked", noMat ? "true" : "false");
+      savePrefs();
+      renderSettings();
+    }));
+    const gP = group(S.groups.profile);
+    gP.appendChild(toggleRow(ICO.eyeOff, S.anon.label, S.anon.desc, !!profile.anon, function(v){
+      profile.anon = v;
+      saveProfile();
+      renderSettings();
+    }));
+    const gL = group(S.groups.look);
+    gL.appendChild(toggleRow(ICO.moon, S.dark.label, S.dark.desc, true, null, true));
+    const gD = group(S.groups.data);
+    const clearBtn = actionRow(ICO.trash, S.clear.label, fmt(S.clear.desc, { n: history.length }), "danger");
+    armConfirm(clearBtn, S.clear.confirm, function(){
+      if(!history.length){ showToast(S.clear.empty); return; }
+      history = [];
+      saveHistory();
+      if(lastVerdict){ lastVerdict.hid = null; syncFavBtn(); }
+      vibe(VIBE.seal);
+      showToast(S.clear.done);
+      renderSettings();
+    });
+    gD.appendChild(clearBtn);
+    if(profile.pro){
+      const gX = group(S.groups.demo);
+      const off = actionRow(ICO.crown, S.proOff.label, S.proOff.desc);
+      off.addEventListener("click", function(){
+        setPro(false);
+        vibe(VIBE.light);
+        showToast(S.proOff.done);
+        renderSettings();
+      });
+      gX.appendChild(off);
+    }
+  }
+
+  /* ---------- about ---------- */
+  function renderAbout(){
+    const A = SHELL.about;
+    $("aboutTitle").textContent = A.title;
+    $("aboutVer").textContent = fmt(A.version, { v: DATA.version });
+    const box = $("aboutLines");
+    box.innerHTML = "";
+    A.lines.forEach(function(line){
+      const p = document.createElement("p");
+      p.textContent = line;
+      box.appendChild(p);
+    });
+    $("aboutDisclaimer").textContent = A.disclaimer;
+    const a = $("aboutLink");
+    a.textContent = A.link;
+    a.href = APP_URL;
+  }
+
+  /* ---------- boot ---------- */
+  document.body.dataset.tab = curTab;
+  renderTabbar();
+  renderCtxRow();
+
   // Exposed for smoke tests / debugging only
   try{
     window.__proklinator = {
       matchSin: matchSin, isVulgar: isVulgar, inferGender: inferGender, pickVerdict: pickVerdict,
       cleanLadder: cleanLadder, displaySinName: displaySinName, verdicts: DATA.verdicts,
       paintPoster: paintPoster, paintOgCard: paintOgCard, conjugate: conjugate,
-      version: DATA.version, get last(){ return lastVerdict; }
+      version: DATA.version, get last(){ return lastVerdict; },
+      shell: SHELL, showTab: showTab, showPage: showPage, openProfilePage: openProfilePage,
+      selectCategory: selectCategory, clearCategory: clearCategory, setRitual: setRitual,
+      openHistoryEntry: openHistoryEntry, sinsForCategory: sinsForCategory, karmaAll: karmaAll, worsePct: worsePct,
+      get history(){ return history; }, get stats(){ return stats; }, get profile(){ return profile; },
+      get state(){ return { tab: curTab, page: pageOf.profile, powerId: powerId, noMat: noMat, categoryId: categoryId, ritualId: ritualId, casting: casting }; }
     };
   }catch(e){}
 })();
