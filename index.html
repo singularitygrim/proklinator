@@ -19,7 +19,6 @@
   --soot:#1A1714;
   --soot-2:#141210;
   --bone:rgba(232,224,212,.10);
-  --bone-soft:rgba(232,224,212,.07);
   --bone-text:#E8E0D4;
   --muted:rgba(232,224,212,.55);
   --faint:rgba(232,224,212,.32);
@@ -45,21 +44,19 @@ body{
   overflow-x:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   padding:var(--safe-t) var(--safe-r) 0 var(--safe-l);
   background:
-    radial-gradient(ellipse 120% 80% at 50% -20%,rgba(196,92,38,.06),transparent 50%),
-    radial-gradient(ellipse 90% 60% at 50% 120%,rgba(0,0,0,.55),transparent 55%),
+    radial-gradient(ellipse 120% 80% at 50% -20%,rgba(196,92,38,.07),transparent 50%),
+    radial-gradient(ellipse 90% 60% at 50% 120%,rgba(0,0,0,.6),transparent 55%),
     linear-gradient(180deg,#100E0C 0%,var(--bg) 40%,#0C0A09 100%);
   position:relative;
 }
-/* film grain */
 body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.045;
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.055;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px 180px;mix-blend-mode:overlay;
 }
-/* vignette */
 body::after{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:89;
-  background:radial-gradient(ellipse 75% 70% at 50% 45%,transparent 40%,rgba(0,0,0,.55) 100%);
+  background:radial-gradient(ellipse 72% 68% at 50% 45%,transparent 38%,rgba(0,0,0,.62) 100%);
 }
 button,input{font:inherit;color:inherit}
 button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -68,160 +65,137 @@ input{
   font-size:16px;line-height:1.4;width:100%;
   background:var(--soot-2);border:1px solid var(--bone);border-radius:12px;
   padding:14px 16px;color:var(--bone-text);letter-spacing:.01em;
+  transition:border-color .25s,box-shadow .25s;
 }
 input::placeholder{color:var(--faint)}
-input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
+input:focus{border-color:rgba(196,92,38,.5);box-shadow:0 0 0 3px rgba(196,92,38,.12)}
+input.pulse-inner{animation:pulseInner .7s var(--ease)}
+@keyframes pulseInner{
+  0%,100%{box-shadow:0 0 0 0 transparent;border-color:var(--bone)}
+  30%{box-shadow:0 0 0 4px rgba(196,92,38,.28);border-color:var(--amber)}
+  60%{box-shadow:0 0 0 2px rgba(196,92,38,.15);border-color:var(--amber-hot)}
+}
 
 .app{
   max-width:440px;margin:0 auto;min-height:100dvh;
-  padding:20px 20px calc(var(--cta-h) + var(--safe-b) + 24px);
-  display:flex;flex-direction:column;gap:0;position:relative;z-index:1;
+  padding:24px 20px calc(var(--cta-h) + var(--safe-b) + 28px);
+  display:flex;flex-direction:column;position:relative;z-index:1;
 }
 
-/* —— Header —— */
-.brand{display:flex;align-items:center;gap:14px;margin-bottom:8px}
-.mark{
-  width:36px;height:36px;min-width:36px;position:relative;
-  display:grid;place-items:center;
-}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.mark{width:40px;height:40px;min-width:40px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
-.mark .ring{animation:sealSpin 48s linear infinite;transform-origin:center}
+.mark .ring{animation:sealSpin 56s linear infinite;transform-origin:center}
 @keyframes sealSpin{to{transform:rotate(360deg)}}
 .brand-text h1{
-  margin:0;font-size:13px;font-weight:700;letter-spacing:.28em;
+  margin:0;font-size:13px;font-weight:700;letter-spacing:.32em;
   text-transform:uppercase;color:var(--bone-text);line-height:1.2;
 }
 .atmosphere{
-  margin:0 0 28px;font-size:13px;line-height:1.5;color:var(--muted);
-  letter-spacing:.02em;max-width:32em;
+  margin:0 0 32px;font-size:13px;line-height:1.55;color:var(--muted);
+  letter-spacing:.02em;max-width:30em;
 }
-.row-top{display:flex;gap:8px;align-items:center;margin-bottom:22px}
-.chip-btn{
-  min-height:40px;padding:0 14px;border-radius:999px;
-  border:1px solid var(--line);color:var(--faint);font-size:12px;
-  font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  background:transparent;
-}
-.chip-btn:active{border-color:var(--bone);color:var(--muted)}
 
-/* —— Fields —— */
-.field{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
-.field span,.section-label{
-  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.field > span,.section-label{
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--faint);font-weight:600;
 }
 .section-label{margin:0 0 12px;display:block}
-.ban{margin:0 0 20px;font-size:11px;color:var(--faint);line-height:1.45}
-.hint{margin:0 0 10px;font-size:12px;color:var(--muted);line-height:1.4}
+.empty-hint{
+  margin:6px 0 0;font-size:12px;color:var(--amber);opacity:0;
+  letter-spacing:.04em;transition:opacity .25s;min-height:1.2em;
+}
+.empty-hint.show{opacity:1}
 
-/* —— Vertical sin list —— */
-.sins{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
-.sin{
-  min-height:64px;width:100%;text-align:left;padding:14px 16px;
-  border-radius:var(--radius);border:1px solid var(--bone);
-  background:var(--soot);color:var(--muted);
-  display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:center;
-  transition:border-color .25s,color .25s,background .25s;
+.power{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:8px}
+.pow{
+  min-height:72px;border-radius:var(--radius);border:1px solid var(--bone);
+  background:var(--soot);display:grid;grid-template-columns:36px 1fr;
+  gap:14px;align-items:center;padding:14px 16px;text-align:left;
+  color:var(--muted);transition:border-color .25s,color .25s,background .25s;
   position:relative;overflow:hidden;
 }
-.sin .rune{
-  width:28px;height:28px;display:grid;place-items:center;
-  font-size:11px;letter-spacing:.04em;font-weight:700;
-  color:var(--faint);border:1px solid var(--line);border-radius:50%;
-  font-variant-numeric:tabular-nums;
+.pow .seal{
+  width:36px;height:36px;display:grid;place-items:center;position:relative;
 }
-.sin .meta{display:flex;flex-direction:column;gap:3px;min-width:0}
-.sin b{font-size:15px;line-height:1.25;color:inherit;font-weight:600;letter-spacing:.01em}
-.sin .whisper{font-size:12px;color:var(--faint);line-height:1.3}
-.sin:active{transform:none;opacity:.9}
-.sin.on{
-  border-color:var(--amber);color:var(--bone-text);background:var(--soot);
-  box-shadow:inset 0 0 0 1px rgba(196,92,38,.25);
+.pow .seal svg{width:100%;height:100%}
+.pow .meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pow b{font-size:15px;font-weight:650;letter-spacing:.04em;color:inherit}
+.pow small{font-size:12px;line-height:1.35;color:var(--faint);font-weight:400}
+.pow:active{opacity:.9}
+.pow.on{
+  border-color:var(--amber);color:var(--bone-text);
+  box-shadow:inset 0 0 0 1px rgba(196,92,38,.28);
 }
-.sin.on::after{
+.pow.on::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 80% 70% at 20% 50%,var(--amber-dim),transparent 65%);
-  animation:innerPulse 2.3s ease-in-out infinite;
+  background:radial-gradient(ellipse 70% 80% at 12% 50%,var(--amber-dim),transparent 70%);
+  animation:innerPulse 2.4s ease-in-out infinite;
 }
-@keyframes innerPulse{0%,100%{opacity:.35}50%{opacity:.85}}
-.sin.on .rune{border-color:var(--amber);color:var(--amber)}
-.empty{display:none;margin:0 0 12px;padding:12px 0;color:var(--faint);font-size:13px;border-top:1px solid var(--line)}
-.empty.show{display:block}
-
-/* —— Severity seals —— */
-.power{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px}
-.pow{
-  min-height:64px;border-radius:12px;border:1px solid var(--bone);
-  background:var(--soot);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:6px;color:var(--muted);
-  transition:border-color .25s,color .25s;
-}
-.pow .seal-dot{
-  width:8px;height:8px;border-radius:50%;
-  border:1px solid var(--faint);background:transparent;
-}
-.pow small{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-.pow:active{opacity:.85}
-.pow.on{border-color:var(--amber);color:var(--bone-text)}
-.pow.on .seal-dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 10px var(--amber-glow)}
+@keyframes innerPulse{0%,100%{opacity:.3}50%{opacity:.85}}
+.pow.on .seal .dot{fill:var(--amber)}
+.pow.on .seal .ring-s{stroke:var(--amber);opacity:1}
 
 .home-hint{
-  margin-top:28px;padding-top:18px;border-top:1px solid var(--line);
+  margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
   font-size:12px;color:var(--faint);line-height:1.45;
 }
 .home-hint strong{display:block;color:var(--muted);margin-bottom:4px;font-size:12px;font-weight:600;letter-spacing:.04em}
 
-/* —— Verdict parchment —— */
-.verdict{display:none;margin-top:28px;position:relative;padding:22px 20px 20px;
+.verdict{
+  display:none;margin-top:8px;position:relative;padding:24px 20px 20px;
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
   overflow:hidden;
 }
-.verdict.show{display:block;animation:riseIn .5s var(--ease)}
-@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.verdict.show{display:block;animation:riseIn .55s var(--ease)}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .verdict::before{
-  content:"";position:absolute;right:-20px;top:-20px;width:120px;height:120px;
+  content:"";position:absolute;right:-24px;top:-24px;width:140px;height:140px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity:.08;pointer-events:none;
+  opacity:.09;pointer-events:none;
 }
-.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-weight:700}
+.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;font-weight:700}
+.sin-tag{
+  display:inline-block;margin:0 0 12px;padding:5px 10px;border-radius:999px;
+  border:1px solid rgba(196,92,38,.35);color:var(--amber);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+}
 .verdict h2{margin:0 0 12px;font-size:18px;line-height:1.35;font-weight:600;letter-spacing:.01em;color:var(--bone-text)}
-.verdict p{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.55}
-.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.kpi span{
-  padding:12px;border-radius:12px;border:1px solid var(--line);
-  background:var(--soot-2);display:flex;flex-direction:column;gap:4px;
-}
-.kpi b{font-size:18px;color:var(--amber);font-weight:700;letter-spacing:.02em}
-.kpi small{font-size:10px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.verdict p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.55}
+.sev-row{margin:0 0 18px;font-size:12px;color:var(--faint);letter-spacing:.06em}
+.sev-row b{color:var(--amber);font-weight:650;letter-spacing:.1em;text-transform:uppercase}
+.actions{display:grid;grid-template-columns:1fr;gap:8px}
 .actions button{
-  min-height:46px;border-radius:12px;border:1px solid var(--bone);
-  color:var(--muted);font-weight:600;font-size:13px;letter-spacing:.04em;
-  background:transparent;
+  min-height:48px;border-radius:12px;border:1px solid var(--bone);
+  color:var(--muted);font-weight:600;font-size:13px;letter-spacing:.06em;
+  background:transparent;transition:border-color .2s,color .2s;
+}
+.actions button.primary{
+  background:var(--amber);color:var(--ink);border-color:var(--amber);
+  letter-spacing:.1em;text-transform:uppercase;font-size:12px;
 }
 .actions button:active{border-color:var(--amber);color:var(--bone-text)}
+.actions button.primary:active{filter:brightness(1.06);color:var(--ink)}
 .disclaimer{margin:28px 0 0;font-size:11px;color:var(--faint);line-height:1.5;text-align:left}
 
-/* —— Sticky CTA —— */
 .cta-bar{
   position:fixed;left:0;right:0;bottom:0;z-index:30;
   padding:12px 20px calc(12px + var(--safe-b));
-  background:linear-gradient(180deg,transparent,rgba(14,12,11,.92) 30%,var(--bg) 70%);
+  background:linear-gradient(180deg,transparent,rgba(14,12,11,.94) 28%,var(--bg) 70%);
 }
 .cta-bar-inner{max-width:440px;margin:0 auto;position:relative}
-/* ember glint near CTA */
 .cta-bar-inner::before{
   content:"";position:absolute;right:18px;top:-6px;width:5px;height:5px;
   border-radius:50%;background:var(--amber);opacity:.55;
   box-shadow:0 0 12px 3px var(--amber-glow);pointer-events:none;
   animation:ember 3.2s ease-in-out infinite;
 }
-@keyframes ember{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.8;transform:scale(1.15)}}
+@keyframes ember{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.85;transform:scale(1.15)}}
 .cta{
   width:100%;min-height:54px;border-radius:14px;position:relative;overflow:hidden;
-  font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;
-  background:var(--amber);color:var(--ink);
-  transition:opacity .2s,filter .2s;
+  font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;
+  background:var(--amber);color:var(--ink);transition:opacity .2s,filter .2s;
 }
 .cta::before{
   content:"";position:absolute;left:50%;top:50%;width:72px;height:72px;
@@ -229,19 +203,16 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%230E0C0B' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%230E0C0B' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%230E0C0B'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 .cta:active:not(:disabled){filter:brightness(1.08)}
-.cta:disabled{opacity:.28;cursor:not-allowed;filter:none}
+.cta:disabled{opacity:.32;cursor:not-allowed;filter:none}
+.cta.busy{opacity:.7;letter-spacing:.12em}
 
-/* —— Ritual overlay —— */
 .overlay{
   position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
-  flex-direction:column;gap:18px;background:rgba(14,12,11,.94);padding:24px;
+  flex-direction:column;gap:18px;background:rgba(14,12,11,.96);padding:24px;
 }
 .overlay.on{display:flex}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.seal-stage{
-  width:120px;height:120px;position:relative;z-index:2;
-  display:grid;place-items:center;
-}
+.seal-stage{width:128px;height:128px;position:relative;z-index:2;display:grid;place-items:center}
 .seal-stage svg{width:100%;height:100%}
 .seal-stage .spin{animation:sealSpin 8s linear infinite;transform-origin:center}
 .chant{
@@ -253,19 +224,25 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
   background:rgba(232,224,212,.08);overflow:hidden;
 }
 .progress-bar{height:100%;width:0%;background:var(--amber);transition:width .25s linear}
-.busy-label{position:relative;z-index:2;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.busy-label{position:relative;z-index:2;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
 
-.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(196,92,38,.35),transparent 55%)}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(196,92,38,.38),transparent 55%)}
 .flash.on{animation:flash .45s ease-out}
-@keyframes flash{0%{opacity:.7}100%{opacity:0}}
+@keyframes flash{0%{opacity:.75}100%{opacity:0}}
 .shake-root.shake{animation:shake .55s var(--ease)}
-@keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-4px,2px)}40%{transform:translate(5px,-2px)}60%{transform:translate(-3px,1px)}80%{transform:translate(2px,-1px)}}
+@keyframes shake{
+  0%,100%{transform:translate(0)}
+  20%{transform:translate(-4px,2px)}
+  40%{transform:translate(5px,-2px)}
+  60%{transform:translate(-3px,1px)}
+  80%{transform:translate(2px,-1px)}
+}
 .rain{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden}
-.drop{position:absolute;top:-30px;font-size:14px;animation:fall linear forwards;opacity:.7}
+.drop{position:absolute;top:-30px;font-size:14px;animation:fall linear forwards;opacity:.65;color:var(--amber)}
 @keyframes fall{to{transform:translateY(110vh);opacity:0}}
 .bolt{position:fixed;inset:0;pointer-events:none;z-index:54;opacity:0}
 .bolt.on{animation:bolt .3s ease-out}
-@keyframes bolt{0%{opacity:0}25%{opacity:1;background:radial-gradient(ellipse at 50% 40%,rgba(196,92,38,.2),transparent 50%)}100%{opacity:0}}
+@keyframes bolt{0%{opacity:0}25%{opacity:1;background:radial-gradient(ellipse at 50% 40%,rgba(196,92,38,.22),transparent 50%)}100%{opacity:0}}
 
 .toast{
   position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 10px);
@@ -277,30 +254,13 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;z-index:80;transition:opacity .25s}
-.drawer-bg.on{opacity:1;pointer-events:auto}
-.drawer{
-  position:fixed;left:0;right:0;bottom:0;z-index:81;max-height:70dvh;
-  background:var(--bg-elev);border-radius:16px 16px 0 0;
-  padding:10px 20px calc(18px + var(--safe-b));
-  transform:translateY(110%);transition:transform .35s var(--ease);
-  border:1px solid var(--line);border-bottom:0;
-}
-.drawer.on{transform:translateY(0)}
-.drawer-handle{width:36px;height:3px;border-radius:999px;background:var(--line);margin:4px auto 14px}
-.drawer h3{margin:0 0 14px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.hist-item{
-  width:100%;text-align:left;padding:12px 0;min-height:48px;
-  border:0;border-bottom:1px solid var(--line);margin-bottom:0;
-  color:var(--muted);background:transparent;
-}
-.hist-item b{display:block;color:var(--bone-text);margin-bottom:3px;font-weight:600;font-size:14px}
-.hist-item span{font-size:12px;color:var(--faint)}
+.screen-cast.hidden,.screen-result.hidden{display:none}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .mark .ring,.seal-stage .spin{animation:none!important}
   .cta-bar-inner::before{opacity:.5}
+  input.pulse-inner{box-shadow:0 0 0 3px rgba(196,92,38,.3);border-color:var(--amber)}
 }
 </style>
 </head>
@@ -313,39 +273,29 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
 <main class="app">
   <header class="brand">
     <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle class="ring" cx="18" cy="18" r="15" stroke="#C45C26" stroke-width="1" opacity=".7"/>
-        <circle cx="18" cy="18" r="9" stroke="#C45C26" stroke-width=".8" opacity=".5"/>
-        <circle cx="18" cy="18" r="2.2" fill="#C45C26"/>
-        <line x1="18" y1="3" x2="18" y2="7" stroke="#C45C26" stroke-width="1" opacity=".6"/>
-        <line x1="18" y1="29" x2="18" y2="33" stroke="#C45C26" stroke-width="1" opacity=".6"/>
-        <line x1="3" y1="18" x2="7" y2="18" stroke="#C45C26" stroke-width="1" opacity=".6"/>
-        <line x1="29" y1="18" x2="33" y2="18" stroke="#C45C26" stroke-width="1" opacity=".6"/>
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="ring" cx="20" cy="20" r="16.5" stroke="#C45C26" stroke-width="1" opacity=".75"/>
+        <circle cx="20" cy="20" r="10" stroke="#C45C26" stroke-width=".85" opacity=".5"/>
+        <circle cx="20" cy="20" r="2.5" fill="#C45C26"/>
+        <line x1="20" y1="3.5" x2="20" y2="8" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="20" y1="32" x2="20" y2="36.5" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="3.5" y1="20" x2="8" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        <line x1="32" y1="20" x2="36.5" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
       </svg>
     </div>
     <div class="brand-text"><h1>Проклинатор</h1></div>
   </header>
   <p class="atmosphere">Поздний этаж. Принтер молчит. Печать уже ждёт имя.</p>
-  <div class="row-top"><button type="button" class="chip-btn" id="historyBtn">История</button></div>
 
-  <section id="formCard">
+  <section class="screen-cast" id="castScreen">
     <label class="field">
-      <span>Жертва (необязательно)</span>
-      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done"/>
-    </label>
-    <p class="ban">Только офисные грехи. Не про внешность, возраст, пол, этнос, здоровье, религию или ориентацию.</p>
-
-    <div class="section-label">Грех</div>
-    <div class="empty" id="empty">Проклинать пока некого. Выбери грех — или добавь свой.</div>
-    <div class="sins" id="sins" role="listbox" aria-label="Грех"></div>
-    <label class="field">
-      <span>Свой грех</span>
-      <input id="customSin" type="text" maxlength="80" placeholder="Например: переслал тред без контекста" autocomplete="off"/>
+      <span>Имя жертвы</span>
+      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true"/>
+      <span class="empty-hint" id="emptyHint">Кого скрепляем?</span>
     </label>
 
-    <div class="section-label">Сила</div>
-    <p class="hint">По умолчанию средняя. Или жми печать внизу.</p>
-    <div class="power" id="power" role="radiogroup" aria-label="Сила"></div>
+    <div class="section-label">Сила печати</div>
+    <div class="power" id="power" role="radiogroup" aria-label="Сила печати"></div>
 
     <div class="home-hint">
       <strong>На экран «Домой»</strong>
@@ -353,16 +303,15 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     </div>
   </section>
 
-  <section class="verdict" id="result" aria-live="polite">
-    <div class="eyebrow" id="vEyebrow">Вердикт</div>
+  <section class="verdict screen-result hidden" id="result" aria-live="polite">
+    <div class="eyebrow">Вердикт</div>
+    <div class="sin-tag" id="vSin"></div>
     <h2 id="vTitle"></h2>
     <p id="vText"></p>
-    <div class="kpi">
-      <span><b id="k1"></b><small id="k1l"></small></span>
-      <span><b id="k2"></b><small id="k2l"></small></span>
-    </div>
+    <div class="sev-row">Сила: <b id="vSev"></b></div>
     <div class="actions">
-      <button type="button" id="copyBtn">Копировать</button>
+      <button type="button" class="primary" id="saveBtn">Сохранить 9:16</button>
+      <button type="button" id="shareBtn">Поделиться</button>
       <button type="button" id="againBtn">Ещё ритуал</button>
     </div>
   </section>
@@ -370,9 +319,9 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
   <p class="disclaimer">Не является HR-процедурой. Проклятия не имеют юридической силы. Все совпадения с реальными созвонами случайны, кроме тех, что не случайны.</p>
 </main>
 
-<div class="cta-bar">
+<div class="cta-bar" id="ctaBar">
   <div class="cta-bar-inner">
-    <button type="button" class="cta" id="cast" disabled>Сначала выбери грех</button>
+    <button type="button" class="cta" id="cast">Скрепить печатью</button>
   </div>
 </div>
 
@@ -387,44 +336,45 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
       <line x1="60" y1="96" x2="60" y2="108" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
       <line x1="12" y1="60" x2="24" y2="60" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
       <line x1="96" y1="60" x2="108" y2="60" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
-      <text id="rune" x="60" y="66" text-anchor="middle" fill="#E8E0D4" font-size="11" font-family="system-ui,sans-serif" opacity="0"></text>
     </svg>
   </div>
   <div class="chant" id="chant">Шепчем в сторону принтера…</div>
   <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
-  <div class="busy-label">Читаю грехи…</div>
+  <div class="busy-label">Печать тлеет…</div>
 </div>
 
-<div class="drawer-bg" id="drawerBg"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-label="История">
-  <div class="drawer-handle"></div>
-  <h3>Последние 5</h3>
-  <div id="histList"></div>
-</aside>
+<canvas id="exportCanvas" width="720" height="1280" style="display:none" aria-hidden="true"></canvas>
 
 <script>
 (function(){
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const HIST_KEY = "proklinator_hist_v3";
-  const names = ["Коллега из Reply All","Тот с «быстрым вопросом»","Человек с созвоном на 5 минут","Автор «глянь глазами»","Хранитель скрытого листа","Мастер согласований","Почти-готово из спринта","Голос «я кратко»"];
-  const rainEmojis = ["·","—","†","·","—"];
+  const placeholders = [
+    "напр. Паша из снабжения",
+    "напр. Оля из реплаев",
+    "напр. Коля с «быстрым вопросом»",
+    "напр. Маша со скрытым листом",
+    "напр. Дима «я кратко»"
+  ];
+  const rainMarks = ["·","—","†","·","—"];
 
   const sins = [
-    {id:"five",title:"Созвон «на пять минут»",hint:"Который уже 47-й",rune:"I"},
-    {id:"cc14",title:"Письмо с 14 в копии",hint:"И нулём смысла",rune:"II"},
-    {id:"eyes",title:"«Глянь глазами»",hint:"Файл на 80 слайдов",rune:"III"},
-    {id:"fri1750",title:"Срочно в пятницу",hint:"В 17:50. Конечно",rune:"IV"},
-    {id:"hidden",title:"Скрытый лист правды",hint:"В таблице, разумеется",rune:"V"},
-    {id:"circles",title:"Согласование кругами",hint:"Все «в целом за»",rune:"VI"},
-    {id:"almost",title:"«Почти готово»",hint:"Третий спринт",rune:"VII"},
-    {id:"brief",title:"«Я кратко»",hint:"Монолог до обеда",rune:"VIII"}
+    {id:"five",title:"Созвон «на пять минут»",hint:"Который уже 47-й"},
+    {id:"cc14",title:"Письмо с 14 в копии",hint:"И нулём смысла"},
+    {id:"eyes",title:"«Глянь глазами»",hint:"Файл на 80 слайдов"},
+    {id:"fri1750",title:"Срочно в пятницу",hint:"В 17:50. Конечно"},
+    {id:"hidden",title:"Скрытый лист правды",hint:"В таблице, разумеется"},
+    {id:"circles",title:"Согласование кругами",hint:"Все «в целом за»"},
+    {id:"almost",title:"«Почти готово»",hint:"Третий спринт"},
+    {id:"brief",title:"«Я кратко»",hint:"Монолог до обеда"}
   ];
+
   const powers = [
-    {id:"mild",label:"Лёгкое",mul:1},
-    {id:"medium",label:"Ощутимое",mul:1.45},
-    {id:"hard",label:"Карьерное",mul:2}
+    {id:"whisper",label:"Шёпот",desc:"едва слышно за стеной совещаний",mul:1},
+    {id:"seal",label:"Печать",desc:"закрепить в протоколе навсегда",mul:1.45},
+    {id:"anathema",label:"Анафема",desc:"имя войдёт в легенды спринта",mul:2}
   ];
-  const chants = [
+
+  const chantsPool = [
     "Грех выбран. Дышим через нос.",
     "Читаем заклинание статуса…",
     "Создаём комитет по мелочам…",
@@ -432,21 +382,10 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     "Крутим колесо согласований…",
     "Будим спящий тред…",
     "Печатаем приговор без «ответить всем»…",
+    "Шепчем в сторону принтера…",
+    "Сверяем карму с календарём…",
     "Готово. Можно жить дальше."
   ];
-  const successLines = [
-    "Вердикт улетел.",
-    "Грех зафиксирован.",
-    "Поделились. Пусть знают.",
-    "Ритуал закрыт.",
-    "Заклинание принято.",
-    "Офис предупреждён."
-  ];
-  const EMPTY = "Проклинать пока некого. Выбери грех — или добавь свой.";
-  const shareSubtitle = "Пусть календарь узнает, кого винить.";
-  const toastShare = "Поделились. Пусть знают.";
-  const BAN = "Только офисные грехи. Не про внешность, возраст, пол, этнос, здоровье, религию или ориентацию.";
-  const banned = /(внешност|возраст|пол\b|гендер|этнос|рас[аы]|национал|здоров|инвалид|болезн|религ|вер[аы]\b|ориентац|лгбт|секс|урод|толст|худой|жирн)/i;
 
   const verdictTemplates = [
     (n,s)=>`${n} пойман(а) на грехе «${s}». Календарь уже плачет.`,
@@ -471,21 +410,29 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     `Календарь ${n} уже дрожит. Сила ритуала ×${p.toFixed(1)}.`,
     `Отдел знает. Принтер знает. Даже статус «почти готово» знает про «${s}».`
   ];
+
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+  function shuffle(arr){
+    const a=arr.slice();
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    return a;
+  }
   function pickVerdict(n,p,sinTitle){
-    const head=verdictTemplates[Math.floor(Math.random()*verdictTemplates.length)](n,sinTitle);
+    const head=pick(verdictTemplates)(n,sinTitle);
     const sides=sideEffects(n,p,sinTitle);
-    return [head, sides[Math.floor(Math.random()*sides.length)], sides[Math.floor(Math.random()*sides.length)]];
+    return {title:head, text:pick(sides)+" "+pick(sides)};
   }
 
-  const kpiPairs = [["Эффект на KPI","Сарказм / 10"],["Шанс «уточнить в чате»","Уровень кармы"],["Задержка ответа","Офисный вайб"]];
-
-  let sinId=null, powerId="medium", lastVerdict=null, mode="cast", casting=false;
+  let powerId="seal", lastVerdict=null, casting=false;
   const $ = id => document.getElementById(id);
-  const victim=$("victim"), customSin=$("customSin"), cast=$("cast"), empty=$("empty");
-  const overlay=$("overlay"), chant=$("chant"), rune=$("rune"), progress=$("progress");
-  const result=$("result"), toast=$("toast"), flash=$("flash"), bolt=$("bolt"), rain=$("rain");
-  const canvas=$("ritualCanvas"), root=$("root");
-  victim.placeholder = names[Math.floor(Math.random()*names.length)];
+  const victim=$("victim"), cast=$("cast"), emptyHint=$("emptyHint");
+  const overlay=$("overlay"), chant=$("chant"), progress=$("progress");
+  const result=$("result"), castScreen=$("castScreen"), toast=$("toast");
+  const flash=$("flash"), bolt=$("bolt"), rain=$("rain");
+  const canvas=$("ritualCanvas"), root=$("root"), ctaBar=$("ctaBar");
+  const exportCanvas=$("exportCanvas");
+
+  victim.placeholder = pick(placeholders);
 
   function haptic(pattern){
     try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
@@ -496,66 +443,65 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
   }
   function sleep(ms){ return new Promise(r=>setTimeout(r, reduced?0:ms)); }
 
-  function updateCta(){
-    const has = !!(sinId || customSin.value.trim());
-    if(mode==="share" && lastVerdict){ cast.disabled=false; cast.textContent="Поделиться вердиктом"; return; }
-    mode="cast";
-    if(has){ cast.disabled=false; cast.textContent="Проклинать"; }
-    else { cast.disabled=true; cast.textContent="Сначала выбери грех"; }
-    empty.classList.toggle("show", !has); empty.textContent=EMPTY;
+  function safeFileName(name){
+    return String(name||"victim")
+      .replace(/[\\/:*?"<>|]+/g,"")
+      .replace(/\s+/g,"-")
+      .slice(0,40) || "victim";
   }
-
-  const sinsEl=$("sins");
-  sins.forEach(s=>{
-    const b=document.createElement("button");
-    b.type="button"; b.className="sin"; b.dataset.id=s.id; b.setAttribute("role","option");
-    b.innerHTML=`<span class="rune">${s.rune}</span><span class="meta"><b>${s.title}</b><span class="whisper">${s.hint}</span></span>`;
-    b.addEventListener("click",()=>{
-      if(casting) return;
-      sinId=s.id; customSin.value="";
-      sinsEl.querySelectorAll(".sin").forEach(x=>x.classList.toggle("on", x.dataset.id===s.id));
-      if(rune) rune.textContent=s.rune;
-      haptic(12);
-      if(mode==="share"){ mode="cast"; result.classList.remove("show"); lastVerdict=null; }
-      updateCta();
-      runRitual(true);
-    });
-    sinsEl.appendChild(b);
-  });
 
   const powerEl=$("power");
   powers.forEach(p=>{
     const b=document.createElement("button");
     b.type="button"; b.className="pow"+(p.id===powerId?" on":""); b.dataset.id=p.id;
-    b.innerHTML=`<span class="seal-dot" aria-hidden="true"></span><small>${p.label}</small>`;
+    b.setAttribute("role","radio"); b.setAttribute("aria-checked", p.id===powerId?"true":"false");
+    b.innerHTML=
+      `<span class="seal" aria-hidden="true">`+
+      `<svg viewBox="0 0 36 36" fill="none"><circle class="ring-s" cx="18" cy="18" r="14" stroke="#C45C26" stroke-width="1" opacity=".45"/>`+
+      `<circle class="dot" cx="18" cy="18" r="3.2" fill="rgba(232,224,212,.25)"/></svg></span>`+
+      `<span class="meta"><b>${p.label}</b><small>${p.desc}</small></span>`;
     b.addEventListener("click",()=>{
+      if(casting) return;
       powerId=p.id;
-      powerEl.querySelectorAll(".pow").forEach(x=>x.classList.toggle("on", x.dataset.id===p.id));
+      powerEl.querySelectorAll(".pow").forEach(x=>{
+        const on=x.dataset.id===p.id;
+        x.classList.toggle("on", on);
+        x.setAttribute("aria-checked", on?"true":"false");
+      });
       haptic(10);
     });
     powerEl.appendChild(b);
   });
 
-  customSin.addEventListener("input",()=>{
-    if(customSin.value.trim()){
-      sinId=null;
-      sinsEl.querySelectorAll(".sin").forEach(x=>x.classList.remove("on"));
-      if(rune) rune.textContent="";
-      if(mode==="share"){ mode="cast"; result.classList.remove("show"); lastVerdict=null; }
-    }
-    updateCta();
+  function failEmpty(){
+    emptyHint.classList.add("show");
+    root.classList.remove("shake");
+    void root.offsetWidth;
+    root.classList.add("shake");
+    victim.classList.remove("pulse-inner");
+    void victim.offsetWidth;
+    victim.classList.add("pulse-inner");
+    victim.focus();
+    haptic([18,40,18]);
+    setTimeout(()=>{
+      root.classList.remove("shake");
+      victim.classList.remove("pulse-inner");
+    },700);
+  }
+
+  victim.addEventListener("input",()=>{
+    if(victim.value.trim()) emptyHint.classList.remove("show");
   });
-  updateCta();
 
   function spawnRain(){
     if(reduced) return;
-    for(let i=0;i<12;i++){
+    for(let i=0;i<14;i++){
       const d=document.createElement("span");
       d.className="drop";
-      d.textContent=rainEmojis[i%rainEmojis.length];
+      d.textContent=rainMarks[i%rainMarks.length];
       d.style.left=(Math.random()*100)+"%";
       d.style.fontSize=(11+Math.random()*8)+"px";
-      d.style.color="rgba(196,92,38,"+(0.35+Math.random()*0.4)+")";
+      d.style.opacity=String(0.35+Math.random()*0.4);
       d.style.animationDuration=(1.4+Math.random()*1.6)+"s";
       d.style.animationDelay=(Math.random()*0.4)+"s";
       rain.appendChild(d);
@@ -571,7 +517,7 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     const h=canvas.height=Math.floor(innerHeight*dpr);
     canvas.style.width=innerWidth+"px"; canvas.style.height=innerHeight+"px";
     const parts=[];
-    for(let i=0;i<48;i++){
+    for(let i=0;i<52;i++){
       parts.push({
         x:w/2, y:h*0.42,
         vx:(Math.random()-0.5)*3.2*dpr, vy:(Math.random()-0.8)*4*dpr,
@@ -602,56 +548,218 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     root.classList.add("shake"); setTimeout(()=>root.classList.remove("shake"),560);
   }
 
-  function loadHist(){ try{return JSON.parse(localStorage.getItem(HIST_KEY)||"[]");}catch(e){return[]} }
-  function saveHist(item){
-    const list=[item,...loadHist()].slice(0,5);
-    localStorage.setItem(HIST_KEY, JSON.stringify(list));
+  function wrapText(ctx, text, x, y, maxW, lineH){
+    const words=String(text).split(/\s+/);
+    let line="", lines=[], cy=y;
+    for(let i=0;i<words.length;i++){
+      const test=line?line+" "+words[i]:words[i];
+      if(ctx.measureText(test).width>maxW && line){
+        lines.push(line); line=words[i];
+      } else line=test;
+    }
+    if(line) lines.push(line);
+    lines.forEach(l=>{ ctx.fillText(l,x,cy); cy+=lineH; });
+    return cy;
   }
-  function openDrawer(){
-    const list=$("histList"); list.innerHTML="";
-    const items=loadHist();
-    if(!items.length){ list.innerHTML="<p class='hint'>Пока пусто. Прокляни кого-нибудь.</p>"; }
-    items.forEach(it=>{
-      const b=document.createElement("button"); b.type="button"; b.className="hist-item";
-      b.innerHTML=`<b>${it.name} · ${it.sin}</b><span>${it.line}</span>`;
-      list.appendChild(b);
+
+  function drawSigil(ctx, cx, cy, r, alpha){
+    ctx.save();
+    ctx.globalAlpha=alpha;
+    ctx.strokeStyle="#C45C26";
+    ctx.fillStyle="#C45C26";
+    ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,r*0.66,0,Math.PI*2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx,cy,r*0.12,0,Math.PI*2); ctx.fill();
+    [[0,-1],[0,1],[-1,0],[1,0]].forEach(([dx,dy])=>{
+      ctx.beginPath();
+      ctx.moveTo(cx+dx*r*0.85, cy+dy*r*0.85);
+      ctx.lineTo(cx+dx*r*0.55, cy+dy*r*0.55);
+      ctx.stroke();
     });
-    $("drawerBg").classList.add("on"); $("drawer").classList.add("on");
+    ctx.restore();
   }
-  function closeDrawer(){ $("drawerBg").classList.remove("on"); $("drawer").classList.remove("on"); }
-  $("historyBtn").onclick=openDrawer; $("drawerBg").onclick=closeDrawer;
 
-  async function shareVerdict(){
+  function buildExportPng(){
+    if(!lastVerdict) return null;
+    const W=720, H=1280;
+    const c=exportCanvas;
+    c.width=W; c.height=H;
+    const ctx=c.getContext("2d");
+
+    ctx.fillStyle="#0E0C0B";
+    ctx.fillRect(0,0,W,H);
+
+    const g=ctx.createRadialGradient(W/2, H*0.2, 40, W/2, H*0.45, H*0.7);
+    g.addColorStop(0,"rgba(196,92,38,0.10)");
+    g.addColorStop(0.5,"rgba(14,12,11,0)");
+    g.addColorStop(1,"rgba(0,0,0,0.55)");
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,W,H);
+
+    // grain
+    const img=ctx.createImageData(W,H);
+    for(let i=0;i<img.data.length;i+=4){
+      const n=Math.random()*255;
+      img.data[i]=n; img.data[i+1]=n; img.data[i+2]=n; img.data[i+3]=14;
+    }
+    ctx.putImageData(img,0,0);
+
+    // vignette
+    const vig=ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H*0.72);
+    vig.addColorStop(0,"rgba(0,0,0,0)");
+    vig.addColorStop(1,"rgba(0,0,0,0.55)");
+    ctx.fillStyle=vig;
+    ctx.fillRect(0,0,W,H);
+
+    // border
+    ctx.strokeStyle="rgba(196,92,38,0.35)";
+    ctx.lineWidth=2;
+    ctx.strokeRect(36,36,W-72,H-72);
+    ctx.strokeStyle="rgba(232,224,212,0.08)";
+    ctx.lineWidth=1;
+    ctx.strokeRect(48,48,W-96,H-96);
+
+    drawSigil(ctx, W/2, 210, 78, 0.55);
+    drawSigil(ctx, W-110, H-160, 90, 0.07);
+
+    ctx.textAlign="center";
+    ctx.fillStyle="#C45C26";
+    ctx.font="700 13px system-ui,sans-serif";
+    ctx.letterSpacing="0.32em";
+    ctx.fillText("ПРОКЛИНАТОР", W/2, 330);
+
+    ctx.fillStyle="#E8E0D4";
+    ctx.font="600 42px system-ui,sans-serif";
+    ctx.letterSpacing="0";
+    let y=400;
+    y=wrapText(ctx, lastVerdict.name, W/2, y, W-120, 50);
+
+    ctx.fillStyle="#C45C26";
+    ctx.font="600 14px system-ui,sans-serif";
+    y+=28;
+    ctx.fillText(lastVerdict.sin.toUpperCase(), W/2, y);
+
+    ctx.fillStyle="rgba(232,224,212,0.12)";
+    ctx.fillRect(W/2-40, y+22, 80, 1);
+
+    ctx.fillStyle="rgba(232,224,212,0.88)";
+    ctx.font="400 22px system-ui,sans-serif";
+    y+=70;
+    y=wrapText(ctx, lastVerdict.title, W/2, y, W-130, 32);
+
+    ctx.fillStyle="rgba(232,224,212,0.55)";
+    ctx.font="400 18px system-ui,sans-serif";
+    y+=28;
+    y=wrapText(ctx, lastVerdict.text, W/2, y, W-130, 28);
+
+    ctx.fillStyle="#C45C26";
+    ctx.font="700 12px system-ui,sans-serif";
+    y+=48;
+    ctx.fillText("СИЛА: "+lastVerdict.sevLabel.toUpperCase(), W/2, y);
+
+    ctx.fillStyle="rgba(232,224,212,0.28)";
+    ctx.font="400 11px system-ui,sans-serif";
+    wrapText(ctx, "Не является HR-процедурой. Проклятия не имеют юридической силы.", W/2, H-78, W-120, 16);
+
+    return c;
+  }
+
+  function downloadPng(canvasEl, filename){
+    return new Promise((resolve,reject)=>{
+      canvasEl.toBlob(blob=>{
+        if(!blob){ reject(new Error("blob")); return; }
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement("a");
+        a.href=url; a.download=filename;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url), 1500);
+        resolve(blob);
+      }, "image/png");
+    });
+  }
+
+  async function saveCard(){
     if(!lastVerdict) return;
-    const text = `${lastVerdict.title}\n\n${lastVerdict.text}\n\n${shareSubtitle}\n— ПРОКЛИНАТОР`;
     try{
-      if(navigator.share){ await navigator.share({title:"ПРОКЛИНАТОР", text}); showToast(toastShare); return; }
-    }catch(e){ if(e && e.name==="AbortError") return; }
-    try{ await navigator.clipboard.writeText(text); showToast("Скопировано. "+toastShare); }
-    catch(e){ showToast("Скопируй вердикт вручную — share недоступен."); }
+      const c=buildExportPng();
+      const fname="proklinator-"+safeFileName(lastVerdict.name)+".png";
+      const blob=await downloadPng(c, fname);
+      showToast("Печать легла.");
+      // offer share if files supported
+      try{
+        const file=new File([blob], fname, {type:"image/png"});
+        if(navigator.canShare && navigator.canShare({files:[file]})){
+          // optional secondary share — user already has download; skip auto-share
+        }
+      }catch(e){}
+    }catch(e){
+      showToast("Не удалось сохранить изображение.");
+    }
   }
 
-  async function runRitual(fromTap){
-    if(casting) return;
-    if(mode==="share" && lastVerdict && !fromTap){ await shareVerdict(); return; }
-    const custom=customSin.value.trim();
-    const activeCustom=!!custom && !sinId;
-    if(!sinId && !activeCustom){ updateCta(); empty.classList.add("show"); return; }
-    if(activeCustom && banned.test(custom)){ showToast(BAN); return; }
+  async function shareCard(){
+    if(!lastVerdict) return;
+    try{
+      const c=buildExportPng();
+      const fname="proklinator-"+safeFileName(lastVerdict.name)+".png";
+      const blob=await new Promise((res,rej)=>c.toBlob(b=>b?res(b):rej(new Error("blob")),"image/png"));
+      const file=new File([blob], fname, {type:"image/png"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({
+          files:[file],
+          title:"ПРОКЛИНАТОР",
+          text: lastVerdict.title
+        });
+        showToast("Печать легла.");
+        return;
+      }
+      if(navigator.share){
+        await navigator.share({
+          title:"ПРОКЛИНАТОР",
+          text: `${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`
+        });
+        showToast("Печать легла.");
+        return;
+      }
+      await downloadPng(c, fname);
+      showToast("Печать легла.");
+    }catch(e){
+      if(e && e.name==="AbortError") return;
+      try{
+        const text=`${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`;
+        await navigator.clipboard.writeText(text);
+        showToast("Скопировано.");
+      }catch(e2){
+        showToast("Поделиться недоступно.");
+      }
+    }
+  }
 
-    casting=true; cast.disabled=true; cast.textContent="Читаю грехи…";
-    const name=(victim.value.trim()||victim.placeholder||"Безымянный коллега");
+  async function runRitual(){
+    if(casting) return;
+    const name=victim.value.trim();
+    if(!name){ failEmpty(); return; }
+
+    casting=true;
+    cast.disabled=true;
+    cast.classList.add("busy");
+    cast.textContent="Печать тлеет…";
+    emptyHint.classList.remove("show");
+
     const pow=powers.find(p=>p.id===powerId)||powers[1];
-    const sin=activeCustom?{id:"custom",title:custom,rune:""}:sins.find(s=>s.id===sinId);
-    if(rune) rune.textContent=sin.rune||"";
+    const sin=pick(sins);
+    const ritualChants=shuffle(chantsPool).slice(0,7);
+    ritualChants.push("Готово. Можно жить дальше.");
+
     overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
     progress.style.width="0%";
     haptic([30,40,30]);
     particlesBurst(reduced?0:2200);
 
-    for(let i=0;i<chants.length;i++){
-      chant.textContent=chants[i];
-      progress.style.width=Math.round(((i+1)/chants.length)*100)+"%";
+    for(let i=0;i<ritualChants.length;i++){
+      chant.textContent=ritualChants[i];
+      progress.style.width=Math.round(((i+1)/ritualChants.length)*100)+"%";
       if(!reduced && i%3===0){ bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),280); haptic(20); }
       if(!reduced && i===2) spawnRain();
       await sleep(380);
@@ -663,34 +771,49 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
 
     const lines=pickVerdict(name, pow.mul, sin.title);
-    $("vTitle").textContent=lines[0];
-    $("vText").textContent=lines[1]+" "+lines[2];
-    const pair=kpiPairs[Math.floor(Math.random()*kpiPairs.length)];
-    $("k1").textContent=Math.min(99,Math.round(42+22*pow.mul+Math.random()*20))+"%";
-    $("k1l").textContent=pair[0];
-    $("k2").textContent=(6.2+pow.mul+Math.random()*1.6).toFixed(1);
-    $("k2l").textContent=pair[1];
-    lastVerdict={title:lines[0], text:lines[1]+" "+lines[2], name, sin:sin.title};
-    saveHist({name, sin:sin.title, line:lines[0]});
+    $("vSin").textContent=sin.title;
+    $("vTitle").textContent=lines.title;
+    $("vText").textContent=lines.text;
+    $("vSev").textContent=pow.label;
+
+    lastVerdict={
+      name, sin:sin.title, title:lines.title, text:lines.text,
+      sevLabel:pow.label, sevId:pow.id, mul:pow.mul
+    };
+
+    castScreen.classList.add("hidden");
+    result.classList.remove("hidden");
     result.classList.add("show");
-    mode="share";
+    ctaBar.style.display="none";
+
     casting=false;
-    updateCta();
-    showToast(successLines[Math.floor(Math.random()*successLines.length)]);
+    cast.disabled=false;
+    cast.classList.remove("busy");
+    cast.textContent="Скрепить печатью";
+    showToast("Печать легла.");
     result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"nearest"});
   }
 
-  cast.addEventListener("click",()=>runRitual(false));
-  $("copyBtn").onclick=async()=>{
-    if(!lastVerdict) return;
-    const text=`${lastVerdict.title}\n\n${lastVerdict.text}\n\n${shareSubtitle}`;
-    try{ await navigator.clipboard.writeText(text); showToast("Скопировано."); }
-    catch(e){ showToast("Не удалось скопировать."); }
-  };
+  cast.addEventListener("click",()=>runRitual());
+  victim.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){ e.preventDefault(); runRitual(); }
+  });
+
+  $("saveBtn").onclick=()=>saveCard();
+  $("shareBtn").onclick=()=>shareCard();
   $("againBtn").onclick=()=>{
-    mode="cast"; lastVerdict=null; result.classList.remove("show");
-    victim.placeholder=names[Math.floor(Math.random()*names.length)];
-    updateCta(); haptic(8);
+    lastVerdict=null;
+    result.classList.remove("show");
+    result.classList.add("hidden");
+    castScreen.classList.remove("hidden");
+    ctaBar.style.display="";
+    victim.placeholder=pick(placeholders);
+    victim.value="";
+    emptyHint.classList.remove("show");
+    cast.textContent="Скрепить печатью";
+    cast.disabled=false;
+    cast.classList.remove("busy");
+    haptic(8);
     window.scrollTo({top:0, behavior:reduced?"auto":"smooth"});
   };
 
