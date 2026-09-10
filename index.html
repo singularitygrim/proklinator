@@ -786,7 +786,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
         return;
       }
       await downloadPng(c, fname);
-      showToast(ui.toastOk);
+      showToast(ui.toastShare);
     }catch(e){
       if(e && e.name === "AbortError") return;
       try{
