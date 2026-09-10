@@ -6,337 +6,197 @@
 <meta name="theme-color" content="#0b0a12"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="application-name" content="ПРОКЛИНАТОР"/>
 <meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
-<meta name="description" content="Офисный ритуал лёгкой мести. Сарказм по привычкам — не по людям."/>
+<meta name="application-name" content="ПРОКЛИНАТОР"/>
+<meta name="description" content="Офисный ритуал лёгкой мести. WOW-версия."/>
 <title>ПРОКЛИНАТОР</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23b84dff'/%3E%3Cstop offset='1' stop-color='%23ff4d8d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0a12'/%3E%3Ccircle cx='32' cy='32' r='22' fill='url(%23g)'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='26' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23b84dff'/%3E%3Cstop offset='1' stop-color='%23ff4d8d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='%230b0a12'/%3E%3Ccircle cx='90' cy='90' r='62' fill='url(%23g)'/%3E%3Ctext x='90' y='112' text-anchor='middle' font-size='72' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E"/>
 <style>
 :root{
-  --bg:#0b0a12;--surface:#15131f;--card:rgba(28,25,48,.72);--line:#2e2a45;
-  --fg:#f4efe8;--muted:#9a93b0;--faint:#6b6480;
-  --accent:#b84dff;--accent2:#ff4d8d;--gold:#f0c14b;--ok:#3dd68c;
-  --glow:rgba(184,77,255,.45);
-  --r:18px;--ease:cubic-bezier(.32,.72,0,1);
+  --bg:#07060e;--surface:#12101c;--card:rgba(28,25,48,.78);--line:#2e2a45;
+  --fg:#f7f2ea;--muted:#a59cbc;--faint:#6e6785;
+  --accent:#c45cff;--accent2:#ff4d9a;--gold:#ffd166;--ok:#3dd68c;
+  --glow:rgba(196,92,255,.55);
   --spring:cubic-bezier(.34,1.56,.64,1);
+  --ease:cubic-bezier(.32,.72,0,1);
   --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
   --safe-l:env(safe-area-inset-left,0px);
   --safe-r:env(safe-area-inset-right,0px);
-  --cta-h:76px;
+  --cta-h:84px;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 html,body{margin:0;min-height:100%;min-height:100dvh;background:var(--bg);color:var(--fg)}
 body{
-  overflow-x:hidden;
-  touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;
+  overflow-x:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   padding:var(--safe-t) var(--safe-r) 0 var(--safe-l);
   background:
-    radial-gradient(900px 500px at 15% -10%,rgba(184,77,255,.22),transparent 60%),
-    radial-gradient(700px 400px at 90% 10%,rgba(255,77,141,.16),transparent 55%),
-    radial-gradient(600px 400px at 50% 120%,rgba(240,193,75,.08),transparent 50%),
+    radial-gradient(800px 420px at 10% -5%,rgba(196,92,255,.28),transparent 55%),
+    radial-gradient(700px 380px at 95% 5%,rgba(255,77,154,.2),transparent 50%),
+    radial-gradient(500px 360px at 50% 110%,rgba(255,209,102,.1),transparent 45%),
     var(--bg);
 }
-button,input,textarea,select{font:inherit;color:inherit}
+button,input{font:inherit;color:inherit}
 button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-input,textarea{font-size:16px;line-height:1.4}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input{font-size:16px;line-height:1.4;width:100%;background:rgba(7,6,14,.85);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,92,255,.25)}
 
-.app{
-  max-width:480px;margin:0 auto;
-  min-height:100dvh;
-  padding:16px 16px calc(var(--cta-h) + var(--safe-b) + 20px);
-  position:relative;z-index:1;
-  display:flex;flex-direction:column;gap:14px;
-}
-
+.app{max-width:480px;margin:0 auto;min-height:100dvh;padding:14px 16px calc(var(--cta-h) + var(--safe-b) + 18px);display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
 .brand{display:flex;align-items:center;gap:12px}
 .sigil{
-  width:48px;height:48px;min-width:48px;border-radius:14px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 0 28px var(--glow);font-size:22px;
-  animation:sigilPulse 2.8s ease-in-out infinite;
+  width:52px;height:52px;min-width:52px;border-radius:16px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 34px var(--glow);font-size:24px;
+  animation:sigilPulse 2.2s ease-in-out infinite;
 }
-@keyframes sigilPulse{
-  0%,100%{transform:scale(1) rotate(0);box-shadow:0 0 20px var(--glow)}
-  50%{transform:scale(1.06) rotate(3deg);box-shadow:0 0 36px var(--glow)}
-}
-h1{
-  margin:0;font-size:clamp(22px,6vw,30px);letter-spacing:.05em;font-weight:800;
-  background:linear-gradient(90deg,var(--fg),var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.tagline{color:var(--muted);margin:0;font-size:13px;line-height:1.45}
+@keyframes sigilPulse{0%,100%{transform:scale(1) rotate(0);filter:brightness(1)}50%{transform:scale(1.1) rotate(6deg);filter:brightness(1.25);box-shadow:0 0 48px var(--glow)}}
+h1{margin:0;font-size:clamp(24px,7vw,34px);font-weight:900;letter-spacing:.06em;background:linear-gradient(92deg,#fff,var(--accent),var(--accent2),var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:titleShine 4s linear infinite}
+@keyframes titleShine{to{background-position:200% 0}}
+.tagline{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+.row-top{display:flex;gap:8px;align-items:center}
+.chip-btn{min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:600;background:rgba(18,16,28,.7)}
+.chip-btn:active{transform:scale(.96);border-color:var(--accent);color:var(--fg)}
 
-.glass{
-  background:linear-gradient(180deg,rgba(28,25,48,.88),rgba(21,19,31,.92));
-  border:1px solid var(--line);border-radius:var(--r);
-  padding:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  box-shadow:0 12px 40px rgba(0,0,0,.3);
-}
-
+.glass{background:linear-gradient(180deg,rgba(28,25,48,.9),rgba(18,16,28,.94));border:1px solid var(--line);border-radius:20px;padding:16px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 16px 50px rgba(0,0,0,.35)}
 .field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.field > span,.section-label{
-  color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
-}
-.field input,.field textarea{
-  width:100%;background:rgba(11,10,18,.7);border:1px solid var(--line);
-  border-radius:14px;padding:14px 16px;color:var(--fg);
-  transition:border .2s var(--ease),box-shadow .2s var(--ease);
-  min-height:48px;
-}
-.field textarea{min-height:72px;resize:vertical}
-.field input:focus,.field textarea:focus{
-  border-color:var(--accent);box-shadow:0 0 0 3px rgba(184,77,255,.22);
-}
-.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+.field span,.section-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.section-label{margin:4px 0 10px}
+.hint{margin:0 0 10px;font-size:12px;color:var(--muted);line-height:1.4}
+.ban{margin:0 0 12px;font-size:11px;color:var(--faint);line-height:1.4}
 
-.sins{
-  display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px;
-}
+.sins{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .sin{
-  min-height:44px;padding:10px 14px;border-radius:999px;
-  border:1px solid var(--line);background:rgba(11,10,18,.55);
-  color:var(--muted);font-size:13px;font-weight:600;
-  transition:transform .25s var(--spring),border .2s,background .2s,color .2s,box-shadow .2s;
-  display:inline-flex;align-items:center;gap:6px;
+  min-height:76px;text-align:left;padding:12px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(7,6,14,.55);color:var(--muted);display:flex;flex-direction:column;gap:6px;
+  transition:transform .18s var(--spring),border .2s,background .2s,box-shadow .2s;
 }
-.sin:active{transform:scale(.94)}
-.sin.on{
-  border-color:var(--accent);background:rgba(184,77,255,.18);color:var(--fg);
-  box-shadow:0 0 0 1px rgba(184,77,255,.35),0 8px 24px rgba(184,77,255,.2);
-  transform:scale(1.04);
-}
-.sin .rune{font-size:15px;line-height:1}
+.sin .emoji{font-size:22px;line-height:1}
+.sin b{font-size:13px;line-height:1.25;color:inherit;font-weight:700}
+.sin:active{transform:scale(.96)}
+.sin.on{border-color:var(--accent);background:linear-gradient(145deg,rgba(196,92,255,.22),rgba(255,77,154,.12));color:var(--fg);box-shadow:0 0 0 1px rgba(196,92,255,.4),0 10px 28px rgba(196,92,255,.2);transform:scale(1.02)}
+.empty{display:none;margin:0 0 10px;padding:12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13px}
+.empty.show{display:block}
 
-.seg{
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;
-  background:rgba(11,10,18,.65);border:1px solid var(--line);
-  border-radius:14px;padding:4px;margin-bottom:4px;
+.power{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:8px}
+.pow{
+  min-height:72px;border-radius:18px;border:1px solid var(--line);background:rgba(7,6,14,.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);
+  transition:transform .18s var(--spring),border .2s,background .2s,box-shadow .2s;
 }
-.seg button{
-  min-height:44px;border-radius:11px;color:var(--muted);font-size:13px;font-weight:600;
-  transition:transform .2s var(--spring),background .2s,color .2s,box-shadow .2s;
-}
-.seg button:active{transform:scale(.96)}
-.seg button.on{
-  background:linear-gradient(135deg,rgba(184,77,255,.35),rgba(255,77,141,.28));
-  color:var(--fg);box-shadow:0 4px 16px rgba(184,77,255,.25);
-}
+.pow .e{font-size:28px;line-height:1}.pow small{font-size:11px;font-weight:700;letter-spacing:.04em}
+.pow:active{transform:scale(.95)}
+.pow.on{border-color:var(--gold);color:var(--fg);background:linear-gradient(160deg,rgba(255,209,102,.18),rgba(196,92,255,.12));box-shadow:0 0 24px rgba(255,209,102,.25);transform:scale(1.04)}
 
-.home-hint{
-  display:flex;flex-direction:column;gap:4px;padding:12px 14px;
-  border-radius:14px;border:1px dashed rgba(240,193,75,.35);
-  background:rgba(240,193,75,.06);margin-top:4px;
-}
-.home-hint strong{font-size:13px;color:var(--gold);font-weight:600}
-.home-hint span{font-size:12px;color:var(--faint);line-height:1.4}
+.home-hint{margin-top:12px;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(7,6,14,.45);font-size:12px;color:var(--muted);line-height:1.4}
+.home-hint strong{display:block;color:var(--fg);margin-bottom:4px;font-size:13px}
 
-.history-btn{
-  align-self:flex-start;min-height:44px;min-width:44px;padding:0 14px;
-  border-radius:12px;border:1px solid var(--line);color:var(--muted);
-  font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px;
-  transition:transform .15s var(--ease),border .2s,color .2s;
-}
-.history-btn:active{transform:scale(.96);border-color:var(--accent);color:var(--fg)}
-
-.verdict-panel{display:none;animation:reveal .55s var(--ease)}
-.verdict-panel.show{display:block}
-@keyframes reveal{
-  from{opacity:0;transform:translateY(18px) scale(.97)}
-  to{opacity:1;transform:none}
-}
-.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:700}
-.verdict-panel h2{margin:0 0 10px;font-size:clamp(18px,5vw,22px);line-height:1.3}
-.verdict-panel p{margin:0 0 14px;color:var(--muted);line-height:1.5;font-size:14px}
-.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.kpi span{
-  padding:12px;border-radius:12px;background:rgba(11,10,18,.65);
-  border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;
-}
-.kpi b{font-size:18px;color:var(--accent2)}.kpi small{color:var(--faint);font-size:11px}
-.actions-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.actions-row button{
-  min-height:44px;border-radius:12px;border:1px solid var(--line);
-  color:var(--muted);font-weight:600;font-size:13px;
-  transition:transform .15s var(--ease),border .2s,color .2s,background .2s;
-}
-.actions-row button:active{transform:scale(.96);border-color:var(--accent);color:var(--fg)}
-
+.verdict{display:none;margin-top:2px}
+.verdict.show{display:block;animation:popIn .55s var(--spring)}
+@keyframes popIn{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:none}}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:800}
+.verdict h2{margin:0 0 10px;font-size:20px;line-height:1.3}
+.verdict p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.5}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kpi span{padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(7,6,14,.55);display:flex;flex-direction:column;gap:4px}
+.kpi b{font-size:20px;color:var(--accent2)}.kpi small{font-size:11px;color:var(--faint)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.actions button{min-height:48px;border-radius:14px;border:1px solid var(--line);color:var(--fg);font-weight:700;background:rgba(7,6,14,.55)}
+.actions button:active{transform:scale(.97);border-color:var(--accent)}
 .disclaimer{margin:4px 0 0;font-size:11px;color:var(--faint);line-height:1.45;text-align:center}
 
-/* Sticky CTA */
-.cta-bar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
-  padding:10px 16px calc(10px + var(--safe-b));
-  background:linear-gradient(180deg,transparent,rgba(11,10,18,.92) 28%,rgba(11,10,18,.98));
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-}
+.cta-bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + var(--safe-b));background:linear-gradient(180deg,transparent,rgba(7,6,14,.92) 28%,rgba(7,6,14,.98));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .cta-bar-inner{max-width:480px;margin:0 auto}
 .cta{
-  width:100%;min-height:52px;border-radius:16px;font-weight:800;
-  letter-spacing:.06em;text-transform:uppercase;font-size:14px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;
-  box-shadow:0 10px 36px var(--glow);
-  transition:transform .15s var(--ease),filter .2s,opacity .2s;
+  width:100%;min-height:56px;border-radius:16px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--accent),var(--accent2),#ff7a4d);background-size:200% 200%;
+  color:#fff;box-shadow:0 12px 40px var(--glow);animation:ctaGlow 3s ease-in-out infinite;
+  transition:transform .15s var(--spring),filter .2s,opacity .2s;
 }
-.cta:active:not(:disabled){transform:scale(.97);filter:brightness(1.08)}
-.cta:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.35);box-shadow:none}
+@keyframes ctaGlow{0%,100%{background-position:0% 50%;box-shadow:0 12px 36px var(--glow)}50%{background-position:100% 50%;box-shadow:0 16px 52px rgba(255,77,154,.45)}}
+.cta:active:not(:disabled){transform:scale(.97)}
+.cta:disabled{opacity:.4;cursor:not-allowed;animation:none;filter:grayscale(.35);box-shadow:none}
 
-/* Ritual overlay */
-.overlay{
-  position:fixed;inset:0;z-index:80;display:none;
-  flex-direction:column;align-items:center;justify-content:center;
-  background:rgba(8,6,16,.92);padding:var(--safe-t) 24px var(--safe-b);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-}
+.overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:rgba(7,6,14,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:24px}
 .overlay.on{display:flex}
-.overlay.shake{animation:shake .55s var(--ease)}
-@keyframes shake{
-  0%,100%{transform:translate(0)}
-  20%{transform:translate(-8px,3px) rotate(-1deg)}
-  40%{transform:translate(9px,-4px) rotate(1deg)}
-  60%{transform:translate(-6px,2px)}
-  80%{transform:translate(5px,-2px)}
-}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .pent{
-  width:140px;height:140px;border-radius:50%;border:2px solid var(--accent);
-  display:grid;place-items:center;position:relative;z-index:2;
-  animation:spin 3.6s linear infinite;
-  box-shadow:0 0 48px var(--glow),inset 0 0 36px rgba(184,77,255,.25);
+  width:140px;height:140px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;position:relative;z-index:2;
+  box-shadow:0 0 50px var(--glow),inset 0 0 40px rgba(196,92,255,.25);animation:spin 3.2s linear infinite;
 }
-.pent::before{
-  content:"";position:absolute;inset:12px;border-radius:50%;
-  border:1px dashed var(--accent2);animation:spin 5.5s linear infinite reverse;
-}
-.pent span{font-size:48px;animation:bob 1.2s ease-in-out infinite;z-index:1}
+.pent::before{content:"";position:absolute;inset:12px;border-radius:50%;border:1px dashed var(--accent2);animation:spin 5s linear infinite reverse}
+.pent span{font-size:48px;animation:bob 1s ease-in-out infinite;position:relative;z-index:1}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.chant{position:relative;z-index:2;margin-top:28px;color:var(--muted);font-size:14px;letter-spacing:.04em;text-align:center;min-height:1.4em}
-.progress-wrap{
-  position:relative;z-index:2;width:min(280px,80vw);height:6px;
-  border-radius:999px;background:rgba(255,255,255,.08);margin-top:22px;overflow:hidden;
-}
-.progress-bar{
-  height:100%;width:0%;border-radius:inherit;
-  background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));
-  transition:width .35s var(--ease);box-shadow:0 0 12px var(--glow);
-}
-.busy-label{position:relative;z-index:2;margin-top:12px;font-size:12px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+@keyframes bob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.08)}}
+.chant{position:relative;z-index:2;color:var(--muted);font-size:14px;text-align:center;min-height:1.4em;letter-spacing:.03em}
+.progress-wrap{position:relative;z-index:2;width:min(280px,70vw);height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress-bar{height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));box-shadow:0 0 16px var(--glow);transition:width .25s linear}
+.busy-label{position:relative;z-index:2;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 
-.flash{
-  position:fixed;inset:0;pointer-events:none;z-index:90;
-  background:radial-gradient(circle,rgba(255,255,255,.4),transparent 55%);
-  opacity:0;
-}
-.flash.on{animation:flash .45s ease-out}
-@keyframes flash{0%{opacity:.75}100%{opacity:0}}
-
-/* Confetti layer */
-.confetti{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
-.confetti i{
-  position:absolute;width:8px;height:8px;border-radius:2px;opacity:0;
-  animation:confettiFall 1.8s ease-out forwards;
-}
-@keyframes confettiFall{
-  0%{opacity:1;transform:translateY(0) rotate(0) scale(1)}
-  100%{opacity:0;transform:translateY(100vh) rotate(720deg) scale(.6)}
-}
-
-/* Drawer */
-.drawer-bg{
-  position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);
-  opacity:0;pointer-events:none;transition:opacity .25s var(--ease);
-}
-.drawer-bg.open{opacity:1;pointer-events:auto}
-.drawer{
-  position:fixed;left:0;right:0;bottom:0;z-index:55;
-  max-height:70dvh;border-radius:22px 22px 0 0;
-  background:linear-gradient(180deg,#1c1930,#12101c);
-  border:1px solid var(--line);border-bottom:0;
-  padding:12px 16px calc(20px + var(--safe-b));
-  transform:translateY(110%);transition:transform .35s var(--ease);
-  box-shadow:0 -20px 60px rgba(0,0,0,.45);
-}
-.drawer.open{transform:translateY(0)}
-.drawer-handle{width:40px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 14px}
-.drawer h3{margin:0 0 12px;font-size:16px}
-.hist-empty{color:var(--faint);font-size:13px;padding:12px 0}
-.hist-item{
-  width:100%;text-align:left;padding:12px 14px;min-height:44px;
-  border-radius:14px;border:1px solid var(--line);background:rgba(11,10,18,.5);
-  margin-bottom:8px;color:var(--fg);transition:transform .15s var(--ease);
-}
-.hist-item:active{transform:scale(.98)}
-.hist-item b{display:block;font-size:14px;margin-bottom:2px}
-.hist-item small{color:var(--faint);font-size:12px}
-
-.toast{
-  position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 12px);
-  transform:translateX(-50%) translateY(20px);z-index:95;
-  background:rgba(28,25,48,.95);border:1px solid var(--line);
-  color:var(--fg);padding:12px 18px;border-radius:999px;font-size:13px;font-weight:600;
-  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s var(--ease);
-  white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.4);
-}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(255,255,255,.55),rgba(196,92,255,.2) 40%,transparent 70%)}
+.flash.on{animation:flash .5s ease-out}
+@keyframes flash{0%{opacity:.85}100%{opacity:0}}
+.shake-root.shake{animation:shake .65s var(--ease)}
+@keyframes shake{0%,100%{transform:translate(0)}15%{transform:translate(-10px,4px) rotate(-1.2deg)}30%{transform:translate(12px,-5px) rotate(1.2deg)}45%{transform:translate(-8px,3px)}60%{transform:translate(9px,-3px)}80%{transform:translate(-4px,2px)}}
+.rain{position:fixed;inset:0;pointer-events:none;z-index:55;overflow:hidden}
+.drop{position:absolute;top:-40px;font-size:22px;animation:fall linear forwards;opacity:.95}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+.bolt{position:fixed;inset:0;pointer-events:none;z-index:54;opacity:0}
+.bolt.on{animation:bolt .35s ease-out}
+@keyframes bolt{0%{opacity:0;background:transparent}20%{opacity:1;background:linear-gradient(180deg,rgba(255,255,255,.35),transparent 40%),linear-gradient(90deg,transparent 48%,rgba(196,92,255,.45),transparent 52%)}100%{opacity:0}}
+.toast{position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 12px);transform:translateX(-50%) translateY(16px);opacity:0;z-index:70;padding:12px 16px;border-radius:14px;background:rgba(28,25,48,.96);border:1px solid var(--accent);color:var(--fg);font-size:13px;max-width:min(420px,90vw);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.45);transition:opacity .25s,transform .25s;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.shake-card{animation:shake .55s var(--ease)}
-
-@media(min-width:720px){
-  .app{max-width:520px;padding-top:28px}
-  .sins{gap:10px}
-}
+.drawer-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;z-index:80;transition:opacity .25s}
+.drawer-bg.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:81;max-height:70dvh;background:var(--surface);border-radius:20px 20px 0 0;padding:10px 16px calc(18px + var(--safe-b));transform:translateY(110%);transition:transform .35s var(--spring);border:1px solid var(--line)}
+.drawer.on{transform:translateY(0)}
+.drawer-handle{width:42px;height:5px;border-radius:999px;background:var(--line);margin:4px auto 14px}
+.drawer h3{margin:0 0 12px;font-size:16px}
+.hist-item{width:100%;text-align:left;padding:12px 14px;min-height:52px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px;color:var(--muted);background:rgba(7,6,14,.4)}
+.hist-item b{display:block;color:var(--fg);margin-bottom:3px}
 
 @media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .sigil,.pent,.pent::before,.pent span,.flash,.confetti i,.overlay.shake,.shake-card,.verdict-panel{
-    animation:none!important;
-  }
-  .verdict-panel.show{opacity:1}
-  .cta:active,.sin:active,.seg button:active,.sin.on{transform:none}
-  .drawer,.drawer-bg,.toast{transition:opacity .2s}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .cta:active,.sin:active,.pow:active,.sin.on,.pow.on{transform:none}
+  .overlay .pent,.overlay .pent::before,.overlay .pent span{animation:none!important}
 }
 </style>
 </head>
-<body>
+<body class="shake-root" id="root">
 <div class="flash" id="flash" aria-hidden="true"></div>
-<div class="confetti" id="confetti" aria-hidden="true"></div>
+<div class="bolt" id="bolt" aria-hidden="true"></div>
+<div class="rain" id="rain" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<main class="app" id="app">
+<main class="app">
   <header class="brand">
     <div class="sigil" aria-hidden="true">✦</div>
-    <div>
-      <h1>ПРОКЛИНАТОР</h1>
-    </div>
+    <div><h1>ПРОКЛИНАТОР</h1></div>
   </header>
-  <p class="tagline">Офисный ритуал лёгкой мести. Не HR. Не магия. Сарказм по привычкам — не по людям.</p>
-
-  <button type="button" class="history-btn" id="historyBtn" aria-haspopup="dialog">☰ История</button>
+  <p class="tagline">Тапни грех — и офисный космос уже знает. Не HR. Не магия. Чистый сарказм.</p>
+  <div class="row-top"><button type="button" class="chip-btn" id="historyBtn">☰ История</button></div>
 
   <section class="glass" id="formCard">
     <label class="field">
-      <span>Жертва ритуала</span>
-      <input id="victim" type="text" maxlength="48" placeholder="Имя коллеги (или «Тот из Reply All»)" autocomplete="off" enterkeyhint="done"/>
+      <span>Жертва (необязательно)</span>
+      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done"/>
     </label>
+    <p class="ban">Только офисные грехи. Не про внешность, возраст, пол, этнос, здоровье, религию или ориентацию.</p>
 
-    <div class="section-label">Грех</div>
+    <div class="section-label">Грех — тапни и полетели</div>
+    <div class="empty" id="empty">Проклинать пока некого. Выбери грех — или добавь свой.</div>
     <div class="sins" id="sins" role="listbox" aria-label="Грех"></div>
-
     <label class="field">
       <span>Свой грех</span>
-      <input id="customSin" type="text" maxlength="80" placeholder="Например: «переслал весь тред без контекста»" autocomplete="off"/>
+      <input id="customSin" type="text" maxlength="80" placeholder="Например: переслал тред без контекста" autocomplete="off"/>
     </label>
 
-    <div class="section-label" style="margin-bottom:8px">Сила проклятия</div>
-    <div class="seg" id="power" role="radiogroup" aria-label="Сила проклятия"></div>
+    <div class="section-label">Сила</div>
+    <p class="hint">По умолчанию средняя. Или жми огромную кнопку пальцем.</p>
+    <div class="power" id="power" role="radiogroup" aria-label="Сила"></div>
 
     <div class="home-hint">
       <strong>Добавить на Домой — проклинать одной рукой.</strong>
@@ -344,7 +204,7 @@ h1{
     </div>
   </section>
 
-  <section class="glass verdict-panel" id="result" aria-live="polite">
+  <section class="glass verdict" id="result" aria-live="polite">
     <div class="eyebrow" id="vEyebrow">Вердикт ритуала</div>
     <h2 id="vTitle"></h2>
     <p id="vText"></p>
@@ -352,7 +212,7 @@ h1{
       <span><b id="k1"></b><small id="k1l"></small></span>
       <span><b id="k2"></b><small id="k2l"></small></span>
     </div>
-    <div class="actions-row">
+    <div class="actions">
       <button type="button" id="copyBtn">Копировать</button>
       <button type="button" id="againBtn">Ещё ритуал</button>
     </div>
@@ -376,7 +236,7 @@ h1{
 </div>
 
 <div class="drawer-bg" id="drawerBg"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-label="История ритуалов">
+<aside class="drawer" id="drawer" role="dialog" aria-label="История">
   <div class="drawer-handle"></div>
   <h3>Последние 5</h3>
   <div id="histList"></div>
@@ -385,182 +245,141 @@ h1{
 <script>
 (function(){
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const HIST_KEY = "proklinator_hist_v1";
+  const HIST_KEY = "proklinator_hist_v3";
+  const names = ["Коллега из Reply All","Тот с «быстрым вопросом»","Человек с созвоном на 5 минут","Автор «глянь глазами»","Хранитель скрытого листа","Мастер согласований","Почти-готово из спринта","Голос «я кратко»"];
+  const rainEmojis = ["🔥","💀","😈","📧","📅","☕","📎","💀","🔥","😈","📊","⏳"];
 
   const sins = [
     {id:"five",title:"Созвон «на пять минут»",hint:"Который уже 47-й",rune:"☎"},
     {id:"cc14",title:"Письмо с 14 в копии",hint:"И нулём смысла",rune:"✉"},
-    {id:"eyes",title:"«Глянь глазами»",hint:"И файл на 80 слайдов",rune:"👁"},
+    {id:"eyes",title:"«Глянь глазами»",hint:"Файл на 80 слайдов",rune:"👁"},
     {id:"fri1750",title:"Срочно в пятницу",hint:"В 17:50. Конечно",rune:"🔥"},
-    {id:"hidden",title:"Таблица со скрытым листом",hint:"Правда только там",rune:"📊"},
-    {id:"circles",title:"Согласование кругами",hint:"Пока все «в целом за»",rune:"🔄"},
-    {id:"almost",title:"«Почти готово»",hint:"Третий спринт подряд",rune:"⏳"},
+    {id:"hidden",title:"Скрытый лист правды",hint:"В таблице, разумеется",rune:"📊"},
+    {id:"circles",title:"Согласование кругами",hint:"Все «в целом за»",rune:"🔄"},
+    {id:"almost",title:"«Почти готово»",hint:"Третий спринт",rune:"⏳"},
     {id:"brief",title:"«Я кратко»",hint:"Монолог до обеда",rune:"🎙"}
   ];
   const powers = [
-    {id:"mild",label:"Лёгкое",mul:1},
-    {id:"medium",label:"Ощутимое",mul:1.4},
-    {id:"hard",label:"Карьерное",mul:1.9}
+    {id:"mild",label:"Лёгкое",emoji:"🌶️",mul:1},
+    {id:"medium",label:"Ощутимое",emoji:"🔥",mul:1.45},
+    {id:"hard",label:"Карьерное",emoji:"☢️",mul:2}
   ];
   const chants = [
-    "Шепчем в сторону принтера…",
-    "Перекладываем стикеры против часовой…",
-    "Призываем дух непринятого PR…",
-    "Жертвуем слот в календаре…",
-    "Читаем Terms of Service вслух…",
-    "Взываем Outlook проснуться…"
+    "Грех выбран. Дышим через нос.",
+    "Читаем заклинание статуса…",
+    "Созываем комитет по мелочам…",
+    "Кладём в копию всю вселенную…",
+    "Крутим колесо согласований…",
+    "Будим спящий тред…",
+    "Печатаем приговор без «ответить всем»…",
+    "Готово. Можно жить дальше."
   ];
   const successLines = [
-    "Заклинание принято. Пусть календарь смягчится.",
-    "Отправлено в космос бюрократии.",
-    "Грех зафиксирован. Можно жить дальше."
+    "Вердикт улетел.",
+    "Грех зафиксирован.",
+    "Поделились. Пусть знают.",
+    "Ритуал закрыт.",
+    "Заклинание принято.",
+    "Офис предупреждён."
   ];
-  const emptyHint = "Проклинать пока некого. Выбери грех — или добавь свой.";
+  const EMPTY = "Проклинать пока некого. Выбери грех — или добавь свой.";
   const shareSubtitle = "Пусть календарь узнает, кого винить.";
-  const toastShare = "Ушло. Пусть смягчится.";
+  const toastShare = "Поделились. Пусть знают.";
+  const BAN = "Только офисные грехи. Не про внешность, возраст, пол, этнос, здоровье, религию или ориентацию.";
+  const banned = /(внешност|возраст|пол\b|гендер|этнос|рас[аы]|национал|здоров|инвалид|болезн|религ|вер[аы]\b|ориентац|лгбт|секс|урод|толст|худой|жирн)/i;
 
-  const verdicts = {
-    five:(n,p)=>[
-      `${n} теперь назначает «пятиминутки» ровно на ${Math.round(47*p)} минут. Без повестки.`,
-      `Каждый созвон ${n} начинается с «нас плохо слышно» и заканчивается «ну ладно, потом».`,
-      `KPI: доля встреч «на пять минут» +${Math.round(30*p)}%. Смысл −${Math.round(25*p)}%.`
-    ],
-    cc14:(n,p)=>[
-      `${n} обречён(а) читать все 14 копий вслух перед отправкой.`,
-      `Письма ${n} теперь открываются с вопросом: «а зачем я здесь?»`,
-      `Эффект: прозрачность +${Math.round(40*p)}%, ясность −${Math.round(35*p)}%.`
-    ],
-    eyes:(n,p)=>[
-      `«Глянь глазами» от ${n} теперь занимает ровно один рабочий день.`,
-      `${n} получает отзывы вида «слайд 73 — особенно» до скончания квартала.`,
-      `KPI: объём «на глаз» +${Math.round(80*p)} слайдов. Внимание то же.`
-    ],
-    fri1750:(n,p)=>[
-      `Все срочные задачи ${n} приходят в пятницу в 17:50. Всегда.`,
-      `${n} видит в календаре только «горит» и «ещё горит».`,
-      `Эффект на KPI: предсказуемость планов −${Math.round(22*p)} пунктов.`
-    ],
-    hidden:(n,p)=>[
-      `${n} находит правду только на скрытом листе. Иногда.`,
-      `Каждая таблица ${n} теперь называется «финал_финал_v${Math.round(7*p)}».`,
-      `KPI: скрытых листов +${Math.round(3*p)}, доверия −${Math.round(40*p)}%.`
-    ],
-    circles:(n,p)=>[
-      `Согласования ${n} кружат, пока все «в целом за» и никто не подписал.`,
-      `${n} получает статус «почти согласовано» вечно.`,
-      `Эффект: круги +${Math.round(5*p)}, решения −${Math.round(50*p)}%.`
-    ],
-    almost:(n,p)=>[
-      `Статус ${n} застрял на «почти готово» на ${Math.round(3*p)} спринта.`,
-      `${n} обязан(а) писать «ещё чуть-чуть» в каждый стендап.`,
-      `KPI готовности: +${Math.round(1*p)}%, ощущение прогресса −${Math.round(60*p)}%.`
-    ],
-    brief:(n,p)=>[
-      `«Я кратко» от ${n} теперь длится до обеда. Без слайдов — ещё дольше.`,
-      `${n} начинает каждое предложение с «и ещё один момент».`,
-      `Эффект на KPI: краткость −${Math.round(70*p)}%, харизма символическая.`
-    ],
-    custom:(n,p,custom)=>[
-      `${n} получает кармический бумеранг за «${custom}». Сила ×${p.toFixed(1)}.`,
-      `Офисный космос зафиксировал грех. Календарь уже знает.`,
-      `Эффект бюрократии: +${Math.round(35*p)}% хаоса, −${Math.round(20*p)}% спокойствия.`
-    ]
-  };
-  const kpiPairs = [
-    ["Эффект на KPI","Сарказм / 10"],
-    ["Шанс «уточнить в чате»","Уровень кармы"],
-    ["Задержка ответа","Офисный вайб"]
+  const verdictTemplates = [
+    (n,s)=>`${n} пойман(а) на грехе «${s}». Календарь уже плачет.`,
+    (n,s)=>`Приговор: ${n} — рецидивист по делу «${s}».`,
+    (n,s)=>`${n}, ты снова выбрал(а) «${s}». Слайды это запомнят.`,
+    (n,s)=>`Вердикт вынесен: «${s}» закреплено за ${n} до конца квартала.`,
+    (n,s)=>`${n} пытался(ась) отрицать «${s}». Excel не врёт.`,
+    (n,s)=>`Суд офиса решил: ${n} виновен(на) в «${s}».`,
+    (n,s)=>`${n}, за «${s}» тебе положен ещё один статус-митинг.`,
+    (n,s)=>`Грех «${s}» успешно приземлился на ${n}. Поздравляем?`,
+    (n,s)=>`${n} официально стал(а) покровителем «${s}».`,
+    (n,s)=>`Фиксируем: ${n} + «${s}» = идеальный шторм спринта.`,
+    (n,s)=>`${n}, твоё «${s}» уже в копии у всего отдела.`,
+    (n,s)=>`По факту «${s}» обвиняемый: ${n}. Возражения после дедлайна.`,
+    (n,s)=>`${n} проклят(а) мягко, но метко: «${s}».`,
+    (n,s)=>`Диагноз офиса: у ${n} хроническое «${s}».`,
+    (n,s)=>`${n} получил(а) чёрную метку за «${s}». Синк неизбежен.`,
+    (n,s)=>`Итог ритуала: ${n} теперь ассоциируется с «${s}». Навсегда. Почти.`
   ];
-
-  let sinId = null;
-  let powerId = "medium";
-  let lastVerdict = null;
-  let mode = "cast"; // cast | share
-
-  const $ = (id) => document.getElementById(id);
-  const sinsEl = $("sins");
-  const powerEl = $("power");
-  const victim = $("victim");
-  const customSin = $("customSin");
-  const cast = $("cast");
-  const overlay = $("overlay");
-  const chant = $("chant");
-  const rune = $("rune");
-  const progress = $("progress");
-  const result = $("result");
-  const formCard = $("formCard");
-  const flash = $("flash");
-  const toast = $("toast");
-  const canvas = $("ritualCanvas");
-  const confettiEl = $("confetti");
-
-  function haptic(ms){
-    try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){}
+  const sideEffects = (n,p,s)=>[
+    `Эффект на KPI: хаос +${Math.round(30+20*p)}%, спокойствие −${Math.round(18*p)}%.`,
+    `Календарь ${n} уже дрожит. Сила ритуала ×${p.toFixed(1)}.`,
+    `Отдел знает. Принтер знает. Даже статус «почти готово» знает про «${s}».`
+  ];
+  function packVerdict(n,p,sinTitle){
+    const head=verdictTemplates[Math.floor(Math.random()*verdictTemplates.length)](n,sinTitle);
+    const sides=sideEffects(n,p,sinTitle);
+    return [head, sides[Math.floor(Math.random()*sides.length)], sides[Math.floor(Math.random()*sides.length)]];
   }
+  const verdicts = {
+    five:(n,p)=>packVerdict(n,p,"Созвон «на пять минут»"),
+    cc14:(n,p)=>packVerdict(n,p,"Письмо с 14 в копии"),
+    eyes:(n,p)=>packVerdict(n,p,"«Глянь глазами»"),
+    fri1750:(n,p)=>packVerdict(n,p,"Срочно в пятницу в 17:50"),
+    hidden:(n,p)=>packVerdict(n,p,"Таблица со скрытым листом"),
+    circles:(n,p)=>packVerdict(n,p,"Согласование кругами"),
+    almost:(n,p)=>packVerdict(n,p,"«Почти готово»"),
+    brief:(n,p)=>packVerdict(n,p,"«Я кратко»"),
+    custom:(n,p,g)=>packVerdict(n,p,g)
+  };
+  const kpiPairs = [["Эффект на KPI","Сарказм / 10"],["Шанс «уточнить в чате»","Уровень кармы"],["Задержка ответа","Офисный вайб"]];
 
+  let sinId=null, powerId="medium", lastVerdict=null, mode="cast", casting=false;
+  const $ = id => document.getElementById(id);
+  const victim=$("victim"), customSin=$("customSin"), cast=$("cast"), empty=$("empty");
+  const overlay=$("overlay"), chant=$("chant"), rune=$("rune"), progress=$("progress");
+  const result=$("result"), toast=$("toast"), flash=$("flash"), bolt=$("bolt"), rain=$("rain");
+  const canvas=$("ritualCanvas"), root=$("root");
+  victim.placeholder = names[Math.floor(Math.random()*names.length)];
+
+  function haptic(pattern){
+    try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
+  }
   function showToast(msg){
-    toast.textContent = msg;
-    toast.classList.add("show");
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(()=>toast.classList.remove("show"), 2200);
+    toast.textContent=msg; toast.classList.add("show");
+    clearTimeout(showToast._t); showToast._t=setTimeout(()=>toast.classList.remove("show"), 2400);
   }
+  function sleep(ms){ return new Promise(r=>setTimeout(r, reduced?0:ms)); }
 
   function updateCta(){
-    const hasSin = !!(sinId || customSin.value.trim());
-    if(mode === "share" && lastVerdict){
-      cast.disabled = false;
-      cast.textContent = "Поделиться вердиктом";
-      return;
-    }
-    mode = "cast";
-    if(hasSin){
-      cast.disabled = false;
-      cast.textContent = "Проклинать";
-    } else {
-      cast.disabled = true;
-      cast.textContent = "Сначала выбери грех";
-    }
+    const has = !!(sinId || customSin.value.trim());
+    if(mode==="share" && lastVerdict){ cast.disabled=false; cast.textContent="Поделиться вердиктом"; return; }
+    mode="cast";
+    if(has){ cast.disabled=false; cast.textContent="Проклинать"; }
+    else { cast.disabled=true; cast.textContent="Сначала выбери грех"; }
+    empty.classList.toggle("show", !has); empty.textContent=EMPTY;
   }
 
-  sins.forEach((s)=>{
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "sin";
-    b.dataset.id = s.id;
-    b.setAttribute("role","option");
-    b.setAttribute("aria-selected","false");
-    b.innerHTML = `<span class="rune">${s.rune}</span><span>${s.title}</span>`;
+  const sinsEl=$("sins");
+  sins.forEach(s=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="sin"; b.dataset.id=s.id; b.setAttribute("role","option");
+    b.innerHTML=`<span class="emoji">${s.rune}</span><b>${s.title}</b>`;
     b.addEventListener("click",()=>{
-      sinId = s.id;
-      customSin.value = "";
-      sinsEl.querySelectorAll(".sin").forEach(x=>{
-        const on = x.dataset.id === s.id;
-        x.classList.toggle("on", on);
-        x.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      rune.textContent = s.rune;
-      haptic(10);
-      if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; }
+      if(casting) return;
+      sinId=s.id; customSin.value="";
+      sinsEl.querySelectorAll(".sin").forEach(x=>x.classList.toggle("on", x.dataset.id===s.id));
+      rune.textContent=s.rune; haptic(12);
+      if(mode==="share"){ mode="cast"; result.classList.remove("show"); lastVerdict=null; }
       updateCta();
+      runRitual(true); // tap → сразу ритуал
     });
     sinsEl.appendChild(b);
   });
 
-  powers.forEach((p)=>{
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "pow" + (p.id === powerId ? " on" : "");
-    b.dataset.id = p.id;
-    b.setAttribute("role","radio");
-    b.setAttribute("aria-checked", p.id === powerId ? "true" : "false");
-    b.textContent = p.label;
+  const powerEl=$("power");
+  powers.forEach(p=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="pow"+(p.id===powerId?" on":""); b.dataset.id=p.id;
+    b.innerHTML=`<span class="e">${p.emoji}</span><small>${p.label}</small>`;
     b.addEventListener("click",()=>{
-      powerId = p.id;
-      powerEl.querySelectorAll("button").forEach(x=>{
-        const on = x.dataset.id === p.id;
-        x.classList.toggle("on", on);
-        x.setAttribute("aria-checked", on ? "true" : "false");
-      });
+      powerId=p.id;
+      powerEl.querySelectorAll(".pow").forEach(x=>x.classList.toggle("on", x.dataset.id===p.id));
       haptic(10);
     });
     powerEl.appendChild(b);
@@ -568,306 +387,166 @@ h1{
 
   customSin.addEventListener("input",()=>{
     if(customSin.value.trim()){
-      sinId = null;
-      sinsEl.querySelectorAll(".sin").forEach(x=>{
-        x.classList.remove("on");
-        x.setAttribute("aria-selected","false");
-      });
-      rune.textContent = "✦";
-      if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; }
+      sinId=null;
+      sinsEl.querySelectorAll(".sin").forEach(x=>x.classList.remove("on"));
+      rune.textContent="✦";
+      if(mode==="share"){ mode="cast"; result.classList.remove("show"); lastVerdict=null; }
     }
     updateCta();
   });
+  updateCta();
 
-  victim.addEventListener("input",()=>{
-    if(mode === "share"){ mode = "cast"; result.classList.remove("show"); lastVerdict = null; updateCta(); }
-  });
-
-  function sleep(ms){ return new Promise(r=>setTimeout(r, reduced ? Math.min(ms, 40) : ms)); }
-
-  // Particle canvas for ritual
-  let particleRAF = null;
-  let particles = [];
-  function resizeCanvas(){
-    canvas.width = window.innerWidth * devicePixelRatio;
-    canvas.height = window.innerHeight * devicePixelRatio;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-  }
-  function startParticles(){
+  function spawnRain(){
     if(reduced) return;
-    resizeCanvas();
-    particles = [];
-    for(let i=0;i<48;i++){
-      particles.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        r: (1+Math.random()*3)*devicePixelRatio,
-        vx: (Math.random()-.5)*0.6*devicePixelRatio,
-        vy: (-0.4-Math.random()*1.2)*devicePixelRatio,
-        c: ["#f0c14b","#b84dff","#ff4d8d","#ffffff"][i%4],
-        a: 0.3+Math.random()*0.7
+    for(let i=0;i<28;i++){
+      const d=document.createElement("span");
+      d.className="drop";
+      d.textContent=rainEmojis[i%rainEmojis.length];
+      d.style.left=(Math.random()*100)+"%";
+      d.style.fontSize=(16+Math.random()*22)+"px";
+      d.style.animationDuration=(1.1+Math.random()*1.4)+"s";
+      d.style.animationDelay=(Math.random()*0.35)+"s";
+      rain.appendChild(d);
+      setTimeout(()=>d.remove(), 2800);
+    }
+  }
+
+  function particlesBurst(duration){
+    if(reduced) return;
+    const ctx=canvas.getContext("2d");
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const w=canvas.width=Math.floor(innerWidth*dpr);
+    const h=canvas.height=Math.floor(innerHeight*dpr);
+    canvas.style.width=innerWidth+"px"; canvas.style.height=innerHeight+"px";
+    const parts=[];
+    for(let i=0;i<90;i++){
+      parts.push({
+        x:w/2, y:h*0.42,
+        vx:(Math.random()-0.5)*8*dpr, vy:(Math.random()-0.5)*8*dpr-2*dpr,
+        life:1, r:(2+Math.random()*4)*dpr,
+        c:`hsl(${270+Math.random()*80},90%,${60+Math.random()*20}%)`
       });
     }
-    const ctx = canvas.getContext("2d");
-    function tick(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(const p of particles){
-        p.x += p.vx; p.y += p.vy;
-        if(p.y < -10){ p.y = canvas.height+10; p.x = Math.random()*canvas.width; }
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle = p.c;
-        ctx.globalAlpha = p.a;
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-      particleRAF = requestAnimationFrame(tick);
-    }
-    particleRAF = requestAnimationFrame(tick);
-  }
-  function stopParticles(){
-    if(particleRAF) cancelAnimationFrame(particleRAF);
-    particleRAF = null;
-    const ctx = canvas.getContext("2d");
-    if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
-  }
-
-  function spawnConfetti(){
-    if(reduced) return;
-    confettiEl.innerHTML = "";
-    for(let i=0;i<36;i++){
-      const el = document.createElement("i");
-      el.style.left = (Math.random()*100) + "%";
-      el.style.top = (-5 + Math.random()*20) + "%";
-      el.style.background = ["#f0c14b","#b84dff","#ff4d8d","#fff","#3dd68c"][i%5];
-      el.style.animationDelay = (Math.random()*0.5) + "s";
-      el.style.width = (5+Math.random()*8) + "px";
-      el.style.height = (5+Math.random()*10) + "px";
-      el.style.transform = `rotate(${Math.random()*360}deg)`;
-      confettiEl.appendChild(el);
-      setTimeout(()=>el.remove(), 2200);
-    }
-  }
-
-  function loadHist(){
-    try{ return JSON.parse(localStorage.getItem(HIST_KEY)||"[]"); }catch(e){ return []; }
-  }
-  function saveHist(entry){
-    const list = loadHist();
-    list.unshift(entry);
-    localStorage.setItem(HIST_KEY, JSON.stringify(list.slice(0,5)));
-  }
-  function renderHist(){
-    const list = loadHist();
-    const el = $("histList");
-    if(!list.length){
-      el.innerHTML = '<div class="hist-empty">Пока пусто. Прокляни что-нибудь офисное.</div>';
-      return;
-    }
-    el.innerHTML = list.map((h,i)=>`
-      <button type="button" class="hist-item" data-i="${i}">
-        <b>${escapeHtml(h.victim)} — ${escapeHtml(h.sinTitle)}</b>
-        <small>${escapeHtml(h.eyebrow)}</small>
-      </button>`).join("");
-    el.querySelectorAll(".hist-item").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const h = list[+btn.dataset.i];
-        if(!h) return;
-        victim.value = h.victim;
-        closeDrawer();
-        showToast("Подставили жертву из истории.");
-        updateCta();
+    const t0=performance.now();
+    function frame(t){
+      const elapsed=t-t0;
+      ctx.clearRect(0,0,w,h);
+      parts.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.vy+=0.12*dpr; p.life-=0.012;
+        ctx.globalAlpha=Math.max(0,p.life);
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.c; ctx.fill();
       });
+      if(elapsed<duration && parts.some(p=>p.life>0)) requestAnimationFrame(frame);
+      else ctx.clearRect(0,0,w,h);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function confettiBoom(){
+    if(reduced) return;
+    spawnRain();
+    flash.classList.add("on"); setTimeout(()=>flash.classList.remove("on"),500);
+    bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),350);
+    root.classList.add("shake"); setTimeout(()=>root.classList.remove("shake"),700);
+  }
+
+  function loadHist(){ try{return JSON.parse(localStorage.getItem(HIST_KEY)||"[]");}catch(e){return[]} }
+  function saveHist(item){
+    const list=[item,...loadHist()].slice(0,5);
+    localStorage.setItem(HIST_KEY, JSON.stringify(list));
+  }
+  function openDrawer(){
+    const list=$("histList"); list.innerHTML="";
+    const items=loadHist();
+    if(!items.length){ list.innerHTML="<p class='hint'>Пока пусто. Прокляни кого-нибудь.</p>"; }
+    items.forEach(it=>{
+      const b=document.createElement("button"); b.type="button"; b.className="hist-item";
+      b.innerHTML=`<b>${it.name} · ${it.sin}</b><span>${it.line}</span>`;
+      list.appendChild(b);
     });
+    $("drawerBg").classList.add("on"); $("drawer").classList.add("on");
   }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-  }
-
-  function openDrawer(){ renderHist(); $("drawerBg").classList.add("open"); $("drawer").classList.add("open"); }
-  function closeDrawer(){ $("drawerBg").classList.remove("open"); $("drawer").classList.remove("open"); }
-  $("historyBtn").addEventListener("click", openDrawer);
-  $("drawerBg").addEventListener("click", closeDrawer);
-
-  function buildShareText(v){
-    return `ПРОКЛИНАТОР\n${v.eyebrow}\n\n${v.title}\n${v.text}\n\n${shareSubtitle}`;
-  }
+  function closeDrawer(){ $("drawerBg").classList.remove("on"); $("drawer").classList.remove("on"); }
+  $("historyBtn").onclick=openDrawer; $("drawerBg").onclick=closeDrawer;
 
   async function shareVerdict(){
     if(!lastVerdict) return;
-    const text = buildShareText(lastVerdict);
+    const text = `${lastVerdict.title}\n\n${lastVerdict.text}\n\n${shareSubtitle}\n— ПРОКЛИНАТОР`;
     try{
-      if(navigator.share){
-        await navigator.share({ title: "ПРОКЛИНАТОР", text });
-        showToast(toastShare);
-        return;
-      }
-    }catch(e){
-      if(e && e.name === "AbortError") return;
-    }
-    try{
-      await navigator.clipboard.writeText(text);
-      showToast(toastShare);
-    }catch(e){
-      // fallback textarea
-      const ta = document.createElement("textarea");
-      ta.value = text; document.body.appendChild(ta); ta.select();
-      try{ document.execCommand("copy"); showToast(toastShare); }catch(err){ showToast("Скопируй вручную."); }
-      ta.remove();
-    }
+      if(navigator.share){ await navigator.share({title:"ПРОКЛИНАТОР", text}); showToast(toastShare); return; }
+    }catch(e){ if(e && e.name==="AbortError") return; }
+    try{ await navigator.clipboard.writeText(text); showToast("Скопировано. "+toastShare); }
+    catch(e){ showToast("Скопируй вердикт вручную — share недоступен."); }
   }
 
-  $("copyBtn").addEventListener("click", async ()=>{
-    if(!lastVerdict) return;
-    const text = buildShareText(lastVerdict);
-    try{
-      await navigator.clipboard.writeText(text);
-      showToast("Скопировано.");
-    }catch(e){
-      showToast("Не удалось скопировать.");
-    }
-  });
+  async function runRitual(fromTap){
+    if(casting) return;
+    if(mode==="share" && lastVerdict && !fromTap){ await shareVerdict(); return; }
+    const custom=customSin.value.trim();
+    const activeCustom=!!custom && !sinId;
+    if(!sinId && !activeCustom){ updateCta(); empty.classList.add("show"); return; }
+    if(activeCustom && banned.test(custom)){ showToast(BAN); return; }
 
-  $("againBtn").addEventListener("click",()=>{
-    mode = "cast";
-    lastVerdict = null;
-    result.classList.remove("show");
-    updateCta();
-    victim.focus();
-    window.scrollTo({ top:0, behavior: reduced ? "auto" : "smooth" });
-  });
-
-  cast.addEventListener("click", async ()=>{
-    if(mode === "share"){
-      await shareVerdict();
-      return;
-    }
-
-    const name = victim.value.trim();
-    const custom = customSin.value.trim();
-    const hasSin = !!(sinId || custom);
-
-    if(!hasSin){
-      formCard.classList.add("shake-card");
-      setTimeout(()=>formCard.classList.remove("shake-card"), 600);
-      showToast(emptyHint);
-      return;
-    }
-    if(!name){
-      victim.placeholder = emptyHint;
-      victim.focus();
-      formCard.classList.add("shake-card");
-      setTimeout(()=>formCard.classList.remove("shake-card"), 600);
-      showToast(emptyHint);
-      return;
-    }
-
-    const pow = powers.find(p=>p.id===powerId) || powers[1];
-    const sin = sinId ? sins.find(s=>s.id===sinId) : {id:"custom", title: custom, rune:"✦"};
-    const usingCustom = !sinId;
-
-    cast.disabled = true;
-    result.classList.remove("show");
-    overlay.classList.add("on");
-    overlay.setAttribute("aria-hidden","false");
-    progress.style.width = "0%";
-    rune.textContent = sin.rune || "✦";
-    haptic(10);
-    startParticles();
-
-    if(!reduced){
-      overlay.classList.add("shake");
-      setTimeout(()=>overlay.classList.remove("shake"), 560);
-    }
+    casting=true; cast.disabled=true; cast.textContent="Читаю грехи…";
+    const name=(victim.value.trim()||victim.placeholder||"Безымянный коллега");
+    const pow=powers.find(p=>p.id===powerId)||powers[1];
+    const sin=activeCustom?{id:"custom",title:custom,rune:"✦"}:sins.find(s=>s.id===sinId);
+    rune.textContent=sin.rune;
+    overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
+    progress.style.width="0%";
+    haptic([30,40,30]);
+    particlesBurst(reduced?0:2200);
 
     for(let i=0;i<chants.length;i++){
-      chant.textContent = chants[i];
-      progress.style.width = ((i+1)/chants.length*100) + "%";
-      if(i === Math.floor(chants.length/2) && !reduced){
-        overlay.classList.add("shake");
-        setTimeout(()=>overlay.classList.remove("shake"), 560);
-      }
-      await sleep(420);
+      chant.textContent=chants[i];
+      progress.style.width=Math.round(((i+1)/chants.length)*100)+"%";
+      if(!reduced && i%2===0){ bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),280); haptic(20); }
+      await sleep(380);
     }
-    chant.textContent = "Ритуал завершён.";
-    progress.style.width = "100%";
+    chant.textContent="Ритуал завершён.";
+    confettiBoom();
+    haptic([20,30,20,30,60]);
+    await sleep(420);
+    overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
 
-    if(!reduced){
-      flash.classList.add("on");
-      setTimeout(()=>flash.classList.remove("on"), 450);
-    }
-    await sleep(280);
-    stopParticles();
-    overlay.classList.remove("on");
-    overlay.setAttribute("aria-hidden","true");
-
-    const lines = usingCustom
-      ? verdicts.custom(name, pow.mul, custom)
-      : verdicts[sinId](name, pow.mul);
-    const ok = successLines[Math.floor(Math.random()*successLines.length)];
-    const pair = kpiPairs[Math.floor(Math.random()*kpiPairs.length)];
-    const v1 = Math.min(99, Math.round(40 + 20*pow.mul + Math.random()*25));
-    const v2 = (6 + pow.mul + Math.random()*2).toFixed(1);
-
-    $("vEyebrow").textContent = ok;
-    $("vTitle").textContent = lines[0];
-    $("vText").textContent = lines[1] + " " + lines[2];
-    $("k1").textContent = v1 + "%";
-    $("k1l").textContent = pair[0];
-    $("k2").textContent = v2;
-    $("k2l").textContent = pair[1];
-
-    lastVerdict = {
-      eyebrow: ok,
-      title: lines[0],
-      text: lines[1] + " " + lines[2],
-      victim: name,
-      sinTitle: sin.title,
-      power: pow.label
-    };
-    saveHist({
-      victim: name,
-      sinTitle: sin.title,
-      eyebrow: ok,
-      at: Date.now()
-    });
-
+    const lines=activeCustom?verdicts.custom(name,pow.mul,custom):verdicts[sin.id](name,pow.mul);
+    $("vTitle").textContent=lines[0];
+    $("vText").textContent=lines[1]+" "+lines[2];
+    const pair=kpiPairs[Math.floor(Math.random()*kpiPairs.length)];
+    $("k1").textContent=Math.min(99,Math.round(42+22*pow.mul+Math.random()*20))+"%";
+    $("k1l").textContent=pair[0];
+    $("k2").textContent=(6.2+pow.mul+Math.random()*1.6).toFixed(1);
+    $("k2l").textContent=pair[1];
+    lastVerdict={title:lines[0], text:lines[1]+" "+lines[2], name, sin:sin.title};
+    saveHist({name, sin:sin.title, line:lines[0]});
     result.classList.add("show");
-    spawnConfetti();
-    haptic(20);
-    mode = "share";
+    mode="share";
+    casting=false;
     updateCta();
-    result.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
-  });
+    showToast(successLines[Math.floor(Math.random()*successLines.length)]);
+    result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"nearest"});
+  }
 
-  // Lightweight Web App Manifest via blob URL
+  cast.addEventListener("click",()=>runRitual(false));
+  $("copyBtn").onclick=async()=>{
+    if(!lastVerdict) return;
+    const text=`${lastVerdict.title}\n\n${lastVerdict.text}\n\n${shareSubtitle}`;
+    try{ await navigator.clipboard.writeText(text); showToast("Скопировано."); }
+    catch(e){ showToast("Не удалось скопировать."); }
+  };
+  $("againBtn").onclick=()=>{
+    mode="cast"; lastVerdict=null; result.classList.remove("show");
+    victim.placeholder=names[Math.floor(Math.random()*names.length)];
+    updateCta(); haptic(8);
+    window.scrollTo({top:0, behavior:reduced?"auto":"smooth"});
+  };
+
+  // manifest blob for Add to Home niceness
   try{
-    const manifest = {
-      name: "ПРОКЛИНАТОР",
-      short_name: "Проклинатор",
-      description: "Офисный ритуал лёгкой мести",
-      start_url: ".",
-      display: "standalone",
-      background_color: "#0b0a12",
-      theme_color: "#0b0a12",
-      lang: "ru",
-      icons: [{
-        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230b0a12'/%3E%3Ccircle cx='90' cy='90' r='62' fill='%23b84dff'/%3E%3Ctext x='90' y='112' text-anchor='middle' font-size='72' fill='%23fff'%3E%E2%9C%B6%3C/text%3E%3C/svg%3E",
-        sizes: "180x180",
-        type: "image/svg+xml",
-        purpose: "any"
-      }]
-    };
-    const blob = new Blob([JSON.stringify(manifest)], {type:"application/manifest+json"});
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("link");
-    link.rel = "manifest";
-    link.href = url;
-    document.head.appendChild(link);
+    const manifest={name:"ПРОКЛИНАТОР",short_name:"Проклинатор",start_url:".",display:"standalone",background_color:"#07060e",theme_color:"#0b0a12",lang:"ru"};
+    const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
+    const link=document.createElement("link"); link.rel="manifest"; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
   }catch(e){}
-
-  updateCta();
 })();
 </script>
 </body>
