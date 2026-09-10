@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
 <meta name="application-name" content="ПРОКЛИНАТОР"/>
-<meta name="description" content="Офисный ритуал лёгкой мести. Печать. Уголь. Приговор."/>
+<meta name="description" content="Офисное проклятие по всем правилам. Печать. Уголь. Приговор."/>
 <title>ПРОКЛИНАТОР</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230E0C0B'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23C45C26' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='none' stroke='%23C45C26' stroke-width='1' opacity='.7'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23C45C26'/%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230E0C0B'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23C45C26' stroke-width='3'/%3E%3Ccircle cx='90' cy='90' r='28' fill='none' stroke='%23C45C26' stroke-width='2' opacity='.7'/%3E%3Ccircle cx='90' cy='90' r='7' fill='%23C45C26'/%3E%3C/svg%3E"/>
@@ -18,22 +18,22 @@
   --bg-elev:#161210;
   --soot:#1A1714;
   --soot-2:#141210;
-  --bone:rgba(232,224,212,.10);
-  --bone-text:#E8E0D4;
-  --muted:rgba(232,224,212,.55);
-  --faint:rgba(232,224,212,.32);
+  --bone:rgba(242,235,224,.12);
+  --bone-text:#F2EBE0;
+  --muted:rgba(242,235,224,.68);
+  --faint:rgba(242,235,224,.42);
   --amber:#C45C26;
   --amber-hot:#D4783A;
-  --amber-dim:rgba(196,92,38,.22);
-  --amber-glow:rgba(196,92,38,.35);
+  --amber-dim:rgba(196,92,38,.28);
+  --amber-glow:rgba(196,92,38,.4);
   --ink:#0E0C0B;
-  --line:rgba(232,224,212,.09);
-  --radius:14px;
+  --line:rgba(242,235,224,.1);
+  --radius:16px;
   --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
   --safe-l:env(safe-area-inset-left,0px);
   --safe-r:env(safe-area-inset-right,0px);
-  --cta-h:76px;
+  --cta-h:80px;
   --ease:cubic-bezier(.32,.72,0,1);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,"Helvetica Neue",sans-serif;
 }
@@ -44,189 +44,192 @@ body{
   overflow-x:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   padding:var(--safe-t) var(--safe-r) 0 var(--safe-l);
   background:
-    radial-gradient(ellipse 120% 80% at 50% -20%,rgba(196,92,38,.07),transparent 50%),
-    radial-gradient(ellipse 90% 60% at 50% 120%,rgba(0,0,0,.6),transparent 55%),
+    radial-gradient(ellipse 120% 80% at 50% -20%,rgba(196,92,38,.08),transparent 50%),
+    radial-gradient(ellipse 90% 60% at 50% 120%,rgba(0,0,0,.65),transparent 55%),
     linear-gradient(180deg,#100E0C 0%,var(--bg) 40%,#0C0A09 100%);
   position:relative;
 }
 body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.055;
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.06;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:180px 180px;mix-blend-mode:overlay;
 }
 body::after{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:89;
-  background:radial-gradient(ellipse 72% 68% at 50% 45%,transparent 38%,rgba(0,0,0,.62) 100%);
+  background:radial-gradient(ellipse 72% 68% at 50% 45%,transparent 38%,rgba(0,0,0,.64) 100%);
 }
 button,input{font:inherit;color:inherit}
 button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-button:focus-visible,input:focus-visible{outline:1px solid var(--amber);outline-offset:2px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 input{
-  font-size:16px;line-height:1.4;width:100%;
-  background:var(--soot-2);border:1px solid var(--bone);border-radius:12px;
-  padding:14px 16px;color:var(--bone-text);letter-spacing:.01em;
+  font-size:17px;line-height:1.4;width:100%;
+  background:var(--soot-2);border:1px solid var(--bone);border-radius:14px;
+  padding:16px 18px;color:var(--bone-text);letter-spacing:.01em;
   transition:border-color .25s,box-shadow .25s;
 }
 input::placeholder{color:var(--faint)}
-input:focus{border-color:rgba(196,92,38,.5);box-shadow:0 0 0 3px rgba(196,92,38,.12)}
+input:focus{border-color:rgba(196,92,38,.55);box-shadow:0 0 0 3px rgba(196,92,38,.14)}
 input.pulse-inner{animation:pulseInner .7s var(--ease)}
 @keyframes pulseInner{
   0%,100%{box-shadow:0 0 0 0 transparent;border-color:var(--bone)}
-  30%{box-shadow:0 0 0 4px rgba(196,92,38,.28);border-color:var(--amber)}
-  60%{box-shadow:0 0 0 2px rgba(196,92,38,.15);border-color:var(--amber-hot)}
+  30%{box-shadow:0 0 0 4px rgba(196,92,38,.3);border-color:var(--amber)}
+  60%{box-shadow:0 0 0 2px rgba(196,92,38,.16);border-color:var(--amber-hot)}
 }
 
 .app{
   max-width:440px;margin:0 auto;min-height:100dvh;
-  padding:24px 20px calc(var(--cta-h) + var(--safe-b) + 28px);
+  padding:28px 22px calc(var(--cta-h) + var(--safe-b) + 32px);
   display:flex;flex-direction:column;position:relative;z-index:1;
 }
 
-.brand{display:flex;align-items:center;gap:14px;margin-bottom:10px}
-.mark{width:40px;height:40px;min-width:40px;display:grid;place-items:center}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.mark{width:44px;height:44px;min-width:44px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
 .mark .ring{animation:sealSpin 56s linear infinite;transform-origin:center}
 @keyframes sealSpin{to{transform:rotate(360deg)}}
 .brand-text h1{
-  margin:0;font-size:13px;font-weight:700;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--bone-text);line-height:1.2;
+  margin:0;font-size:15px;font-weight:700;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--bone-text);line-height:1.25;
 }
 .atmosphere{
-  margin:0 0 32px;font-size:13px;line-height:1.55;color:var(--muted);
-  letter-spacing:.02em;max-width:30em;
+  margin:0 0 36px;font-size:16px;line-height:1.55;color:var(--muted);
+  letter-spacing:.01em;max-width:28em;
 }
 
-.field{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.field{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
 .field > span,.section-label{
-  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--faint);font-weight:600;
 }
-.section-label{margin:0 0 12px;display:block}
+.section-label{margin:0 0 14px;display:block}
 .empty-hint{
-  margin:6px 0 0;font-size:12px;color:var(--amber);opacity:0;
-  letter-spacing:.04em;transition:opacity .25s;min-height:1.2em;
+  margin:6px 0 0;font-size:14px;color:var(--amber);opacity:0;
+  letter-spacing:.02em;transition:opacity .25s;min-height:1.2em;
 }
 .empty-hint.show{opacity:1}
 
-.power{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:8px}
+.power{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:8px}
 .pow{
-  min-height:72px;border-radius:var(--radius);border:1px solid var(--bone);
-  background:var(--soot);display:grid;grid-template-columns:36px 1fr;
-  gap:14px;align-items:center;padding:14px 16px;text-align:left;
-  color:var(--muted);transition:border-color .25s,color .25s,background .25s;
+  min-height:80px;border-radius:var(--radius);border:1px solid var(--bone);
+  background:var(--soot);display:grid;grid-template-columns:40px 1fr;
+  gap:16px;align-items:center;padding:16px 18px;text-align:left;
+  color:var(--muted);transition:border-color .25s,color .25s,background .25s,box-shadow .25s;
   position:relative;overflow:hidden;
 }
 .pow .seal{
-  width:36px;height:36px;display:grid;place-items:center;position:relative;
+  width:40px;height:40px;display:grid;place-items:center;position:relative;
 }
 .pow .seal svg{width:100%;height:100%}
-.pow .meta{display:flex;flex-direction:column;gap:4px;min-width:0}
-.pow b{font-size:15px;font-weight:650;letter-spacing:.04em;color:inherit}
-.pow small{font-size:12px;line-height:1.35;color:var(--faint);font-weight:400}
-.pow:active{opacity:.9}
+.pow .meta{display:flex;flex-direction:column;gap:5px;min-width:0}
+.pow b{font-size:17px;font-weight:650;letter-spacing:.03em;color:inherit}
+.pow small{font-size:14px;line-height:1.4;color:var(--faint);font-weight:400}
+.pow:active{opacity:.92}
 .pow.on{
   border-color:var(--amber);color:var(--bone-text);
-  box-shadow:inset 0 0 0 1px rgba(196,92,38,.28);
+  background:linear-gradient(105deg,rgba(196,92,38,.14),var(--soot) 55%);
+  box-shadow:inset 0 0 0 1px rgba(196,92,38,.35),0 0 24px rgba(196,92,38,.12);
 }
 .pow.on::after{
   content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 70% 80% at 12% 50%,var(--amber-dim),transparent 70%);
   animation:innerPulse 2.4s ease-in-out infinite;
 }
-@keyframes innerPulse{0%,100%{opacity:.3}50%{opacity:.85}}
+@keyframes innerPulse{0%,100%{opacity:.35}50%{opacity:.9}}
 .pow.on .seal .dot{fill:var(--amber)}
 .pow.on .seal .ring-s{stroke:var(--amber);opacity:1}
 
 .home-hint{
-  margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
-  font-size:12px;color:var(--faint);line-height:1.45;
+  margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:14px;color:var(--faint);line-height:1.5;
 }
-.home-hint strong{display:block;color:var(--muted);margin-bottom:4px;font-size:12px;font-weight:600;letter-spacing:.04em}
+.home-hint strong{display:block;color:var(--muted);margin-bottom:6px;font-size:14px;font-weight:600;letter-spacing:.03em}
 
 .verdict{
-  display:none;margin-top:8px;position:relative;padding:24px 20px 20px;
+  display:none;margin-top:8px;position:relative;padding:28px 22px 24px;
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
   overflow:hidden;
 }
 .verdict.show{display:block;animation:riseIn .55s var(--ease)}
 @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .verdict::before{
-  content:"";position:absolute;right:-24px;top:-24px;width:140px;height:140px;
+  content:"";position:absolute;right:-24px;top:-24px;width:150px;height:150px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
-  opacity:.09;pointer-events:none;
+  opacity:.1;pointer-events:none;
 }
-.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;font-weight:700}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-weight:700}
 .sin-tag{
-  display:inline-block;margin:0 0 12px;padding:5px 10px;border-radius:999px;
-  border:1px solid rgba(196,92,38,.35);color:var(--amber);font-size:11px;
-  letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  display:inline-block;margin:0 0 14px;padding:6px 12px;border-radius:999px;
+  border:1px solid rgba(196,92,38,.4);color:var(--amber);font-size:13px;
+  letter-spacing:.04em;font-weight:600;
 }
-.verdict h2{margin:0 0 12px;font-size:18px;line-height:1.35;font-weight:600;letter-spacing:.01em;color:var(--bone-text)}
-.verdict p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.55}
-.sev-row{margin:0 0 18px;font-size:12px;color:var(--faint);letter-spacing:.06em}
-.sev-row b{color:var(--amber);font-weight:650;letter-spacing:.1em;text-transform:uppercase}
-.actions{display:grid;grid-template-columns:1fr;gap:8px}
+.verdict h2{margin:0 0 14px;font-size:20px;line-height:1.4;font-weight:600;letter-spacing:.01em;color:var(--bone-text)}
+.verdict p{margin:0 0 20px;color:var(--muted);font-size:16px;line-height:1.55}
+.sev-row{margin:0 0 20px;font-size:14px;color:var(--faint);letter-spacing:.04em}
+.sev-row b{color:var(--amber);font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+.actions{display:grid;grid-template-columns:1fr;gap:10px}
 .actions button{
-  min-height:48px;border-radius:12px;border:1px solid var(--bone);
-  color:var(--muted);font-weight:600;font-size:13px;letter-spacing:.06em;
+  min-height:52px;border-radius:14px;border:1px solid var(--bone);
+  color:var(--muted);font-weight:600;font-size:15px;letter-spacing:.04em;
   background:transparent;transition:border-color .2s,color .2s;
 }
 .actions button.primary{
   background:var(--amber);color:var(--ink);border-color:var(--amber);
-  letter-spacing:.1em;text-transform:uppercase;font-size:12px;
+  letter-spacing:.06em;font-size:15px;font-weight:700;
 }
 .actions button:active{border-color:var(--amber);color:var(--bone-text)}
 .actions button.primary:active{filter:brightness(1.06);color:var(--ink)}
-.disclaimer{margin:28px 0 0;font-size:11px;color:var(--faint);line-height:1.5;text-align:left}
+.disclaimer{margin:32px 0 0;font-size:13px;color:var(--faint);line-height:1.55;text-align:left}
 
 .cta-bar{
   position:fixed;left:0;right:0;bottom:0;z-index:30;
-  padding:12px 20px calc(12px + var(--safe-b));
-  background:linear-gradient(180deg,transparent,rgba(14,12,11,.94) 28%,var(--bg) 70%);
+  padding:14px 22px calc(14px + var(--safe-b));
+  background:linear-gradient(180deg,transparent,rgba(14,12,11,.95) 28%,var(--bg) 70%);
 }
 .cta-bar-inner{max-width:440px;margin:0 auto;position:relative}
 .cta-bar-inner::before{
-  content:"";position:absolute;right:18px;top:-6px;width:5px;height:5px;
-  border-radius:50%;background:var(--amber);opacity:.55;
-  box-shadow:0 0 12px 3px var(--amber-glow);pointer-events:none;
+  content:"";position:absolute;right:18px;top:-6px;width:6px;height:6px;
+  border-radius:50%;background:var(--amber);opacity:.6;
+  box-shadow:0 0 14px 4px var(--amber-glow);pointer-events:none;
   animation:ember 3.2s ease-in-out infinite;
 }
-@keyframes ember{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.85;transform:scale(1.15)}}
+@keyframes ember{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.9;transform:scale(1.15)}}
 .cta{
-  width:100%;min-height:54px;border-radius:14px;position:relative;overflow:hidden;
-  font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;
-  background:var(--amber);color:var(--ink);transition:opacity .2s,filter .2s;
+  width:100%;min-height:56px;border-radius:16px;position:relative;overflow:hidden;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:14px;
+  background:var(--amber);color:var(--ink);
+  box-shadow:0 4px 28px rgba(196,92,38,.28);
+  transition:opacity .2s,filter .2s;
 }
 .cta::before{
-  content:"";position:absolute;left:50%;top:50%;width:72px;height:72px;
-  transform:translate(-50%,-50%);opacity:.08;pointer-events:none;
+  content:"";position:absolute;left:50%;top:50%;width:76px;height:76px;
+  transform:translate(-50%,-50%);opacity:.1;pointer-events:none;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%230E0C0B' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%230E0C0B' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%230E0C0B'/%3E%3C/svg%3E") center/contain no-repeat;
 }
 .cta:active:not(:disabled){filter:brightness(1.08)}
-.cta:disabled{opacity:.32;cursor:not-allowed;filter:none}
-.cta.busy{opacity:.7;letter-spacing:.12em}
+.cta:disabled{opacity:.32;cursor:not-allowed;filter:none;box-shadow:none}
+.cta.busy{opacity:.72;letter-spacing:.1em}
 
 .overlay{
   position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
-  flex-direction:column;gap:18px;background:rgba(14,12,11,.96);padding:24px;
+  flex-direction:column;gap:20px;background:rgba(14,12,11,.97);padding:28px;
 }
 .overlay.on{display:flex}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.seal-stage{width:128px;height:128px;position:relative;z-index:2;display:grid;place-items:center}
+.seal-stage{width:132px;height:132px;position:relative;z-index:2;display:grid;place-items:center}
 .seal-stage svg{width:100%;height:100%}
 .seal-stage .spin{animation:sealSpin 8s linear infinite;transform-origin:center}
 .chant{
-  position:relative;z-index:2;color:var(--muted);font-size:14px;
-  text-align:center;min-height:1.4em;letter-spacing:.04em;max-width:280px;line-height:1.45;
+  position:relative;z-index:2;color:var(--muted);font-size:16px;
+  text-align:center;min-height:1.4em;letter-spacing:.02em;max-width:300px;line-height:1.45;
 }
 .progress-wrap{
   position:relative;z-index:2;width:min(240px,65vw);height:2px;
-  background:rgba(232,224,212,.08);overflow:hidden;
+  background:rgba(242,235,224,.1);overflow:hidden;
 }
 .progress-bar{height:100%;width:0%;background:var(--amber);transition:width .25s linear}
-.busy-label{position:relative;z-index:2;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.busy-label{position:relative;z-index:2;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 
-.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(196,92,38,.38),transparent 55%)}
+.flash{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0;background:radial-gradient(circle,rgba(196,92,38,.4),transparent 55%)}
 .flash.on{animation:flash .45s ease-out}
 @keyframes flash{0%{opacity:.75}100%{opacity:0}}
 .shake-root.shake{animation:shake .55s var(--ease)}
@@ -242,13 +245,13 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 @keyframes fall{to{transform:translateY(110vh);opacity:0}}
 .bolt{position:fixed;inset:0;pointer-events:none;z-index:54;opacity:0}
 .bolt.on{animation:bolt .3s ease-out}
-@keyframes bolt{0%{opacity:0}25%{opacity:1;background:radial-gradient(ellipse at 50% 40%,rgba(196,92,38,.22),transparent 50%)}100%{opacity:0}}
+@keyframes bolt{0%{opacity:0}25%{opacity:1;background:radial-gradient(ellipse at 50% 40%,rgba(196,92,38,.24),transparent 50%)}100%{opacity:0}}
 
 .toast{
-  position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 10px);
+  position:fixed;left:50%;bottom:calc(var(--cta-h) + var(--safe-b) + 12px);
   transform:translateX(-50%) translateY(12px);opacity:0;z-index:70;
-  padding:11px 16px;border-radius:12px;background:var(--bg-elev);
-  border:1px solid var(--bone);color:var(--bone-text);font-size:13px;
+  padding:12px 18px;border-radius:14px;background:var(--bg-elev);
+  border:1px solid var(--bone);color:var(--bone-text);font-size:15px;
   max-width:min(400px,88vw);text-align:center;
   transition:opacity .25s,transform .25s;pointer-events:none;
 }
@@ -260,7 +263,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .mark .ring,.seal-stage .spin{animation:none!important}
   .cta-bar-inner::before{opacity:.5}
-  input.pulse-inner{box-shadow:0 0 0 3px rgba(196,92,38,.3);border-color:var(--amber)}
+  input.pulse-inner{box-shadow:0 0 0 3px rgba(196,92,38,.32);border-color:var(--amber)}
 }
 </style>
 </head>
@@ -285,13 +288,13 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     </div>
     <div class="brand-text"><h1>Проклинатор</h1></div>
   </header>
-  <p class="atmosphere">Поздний этаж. Принтер молчит. Печать уже ждёт имя.</p>
+  <p class="atmosphere">Офисное проклятие по всем правилам.</p>
 
   <section class="screen-cast" id="castScreen">
     <label class="field">
       <span>Имя жертвы</span>
-      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true"/>
-      <span class="empty-hint" id="emptyHint">Кого скрепляем?</span>
+      <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true" placeholder="Кого скрепляем?"/>
+      <span class="empty-hint" id="emptyHint">Сначала имя.</span>
     </label>
 
     <div class="section-label">Сила печати</div>
@@ -310,13 +313,13 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     <p id="vText"></p>
     <div class="sev-row">Сила: <b id="vSev"></b></div>
     <div class="actions">
-      <button type="button" class="primary" id="saveBtn">Сохранить 9:16</button>
+      <button type="button" class="primary" id="saveBtn">Сохранить картинку</button>
       <button type="button" id="shareBtn">Поделиться</button>
       <button type="button" id="againBtn">Ещё ритуал</button>
     </div>
   </section>
 
-  <p class="disclaimer">Не является HR-процедурой. Проклятия не имеют юридической силы. Все совпадения с реальными созвонами случайны, кроме тех, что не случайны.</p>
+  <p class="disclaimer">Это шутка. Не кадровая процедура и не юридический документ.</p>
 </main>
 
 <div class="cta-bar" id="ctaBar">
@@ -338,7 +341,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
       <line x1="96" y1="60" x2="108" y2="60" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
     </svg>
   </div>
-  <div class="chant" id="chant">Шепчем в сторону принтера…</div>
+  <div class="chant" id="chant">Имя принято. Дышим ровнее.</div>
   <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
   <div class="busy-label">Печать тлеет…</div>
 </div>
@@ -348,80 +351,72 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 <script>
 (function(){
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const placeholders = [
-    "напр. Паша из снабжения",
-    "напр. Оля из реплаев",
-    "напр. Коля с «быстрым вопросом»",
-    "напр. Маша со скрытым листом",
-    "напр. Дима «я кратко»"
-  ];
   const rainMarks = ["·","—","†","·","—"];
 
   const sins = [
-    {id:"five",title:"Созвон «на пять минут»",hint:"Который уже 47-й"},
-    {id:"cc14",title:"Письмо с 14 в копии",hint:"И нулём смысла"},
-    {id:"eyes",title:"«Глянь глазами»",hint:"Файл на 80 слайдов"},
-    {id:"fri1750",title:"Срочно в пятницу",hint:"В 17:50. Конечно"},
-    {id:"hidden",title:"Скрытый лист правды",hint:"В таблице, разумеется"},
-    {id:"circles",title:"Согласование кругами",hint:"Все «в целом за»"},
-    {id:"almost",title:"«Почти готово»",hint:"Третий спринт"},
-    {id:"brief",title:"«Я кратко»",hint:"Монолог до обеда"}
+    "Созвон «на пять минут»",
+    "Письмо сразу всем",
+    "«Глянь глазами» на восемьдесят листов",
+    "Срочно в пятницу вечером",
+    "Правда в скрытом листе таблицы",
+    "Согласование по кругу",
+    "«Почти готово» третий месяц",
+    "«Я кратко» на полчаса",
+    "Перенос срока без предупреждения",
+    "Планёрка вместо решения",
+    "Файл «финал_вот_этот_точно»",
+    "Молчание в общем чате три дня, потом «ну как?»",
+    "Правки после «утвердили»",
+    "Созвон без повестки",
+    "«Это на пять минут» в конце дня",
+    "Таблица вместо разговора"
   ];
 
   const powers = [
-    {id:"whisper",label:"Шёпот",desc:"едва слышно за стеной совещаний",mul:1},
-    {id:"seal",label:"Печать",desc:"закрепить в протоколе навсегда",mul:1.45},
-    {id:"anathema",label:"Анафема",desc:"имя войдёт в легенды спринта",mul:2}
+    {id:"whisper",label:"Шёпот",desc:"тихо, но дойдёт до всех",mul:1},
+    {id:"seal",label:"Печать",desc:"уже не отмажешься",mul:1.45},
+    {id:"anathema",label:"Анафема",desc:"будут вспоминать на планёрках",mul:2}
   ];
 
-  const chantsPool = [
-    "Грех выбран. Дышим через нос.",
-    "Читаем заклинание статуса…",
-    "Создаём комитет по мелочам…",
-    "Кладём в копию всю вселенную…",
-    "Крутим колесо согласований…",
-    "Будим спящий тред…",
-    "Печатаем приговор без «ответить всем»…",
-    "Шепчем в сторону принтера…",
-    "Сверяем карму с календарём…",
+  const chants = [
+    "Имя принято. Дышим ровнее.",
+    "Выбираем силу проклятия…",
+    "Грех сам ползёт из общих привычек…",
+    "Мажем печать офисной желчью…",
+    "Кладём в копию всю лестничную клетку…",
+    "Крутим круг согласований…",
+    "Будим мёртвый чат…",
     "Готово. Можно жить дальше."
   ];
 
   const verdictTemplates = [
-    (n,s)=>`${n} пойман(а) на грехе «${s}». Календарь уже плачет.`,
-    (n,s)=>`Приговор: ${n} — рецидивист по делу «${s}».`,
-    (n,s)=>`${n}, ты снова выбрал(а) «${s}». Слайды это запомнят.`,
-    (n,s)=>`Вердикт вынесен: «${s}» закреплено за ${n} до конца квартала.`,
-    (n,s)=>`${n} пытался(ась) отрицать «${s}». Excel не врёт.`,
-    (n,s)=>`Суд офиса решил: ${n} виновен(на) в «${s}».`,
-    (n,s)=>`${n}, за «${s}» тебе положен ещё один статус-митинг.`,
-    (n,s)=>`Грех «${s}» успешно приземлился на ${n}. Поздравляем?`,
-    (n,s)=>`${n} официально стал(а) покровителем «${s}».`,
-    (n,s)=>`Фиксируем: ${n} + «${s}» = идеальный шторм спринта.`,
-    (n,s)=>`${n}, твоё «${s}» уже в копии у всего отдела.`,
-    (n,s)=>`По факту «${s}» обвиняемый: ${n}. Возражения после дедлайна.`,
-    (n,s)=>`${n} проклят(а) мягко, но метко: «${s}».`,
-    (n,s)=>`Диагноз офиса: у ${n} хроническое «${s}».`,
-    (n,s)=>`${n} получил(а) чёрную метку за «${s}». Синк неизбежен.`,
-    (n,s)=>`Итог ритуала: ${n} теперь ассоциируется с «${s}». Навсегда. Почти.`
+    (n,s)=>`${n} пойман(а) на грехе «${s}». Пусть теперь объясняет на планёрке.`,
+    (n,s)=>`Приговор: ${n} снова за «${s}». Хватит уже, блин.`,
+    (n,s)=>`${n}, за «${s}» тебе положен ещё один созвон. Наслаждайся.`,
+    (n,s)=>`Вердикт: «${s}» — на совести ${n}. Печать не врёт.`,
+    (n,s)=>`${n} пытался(ась) отвертеться от «${s}». Не вышло, чёрт побери.`,
+    (n,s)=>`${n} официально стал(а) чемпионом по «${s}». Поздравлять не будем.`,
+    (n,s)=>`Зафиксировано: ${n} + «${s}» = головная боль отдела.`,
+    (n,s)=>`${n}, твоё «${s}» уже обсуждают у кофемашины.`,
+    (n,s)=>`По делу «${s}» виновен(на): ${n}. Возражения — после срока.`,
+    (n,s)=>`${n} проклят(а) за «${s}». Мягко? Нет. Метко.`,
+    (n,s)=>`Диагноз: у ${n} хроническое «${s}». Лечится только делом.`,
+    (n,s)=>`${n} получил(а) чёрную метку за «${s}». Созвон неизбежен.`,
+    (n,s)=>`Итог: ${n} теперь навсегда про «${s}». Почти.`,
+    (n,s)=>`${n}, хватит с «${s}». Печать легла — живи с этим.`,
+    (n,s)=>`Суд офиса решил: ${n} виновен(на) в «${s}». Без смягчения.`,
+    (n,s)=>`${n} снова выбрал(а) «${s}». Таблицы это запомнят, блядь.`
   ];
-  const sideEffects = (n,p,s)=>[
-    `Эффект на KPI: хаос +${Math.round(30+20*p)}%, спокойствие −${Math.round(18*p)}%.`,
-    `Календарь ${n} уже дрожит. Сила ритуала ×${p.toFixed(1)}.`,
-    `Отдел знает. Принтер знает. Даже статус «почти готово» знает про «${s}».`
+
+  const flavorLines = [
+    "Печать держится. Отдел уже шепчется.",
+    "Ритуал закрыт. Можно вернуться к своим письмам.",
+    "Уголь остыл. Имя в протоколе.",
+    "Лестничная клетка всё слышала.",
+    "Кофемашина подтверждает приговор."
   ];
 
   function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-  function shuffle(arr){
-    const a=arr.slice();
-    for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-    return a;
-  }
-  function pickVerdict(n,p,sinTitle){
-    const head=pick(verdictTemplates)(n,sinTitle);
-    const sides=sideEffects(n,p,sinTitle);
-    return {title:head, text:pick(sides)+" "+pick(sides)};
-  }
 
   let powerId="seal", lastVerdict=null, casting=false;
   const $ = id => document.getElementById(id);
@@ -431,8 +426,6 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   const flash=$("flash"), bolt=$("bolt"), rain=$("rain");
   const canvas=$("ritualCanvas"), root=$("root"), ctaBar=$("ctaBar");
   const exportCanvas=$("exportCanvas");
-
-  victim.placeholder = pick(placeholders);
 
   function haptic(pattern){
     try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
@@ -444,10 +437,10 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   function sleep(ms){ return new Promise(r=>setTimeout(r, reduced?0:ms)); }
 
   function safeFileName(name){
-    return String(name||"victim")
+    return String(name||"имя")
       .replace(/[\\/:*?"<>|]+/g,"")
       .replace(/\s+/g,"-")
-      .slice(0,40) || "victim";
+      .slice(0,40) || "имя";
   }
 
   const powerEl=$("power");
@@ -458,7 +451,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     b.innerHTML=
       `<span class="seal" aria-hidden="true">`+
       `<svg viewBox="0 0 36 36" fill="none"><circle class="ring-s" cx="18" cy="18" r="14" stroke="#C45C26" stroke-width="1" opacity=".45"/>`+
-      `<circle class="dot" cx="18" cy="18" r="3.2" fill="rgba(232,224,212,.25)"/></svg></span>`+
+      `<circle class="dot" cx="18" cy="18" r="3.2" fill="rgba(242,235,224,.28)"/></svg></span>`+
       `<span class="meta"><b>${p.label}</b><small>${p.desc}</small></span>`;
     b.addEventListener("click",()=>{
       if(casting) return;
@@ -475,6 +468,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 
   function failEmpty(){
     emptyHint.classList.add("show");
+    showToast("Сначала имя.");
     root.classList.remove("shake");
     void root.offsetWidth;
     root.classList.add("shake");
@@ -522,7 +516,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
         x:w/2, y:h*0.42,
         vx:(Math.random()-0.5)*3.2*dpr, vy:(Math.random()-0.8)*4*dpr,
         life:1, r:(1+Math.random()*2.2)*dpr,
-        c: Math.random()>.4 ? `rgba(196,92,38,${0.5+Math.random()*0.4})` : `rgba(232,224,212,${0.25+Math.random()*0.3})`
+        c: Math.random()>.4 ? `rgba(196,92,38,${0.5+Math.random()*0.4})` : `rgba(242,235,224,${0.25+Math.random()*0.3})`
       });
     }
     const t0=performance.now();
@@ -591,76 +585,73 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     ctx.fillRect(0,0,W,H);
 
     const g=ctx.createRadialGradient(W/2, H*0.2, 40, W/2, H*0.45, H*0.7);
-    g.addColorStop(0,"rgba(196,92,38,0.10)");
+    g.addColorStop(0,"rgba(196,92,38,0.11)");
     g.addColorStop(0.5,"rgba(14,12,11,0)");
-    g.addColorStop(1,"rgba(0,0,0,0.55)");
+    g.addColorStop(1,"rgba(0,0,0,0.58)");
     ctx.fillStyle=g;
     ctx.fillRect(0,0,W,H);
 
-    // grain
     const img=ctx.createImageData(W,H);
     for(let i=0;i<img.data.length;i+=4){
       const n=Math.random()*255;
-      img.data[i]=n; img.data[i+1]=n; img.data[i+2]=n; img.data[i+3]=14;
+      img.data[i]=n; img.data[i+1]=n; img.data[i+2]=n; img.data[i+3]=15;
     }
     ctx.putImageData(img,0,0);
 
-    // vignette
     const vig=ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H*0.72);
     vig.addColorStop(0,"rgba(0,0,0,0)");
-    vig.addColorStop(1,"rgba(0,0,0,0.55)");
+    vig.addColorStop(1,"rgba(0,0,0,0.58)");
     ctx.fillStyle=vig;
     ctx.fillRect(0,0,W,H);
 
-    // border
-    ctx.strokeStyle="rgba(196,92,38,0.35)";
+    ctx.strokeStyle="rgba(196,92,38,0.38)";
     ctx.lineWidth=2;
     ctx.strokeRect(36,36,W-72,H-72);
-    ctx.strokeStyle="rgba(232,224,212,0.08)";
+    ctx.strokeStyle="rgba(242,235,224,0.1)";
     ctx.lineWidth=1;
     ctx.strokeRect(48,48,W-96,H-96);
 
     drawSigil(ctx, W/2, 210, 78, 0.55);
-    drawSigil(ctx, W-110, H-160, 90, 0.07);
+    drawSigil(ctx, W-110, H-160, 90, 0.08);
 
     ctx.textAlign="center";
     ctx.fillStyle="#C45C26";
-    ctx.font="700 13px system-ui,sans-serif";
-    ctx.letterSpacing="0.32em";
+    ctx.font="700 14px system-ui,sans-serif";
+    ctx.letterSpacing="0.28em";
     ctx.fillText("ПРОКЛИНАТОР", W/2, 330);
 
-    ctx.fillStyle="#E8E0D4";
+    ctx.fillStyle="#F2EBE0";
     ctx.font="600 42px system-ui,sans-serif";
     ctx.letterSpacing="0";
     let y=400;
     y=wrapText(ctx, lastVerdict.name, W/2, y, W-120, 50);
 
     ctx.fillStyle="#C45C26";
-    ctx.font="600 14px system-ui,sans-serif";
+    ctx.font="600 15px system-ui,sans-serif";
     y+=28;
-    ctx.fillText(lastVerdict.sin.toUpperCase(), W/2, y);
+    y=wrapText(ctx, lastVerdict.sin, W/2, y, W-140, 22);
 
-    ctx.fillStyle="rgba(232,224,212,0.12)";
-    ctx.fillRect(W/2-40, y+22, 80, 1);
+    ctx.fillStyle="rgba(242,235,224,0.14)";
+    ctx.fillRect(W/2-40, y+18, 80, 1);
 
-    ctx.fillStyle="rgba(232,224,212,0.88)";
+    ctx.fillStyle="rgba(242,235,224,0.92)";
     ctx.font="400 22px system-ui,sans-serif";
-    y+=70;
+    y+=60;
     y=wrapText(ctx, lastVerdict.title, W/2, y, W-130, 32);
 
-    ctx.fillStyle="rgba(232,224,212,0.55)";
+    ctx.fillStyle="rgba(242,235,224,0.58)";
     ctx.font="400 18px system-ui,sans-serif";
     y+=28;
     y=wrapText(ctx, lastVerdict.text, W/2, y, W-130, 28);
 
     ctx.fillStyle="#C45C26";
-    ctx.font="700 12px system-ui,sans-serif";
+    ctx.font="700 13px system-ui,sans-serif";
     y+=48;
     ctx.fillText("СИЛА: "+lastVerdict.sevLabel.toUpperCase(), W/2, y);
 
-    ctx.fillStyle="rgba(232,224,212,0.28)";
-    ctx.font="400 11px system-ui,sans-serif";
-    wrapText(ctx, "Не является HR-процедурой. Проклятия не имеют юридической силы.", W/2, H-78, W-120, 16);
+    ctx.fillStyle="rgba(242,235,224,0.32)";
+    ctx.font="400 12px system-ui,sans-serif";
+    wrapText(ctx, "Это шутка. Не кадровая процедура и не юридический документ.", W/2, H-78, W-120, 18);
 
     return c;
   }
@@ -684,17 +675,10 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     try{
       const c=buildExportPng();
       const fname="proklinator-"+safeFileName(lastVerdict.name)+".png";
-      const blob=await downloadPng(c, fname);
+      await downloadPng(c, fname);
       showToast("Печать легла.");
-      // offer share if files supported
-      try{
-        const file=new File([blob], fname, {type:"image/png"});
-        if(navigator.canShare && navigator.canShare({files:[file]})){
-          // optional secondary share — user already has download; skip auto-share
-        }
-      }catch(e){}
     }catch(e){
-      showToast("Не удалось сохранить изображение.");
+      showToast("Не удалось сохранить картинку.");
     }
   }
 
@@ -711,7 +695,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
           title:"ПРОКЛИНАТОР",
           text: lastVerdict.title
         });
-        showToast("Печать легла.");
+        showToast("Ушло. Пусть знают.");
         return;
       }
       if(navigator.share){
@@ -719,7 +703,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
           title:"ПРОКЛИНАТОР",
           text: `${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`
         });
-        showToast("Печать легла.");
+        showToast("Ушло. Пусть знают.");
         return;
       }
       await downloadPng(c, fname);
@@ -729,7 +713,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
       try{
         const text=`${lastVerdict.title}\n\n${lastVerdict.text}\n— ПРОКЛИНАТОР`;
         await navigator.clipboard.writeText(text);
-        showToast("Скопировано.");
+        showToast("Ушло. Пусть знают.");
       }catch(e2){
         showToast("Поделиться недоступно.");
       }
@@ -749,35 +733,33 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 
     const pow=powers.find(p=>p.id===powerId)||powers[1];
     const sin=pick(sins);
-    const ritualChants=shuffle(chantsPool).slice(0,7);
-    ritualChants.push("Готово. Можно жить дальше.");
 
     overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
     progress.style.width="0%";
     haptic([30,40,30]);
     particlesBurst(reduced?0:2200);
 
-    for(let i=0;i<ritualChants.length;i++){
-      chant.textContent=ritualChants[i];
-      progress.style.width=Math.round(((i+1)/ritualChants.length)*100)+"%";
+    for(let i=0;i<chants.length;i++){
+      chant.textContent=chants[i];
+      progress.style.width=Math.round(((i+1)/chants.length)*100)+"%";
       if(!reduced && i%3===0){ bolt.classList.add("on"); setTimeout(()=>bolt.classList.remove("on"),280); haptic(20); }
       if(!reduced && i===2) spawnRain();
       await sleep(380);
     }
-    chant.textContent="Ритуал завершён.";
     ritualFlash();
     haptic([20,30,20,30,60]);
     await sleep(420);
     overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
 
-    const lines=pickVerdict(name, pow.mul, sin.title);
-    $("vSin").textContent=sin.title;
-    $("vTitle").textContent=lines.title;
-    $("vText").textContent=lines.text;
+    const title=pick(verdictTemplates)(name, sin);
+    const text=pick(flavorLines);
+    $("vSin").textContent=sin;
+    $("vTitle").textContent=title;
+    $("vText").textContent=text;
     $("vSev").textContent=pow.label;
 
     lastVerdict={
-      name, sin:sin.title, title:lines.title, text:lines.text,
+      name, sin, title, text,
       sevLabel:pow.label, sevId:pow.id, mul:pow.mul
     };
 
@@ -807,7 +789,6 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     result.classList.add("hidden");
     castScreen.classList.remove("hidden");
     ctaBar.style.display="";
-    victim.placeholder=pick(placeholders);
     victim.value="";
     emptyHint.classList.remove("show");
     cast.textContent="Скрепить печатью";
