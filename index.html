@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
 <meta name="application-name" content="ПРОКЛИНАТОР"/>
-<meta name="description" content="Канцелярия печати. Без смайлов — только приговор."/>
+<meta name="description" content="Канцелярия личной печати. Стебаемся по делу."/>
 <title>ПРОКЛИНАТОР</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230E0C0B'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23C45C26' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='none' stroke='%23C45C26' stroke-width='1' opacity='.7'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23C45C26'/%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230E0C0B'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23C45C26' stroke-width='3'/%3E%3Ccircle cx='90' cy='90' r='28' fill='none' stroke='%23C45C26' stroke-width='2' opacity='.7'/%3E%3Ccircle cx='90' cy='90' r='7' fill='%23C45C26'/%3E%3C/svg%3E"/>
@@ -68,7 +68,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   padding:28px 22px calc(var(--cta-h) + var(--safe-b) + 32px);
   display:flex;flex-direction:column;position:relative;z-index:1;
 }
-.brand{display:flex;align-items:center;gap:14px;margin-bottom:12px;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:10px;position:relative;z-index:1}
 .mark{width:44px;height:44px;min-width:44px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
 .mark .ring{animation:sealSpin 56s linear infinite;transform-origin:center}
@@ -78,8 +78,12 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   text-transform:uppercase;color:var(--bone-text);line-height:1.25;
 }
 .atmosphere{
-  margin:0 0 32px;font-size:16px;line-height:1.55;color:var(--muted);
+  margin:0 0 8px;font-size:16px;line-height:1.55;color:var(--muted);
   letter-spacing:.01em;max-width:28em;position:relative;z-index:1;
+}
+.subhead{
+  margin:0 0 28px;font-size:14px;line-height:1.45;color:var(--faint);
+  letter-spacing:.02em;max-width:28em;position:relative;z-index:1;
 }
 .field{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .field > span,.section-label{
@@ -289,6 +293,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     <div class="brand-text"><h1>Проклинатор</h1></div>
   </header>
   <p class="atmosphere" id="atmosphere"></p>
+  <p class="subhead" id="subhead"></p>
 
   <section class="screen-cast" id="castScreen">
     <label class="field">
@@ -381,32 +386,35 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 
 <script>
 (function(){
-  const DATA = {"sins":[{"id":1,"title":"Пятиминутка","blurb":"созвон «на пять минут», который съел час"},{"id":2,"title":"Письмо всем","blurb":"кинул(а) в копию пол-отдела без нужды"},{"id":3,"title":"Глянь глазами","blurb":"скинул(а) простыню «на быстрый взгляд»"},{"id":4,"title":"Пятница вечер","blurb":"объявил(а) срочное, когда все уже в куртках"},{"id":5,"title":"Скрытый лист","blurb":"правда сидит в невидимой вкладке таблицы"},{"id":6,"title":"Круг согласований","blurb":"гоняет одних и тех же по кругу"},{"id":7,"title":"Почти готово","blurb":"«почти» третий месяц"},{"id":8,"title":"Я кратко","blurb":"монолог до потёмков"},{"id":9,"title":"Тихий перенос","blurb":"сдвинул(а) срок и молчит"},{"id":10,"title":"Планёрка-пустышка","blurb":"собрал(а) людей вместо решения"},{"id":11,"title":"Финал_точно","blurb":"седьмая версия «окончательного» файла"},{"id":12,"title":"Ну как?","blurb":"три дня тишины, потом этот вопрос"},{"id":13,"title":"Правки после утверждения","blurb":"вернул(а) правки, когда уже «да»"},{"id":14,"title":"Созвон без повестки","blurb":"всех созвал(а), темы нет"},{"id":15,"title":"Пять минут в конце дня","blurb":"«на минутку» перед выходом"},{"id":16,"title":"Таблица вместо ответа","blurb":"вместо «да/нет» прислал(а) файл"},{"id":17,"title":"На месте","blurb":"статус «на месте», человека нет"},{"id":18,"title":"Секундочку","blurb":"«секунду» растянул(а) на вечность"},{"id":19,"title":"Пересыл без строки","blurb":"переслал(а) тред без своего слова"},{"id":20,"title":"Зал ради одного","blurb":"собрал(а) толпу, чтобы спросить одного"},{"id":21,"title":"Кажется, решали","blurb":"открыл(а) заново то, что уже закрыли"},{"id":22,"title":"Срок в день сдачи","blurb":"сообщил(а) срок, когда уже поздно"},{"id":23,"title":"Скинь в чат","blurb":"вместо ясности кинул(а) в общий чат"},{"id":24,"title":"Коридорные правки","blurb":"правил(а) голосом в проходе, без записи"},{"id":25,"title":"Срочно без сути","blurb":"орёт «срочно», не говорит что"},{"id":26,"title":"Открыл и пропал","blurb":"поднял(а) тему и исчез(ла)"},{"id":27,"title":"Согласуй со всеми","blurb":"отправил(а) на «всех», кто не нужен"},{"id":28,"title":"Ещё один кружок","blurb":"добавил(а) лишний круг «на всякий»"},{"id":29,"title":"Голос вместо файла","blurb":"важный итог только голосом, следа нет"},{"id":30,"title":"Переиграл вчерашнее","blurb":"переиграл(а) договорённость утра"}],"verdictsN":[{"id":1,"punch":"{имя} снова завёл(а) «пятиминутку» — час ушёл в унитаз.","lift":"Снять: когда закончит созвон ровно за пять минут по таймеру на виду у всех."},{"id":2,"punch":"{имя} разослал(а) письмо всем — теперь пусть стоит у туалета и лично извиняется перед каждым из копии.","lift":"Снять: когда отправит одно письмо одному человеку и получит ответ."},{"id":3,"punch":"{имя} скинул(а) «глянь глазами» — глаза теперь красные, как после поезда.","lift":"Снять: когда пришлёт одну страницу с тремя пометками, не простыню."},{"id":4,"punch":"{имя} объявил(а) срочное в пятницу вечером — пусть сидит в лифте между этажами, пока все доедут домой.","lift":"Снять: когда срочное объявит до обеда рабочего дня."},{"id":5,"punch":"у {имя} правда в скрытом листе — пусть ищет её на четвереньках под столом.","lift":"Снять: когда вынесет правду на первый лист крупным шрифтом."},{"id":6,"punch":"{имя} гоняет согласование по кругу — ноги стёрты, круг всё тот же.","lift":"Снять: когда закроет вопрос с двумя подписями, не с двенадцатью."},{"id":7,"punch":"«почти готово» от {имя} уже отрастило бороду. Пусть стоит у микроволновки и смотрит, как крутится чужой обед.","lift":"Снять: когда скажет честную дату и попадёт в неё."},{"id":8,"punch":"{имя} начал(а) «кратко» — слушатели окоченели.","lift":"Снять: когда уложится в одну минуту без «ещё чуть-чуть»."},{"id":9,"punch":"{имя} тихо утащил(а) срок — пусть теперь стоит в пробке ровно столько, на сколько сдвинул(а).","lift":"Снять: когда предупредит о переносе за сутки."},{"id":10,"punch":"планёрка от {имя} без решения — все посидели, как на унитазе без бумаги.","lift":"Снять: когда закончит встречу одним решением вслух."},{"id":11,"punch":"{имя} прислал(а) седьмой «финал_точно» — пусть переименовывает файлы до посинения.","lift":"Снять: когда один файл останется один и не изменится сутки."},{"id":12,"punch":"три дня тишины, потом «ну как?» от {имя} — собеседник уже поседел в туалете.","lift":"Снять: когда ответит в тот же день одним сообщением."},{"id":13,"punch":"после «утвердили» {имя} притащил(а) правки — пусть стоит под дверью и ждёт, пока его/её впустят обратно.","lift":"Снять: когда правки принесёт до утверждения."},{"id":14,"punch":"созвон без повестки от {имя} — час висит в наушниках, пока пустой стул напротив не обрастёт пылью.","lift":"Снять: когда пришлёт три пункта повестки до звонка."},{"id":15,"punch":"«на минутку» в конце дня от {имя} — люди пропустили автобус.","lift":"Снять: когда «минутка» закончится за минуту."},{"id":16,"punch":"{имя} кинул(а) таблицу вместо «да/нет» — мозг скрипит, как дверь сортира.","lift":"Снять: когда сначала ответит словом, таблицу — потом."},{"id":17,"punch":"статус «на месте», а {имя} в бездне — пусть сидит на стуле у пустого стола, пока не вернётся телом.","lift":"Снять: когда статус совпадёт с реальностью час подряд."},{"id":18,"punch":"«секундочку» от {имя} длится, пока ноги затекли.","lift":"Снять: когда «секунда» станет секундой по секундомеру."},{"id":19,"punch":"{имя} переслал(а) тред без своей строки — получатель орёт в пустоту.","lift":"Снять: когда добавит одно своё предложение сверху."},{"id":20,"punch":"{имя} собрал(а) толпу ради одного вопроса — зал вспотел зря.","lift":"Снять: когда спросит одного в личке."},{"id":21,"punch":"{имя} снова открыл(а) «уже решали» — коллективно хочется орать в вентилятор.","lift":"Снять: когда найдёт старое решение и приложит ссылкой."},{"id":22,"punch":"срок в день сдачи от {имя} — ноги ватные, как после ночной смены.","lift":"Снять: когда срок скажет хотя бы за три дня."},{"id":23,"punch":"«скинь в чат» от {имя} вместо ясности — хаос, как очередь в один сортир.","lift":"Снять: когда напишет, кому и что нужно, по именам."},{"id":24,"punch":"коридорные правки от {имя} — все кивают, никто не помнит.","lift":"Снять: когда продублирует правку одним сообщением."},{"id":25,"punch":"«срочно!» без сути от {имя} — пульс скачет, дело ноль.","lift":"Снять: когда в первом предложении будет глагол и предмет."},{"id":26,"punch":"{имя} поднял(а) тему и пропал(а) — тред гниёт.","lift":"Снять: когда доведёт тему до «закрыто» лично."},{"id":27,"punch":"{имя} отправил(а) «согласуй со всеми» — пусть стоит у каждой двери из списка и лично спрашивает: вы вообще тут зачем?","lift":"Снять: когда укажет двух конкретных согласующих."},{"id":28,"punch":"лишний кружок «на всякий» от {имя} — ещё один круг топтания в коридоре.","lift":"Снять: когда уберёт лишний круг и подпишет сам(а)."}],"verdictsM":[{"id":1,"punch":"{имя} сказал «сейчас» — отдел простоял у туалета до завтра.","lift":"Снять: когда «сейчас» случится в течение десяти минут."},{"id":2,"punch":"{имя} собрал всех, чтобы спросить одного — устроил стадион ради шёпота.","lift":"Снять: когда напишет этому одному в личку."},{"id":3,"punch":"{имя} «на месте» и испарился — стул пустой, уши горят.","lift":"Снять: когда час будет реально на месте без статуса-вранья."},{"id":4,"punch":"{имя} кинул письмо всем — пусть лично раздаёт бумажные извинения у двери.","lift":"Снять: когда разошлёт точечно и без лишней копии."},{"id":5,"punch":"{имя} «кратко» полчаса — ноги затекли, смысл ушёл.","lift":"Снять: когда уложится в минуту с таймером на столе."},{"id":6,"punch":"три дня молчал {имя}, потом «ну как?» — собеседник уже поседел в очереди.","lift":"Снять: когда ответит сам, не спрашивая «ну как»."},{"id":7,"punch":"{имя} утащил срок молча — коллеги стоят, как в лифте без кнопок.","lift":"Снять: когда предупредит о переносе вслух и письмом."},{"id":8,"punch":"открыл тему и свалил — {имя} оставил чат вонять.","lift":"Снять: когда вернётся и закроет тему одной фразой."},{"id":9,"punch":"седьмой «финал_точно» от {имя} — глаз дёргается.","lift":"Снять: когда один файл проживёт сутки без правок."},{"id":10,"punch":"срок в день сдачи от {имя} — ноги ватные, автобус уже ушёл.","lift":"Снять: когда срок скажет заранее и не переиграет."},{"id":11,"punch":"«это срочно» без сути — {имя} поднял пульс залу зря.","lift":"Снять: когда срочность начнёт с «нужно сделать вот что»."},{"id":12,"punch":"{имя} правил в коридоре — голос осип, а в чате по-прежнему пусто.","lift":"Снять: когда пришлёт правку текстом в течение часа."},{"id":13,"punch":"{имя} добавил лишний круг согласования «на всякий» — люди топчутся у двери.","lift":"Снять: когда сам поставит последнюю подпись."},{"id":14,"punch":"итог только голосом от {имя} — через час все спорят, что именно он сказал.","lift":"Снять: когда надиктует итог тремя строками в чат."}],"verdictsF":[{"id":1,"punch":"{имя} сказала «сейчас» — отдел простоял у туалета до завтра.","lift":"Снять: когда «сейчас» случится в течение десяти минут."},{"id":2,"punch":"{имя} собрала всех, чтобы спросить одного — устроила стадион ради шёпота.","lift":"Снять: когда напишет этому одному в личку."},{"id":3,"punch":"{имя} «на месте» и испарилась — стул пустой, уши горят.","lift":"Снять: когда час будет реально на месте без статуса-вранья."},{"id":4,"punch":"{имя} кинула письмо всем — пусть лично раздаёт бумажные извинения у двери.","lift":"Снять: когда разошлёт точечно и без лишней копии."},{"id":5,"punch":"{имя} «кратко» полчаса — ноги затекли, смысл ушёл.","lift":"Снять: когда уложится в минуту с таймером на столе."},{"id":6,"punch":"три дня молчала {имя}, потом «ну как?» — собеседник уже поседел в очереди.","lift":"Снять: когда ответит сама, не спрашивая «ну как»."},{"id":7,"punch":"{имя} утащила срок молча — коллеги стоят, как в лифте без кнопок.","lift":"Снять: когда предупредит о переносе вслух и письмом."},{"id":8,"punch":"открыла тему и свалила — чат воняет без неё.","lift":"Снять: когда вернётся и закроет тему одной фразой."},{"id":9,"punch":"седьмой «финал_точно» от {имя} — глаз дёргается.","lift":"Снять: когда один файл проживёт сутки без правок."},{"id":10,"punch":"срок в день сдачи от {имя} — ноги ватные, автобус уже ушёл.","lift":"Снять: когда срок скажет заранее и не переиграет."},{"id":11,"punch":"«это срочно» без сути — подняла пульс залу зря.","lift":"Снять: когда срочность начнёт с «нужно сделать вот что»."},{"id":12,"punch":"{имя} правила в коридоре — голос осип, а в чате по-прежнему пусто.","lift":"Снять: когда пришлёт правку текстом в течение часа."},{"id":13,"punch":"{имя} добавила лишний круг «на всякий» — люди топчутся у двери.","lift":"Снять: когда сама поставит последнюю подпись."},{"id":14,"punch":"итог только голосом от {имя} — через час все спорят, что именно она сказала.","lift":"Снять: когда надиктует итог тремя строками в чат."}],"powers":[{"id":"whisper","label":"Шёпот","desc":"лёгкая порча: коллеги узнают, но ещё можно отмахнуться","mul":1},{"id":"seal","label":"Печать","desc":"приговор на бумаге: привычку уже не спрятать","mul":1.5},{"id":"anathema","label":"Анафема","desc":"полная фиксация: имя и грех ходят по этажу","mul":2}],"ritual":["Открываем дело на {имя}…","Сверяем пол — чтобы приговор читался грамотно.","Выбираем силу удара…","Достаём грех из общих привычек…","Печать нагревается.","Пишем, что сделал(а)…","Пишем, чем это аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно читать вслух."],"ui":{"header":"Канцелярия печати. Без смайлов — только приговор.","namePh":"Кого скрепляем?","genderM":"Мужской","genderF":"Женский","emptyName":"Сначала имя.","emptyGender":"Выбери пол — так строки сойдутся.","cta":"Скрепить печатью","busy":"Печать тлеет…","toastOk":"Печать легла.","toastShare":"Ушло. Пусть читают.","save":"Сохранить картинку","share":"Поделиться","again":"Ещё ритуал","blocks":["Грех","Приговор","Снять"]}};
-  const ui = DATA.ui;
+
+  const DATA = {"version":"v10","header":"Канцелярия личной печати. Стебаемся по делу.","subheader":"Имя → сила → печать. Один удар — одна картинка.","namePlaceholder":"Кого скрепляем?","gender":{"m":"Мужской","f":"Женский"},"emptyName":"Сначала имя.","emptyGender":"Выбери пол — строки сойдутся.","cta":"Скрепить печатью","busy":"Печать тлеет…","toastOk":"Печать легла.","toastShare":"Карточка готова. Пусть читают.","after":["Сохранить картинку","Поделиться","Ещё ритуал"],"verdictBlocks":["Грех","Приговор","Снять"],"powers":[{"id":"whisper","label":"Шёпот","desc":"лёгкая порча: узнают, ещё можно отмахнуться"},{"id":"seal","label":"Печать","desc":"приговор на виду: привычку не спрятать"},{"id":"anathema","label":"Анафема","desc":"полная фиксация: имя и грех гуляют дальше"}],"ritual":["Открываем дело на {имя}…","Сверяем пол.","Берём силу…","Достаём грех из живых привычек…","Печать греется.","Пишем, что сделал(а)…","Пишем, чем аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно кинуть в чат."],"sins":[{"id":1,"name":"Вечно «щас»","blurb":"говорит «сейчас» и исчезает на час"},{"id":2,"name":"Уже выхожу","blurb":"«уже выхожу», а ещё в душе"},{"id":3,"name":"Гоустинг","blurb":"читал(а) и молчит днями"},{"id":4,"name":"Громко жуёт","blurb":"хруст на весь вагон/зал"},{"id":5,"name":"Перебивает","blurb":"не даёт договорить вторую фразу"},{"id":6,"name":"Хвастается мелочью","blurb":"каждое яйцо — подвиг"},{"id":7,"name":"Нытик","blurb":"погода, люди, судьба — всё против"},{"id":8,"name":"Спойлерит","blurb":"убивает финал чужого фильма"},{"id":9,"name":"На день","blurb":"взял(а) «на день», держит неделями"},{"id":10,"name":"Басы наружу","blurb":"наушники орют на три сиденья"},{"id":11,"name":"Фото еды","blurb":"снимает вечность, суп стынет"},{"id":12,"name":"Мокрый пол","blurb":"после душа пол — каток"},{"id":13,"name":"Кружка «потом»","blurb":"не моет, растёт археология"},{"id":14,"name":"Сортир без бумаги","blurb":"ушёл(ушла), рулона нет"},{"id":15,"name":"Носки в лужах","blurb":"потом орёт на ковёр"},{"id":16,"name":"Звонок в три","blurb":"«ты не спишь?» среди ночи"},{"id":17,"name":"Чужой контейнер","blurb":"«чуть-чуть», контейнер пуст"},{"id":18,"name":"Сморкается на весь мир","blurb":"как сигнал тревоги"},{"id":19,"name":"Поперёк прохода","blurb":"блокирует и не замечает"},{"id":20,"name":"Спорит до победы","blurb":"даже когда уже не прав(а)"},{"id":21,"name":"Ответил «ок»","blurb":"на абзац души — две буквы"},{"id":22,"name":"Ломает планы","blurb":"«давай лучше завтра» в последний миг"},{"id":23,"name":"Голосовое на три минуты","blurb":"вместо двух строк"},{"id":24,"name":"Стикером на серьёзное","blurb":"ответил(а) картинкой на боль"},{"id":25,"name":"Рилсы без наушников","blurb":"сосед по дивану в заложниках"},{"id":26,"name":"Будильник орёт — спит","blurb":"всех поднял(а), сам(а) дальше спит"},{"id":27,"name":"Пятиминутка","blurb":"созвон «на пять минут» на час"},{"id":28,"name":"Письмо всем","blurb":"копия пол-отдела без нужды"},{"id":29,"name":"Почти готово","blurb":"«почти» третий месяц"},{"id":30,"name":"Круг согласований","blurb":"одни и те же по кругу"},{"id":31,"name":"Срок в день сдачи","blurb":"сказал(а), когда уже поздно"},{"id":32,"name":"Правки после «да»","blurb":"вернул(а) правки после утверждения"},{"id":33,"name":"На месте","blurb":"статус есть, человека нет"},{"id":34,"name":"Срочно без сути","blurb":"орёт «срочно», не говорит что"},{"id":35,"name":"Финал_точно","blurb":"седьмая «окончательная» версия"},{"id":36,"name":"Зал ради одного","blurb":"собрал(а) толпу спросить одного"}],"verdicts":{"N":[{"id":"N1","punch":"{имя} снова сказал(а) «щас» — все стояли у двери, как у туалета без бумаги.","lift":"Снять: когда «щас» случится за десять минут по таймеру."},{"id":"N2","punch":"{имя} опять «уже выхожу» — двор стынет, душа ещё шумит.","lift":"Снять: когда выйдет из дома до обещанного времени."},{"id":"N3","punch":"{имя} прочитал(а) и пропал(а) — две галочки горят, ответа нет, собеседник седеет.","lift":"Снять: когда ответит в тот же день одной нормальной фразой."},{"id":"N4","punch":"{имя} хрустит так, что у соседей дёргается глаз.","lift":"Снять: когда доест с закрытым ртом всю поездку."},{"id":"N5","punch":"{имя} перебивает на втором слоге — мысль убита быстрее спойлера.","lift":"Снять: когда дослушает до точки три раза подряд."},{"id":"N6","punch":"{имя} хвастается мелочью — пусть сутки носит табличку «подвиг дня» на груди.","lift":"Снять: когда сутки промолчит о своих «подвигах»."},{"id":"N7","punch":"нытьё {имя} длиннее очереди в поликлинику — уши просят ваты.","lift":"Снять: когда день пройдёт без жалобы вслух."},{"id":"N8","punch":"{имя} спойлернул(а) финал — диван ещё тёплый, вечер уже мёртв.","lift":"Снять: когда спросит «можно?» и примет «нет»."},{"id":"N9","punch":"вещь «на день» у {имя} живёт уже неделю — хозяин орёт в пустоту.","lift":"Снять: когда вернёт вещь лично и в срок."},{"id":"N10","punch":"басы из наушников {имя} слышны на три сиденья — чужие нервы в топку.","lift":"Снять: когда звук слышен только ему/ей."},{"id":"N11","punch":"{имя} снимает еду вечность — суп стынет, компания голодает.","lift":"Снять: когда сделает один кадр и начнёт есть."},{"id":"N12","punch":"после душа от {имя} пол — каток. Кто-то уже чуть не улетел.","lift":"Снять: когда вытрет пол до сухого пятна."},{"id":"N13","punch":"кружки {имя} растут грибницей — «потом» не наступает.","lift":"Снять: когда помоет свою посуду в тот же вечер."},{"id":"N14","punch":"{имя} оставил(а) сортир без бумаги — следующий герой остался наедине с пустотой.","lift":"Снять: когда перед уходом проверит рулон глазами."},{"id":"N15","punch":"звонок от {имя} в три ночи — «ты не спишь?» Спит. Уже нет.","lift":"Снять: когда напишет днём и дождётся ответа."},{"id":"N16","punch":"контейнер «чуть-чуть» от {имя} пуст — хозяин смотрит в бездну холодильника.","lift":"Снять: когда купит замену и поставит на полку."},{"id":"N17","punch":"{имя} встал(а) поперёк прохода — людской поток встал колом.","lift":"Снять: когда шагнёт к стене и пропустит троих."},{"id":"N18","punch":"{имя} спорит до победы без правоты — кислород в комнате кончился.","lift":"Снять: когда один раз скажет «ладно, ты прав(а)» и замолчит."},{"id":"N19","punch":"на абзац души {имя} ответил(а) «ок» — хочется кинуть телефон в унитаз.","lift":"Снять: когда ответит хотя бы одним нормальным предложением."},{"id":"N20","punch":"планы сломаны в последний миг — люди уже в куртках у двери.","lift":"Снять: когда отменит минимум за три часа."},{"id":"N21","punch":"голосовое на три минуты от {имя} — вместо двух строк. Уши устали стоять.","lift":"Снять: когда напишет суть текстом до голосового."},{"id":"N22","punch":"на серьёзный вопрос {имя} кинул(а) стикер — боль осталась без ответа.","lift":"Снять: когда ответит словами, стикер — потом."},{"id":"N23","punch":"рилсы без наушников от {имя} — сосед по дивану в заложниках.","lift":"Снять: когда включит наушники или уйдёт в другую комнату."},{"id":"N24","punch":"будильник {имя} поднял всех — сам(а) спит дальше, как ни в чём не бывало.","lift":"Снять: когда встанет с первым сигналом."},{"id":"N25","punch":"пятиминутка от {имя} съела час — попу залипло к стулу.","lift":"Снять: когда закончит созвон за пять минут по таймеру."},{"id":"N26","punch":"«почти готово» от {имя} старше некоторых растений на окне.","lift":"Снять: когда назовёт честную дату и попадёт в неё."},{"id":"N27","punch":"письмо всем от {имя} — пол-отдела в копии, смысла ноль. Пусть стоит у двери и извиняется лично.","lift":"Снять: когда отправит одному и получит ответ."},{"id":"N28","punch":"статус «на месте», а {имя} в бездне — стул пустой, нервы чужие.","lift":"Снять: когда час будет реально на месте."}],"M":[{"id":"M1","punch":"{имя} сказал «щас» — все простояли у туалета, пока он канул.","lift":"Снять: когда появится за десять минут без напоминаний."},{"id":"M2","punch":"{имя} «уже выходит» — на деле выбирает носки. Двор стынет.","lift":"Снять: когда выйдет до обещанного времени."},{"id":"M3","punch":"{имя} пропал в переписке — две галочки, ноль души.","lift":"Снять: когда ответит сам в тот же день."},{"id":"M4","punch":"{имя} перебивает на полуслове — мысль убита, он уже «главный».","lift":"Снять: когда дослушает до точки без вставки."},{"id":"M5","punch":"{имя} хвастается мелочью — пусть сутки носит табличку «подвиг дня» на груди.","lift":"Снять: когда день промолчит о «подвигах»."},{"id":"M6","punch":"{имя} спойлернул финал — вечер в топку.","lift":"Снять: когда спросит разрешения и примет «нет»."},{"id":"M7","punch":"взял «на день» — вещь живёт у {имя} как прописанная.","lift":"Снять: когда вернёт лично и извинится."},{"id":"M8","punch":"оставил сортир без бумаги — следующий герой познал дзен пустоты.","lift":"Снять: когда перед уходом глянет на рулон."},{"id":"M9","punch":"звонок от {имя} в три ночи — собеседник спал. Уже нет.","lift":"Снять: когда напишет днём."},{"id":"M10","punch":"съел «чуть-чуть» — контейнер пуст, глаза невинные.","lift":"Снять: когда купит замену в тот же день."},{"id":"M11","punch":"кинул голосовое на три минуты — уши устали, суть на пятнадцатой секунде.","lift":"Снять: когда напишет две строки текста."},{"id":"M12","punch":"ответил стикером на серьёзное — боль без адресата.","lift":"Снять: когда ответит словами."},{"id":"M13","punch":"статус «на месте», а {имя} в бездне — стул пустой.","lift":"Снять: когда час будет реально на месте."},{"id":"M14","punch":"собрал зал ради одного вопроса — стадион ради шёпота.","lift":"Снять: когда спросит этого одного в личке."}],"F":[{"id":"F1","punch":"{имя} сказала «щас» — все простояли у туалета, пока она канула.","lift":"Снять: когда появится за десять минут без напоминаний."},{"id":"F2","punch":"{имя} «уже выходит» — на деле выбирает обувь. Двор стынет.","lift":"Снять: когда выйдет до обещанного времени."},{"id":"F3","punch":"{имя} пропала в переписке — две галочки, ноль души.","lift":"Снять: когда ответит сама в тот же день."},{"id":"F4","punch":"{имя} перебивает на полуслове — мысль убита, она уже «главная».","lift":"Снять: когда дослушает до точки без вставки."},{"id":"F5","punch":"{имя} хвастается мелочью — пусть сутки носит табличку «подвиг дня» на груди.","lift":"Снять: когда день промолчит о «подвигах»."},{"id":"F6","punch":"{имя} спойлернула финал — вечер в топку.","lift":"Снять: когда спросит разрешения и примет «нет»."},{"id":"F7","punch":"взяла «на день» — вещь живёт у {имя} как прописанная.","lift":"Снять: когда вернёт лично и извинится."},{"id":"F8","punch":"оставила сортир без бумаги — следующий герой познал дзен пустоты.","lift":"Снять: когда перед уходом глянет на рулон."},{"id":"F9","punch":"звонок от {имя} в три ночи — собеседник спал. Уже нет.","lift":"Снять: когда напишет днём."},{"id":"F10","punch":"съела «чуть-чуть» — контейнер пуст, глаза невинные.","lift":"Снять: когда купит замену в тот же день."},{"id":"F11","punch":"кинула голосовое на три минуты — уши устали, суть на пятнадцатой секунде.","lift":"Снять: когда напишет две строки текста."},{"id":"F12","punch":"ответила стикером на серьёзное — боль без адресата.","lift":"Снять: когда ответит словами."},{"id":"F13","punch":"статус «на месте», а {имя} в бездне — стул пустой.","lift":"Снять: когда час будет реально на месте."},{"id":"F14","punch":"собрала зал ради одного вопроса — стадион ради шёпота.","lift":"Снять: когда спросит этого одного в личке."}]}};
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = id => document.getElementById(id);
 
   const sins = DATA.sins;
-  const verdictsN = DATA.verdictsN;
-  const verdictsM = DATA.verdictsM;
-  const verdictsF = DATA.verdictsF;
+  const verdictsN = DATA.verdicts.N;
+  const verdictsM = DATA.verdicts.M;
+  const verdictsF = DATA.verdicts.F;
   const powers = DATA.powers;
   const chants = DATA.ritual;
+  const blocks = DATA.verdictBlocks;
+  const after = DATA.after;
 
-  $("atmosphere").textContent = ui.header;
-  $("victim").placeholder = ui.namePh;
-  $("emptyHint").textContent = ui.emptyName;
-  $("genderHint").textContent = ui.emptyGender;
-  $("gMLabel").textContent = ui.genderM;
-  $("gFLabel").textContent = ui.genderF;
-  $("cast").textContent = ui.cta;
-  $("busyLabel").textContent = ui.busy;
-  $("lblSin").textContent = ui.blocks[0];
-  $("lblPunch").textContent = ui.blocks[1];
-  $("lblLift").textContent = ui.blocks[2];
-  $("saveBtn").textContent = ui.save;
-  $("shareBtn").textContent = ui.share;
-  $("againBtn").textContent = ui.again;
+  $("atmosphere").textContent = DATA.header;
+  $("subhead").textContent = DATA.subheader;
+  $("victim").placeholder = DATA.namePlaceholder;
+  $("emptyHint").textContent = DATA.emptyName;
+  $("genderHint").textContent = DATA.emptyGender;
+  $("gMLabel").textContent = DATA.gender.m;
+  $("gFLabel").textContent = DATA.gender.f;
+  $("cast").textContent = DATA.cta;
+  $("busyLabel").textContent = DATA.busy;
+  $("lblSin").textContent = blocks[0];
+  $("lblPunch").textContent = blocks[1];
+  $("lblLift").textContent = blocks[2];
+  $("saveBtn").textContent = after[0];
+  $("shareBtn").textContent = after[1];
+  $("againBtn").textContent = after[2];
 
   function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
@@ -417,6 +425,9 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
       .replace(/ушёл\(ушла\)/g, m ? "ушёл" : "ушла")
       .replace(/исчез\(ла\)/g, m ? "исчез" : "исчезла")
       .replace(/его\/её/g, m ? "его" : "её")
+      .replace(/ему\/ей/g, m ? "ему" : "ей")
+      .replace(/сам\(а\)/g, m ? "сам" : "сама")
+      .replace(/прав\(а\)/g, m ? "прав" : "права")
       .replace(/([А-Яа-яЁё]+)л\(а\)/g, (_, stem) => stem + (m ? "л" : "ла"))
       .replace(/\(а\)/g, m ? "" : "а")
       .replace(/\(ла\)/g, m ? "" : "ла");
@@ -431,7 +442,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
   }
 
   function genderLabel(g){ return g === "M" ? "М" : g === "F" ? "Ж" : ""; }
-  function genderLong(g){ return g === "M" ? ui.genderM : g === "F" ? ui.genderF : ""; }
+  function genderLong(g){ return g === "M" ? DATA.gender.m : g === "F" ? DATA.gender.f : ""; }
 
   function eligibleVerdicts(gender){
     const pool = verdictsN.slice();
@@ -528,7 +539,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
   function failEmpty(kind){
     var isGender = kind === "gender";
     var hint = isGender ? genderHint : emptyHint;
-    var msg = isGender ? ui.emptyGender : ui.emptyName;
+    var msg = isGender ? DATA.emptyGender : DATA.emptyName;
     hint.classList.add("show");
     showToast(msg);
     if(isGender){
@@ -646,6 +657,19 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     return cy;
   }
 
+  function wrapTextLeft(ctx, text, x, y, maxW, lineH){
+    var words = String(text).split(/\s+/);
+    var line = "", cy = y;
+    for(var i = 0; i < words.length; i++){
+      var test = line ? line + " " + words[i] : words[i];
+      if(ctx.measureText(test).width > maxW && line){
+        ctx.fillText(line, x, cy); cy += lineH; line = words[i];
+      } else line = test;
+    }
+    if(line){ ctx.fillText(line, x, cy); cy += lineH; }
+    return cy;
+  }
+
   function drawSigil(ctx, cx, cy, r, alpha){
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -664,6 +688,402 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     ctx.restore();
   }
 
+
+  /* --- meme visual scenes (original, flat charcoal + blood-amber) --- */
+  var AMBER = "#C45C26";
+  var BONE = "#F2EBE0";
+  var CHAR = "#1A1714";
+  var CHAR2 = "#12100E";
+
+  function sceneBg(ctx, x, y, w, h){
+    var g = ctx.createLinearGradient(x, y, x, y + h);
+    g.addColorStop(0, "#221E1A");
+    g.addColorStop(1, CHAR2);
+    ctx.fillStyle = g;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = "rgba(196,92,38,0.22)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x + 10, y + 10, w - 20, h - 20);
+  }
+
+  function stick(ctx, sx, sy, sc, lean){
+    lean = lean || 0;
+    ctx.save();
+    ctx.translate(sx, sy);
+    ctx.scale(sc, sc);
+    ctx.strokeStyle = "rgba(242,235,224,0.78)";
+    ctx.fillStyle = "rgba(242,235,224,0.78)";
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.beginPath(); ctx.arc(lean, -38, 10, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(lean, -28); ctx.lineTo(lean * 0.3, 8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(lean * 0.3, -12); ctx.lineTo(-14, 0); ctx.moveTo(lean * 0.3, -12); ctx.lineTo(16 + lean, -4); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(lean * 0.3, 8); ctx.lineTo(-10, 36); ctx.moveTo(lean * 0.3, 8); ctx.lineTo(12, 36); ctx.stroke();
+    ctx.restore();
+  }
+
+  function sceneTimer(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    var cx = x + w * 0.5, cy = y + h * 0.48;
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(cx, cy, 78, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = "rgba(242,235,224,0.25)"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(cx, cy, 62, -Math.PI / 2, Math.PI * 0.9); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.beginPath(); ctx.arc(cx, cy, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + 28, cy - 42); ctx.stroke();
+    ctx.fillStyle = BONE; ctx.font = "700 28px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("щас", cx, cy + 110);
+    ctx.fillStyle = "rgba(196,92,38,0.85)"; ctx.font = "600 16px system-ui,sans-serif";
+    ctx.fillText("…час назад", cx, cy + 138);
+  }
+
+  function sceneDoorWinter(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    var dx = x + w * 0.22, dy = y + h * 0.18, dw = w * 0.34, dh = h * 0.62;
+    ctx.fillStyle = "#2A2420"; ctx.fillRect(dx, dy, dw, dh);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3; ctx.strokeRect(dx, dy, dw, dh);
+    ctx.fillStyle = "rgba(180,210,230,0.12)";
+    ctx.beginPath(); ctx.moveTo(dx + dw, dy); ctx.lineTo(dx + dw + 90, dy + 20); ctx.lineTo(dx + dw + 90, dy + dh - 10); ctx.lineTo(dx + dw, dy + dh); ctx.fill();
+    for(var i = 0; i < 12; i++){
+      ctx.fillStyle = "rgba(220,230,240,0.35)";
+      ctx.fillRect(dx + dw + 20 + (i % 4) * 18, dy + 40 + Math.floor(i / 4) * 50, 2, 10);
+    }
+    stick(ctx, x + w * 0.72, y + h * 0.62, 1.1, 4);
+    ctx.fillStyle = AMBER; ctx.font = "700 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("уже выхожу", x + w * 0.72, y + h * 0.82);
+  }
+
+  function sceneChecks(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    var bx = x + w * 0.14, by = y + h * 0.22, bw = w * 0.72, bh = h * 0.42;
+    ctx.fillStyle = "#25201C"; ctx.fillRect(bx, by, bw, bh);
+    ctx.strokeStyle = "rgba(242,235,224,0.18)"; ctx.lineWidth = 2; ctx.strokeRect(bx, by, bw, bh);
+    ctx.fillStyle = "rgba(242,235,224,0.2)";
+    for(var r = 0; r < 4; r++){
+      ctx.fillRect(bx + 24, by + 28 + r * 36, bw * (0.55 - r * 0.08), 10);
+    }
+    ctx.fillStyle = AMBER;
+    ctx.beginPath(); ctx.arc(bx + bw - 48, by + bh - 36, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx + bw - 28, by + bh - 36, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = CHAR2; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bx + bw - 52, by + bh - 36); ctx.lineTo(bx + bw - 49, by + bh - 32); ctx.lineTo(bx + bw - 44, by + bh - 40); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bx + bw - 32, by + bh - 36); ctx.lineTo(bx + bw - 29, by + bh - 32); ctx.lineTo(bx + bw - 24, by + bh - 40); ctx.stroke();
+    ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.font = "600 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("прочитано · ответа нет", x + w / 2, y + h * 0.78);
+  }
+
+  function sceneLoud(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    stick(ctx, x + w * 0.38, y + h * 0.55, 1.25, 0);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3;
+    for(var i = 1; i <= 3; i++){
+      ctx.beginPath(); ctx.arc(x + w * 0.52, y + h * 0.38, 18 * i, -0.9, 0.9); ctx.stroke();
+    }
+    ctx.fillStyle = AMBER; ctx.font = "700 22px system-ui,sans-serif"; ctx.textAlign = "left";
+    ctx.fillText("ХРУст", x + w * 0.58, y + h * 0.55);
+  }
+
+  function sceneTalk(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    stick(ctx, x + w * 0.32, y + h * 0.58, 1.1, -2);
+    stick(ctx, x + w * 0.62, y + h * 0.58, 1.1, 6);
+    ctx.fillStyle = AMBER;
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.62, y + h * 0.28);
+    ctx.quadraticCurveTo(x + w * 0.82, y + h * 0.22, x + w * 0.78, y + h * 0.38);
+    ctx.quadraticCurveTo(x + w * 0.74, y + h * 0.46, x + w * 0.66, y + h * 0.42);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = CHAR2; ctx.font = "700 14px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("…", x + w * 0.7, y + h * 0.36);
+    ctx.fillStyle = "rgba(242,235,224,0.45)";
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.28, y + h * 0.34);
+    ctx.quadraticCurveTo(x + w * 0.18, y + h * 0.28, x + w * 0.22, y + h * 0.4);
+    ctx.closePath(); ctx.fill();
+  }
+
+  function sceneSpoiler(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2622";
+    ctx.fillRect(x + w * 0.18, y + h * 0.55, w * 0.64, h * 0.16);
+    ctx.fillRect(x + w * 0.22, y + h * 0.71, w * 0.12, h * 0.12);
+    ctx.fillRect(x + w * 0.66, y + h * 0.71, w * 0.12, h * 0.12);
+    ctx.fillStyle = "#151210";
+    ctx.fillRect(x + w * 0.28, y + h * 0.22, w * 0.44, h * 0.28);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 2; ctx.strokeRect(x + w * 0.28, y + h * 0.22, w * 0.44, h * 0.28);
+    ctx.fillStyle = AMBER; ctx.font = "700 20px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("ФИНАЛ", x + w / 2, y + h * 0.4);
+    ctx.fillStyle = "rgba(242,235,224,0.5)"; ctx.font = "600 16px system-ui,sans-serif";
+    ctx.fillText("спойлер уже здесь", x + w / 2, y + h * 0.88);
+  }
+
+  function sceneBorrow(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2C2622";
+    ctx.fillRect(x + w * 0.28, y + h * 0.3, w * 0.44, h * 0.34);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3; ctx.strokeRect(x + w * 0.28, y + h * 0.3, w * 0.44, h * 0.34);
+    ctx.fillStyle = AMBER; ctx.font = "700 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("на день", x + w / 2, y + h * 0.48);
+    ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.font = "600 16px system-ui,sans-serif";
+    ctx.fillText("неделя 3…", x + w / 2, y + h * 0.78);
+    ctx.strokeStyle = "rgba(196,92,38,0.5)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x + w * 0.35, y + h * 0.7); ctx.lineTo(x + w * 0.65, y + h * 0.7); ctx.stroke();
+  }
+
+  function sceneBass(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    stick(ctx, x + w * 0.5, y + h * 0.58, 1.2, 0);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 4; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.arc(x + w * 0.5 - 18, y + h * 0.42, 14, 0.2, Math.PI * 1.6); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x + w * 0.5 + 18, y + h * 0.42, 14, -0.2, Math.PI * 0.8, true); ctx.stroke();
+    for(var i = 0; i < 5; i++){
+      var hh = 20 + (i % 3) * 18;
+      ctx.fillStyle = i % 2 ? AMBER : "rgba(242,235,224,0.35)";
+      ctx.fillRect(x + w * 0.18 + i * 28, y + h * 0.78 - hh, 14, hh);
+    }
+  }
+
+  function sceneFood(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2420";
+    ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.55, 90, 28, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.55, 90, 28, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "rgba(196,92,38,0.45)";
+    ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.53, 55, 14, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = BONE; ctx.lineWidth = 3;
+    ctx.strokeRect(x + w * 0.58, y + h * 0.22, 70, 50);
+    ctx.beginPath(); ctx.moveTo(x + w * 0.58 + 35, y + h * 0.22 + 50); ctx.lineTo(x + w * 0.58 + 35, y + h * 0.22 + 70); ctx.stroke();
+    ctx.fillStyle = "rgba(242,235,224,0.5)"; ctx.font = "600 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("суп стынет", x + w / 2, y + h * 0.82);
+  }
+
+  function sceneWetFloor(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "rgba(100,140,180,0.22)";
+    ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.62, 140, 40, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "rgba(140,180,210,0.45)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(x + w * 0.5, y + h * 0.62, 140, 40, 0, 0, Math.PI * 2); ctx.stroke();
+    stick(ctx, x + w * 0.42, y + h * 0.48, 1.0, 12);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(x + w * 0.55, y + h * 0.55); ctx.lineTo(x + w * 0.72, y + h * 0.4); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.font = "700 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("пол — каток", x + w / 2, y + h * 0.86);
+  }
+
+  function sceneMug(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2C2622";
+    ctx.fillRect(x + w * 0.38, y + h * 0.32, 90, 110);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3; ctx.strokeRect(x + w * 0.38, y + h * 0.32, 90, 110);
+    ctx.beginPath(); ctx.arc(x + w * 0.38 + 90, y + h * 0.5, 22, -1.2, 1.2); ctx.stroke();
+    ctx.fillStyle = "rgba(80,120,60,0.55)";
+    for(var i = 0; i < 5; i++){
+      ctx.beginPath(); ctx.arc(x + w * 0.42 + i * 14, y + h * 0.28 - (i % 2) * 8, 5, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.font = "600 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("потом…", x + w / 2, y + h * 0.82);
+  }
+
+  function sceneToilet(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2622";
+    ctx.fillRect(x + w * 0.35, y + h * 0.28, w * 0.3, h * 0.45);
+    ctx.strokeStyle = "rgba(242,235,224,0.3)"; ctx.lineWidth = 2;
+    ctx.strokeRect(x + w * 0.35, y + h * 0.28, w * 0.3, h * 0.45);
+    ctx.beginPath(); ctx.arc(x + w * 0.5, y + h * 0.42, 28, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.font = "700 42px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("?", x + w / 2, y + h * 0.48);
+    ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.font = "600 16px system-ui,sans-serif";
+    ctx.fillText("рулона нет", x + w / 2, y + h * 0.82);
+  }
+
+  function sceneNightCall(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#0A0A12";
+    ctx.fillRect(x + 20, y + 20, w - 40, h - 40);
+    ctx.fillStyle = AMBER;
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.42, y + h * 0.35);
+    ctx.quadraticCurveTo(x + w * 0.5, y + h * 0.28, x + w * 0.58, y + h * 0.35);
+    ctx.lineTo(x + w * 0.56, y + h * 0.55);
+    ctx.lineTo(x + w * 0.44, y + h * 0.55);
+    ctx.closePath(); ctx.fill();
+    ctx.fillRect(x + w * 0.46, y + h * 0.55, w * 0.08, h * 0.08);
+    ctx.fillStyle = BONE; ctx.font = "700 20px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("03:00", x + w / 2, y + h * 0.78);
+    ctx.fillStyle = "rgba(196,92,38,0.85)"; ctx.font = "600 14px system-ui,sans-serif";
+    ctx.fillText("ты не спишь?", x + w / 2, y + h * 0.88);
+  }
+
+  function sceneBlock(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    stick(ctx, x + w * 0.5, y + h * 0.5, 1.3, 0);
+    ctx.strokeStyle = "rgba(242,235,224,0.35)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x + 40, y + h * 0.72); ctx.lineTo(x + w - 40, y + h * 0.72); ctx.stroke();
+    stick(ctx, x + w * 0.22, y + h * 0.58, 0.85, -3);
+    stick(ctx, x + w * 0.78, y + h * 0.58, 0.85, 3);
+    ctx.fillStyle = AMBER; ctx.font = "700 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("проход закрыт", x + w / 2, y + h * 0.88);
+  }
+
+  function sceneVoice(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#25201C";
+    ctx.fillRect(x + w * 0.18, y + h * 0.35, w * 0.64, 54);
+    ctx.fillStyle = AMBER;
+    for(var i = 0; i < 18; i++){
+      var hh = 8 + Math.abs(Math.sin(i * 0.7)) * 28;
+      ctx.fillRect(x + w * 0.22 + i * 18, y + h * 0.35 + 27 - hh / 2, 8, hh);
+    }
+    ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.font = "600 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("3:00  ·  вместо двух строк", x + w / 2, y + h * 0.72);
+  }
+
+  function sceneSticker(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "rgba(242,235,224,0.12)";
+    ctx.fillRect(x + w * 0.15, y + h * 0.25, w * 0.5, h * 0.35);
+    ctx.fillStyle = "rgba(242,235,224,0.35)";
+    ctx.fillRect(x + w * 0.2, y + h * 0.32, w * 0.38, 8);
+    ctx.fillRect(x + w * 0.2, y + h * 0.4, w * 0.3, 8);
+    ctx.fillRect(x + w * 0.2, y + h * 0.48, w * 0.34, 8);
+    ctx.fillStyle = AMBER;
+    ctx.beginPath();
+    ctx.moveTo(x + w * 0.68, y + h * 0.55);
+    ctx.quadraticCurveTo(x + w * 0.88, y + h * 0.45, x + w * 0.82, y + h * 0.68);
+    ctx.quadraticCurveTo(x + w * 0.78, y + h * 0.78, x + w * 0.7, y + h * 0.72);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = CHAR2; ctx.font = "700 22px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("ок", x + w * 0.76, y + h * 0.64);
+  }
+
+  function sceneAlarm(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2420";
+    ctx.beginPath(); ctx.arc(x + w * 0.5, y + h * 0.42, 70, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 5; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + w * 0.5 - 50, y + h * 0.28); ctx.lineTo(x + w * 0.5 - 70, y + h * 0.18); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x + w * 0.5 + 50, y + h * 0.28); ctx.lineTo(x + w * 0.5 + 70, y + h * 0.18); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.beginPath(); ctx.arc(x + w * 0.5, y + h * 0.42, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(x + w * 0.5, y + h * 0.42); ctx.lineTo(x + w * 0.5, y + h * 0.28); ctx.stroke();
+    ctx.fillStyle = BONE; ctx.font = "700 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("ОРЁТ", x + w / 2, y + h * 0.72);
+    ctx.fillStyle = "rgba(242,235,224,0.45)"; ctx.font = "600 14px system-ui,sans-serif";
+    ctx.fillText("а хозяин спит", x + w / 2, y + h * 0.82);
+  }
+
+  function sceneEmptyChair(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    var cx = x + w * 0.5, cy = y + h * 0.5;
+    ctx.strokeStyle = "rgba(242,235,224,0.55)"; ctx.lineWidth = 4; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(cx - 50, cy + 40); ctx.lineTo(cx - 50, cy - 10); ctx.lineTo(cx + 50, cy - 10); ctx.lineTo(cx + 50, cy + 40); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - 50, cy - 10); ctx.lineTo(cx - 50, cy - 70); ctx.lineTo(cx + 50, cy - 70); ctx.lineTo(cx + 50, cy - 10); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - 40, cy + 40); ctx.lineTo(cx - 40, cy + 70); ctx.moveTo(cx + 40, cy + 40); ctx.lineTo(cx + 40, cy + 70); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.font = "700 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("на месте", cx, y + h * 0.88);
+    ctx.fillStyle = "rgba(196,92,38,0.7)";
+    ctx.beginPath(); ctx.arc(cx + 70, cy - 50, 6, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function sceneMail(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2420";
+    ctx.fillRect(x + w * 0.22, y + h * 0.28, w * 0.56, h * 0.32);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 3;
+    ctx.strokeRect(x + w * 0.22, y + h * 0.28, w * 0.56, h * 0.32);
+    ctx.beginPath(); ctx.moveTo(x + w * 0.22, y + h * 0.28); ctx.lineTo(x + w * 0.5, y + h * 0.48); ctx.lineTo(x + w * 0.78, y + h * 0.28); ctx.stroke();
+    ctx.fillStyle = AMBER; ctx.font = "700 18px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("Копия: все", x + w / 2, y + h * 0.78);
+  }
+
+  function sceneMeeting(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    for(var i = 0; i < 6; i++){
+      stick(ctx, x + w * 0.22 + (i % 3) * w * 0.28, y + h * (0.42 + Math.floor(i / 3) * 0.28), 0.75, (i % 2) * 2 - 1);
+    }
+    ctx.fillStyle = AMBER; ctx.font = "700 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("зал ради одного", x + w / 2, y + h * 0.88);
+  }
+
+  function sceneQueue(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = "#2A2622";
+    ctx.fillRect(x + w * 0.72, y + h * 0.25, w * 0.14, h * 0.5);
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 2;
+    ctx.strokeRect(x + w * 0.72, y + h * 0.25, w * 0.14, h * 0.5);
+    for(var i = 0; i < 4; i++){
+      stick(ctx, x + w * 0.2 + i * w * 0.13, y + h * 0.62, 0.85, 0);
+    }
+    ctx.fillStyle = "rgba(242,235,224,0.5)"; ctx.font = "600 15px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("ждут у двери", x + w * 0.4, y + h * 0.88);
+  }
+
+  function sceneCircle(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    var cx = x + w / 2, cy = y + h * 0.48;
+    ctx.strokeStyle = AMBER; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(cx, cy, 70, 0, Math.PI * 1.7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + 55, cy - 45); ctx.lineTo(cx + 70, cy - 20); ctx.lineTo(cx + 42, cy - 22); ctx.fillStyle = AMBER; ctx.fill();
+    for(var i = 0; i < 4; i++){
+      var a = i * Math.PI / 2;
+      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * 70, cy + Math.sin(a) * 70, 8, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(242,235,224,0.55)"; ctx.fill();
+    }
+    ctx.fillStyle = "rgba(242,235,224,0.5)"; ctx.font = "600 15px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("опять по кругу", cx, y + h * 0.86);
+  }
+
+  function sceneUrgent(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    ctx.fillStyle = AMBER;
+    ctx.beginPath();
+    ctx.moveTo(x + w / 2, y + h * 0.22);
+    ctx.lineTo(x + w * 0.72, y + h * 0.68);
+    ctx.lineTo(x + w * 0.28, y + h * 0.68);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = CHAR2; ctx.font = "700 48px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("!", x + w / 2, y + h * 0.58);
+    ctx.fillStyle = BONE; ctx.font = "700 18px system-ui,sans-serif";
+    ctx.fillText("срочно", x + w / 2, y + h * 0.82);
+    ctx.fillStyle = "rgba(242,235,224,0.45)"; ctx.font = "600 14px system-ui,sans-serif";
+    ctx.fillText("сути нет", x + w / 2, y + h * 0.9);
+  }
+
+  function sceneVersions(ctx, x, y, w, h){
+    sceneBg(ctx, x, y, w, h);
+    for(var i = 0; i < 5; i++){
+      ctx.fillStyle = i === 4 ? AMBER : "#2A2420";
+      ctx.fillRect(x + w * 0.22 + i * 12, y + h * 0.28 + i * 14, w * 0.48, h * 0.28);
+      ctx.strokeStyle = "rgba(242,235,224,0.2)"; ctx.lineWidth = 1;
+      ctx.strokeRect(x + w * 0.22 + i * 12, y + h * 0.28 + i * 14, w * 0.48, h * 0.28);
+    }
+    ctx.fillStyle = CHAR2; ctx.font = "700 16px system-ui,sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("финал_точно_7", x + w / 2 + 20, y + h * 0.55);
+    ctx.fillStyle = "rgba(242,235,224,0.5)"; ctx.font = "600 14px system-ui,sans-serif";
+    ctx.fillText("седьмая «окончательная»", x + w / 2, y + h * 0.86);
+  }
+
+  var SIN_SCENE = {
+    1: sceneTimer, 2: sceneDoorWinter, 3: sceneChecks, 4: sceneLoud,
+    5: sceneTalk, 6: sceneTalk, 7: sceneTalk, 8: sceneSpoiler,
+    9: sceneBorrow, 10: sceneBass, 11: sceneFood, 12: sceneWetFloor,
+    13: sceneMug, 14: sceneToilet, 15: sceneWetFloor, 16: sceneNightCall,
+    17: sceneFood, 18: sceneLoud, 19: sceneBlock, 20: sceneTalk,
+    21: sceneSticker, 22: sceneDoorWinter, 23: sceneVoice, 24: sceneSticker,
+    25: sceneBass, 26: sceneAlarm, 27: sceneTimer, 28: sceneMail,
+    29: sceneTimer, 30: sceneCircle, 31: sceneUrgent, 32: sceneVersions,
+    33: sceneEmptyChair, 34: sceneUrgent, 35: sceneVersions, 36: sceneMeeting
+  };
+
+  function drawMemeZone(ctx, sinId, x, y, w, h){
+    var fn = SIN_SCENE[sinId] || sceneQueue;
+    fn(ctx, x, y, w, h);
+  }
+
+
   function buildExportPng(){
     if(!lastVerdict) return null;
     var W = 720, H = 1280;
@@ -674,70 +1094,81 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     ctx.fillStyle = "#0E0C0B";
     ctx.fillRect(0, 0, W, H);
 
-    var g = ctx.createRadialGradient(W / 2, H * 0.2, 40, W / 2, H * 0.45, H * 0.7);
-    g.addColorStop(0, "rgba(196,92,38,0.11)");
-    g.addColorStop(0.5, "rgba(14,12,11,0)");
-    g.addColorStop(1, "rgba(0,0,0,0.58)");
+    var g = ctx.createRadialGradient(W / 2, H * 0.15, 40, W / 2, H * 0.55, H * 0.75);
+    g.addColorStop(0, "rgba(196,92,38,0.1)");
+    g.addColorStop(0.55, "rgba(14,12,11,0)");
+    g.addColorStop(1, "rgba(0,0,0,0.55)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
+    /* grain (light) */
     var img = ctx.createImageData(W, H);
     for(var i = 0; i < img.data.length; i += 4){
       var n = Math.random() * 255;
-      img.data[i] = n; img.data[i + 1] = n; img.data[i + 2] = n; img.data[i + 3] = 14;
+      img.data[i] = n; img.data[i + 1] = n; img.data[i + 2] = n; img.data[i + 3] = 12;
     }
     ctx.putImageData(img, 0, 0);
 
-    var vig = ctx.createRadialGradient(W / 2, H / 2, H * 0.2, W / 2, H / 2, H * 0.72);
-    vig.addColorStop(0, "rgba(0,0,0,0)");
-    vig.addColorStop(1, "rgba(0,0,0,0.58)");
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, W, H);
+    var pad = 36;
+    var memeH = Math.floor(H * 0.42);
+    var memeY = 56;
+    var memeX = pad;
+    var memeW = W - pad * 2;
 
-    ctx.strokeStyle = "rgba(196,92,38,0.38)";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(36, 36, W - 72, H - 72);
-    ctx.strokeStyle = "rgba(242,235,224,0.1)";
-    ctx.lineWidth = 1;
-    ctx.strokeRect(48, 48, W - 96, H - 96);
-
-    drawSigil(ctx, W / 2, 168, 70, 0.5);
-    drawSigil(ctx, W - 110, H - 150, 88, 0.08);
-
+    /* tiny brand eyebrow */
     ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(196,92,38,0.75)";
+    ctx.font = "700 11px system-ui,sans-serif";
+    ctx.fillText("ПРОКЛИНАТОР", W / 2, 34);
+
+    drawMemeZone(ctx, lastVerdict.sinId, memeX, memeY, memeW, memeH);
+
+    drawSigil(ctx, W - 78, H - 90, 52, 0.07);
+
+    var y = memeY + memeH + 36;
+    var maxW = W - 100;
+
+    /* ГРЕХ short label */
+    ctx.textAlign = "left";
     ctx.fillStyle = "#C45C26";
     ctx.font = "700 13px system-ui,sans-serif";
-    ctx.fillText("ПРОКЛИНАТОР", W / 2, 280);
-
+    ctx.fillText("ГРЕХ", pad + 16, y);
+    y += 28;
     ctx.fillStyle = "#F2EBE0";
-    ctx.font = "600 40px system-ui,sans-serif";
-    var y = 340;
-    y = wrapText(ctx, lastVerdict.name, W / 2, y, W - 120, 48);
+    ctx.font = "700 28px system-ui,sans-serif";
+    y = wrapTextLeft(ctx, lastVerdict.sin, pad + 16, y, maxW, 34);
+    y += 18;
 
-    ctx.fillStyle = "rgba(242,235,224,0.55)";
-    ctx.font = "600 15px system-ui,sans-serif";
-    y += 8;
-    ctx.fillText("Пол: " + lastVerdict.genderLabel + "  ·  " + lastVerdict.sevLabel, W / 2, y);
-    y += 36;
+    ctx.strokeStyle = "rgba(242,235,224,0.12)";
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad + 16, y); ctx.lineTo(W - pad - 16, y); ctx.stroke();
+    y += 32;
 
-    function block(label, text, color){
-      ctx.fillStyle = "#C45C26";
-      ctx.font = "700 12px system-ui,sans-serif";
-      ctx.fillText(label.toUpperCase(), W / 2, y);
-      y += 28;
-      ctx.fillStyle = color;
-      ctx.font = "400 20px system-ui,sans-serif";
-      y = wrapText(ctx, text, W / 2, y, W - 130, 30);
-      y += 28;
-    }
+    /* punch — largest */
+    ctx.fillStyle = "#F2EBE0";
+    ctx.font = "700 26px system-ui,sans-serif";
+    y = wrapTextLeft(ctx, lastVerdict.punch, pad + 16, y, maxW, 34);
+    y += 28;
 
-    block(ui.blocks[0], lastVerdict.sin, "rgba(242,235,224,0.95)");
-    block(ui.blocks[1], lastVerdict.punch, "rgba(242,235,224,0.92)");
-    block(ui.blocks[2], lastVerdict.lift, "rgba(242,235,224,0.62)");
+    /* Снять — softer */
+    ctx.fillStyle = "rgba(242,235,224,0.58)";
+    ctx.font = "400 18px system-ui,sans-serif";
+    y = wrapTextLeft(ctx, lastVerdict.lift, pad + 16, y, maxW, 26);
+    y += 28;
 
-    ctx.fillStyle = "rgba(242,235,224,0.32)";
-    ctx.font = "400 12px system-ui,sans-serif";
-    wrapText(ctx, "Это шутка. Не кадровая процедура и не юридический документ.", W / 2, H - 72, W - 120, 18);
+    ctx.strokeStyle = "rgba(242,235,224,0.1)";
+    ctx.beginPath(); ctx.moveTo(pad + 16, y); ctx.lineTo(W - pad - 16, y); ctx.stroke();
+    y += 28;
+
+    /* name · power */
+    ctx.fillStyle = "rgba(196,92,38,0.9)";
+    ctx.font = "600 16px system-ui,sans-serif";
+    ctx.fillText(lastVerdict.name + "  ·  " + lastVerdict.sevLabel, pad + 16, y);
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(242,235,224,0.28)";
+    ctx.font = "400 11px system-ui,sans-serif";
+    ctx.fillText("Это шутка. Не кадровая процедура и не юридический документ.", W / 2, H - 28);
 
     return c;
   }
@@ -761,7 +1192,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     try{
       var c = buildExportPng();
       await downloadPng(c, "proklinator-" + safeFileName(lastVerdict.name) + ".png");
-      showToast(ui.toastOk);
+      showToast(DATA.toastOk);
     }catch(e){
       showToast("Не удалось сохранить картинку.");
     }
@@ -777,21 +1208,21 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
       var shareText = lastVerdict.sin + "\n\n" + lastVerdict.punch + "\n\n" + lastVerdict.lift;
       if(navigator.canShare && navigator.canShare({ files: [file] })){
         await navigator.share({ files: [file], title: "ПРОКЛИНАТОР", text: shareText });
-        showToast(ui.toastShare);
+        showToast(DATA.toastShare);
         return;
       }
       if(navigator.share){
         await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText + "\n— ПРОКЛИНАТОР" });
-        showToast(ui.toastShare);
+        showToast(DATA.toastShare);
         return;
       }
       await downloadPng(c, fname);
-      showToast(ui.toastShare);
+      showToast(DATA.toastShare);
     }catch(e){
       if(e && e.name === "AbortError") return;
       try{
         await navigator.clipboard.writeText(lastVerdict.sin + "\n\n" + lastVerdict.punch + "\n\n" + lastVerdict.lift + "\n— ПРОКЛИНАТОР");
-        showToast(ui.toastShare);
+        showToast(DATA.toastShare);
       }catch(e2){
         showToast("Не вышло поделиться. Сохрани картинку.");
       }
@@ -815,13 +1246,13 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     casting = true;
     cast.disabled = true;
     cast.classList.add("busy");
-    cast.textContent = ui.busy;
+    cast.textContent = DATA.busy;
     emptyHint.classList.remove("show");
     genderHint.classList.remove("show");
 
     var pow = powers.find(function(p){ return p.id === powerId; }) || powers[1];
     var sinObj = pick(sins);
-    var sinTitle = sinObj.title;
+    var sinTitle = sinObj.name;
     var verd = pick(eligibleVerdicts(gender));
     var punch = conjugate(fillName(verd.punch, name), gender);
     var lift = conjugate(fillName(verd.lift, name), gender);
@@ -859,6 +1290,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 
     lastVerdict = {
       name: name,
+      sinId: sinObj.id,
       sin: sinTitle,
       punch: punch,
       lift: lift,
@@ -894,8 +1326,8 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     casting = false;
     cast.disabled = false;
     cast.classList.remove("busy");
-    cast.textContent = ui.cta;
-    showToast(ui.toastOk);
+    cast.textContent = DATA.cta;
+    showToast(DATA.toastOk);
     requestAnimationFrame(function(){
       window.scrollTo(0, 0);
       result.scrollIntoView({ behavior: "auto", block: "start" });
@@ -935,20 +1367,23 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     });
     emptyHint.classList.remove("show");
     genderHint.classList.remove("show");
-    cast.textContent = ui.cta;
+    cast.textContent = DATA.cta;
     victim.focus();
   };
 
-  window.__PROKLINATOR_V9 = {
-    version: 9,
+  window.__PROKLINATOR_V10 = {
+    version: 10,
     sins: sins.length,
     verdictsN: verdictsN.length,
     verdictsM: verdictsM.length,
     verdictsF: verdictsF.length,
     ritual: chants.length,
     powers: powers.length,
-    idleRaf: function(){ return ritualRaf; }
+    idleRaf: function(){ return ritualRaf; },
+    buildExportPng: buildExportPng,
+    drawMemeZone: drawMemeZone
   };
+
 })();
 </script>
 </body>
