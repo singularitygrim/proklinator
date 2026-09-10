@@ -348,6 +348,7 @@
     legacyPrefs: "proklinator.v18.prefs",
     splash: "proklinator.v19.splash"
   };
+  const INTRO_KEY = SHELL.intro.key;   // "pk_intro_v20" — first-launch gate record { v, age, at }
   function lsGet(key, fallback){
     try{
       const raw = localStorage.getItem(key);
@@ -3416,7 +3417,6 @@
      v20 PRODUCTION — intro gate, data tools, network toasts
      ===================================================================== */
   /* ---------- intro: humor → rules → age (18+ full / 16–17 «Без мата» locked / under 16 refused) ---------- */
-  const INTRO_KEY = SHELL.intro.key;
   const INTRO_ICONS = { humor: ICO.mask, rules: ICO.scroll, age: ICO.age18 };
   let introStep = 0, introOpen = false, introRefusal = false;
   function introRecord(){
