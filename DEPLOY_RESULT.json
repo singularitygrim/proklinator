@@ -1,0 +1,74 @@
+{
+  "url": "https://proklinator-static.vercel.app",
+  "deploymentId": "dpl_Duetxh9d8tKARDjCB1Yx8MbAASCR",
+  "sso": "off",
+  "full": true,
+  "target": "production",
+  "project": "proklinator-static",
+  "scope": {
+    "slug": "singularity16",
+    "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
+    "plan": "hobby"
+  },
+  "deploymentUrl": "https://proklinator-static-n9quwkfqx-singularity16.vercel.app",
+  "aliases": [
+    "https://proklinator-static.vercel.app",
+    "https://proklinator-static-singularity16.vercel.app"
+  ],
+  "inspector": "https://vercel.com/singularity16/proklinator-static/Duetxh9d8tKARDjCB1Yx8MbAASCR",
+  "sourceCommit": "22425ef614ec93da63e70fbd2109642aa7bc7cad",
+  "sourceRepo": "https://github.com/singularitygrim/proklinator",
+  "files": {
+    "index.html": {
+      "bytes": 288261,
+      "sha256": "8169dfc442054f1769b3a6e2ee12779fb0172e75aba423f798e3afd6053a0f21"
+    },
+    "hero-altar.jpg": {
+      "bytes": 97618,
+      "sha256": "7b145496fbd6aac18189c5087265e0db0b461e06f944e2324e36a7cb347156b4"
+    },
+    "vercel.json": {
+      "bytes": 354,
+      "sha256": "1b992db47ddb92e98287b17f5cc7f2e67826025cfb777ee41caff6b0df9eb87c"
+    }
+  },
+  "verification": {
+    "checkedAt": "2026-09-10T23:21:53Z",
+    "publicUrlHttpStatus": 200,
+    "publicUrlRedirect": null,
+    "publicUrlContentLength": 288261,
+    "indexHtmlSha256MatchesRepo": true,
+    "heroAltarHttpStatus": 200,
+    "heroAltarSha256MatchesRepo": true,
+    "containsProklinator": 11,
+    "containsZapustitRitual": 1,
+    "containsContactEmail": 1,
+    "ssoCheck": "All three URLs of the project (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full page and no vercel.com/sso-api redirect, so Vercel Authentication is off at the project level.",
+    "cleanUrlsRedirect": "/index.html -> 308 -> /",
+    "securityHeadersApplied": ["Referrer-Policy", "X-Content-Type-Options", "Permissions-Policy"],
+    "buildScaffoldingNotServed": ["build.mjs", "package.json", "vercel.json"]
+  },
+  "otherDeployments": [
+    {
+      "project": "proklinator",
+      "url": "https://proklinator-singularity16.vercel.app",
+      "deploymentId": "dpl_F2UnvJhWwCA2nPWFDH3YYk4Gi5L7",
+      "full": true,
+      "sso": "off",
+      "note": "proklinator.vercel.app belongs to an unrelated account, hence the -singularity16 alias."
+    },
+    {
+      "project": "proklinator-live",
+      "url": "https://proklinator-live.vercel.app",
+      "deploymentId": "dpl_EBkGVus9edmmDMmbyjNk1i9Gr1oa",
+      "full": true,
+      "sso": "standard-protection (public domain 200, deployment URLs 302 to sso-api)"
+    }
+  ],
+  "notes": [
+    "The 403 'You don't have permission to create a Production Deployment for this project' is caused by passing teamId to deploy_to_vercel, not by reusing an existing project name: deployments to the existing projects proklinator (x2), proklinator-live and proklinator-static all succeeded when teamId was omitted, and they land in the same singularity16 scope.",
+    "Fresh project names get Vercel Authentication (Standard Protection) on by default and update_project_deployment_protection returns 404 for this token under every team scope, so the SSO-off requirement can only be met on a project whose protection was already disabled (proklinator, proklinator-static).",
+    "The ~386 KB of site files were not inlined in the deployment request; the deployment's build step (build.mjs, outputDirectory=public) fetches index.html and hero-altar.jpg from raw.githubusercontent.com at the pinned commit (earlier verified deployments as fallback) and fails unless their SHA-256 digests match the pinned values above, so the deployment can only contain the exact repo bytes. vercel.json is included verbatim in the deployment source.",
+    "origin/main is at 1d55b10 (adds docs/ for GitHub Pages); its index.html and hero-altar.jpg are byte-identical to the pinned commit 22425ef."
+  ]
+}
