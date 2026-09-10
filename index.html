@@ -645,10 +645,8 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
 .hist-item{padding:12px;display:grid;grid-template-columns:48px minmax(0,1fr) 34px 30px;gap:10px;align-items:center;text-align:left;color:var(--bone)}
 .hist-main{min-width:0;text-align:left;color:inherit}
 .hist-punch{margin:0;font-family:var(--serif);font-size:14.5px;line-height:1.35;color:var(--bone);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.hist-meta{margin:5px 0 0;font-size:11px;color:var(--bone-mute);display:flex;align-items:baseline;min-width:0}
-.hist-meta b{color:var(--bone-dim);font-weight:600;flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hist-meta .dot{margin:0 5px;opacity:.6;flex:none}
-.hist-meta .dt,.hist-meta .pw{flex:none;white-space:nowrap}
+.hist-meta{margin:5px 0 0;font-size:11.5px;color:var(--bone-dim);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist-sub{margin:2px 0 0;font-size:11px;color:var(--bone-mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hist-actions{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:10px;border-top:1px solid var(--line);margin-top:2px}
 .hist-actions button{
   min-height:38px;border-radius:12px;font-size:12.5px;font-weight:600;color:var(--bone-dim);
@@ -1434,7 +1432,7 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
     },
     karma: { whisper: 120, seal: 210, anathema: 350, fav: 40, ritual: 25 },
     worseK: 75,
-    common: { back: "Назад", close: "Закрыть" }
+    common: { back: "Назад" }
   };
 
   function formatLift(L){
@@ -3473,6 +3471,7 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
     else if(pageId === "about") renderAbout();
   }
   document.querySelectorAll("[data-back]").forEach(function(b){
+    b.setAttribute("aria-label", SHELL.common.back);
     b.addEventListener("click", function(){ vibe(VIBE.light); showPage("profile", "home"); });
   });
 
@@ -3694,12 +3693,12 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
     el.setAttribute("aria-expanded", histExpanded === h.id ? "true" : "false");
     el.innerHTML =
       '<span class="thumb" data-power="' + (h.powerId || "seal") + '" aria-hidden="true">' + (ICONS[h.powerId] || ICONS.seal) + '</span>' +
-      '<button type="button" class="hist-main"><p class="hist-punch"></p><p class="hist-meta"><b></b><span class="dot">·</span><span class="dt"></span><span class="pw"></span></p></button>' +
+      '<button type="button" class="hist-main"><p class="hist-punch"></p><p class="hist-meta"></p><p class="hist-sub"><span class="dt"></span><span class="pw"></span></p></button>' +
       '<button type="button" class="heart' + (h.fav ? " on" : "") + '" aria-pressed="' + (h.fav ? "true" : "false") + '" aria-label="В избранное">' + ICO.heart + '</button>' +
       '<button type="button" class="chev more" aria-label="Ещё">' + ICO.dots + '</button>' +
       '<div class="hist-actions"><button type="button" class="open"></button><button type="button" class="share"></button><button type="button" class="danger del"></button></div>';
     el.querySelector(".hist-punch").textContent = h.punch;
-    el.querySelector(".hist-meta b").textContent = h.name;
+    el.querySelector(".hist-meta").textContent = h.name;
     el.querySelector(".dt").textContent = fmtDate(h.ts);
     el.querySelector(".pw").textContent = h.powerLabel ? " · " + h.powerLabel : "";
     el.querySelector(".open").textContent = SHELL.history.open;
