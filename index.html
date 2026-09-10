@@ -82,7 +82,15 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   display:flex;flex-direction:column;position:relative;z-index:1;
 }
 
-.brand{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.hero-stage{
+  position:relative;margin:0 0 8px;min-height:96px;
+  display:flex;align-items:center;justify-content:flex-start;
+}
+#threeHero{
+  position:absolute;inset:-20px -40px auto auto;width:160px;height:160px;
+  pointer-events:none;opacity:.55;z-index:0;
+}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:12px;position:relative;z-index:1}
 .mark{width:44px;height:44px;min-width:44px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
 .mark .ring{animation:sealSpin 56s linear infinite;transform-origin:center}
@@ -92,13 +100,13 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   text-transform:uppercase;color:var(--bone-text);line-height:1.25;
 }
 .atmosphere{
-  margin:0 0 36px;font-size:16px;line-height:1.55;color:var(--muted);
-  letter-spacing:.01em;max-width:28em;
+  margin:0 0 32px;font-size:16px;line-height:1.55;color:var(--muted);
+  letter-spacing:.01em;max-width:28em;position:relative;z-index:1;
 }
 
-.field{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.field{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .field > span,.section-label{
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--faint);font-weight:600;
 }
 .section-label{margin:0 0 14px;display:block}
@@ -108,17 +116,41 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 }
 .empty-hint.show{opacity:1}
 
+.gender{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;
+}
+.gen{
+  min-height:96px;border-radius:var(--radius);border:1px solid var(--bone);
+  background:var(--soot);display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;color:var(--muted);
+  transition:border-color .25s,color .25s,background .25s,box-shadow .25s,transform .35s var(--ease);
+  position:relative;overflow:hidden;padding:18px 12px;
+}
+.gen .g-seal{
+  width:48px;height:48px;display:grid;place-items:center;
+}
+.gen .g-seal svg{width:100%;height:100%}
+.gen b{font-size:22px;font-weight:700;letter-spacing:.14em;color:inherit}
+.gen small{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.gen:active{opacity:.92}
+.gen.on{
+  border-color:var(--amber);color:var(--bone-text);
+  background:linear-gradient(160deg,rgba(196,92,38,.18),var(--soot) 60%);
+  box-shadow:inset 0 0 0 1px rgba(196,92,38,.4),0 0 28px rgba(196,92,38,.14);
+}
+.gen.on .g-seal .dot{fill:var(--amber)}
+.gen.on .g-seal .ring-s{stroke:var(--amber);opacity:1}
+.gen.pulse-err{animation:pulseInner .7s var(--ease)}
+
 .power{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:8px}
 .pow{
   min-height:80px;border-radius:var(--radius);border:1px solid var(--bone);
   background:var(--soot);display:grid;grid-template-columns:40px 1fr;
   gap:16px;align-items:center;padding:16px 18px;text-align:left;
-  color:var(--muted);transition:border-color .25s,color .25s,background .25s,box-shadow .25s;
+  color:var(--muted);transition:border-color .25s,color .25s,background .25s,box-shadow .25s,transform .35s var(--ease);
   position:relative;overflow:hidden;
 }
-.pow .seal{
-  width:40px;height:40px;display:grid;place-items:center;position:relative;
-}
+.pow .seal{width:40px;height:40px;display:grid;place-items:center;position:relative}
 .pow .seal svg{width:100%;height:100%}
 .pow .meta{display:flex;flex-direction:column;gap:5px;min-width:0}
 .pow b{font-size:17px;font-weight:650;letter-spacing:.03em;color:inherit}
@@ -139,7 +171,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .pow.on .seal .ring-s{stroke:var(--amber);opacity:1}
 
 .home-hint{
-  margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+  margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
   font-size:14px;color:var(--faint);line-height:1.5;
 }
 .home-hint strong{display:block;color:var(--muted);margin-bottom:6px;font-size:14px;font-weight:600;letter-spacing:.03em}
@@ -147,21 +179,22 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .verdict{
   display:none;margin-top:8px;position:relative;padding:28px 22px 24px;
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
-  overflow:hidden;
+  overflow:hidden;opacity:0;transform:translateY(18px) scale(.98);
 }
-.verdict.show{display:block;animation:riseIn .55s var(--ease)}
-@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.verdict.show{display:block}
 .verdict::before{
   content:"";position:absolute;right:-24px;top:-24px;width:150px;height:150px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
   opacity:.1;pointer-events:none;
 }
 .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-weight:700}
-.sin-tag{
-  display:inline-block;margin:0 0 14px;padding:6px 12px;border-radius:999px;
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.sin-tag,.gender-tag{
+  display:inline-block;padding:6px 12px;border-radius:999px;
   border:1px solid rgba(196,92,38,.4);color:var(--amber);font-size:13px;
   letter-spacing:.04em;font-weight:600;
 }
+.gender-tag{border-color:rgba(242,235,224,.22);color:var(--muted)}
 .verdict h2{margin:0 0 14px;font-size:20px;line-height:1.4;font-weight:600;letter-spacing:.01em;color:var(--bone-text)}
 .verdict p{margin:0 0 20px;color:var(--muted);font-size:16px;line-height:1.55}
 .sev-row{margin:0 0 20px;font-size:14px;color:var(--faint);letter-spacing:.04em}
@@ -212,12 +245,20 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .overlay{
   position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
   flex-direction:column;gap:20px;background:rgba(14,12,11,.97);padding:28px;
+  opacity:0;
 }
 .overlay.on{display:flex}
-.ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.seal-stage{width:132px;height:132px;position:relative;z-index:2;display:grid;place-items:center}
+#threeRitual{
+  position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.85;
+}
+.ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.seal-stage{
+  width:132px;height:132px;position:relative;z-index:2;display:grid;place-items:center;
+  transform:scale(.86);opacity:.9;
+}
 .seal-stage svg{width:100%;height:100%}
 .seal-stage .spin{animation:sealSpin 8s linear infinite;transform-origin:center}
+.seal-stage.css-fallback{display:grid}
 .chant{
   position:relative;z-index:2;color:var(--muted);font-size:16px;
   text-align:center;min-height:1.4em;letter-spacing:.02em;max-width:300px;line-height:1.45;
@@ -263,7 +304,10 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .mark .ring,.seal-stage .spin{animation:none!important}
   .cta-bar-inner::before{opacity:.5}
-  input.pulse-inner{box-shadow:0 0 0 3px rgba(196,92,38,.32);border-color:var(--amber)}
+  input.pulse-inner,.gen.pulse-err{box-shadow:0 0 0 3px rgba(196,92,38,.32);border-color:var(--amber)}
+  .verdict.show{opacity:1;transform:none}
+  .overlay.on{opacity:1}
+  #threeHero,#threeRitual{display:none!important}
 }
 </style>
 </head>
@@ -274,20 +318,23 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <main class="app">
-  <header class="brand">
-    <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle class="ring" cx="20" cy="20" r="16.5" stroke="#C45C26" stroke-width="1" opacity=".75"/>
-        <circle cx="20" cy="20" r="10" stroke="#C45C26" stroke-width=".85" opacity=".5"/>
-        <circle cx="20" cy="20" r="2.5" fill="#C45C26"/>
-        <line x1="20" y1="3.5" x2="20" y2="8" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-        <line x1="20" y1="32" x2="20" y2="36.5" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-        <line x1="3.5" y1="20" x2="8" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-        <line x1="32" y1="20" x2="36.5" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
-      </svg>
-    </div>
-    <div class="brand-text"><h1>Проклинатор</h1></div>
-  </header>
+  <div class="hero-stage">
+    <canvas id="threeHero" aria-hidden="true"></canvas>
+    <header class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="ring" cx="20" cy="20" r="16.5" stroke="#C45C26" stroke-width="1" opacity=".75"/>
+          <circle cx="20" cy="20" r="10" stroke="#C45C26" stroke-width=".85" opacity=".5"/>
+          <circle cx="20" cy="20" r="2.5" fill="#C45C26"/>
+          <line x1="20" y1="3.5" x2="20" y2="8" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+          <line x1="20" y1="32" x2="20" y2="36.5" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+          <line x1="3.5" y1="20" x2="8" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+          <line x1="32" y1="20" x2="36.5" y2="20" stroke="#C45C26" stroke-width="1" opacity=".65"/>
+        </svg>
+      </div>
+      <div class="brand-text"><h1>Проклинатор</h1></div>
+    </header>
+  </div>
   <p class="atmosphere">Офисное проклятие по всем правилам.</p>
 
   <section class="screen-cast" id="castScreen">
@@ -296,6 +343,25 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
       <input id="victim" type="text" maxlength="48" autocomplete="off" enterkeyhint="done" required aria-required="true" placeholder="Кого скрепляем?"/>
       <span class="empty-hint" id="emptyHint">Сначала имя.</span>
     </label>
+
+    <div class="section-label">Пол</div>
+    <div class="gender" id="gender" role="radiogroup" aria-label="Пол жертвы">
+      <button type="button" class="gen" data-g="M" role="radio" aria-checked="false">
+        <span class="g-seal" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle class="ring-s" cx="24" cy="24" r="18" stroke="#C45C26" stroke-width="1.2" opacity=".4"/><circle class="ring-s" cx="24" cy="24" r="11" stroke="#C45C26" stroke-width=".9" opacity=".35"/><circle class="dot" cx="24" cy="24" r="3.5" fill="rgba(242,235,224,.28)"/><line x1="24" y1="4" x2="24" y2="10" stroke="#C45C26" stroke-width="1.1" opacity=".5"/><line x1="24" y1="38" x2="24" y2="44" stroke="#C45C26" stroke-width="1.1" opacity=".5"/></svg>
+        </span>
+        <b>М</b>
+        <small>Мужской</small>
+      </button>
+      <button type="button" class="gen" data-g="F" role="radio" aria-checked="false">
+        <span class="g-seal" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><circle class="ring-s" cx="24" cy="24" r="18" stroke="#C45C26" stroke-width="1.2" opacity=".4"/><circle class="ring-s" cx="24" cy="24" r="11" stroke="#C45C26" stroke-width=".9" opacity=".35"/><circle class="dot" cx="24" cy="24" r="3.5" fill="rgba(242,235,224,.28)"/><line x1="4" y1="24" x2="10" y2="24" stroke="#C45C26" stroke-width="1.1" opacity=".5"/><line x1="38" y1="24" x2="44" y2="24" stroke="#C45C26" stroke-width="1.1" opacity=".5"/></svg>
+        </span>
+        <b>Ж</b>
+        <small>Женский</small>
+      </button>
+    </div>
+    <span class="empty-hint" id="genderHint" style="margin-top:-18px;margin-bottom:22px">Выбери пол — так печать грамотнее ляжет.</span>
 
     <div class="section-label">Сила печати</div>
     <div class="power" id="power" role="radiogroup" aria-label="Сила печати"></div>
@@ -308,7 +374,10 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 
   <section class="verdict screen-result hidden" id="result" aria-live="polite">
     <div class="eyebrow">Вердикт</div>
-    <div class="sin-tag" id="vSin"></div>
+    <div class="meta-row">
+      <div class="sin-tag" id="vSin"></div>
+      <div class="gender-tag" id="vGender"></div>
+    </div>
     <h2 id="vTitle"></h2>
     <p id="vText"></p>
     <div class="sev-row">Сила: <b id="vSev"></b></div>
@@ -329,8 +398,9 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 </div>
 
 <div class="overlay" id="overlay" aria-hidden="true">
+  <canvas id="threeRitual" aria-hidden="true"></canvas>
   <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
-  <div class="seal-stage" aria-hidden="true">
+  <div class="seal-stage css-fallback" id="sealStage" aria-hidden="true">
     <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle class="spin" cx="60" cy="60" r="48" stroke="#C45C26" stroke-width="1.2" opacity=".75"/>
       <circle cx="60" cy="60" r="32" stroke="#C45C26" stroke-width="1" opacity=".45"/>
@@ -341,7 +411,7 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
       <line x1="96" y1="60" x2="108" y2="60" stroke="#C45C26" stroke-width="1.2" opacity=".6"/>
     </svg>
   </div>
-  <div class="chant" id="chant">Имя принято. Дышим ровнее.</div>
+  <div class="chant" id="chant">Имя и пол приняты. Дышим ровнее.</div>
   <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
   <div class="busy-label">Печать тлеет…</div>
 </div>
@@ -349,9 +419,20 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 <canvas id="exportCanvas" width="720" height="1280" style="display:none" aria-hidden="true"></canvas>
 
 <script>
+window.__THREE_OK=false; window.__ANIME_OK=false;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"
+  onload="window.__THREE_OK=true"
+  onerror="window.__THREE_OK=false"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"
+  onload="window.__ANIME_OK=true"
+  onerror="window.__ANIME_OK=false"></script>
+<script>
 (function(){
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const rainMarks = ["·","—","†","·","—"];
+  const hasAnime = () => !!(window.__ANIME_OK && typeof anime === "function");
+  const hasThree = () => !!(window.__THREE_OK && typeof THREE !== "undefined");
 
   const sins = [
     "Созвон «на пять минут»",
@@ -365,11 +446,21 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     "Перенос срока без предупреждения",
     "Планёрка вместо решения",
     "Файл «финал_вот_этот_точно»",
-    "Молчание в общем чате три дня, потом «ну как?»",
+    "Молчание в чате три дня, потом «ну как?»",
     "Правки после «утвердили»",
     "Созвон без повестки",
-    "«Это на пять минут» в конце дня",
-    "Таблица вместо разговора"
+    "«На пять минут» в конце дня",
+    "Таблица вместо разговора",
+    "«Я на месте» и пропал(а)",
+    "Голос в трубке: «секундочку» на двадцать минут",
+    "Переслал(а) без единой строки от себя",
+    "Собрал(а) всех, чтобы спросить одного",
+    "«Кажется, уже решали» — и снова то же",
+    "Срок узнал(а) в день сдачи",
+    "«Скинь в чат» вместо ясности",
+    "Правки голосом в коридоре",
+    "«Это срочно» без сути",
+    "Открыл(а) тему и ушёл(ушла) курить/кофе"
   ];
 
   const powers = [
@@ -379,33 +470,62 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   ];
 
   const chants = [
-    "Имя принято. Дышим ровнее.",
-    "Выбираем силу проклятия…",
-    "Грех сам ползёт из общих привычек…",
+    "Имя и пол приняты. Дышим ровнее.",
+    "Выбираем силу…",
+    "Грех ползёт из общих привычек…",
     "Мажем печать офисной желчью…",
-    "Кладём в копию всю лестничную клетку…",
+    "Кладём в копию всю лестницу…",
     "Крутим круг согласований…",
     "Будим мёртвый чат…",
     "Готово. Можно жить дальше."
   ];
 
-  const verdictTemplates = [
-    (n,s)=>`${n} пойман(а) на грехе «${s}». Пусть теперь объясняет на планёрке.`,
-    (n,s)=>`Приговор: ${n} снова за «${s}». Хватит уже, блин.`,
-    (n,s)=>`${n}, за «${s}» тебе положен ещё один созвон. Наслаждайся.`,
-    (n,s)=>`Вердикт: «${s}» — на совести ${n}. Печать не врёт.`,
-    (n,s)=>`${n} пытался(ась) отвертеться от «${s}». Не вышло, чёрт побери.`,
-    (n,s)=>`${n} официально стал(а) чемпионом по «${s}». Поздравлять не будем.`,
-    (n,s)=>`Зафиксировано: ${n} + «${s}» = головная боль отдела.`,
-    (n,s)=>`${n}, твоё «${s}» уже обсуждают у кофемашины.`,
-    (n,s)=>`По делу «${s}» виновен(на): ${n}. Возражения — после срока.`,
-    (n,s)=>`${n} проклят(а) за «${s}». Мягко? Нет. Метко.`,
-    (n,s)=>`Диагноз: у ${n} хроническое «${s}». Лечится только делом.`,
-    (n,s)=>`${n} получил(а) чёрную метку за «${s}». Созвон неизбежен.`,
-    (n,s)=>`Итог: ${n} теперь навсегда про «${s}». Почти.`,
-    (n,s)=>`${n}, хватит с «${s}». Печать легла — живи с этим.`,
-    (n,s)=>`Суд офиса решил: ${n} виновен(на) в «${s}». Без смягчения.`,
-    (n,s)=>`${n} снова выбрал(а) «${s}». Таблицы это запомнят, блядь.`
+  /* Refined UX verdicts — setup→punch. N always; M/F by gender. */
+  const verdictsN = [
+    "{имя} снова созвал(а) «на пять минут» — часы уже подали в суд.",
+    "Письмо всем от {имя}: суть ноль, получателей — пол-отдела.",
+    "{имя} сказал(а) «глянь глазами» — это был роман в таблице.",
+    "У {имя} срочно в пятницу вечером. У срока — горе.",
+    "Правда у {имя} в скрытом листе. Как всегда.",
+    "{имя} гоняет согласование по кругу — круг уже бледный.",
+    "«Почти готово» от {имя} отмечает третий месяц рождения.",
+    "{имя} начал(а) «кратко» — обед остыл.",
+    "Срок уехал без билета. Водитель — {имя}.",
+    "Планёрка вместо решения: ведущий {имя}, итог — ноль.",
+    "Файл «финал_точно» от {имя}. Это уже седьмой финал.",
+    "Три дня тишины, потом «ну как?» — автор {имя}.",
+    "Утвердили. Потом {имя} принёс(ла) правки. Классика.",
+    "Созвон без повестки, герой эфира — {имя}.",
+    "«На пять минут» в конце дня от {имя} = сверхурочные для всех.",
+    "{имя} прислал(а) таблицу вместо ответа. Смелость."
+  ];
+  const verdictsM = [
+    "{имя} сказал «сейчас» — отдел ждал до завтра.",
+    "{имя} собрал всех, чтобы спросить одного. Зал аплодирует стоя… внутри.",
+    "{имя} «на месте» и исчез. Статус врать не стесняется.",
+    "{имя} кинул письмо всем — теперь сам и туши пожар.",
+    "{имя} коротко на полчаса. Хронометраж сдал нервы.",
+    "{имя} молчал три дня, потом «ну как?». Смелость героя.",
+    "{имя} перенёс срок молча. Сюрприз-сюрприз.",
+    "{имя} открыл тему и ушёл. Тема плачет в чате.",
+    "{имя} сделал седьмой «финал_точно». Верим уже слабо.",
+    "{имя} узнал срок в день сдачи. Талант.",
+    "{имя} «это срочно» — сути ноль, паники вагон.",
+    "{имя} правил голосом в коридоре. Документа нет, стресса полно."
+  ];
+  const verdictsF = [
+    "{имя} сказала «сейчас» — отдел ждал до завтра.",
+    "{имя} собрала всех, чтобы спросить одного. Зал аплодирует стоя… внутри.",
+    "{имя} «на месте» и исчезла. Статус врать не стесняется.",
+    "{имя} кинула письмо всем — теперь сама и туши пожар.",
+    "{имя} коротко на полчаса. Хронометраж сдал нервы.",
+    "{имя} молчала три дня, потом «ну как?». Смелость героини.",
+    "{имя} перенесла срок молча. Сюрприз-сюрприз.",
+    "{имя} открыла тему и ушла. Тема плачет в чате.",
+    "{имя} сделала седьмой «финал_точно». Верим уже слабо.",
+    "{имя} узнала срок в день сдачи. Талант.",
+    "{имя} «это срочно» — сути ноль, паники вагон.",
+    "{имя} правила голосом в коридоре. Документа нет, стресса полно."
   ];
 
   const flavorLines = [
@@ -418,14 +538,39 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 
   function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
-  let powerId="seal", lastVerdict=null, casting=false;
+  function conjugate(str, gender){
+    if(!str) return str;
+    const m = gender === "M";
+    return String(str)
+      .replace(/ушёл\(ушла\)/g, m ? "ушёл" : "ушла")
+      .replace(/принёс\(ла\)/g, m ? "принёс" : "принесла")
+      .replace(/([А-Яа-яЁё]+)л\(а\)/g, (_, stem) => stem + (m ? "л" : "ла"))
+      .replace(/\(а\)/g, m ? "" : "а")
+      .replace(/\(ла\)/g, m ? "" : "ла");
+  }
+
+  function fillVerdict(tpl, name, gender){
+    return conjugate(tpl.replace(/\{имя\}/g, name).replace(/\{грех\}/g, ""), gender).replace(/\s+/g," ").trim();
+  }
+
+  function genderLabel(g){ return g === "M" ? "М" : g === "F" ? "Ж" : ""; }
+  function genderLong(g){ return g === "M" ? "Мужской" : g === "F" ? "Женский" : ""; }
+
+  function eligibleVerdicts(gender){
+    const pool = verdictsN.slice();
+    if(gender === "M") pool.push(...verdictsM);
+    if(gender === "F") pool.push(...verdictsF);
+    return pool;
+  }
+
+  let powerId="seal", gender=null, lastVerdict=null, casting=false;
   const $ = id => document.getElementById(id);
-  const victim=$("victim"), cast=$("cast"), emptyHint=$("emptyHint");
+  const victim=$("victim"), cast=$("cast"), emptyHint=$("emptyHint"), genderHint=$("genderHint");
   const overlay=$("overlay"), chant=$("chant"), progress=$("progress");
   const result=$("result"), castScreen=$("castScreen"), toast=$("toast");
   const flash=$("flash"), bolt=$("bolt"), rain=$("rain");
   const canvas=$("ritualCanvas"), root=$("root"), ctaBar=$("ctaBar");
-  const exportCanvas=$("exportCanvas");
+  const exportCanvas=$("exportCanvas"), sealStage=$("sealStage");
 
   function haptic(pattern){
     try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
@@ -443,6 +588,40 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
       .slice(0,40) || "имя";
   }
 
+  function anim(opts){
+    if(reduced){
+      if(opts && opts.complete) opts.complete();
+      return null;
+    }
+    if(hasAnime()) return anime(opts);
+    /* CSS fallback: snap end state if targets known */
+    if(opts && opts.complete) setTimeout(opts.complete, opts.duration||300);
+    return null;
+  }
+
+  /* —— Gender seals —— */
+  const genderEl=$("gender");
+  genderEl.querySelectorAll(".gen").forEach(b=>{
+    b.addEventListener("click",()=>{
+      if(casting) return;
+      gender=b.dataset.g;
+      genderEl.querySelectorAll(".gen").forEach(x=>{
+        const on=x.dataset.g===gender;
+        x.classList.toggle("on", on);
+        x.setAttribute("aria-checked", on?"true":"false");
+      });
+      genderHint.classList.remove("show");
+      haptic(10);
+      anim({
+        targets:b,
+        scale:[1,1.06,1],
+        duration:420,
+        easing:"easeOutElastic(1, .6)"
+      });
+    });
+  });
+
+  /* —— Power —— */
   const powerEl=$("power");
   powers.forEach(p=>{
     const b=document.createElement("button");
@@ -462,24 +641,59 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
         x.setAttribute("aria-checked", on?"true":"false");
       });
       haptic(10);
+      anim({
+        targets:b,
+        scale:[1,1.04,1],
+        duration:480,
+        easing:"easeOutElastic(1, .65)"
+      });
     });
     powerEl.appendChild(b);
   });
 
-  function failEmpty(){
-    emptyHint.classList.add("show");
-    showToast("Сначала имя.");
+  /* CTA pulse via anime (or CSS ember fallback) */
+  function startCtaPulse(){
+    if(reduced || !hasAnime()) return;
+    anime({
+      targets:cast,
+      boxShadow:[
+        "0 4px 28px rgba(196,92,38,.28)",
+        "0 4px 36px rgba(196,92,38,.48)",
+        "0 4px 28px rgba(196,92,38,.28)"
+      ],
+      duration:2600,
+      easing:"easeInOutSine",
+      loop:true
+    });
+  }
+  setTimeout(startCtaPulse, 400);
+
+  function failEmpty(kind){
+    const isGender = kind==="gender";
+    const hint = isGender ? genderHint : emptyHint;
+    const msg = isGender ? "Выбери пол — так печать грамотнее ляжет." : "Сначала имя.";
+    hint.classList.add("show");
+    showToast(msg);
     root.classList.remove("shake");
     void root.offsetWidth;
     root.classList.add("shake");
-    victim.classList.remove("pulse-inner");
-    void victim.offsetWidth;
-    victim.classList.add("pulse-inner");
-    victim.focus();
+    if(isGender){
+      genderEl.querySelectorAll(".gen").forEach(g=>{
+        g.classList.remove("pulse-err");
+        void g.offsetWidth;
+        g.classList.add("pulse-err");
+      });
+    } else {
+      victim.classList.remove("pulse-inner");
+      void victim.offsetWidth;
+      victim.classList.add("pulse-inner");
+      victim.focus();
+    }
     haptic([18,40,18]);
     setTimeout(()=>{
       root.classList.remove("shake");
       victim.classList.remove("pulse-inner");
+      genderEl.querySelectorAll(".gen").forEach(g=>g.classList.remove("pulse-err"));
     },700);
   }
 
@@ -544,15 +758,14 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 
   function wrapText(ctx, text, x, y, maxW, lineH){
     const words=String(text).split(/\s+/);
-    let line="", lines=[], cy=y;
+    let line="", cy=y;
     for(let i=0;i<words.length;i++){
       const test=line?line+" "+words[i]:words[i];
       if(ctx.measureText(test).width>maxW && line){
-        lines.push(line); line=words[i];
+        ctx.fillText(line,x,cy); cy+=lineH; line=words[i];
       } else line=test;
     }
-    if(line) lines.push(line);
-    lines.forEach(l=>{ ctx.fillText(l,x,cy); cy+=lineH; });
+    if(line){ ctx.fillText(line,x,cy); cy+=lineH; }
     return cy;
   }
 
@@ -611,37 +824,40 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     ctx.lineWidth=1;
     ctx.strokeRect(48,48,W-96,H-96);
 
-    drawSigil(ctx, W/2, 210, 78, 0.55);
+    drawSigil(ctx, W/2, 200, 78, 0.55);
     drawSigil(ctx, W-110, H-160, 90, 0.08);
 
     ctx.textAlign="center";
     ctx.fillStyle="#C45C26";
     ctx.font="700 14px system-ui,sans-serif";
-    ctx.letterSpacing="0.28em";
-    ctx.fillText("ПРОКЛИНАТОР", W/2, 330);
+    ctx.fillText("ПРОКЛИНАТОР", W/2, 320);
 
     ctx.fillStyle="#F2EBE0";
     ctx.font="600 42px system-ui,sans-serif";
-    ctx.letterSpacing="0";
-    let y=400;
+    let y=390;
     y=wrapText(ctx, lastVerdict.name, W/2, y, W-120, 50);
+
+    ctx.fillStyle="rgba(242,235,224,0.55)";
+    ctx.font="600 15px system-ui,sans-serif";
+    y+=10;
+    ctx.fillText("Пол: "+lastVerdict.genderLabel, W/2, y);
+    y+=28;
 
     ctx.fillStyle="#C45C26";
     ctx.font="600 15px system-ui,sans-serif";
-    y+=28;
     y=wrapText(ctx, lastVerdict.sin, W/2, y, W-140, 22);
 
     ctx.fillStyle="rgba(242,235,224,0.14)";
-    ctx.fillRect(W/2-40, y+18, 80, 1);
+    ctx.fillRect(W/2-40, y+10, 80, 1);
 
     ctx.fillStyle="rgba(242,235,224,0.92)";
     ctx.font="400 22px system-ui,sans-serif";
-    y+=60;
+    y+=48;
     y=wrapText(ctx, lastVerdict.title, W/2, y, W-130, 32);
 
     ctx.fillStyle="rgba(242,235,224,0.58)";
     ctx.font="400 18px system-ui,sans-serif";
-    y+=28;
+    y+=24;
     y=wrapText(ctx, lastVerdict.text, W/2, y, W-130, 28);
 
     ctx.fillStyle="#C45C26";
@@ -715,26 +931,194 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
         await navigator.clipboard.writeText(text);
         showToast("Ушло. Пусть знают.");
       }catch(e2){
-        showToast("Поделиться недоступно.");
+        showToast("Не вышло поделиться. Сохрани картинку.");
       }
     }
   }
 
+  /* —— Three.js seal scenes —— */
+  const threeState = { hero:null, ritual:null, raf:0 };
+
+  function makeSealGroup(THREE, scale){
+    const g = new THREE.Group();
+    const amber = new THREE.Color(0xC45C26);
+    const bone = new THREE.Color(0xF2EBE0);
+    const mat = new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.78, wireframe:true});
+    const matDim = new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.35, wireframe:true});
+    const matBone = new THREE.MeshBasicMaterial({color:bone, transparent:true, opacity:0.22, wireframe:true});
+
+    const torus = new THREE.Mesh(new THREE.TorusGeometry(1.15*scale, 0.035*scale, 8, 64), mat);
+    const torus2 = new THREE.Mesh(new THREE.TorusGeometry(0.78*scale, 0.022*scale, 6, 48), matDim);
+    torus2.rotation.x = Math.PI/2.4;
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.48*scale, 0.018*scale, 6, 40), matBone);
+    ring.rotation.y = Math.PI/3;
+
+    const lines = new THREE.Group();
+    const lineMat = new THREE.LineBasicMaterial({color:amber, transparent:true, opacity:0.55});
+    [[0,1,0],[0,-1,0],[1,0,0],[-1,0,0]].forEach(([x,y,z])=>{
+      const pts = [
+        new THREE.Vector3(x*1.35*scale, y*1.35*scale, z*1.35*scale),
+        new THREE.Vector3(x*0.55*scale, y*0.55*scale, z*0.55*scale)
+      ];
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      lines.add(new THREE.Line(geo, lineMat));
+    });
+
+    const core = new THREE.Mesh(
+      new THREE.SphereGeometry(0.08*scale, 10, 10),
+      new THREE.MeshBasicMaterial({color:amber, transparent:true, opacity:0.9})
+    );
+
+    g.add(torus, torus2, ring, lines, core);
+    g.userData = {torus, torus2, ring};
+    return g;
+  }
+
+  function makeEmbers(THREE, count, spread){
+    const positions = new Float32Array(count*3);
+    const velocities = [];
+    for(let i=0;i<count;i++){
+      positions[i*3]=(Math.random()-0.5)*spread;
+      positions[i*3+1]=(Math.random()-0.5)*spread;
+      positions[i*3+2]=(Math.random()-0.5)*spread*0.4;
+      velocities.push({
+        vx:(Math.random()-0.5)*0.004,
+        vy:0.003+Math.random()*0.006,
+        vz:(Math.random()-0.5)*0.003,
+        life:Math.random()
+      });
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({
+      color:0xC45C26, size:0.045, transparent:true, opacity:0.7,
+      depthWrite:false, sizeAttenuation:true
+    });
+    const pts = new THREE.Points(geo, mat);
+    pts.userData = {velocities, spread};
+    return pts;
+  }
+
+  function initThreeScene(canvasEl, opts){
+    if(reduced || !hasThree() || !canvasEl) return null;
+    const THREE = window.THREE;
+    const renderer = new THREE.WebGLRenderer({canvas:canvasEl, alpha:true, antialias:true, powerPreference:"low-power"});
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+    camera.position.z = opts.camZ || 4.2;
+    const seal = makeSealGroup(THREE, opts.scale || 1);
+    scene.add(seal);
+    let embers = null;
+    if(opts.embers){
+      embers = makeEmbers(THREE, opts.emberCount||40, opts.emberSpread||2.4);
+      scene.add(embers);
+    }
+    function resize(){
+      const w = canvasEl.clientWidth || opts.w || 160;
+      const h = canvasEl.clientHeight || opts.h || 160;
+      renderer.setSize(w, h, false);
+      camera.aspect = w/Math.max(h,1);
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    return {renderer, scene, camera, seal, embers, resize, active:true};
+  }
+
+  function tickThree(t){
+    threeState.raf = requestAnimationFrame(tickThree);
+    if(reduced) return;
+    const scenes = [threeState.hero, threeState.ritual];
+    scenes.forEach(s=>{
+      if(!s || !s.active) return;
+      const seal = s.seal;
+      seal.rotation.y += 0.0032;
+      seal.rotation.x = Math.sin(t*0.00035)*0.12;
+      if(seal.userData.torus2) seal.userData.torus2.rotation.z += 0.004;
+      if(seal.userData.ring) seal.userData.ring.rotation.x += 0.0025;
+      if(s.embers){
+        const pos = s.embers.geometry.attributes.position;
+        const vels = s.embers.userData.velocities;
+        const spread = s.embers.userData.spread;
+        for(let i=0;i<vels.length;i++){
+          let x=pos.getX(i)+vels[i].vx;
+          let y=pos.getY(i)+vels[i].vy;
+          let z=pos.getZ(i)+vels[i].vz;
+          vels[i].life += 0.004;
+          if(y > spread*0.55 || vels[i].life>1){
+            x=(Math.random()-0.5)*spread;
+            y=-spread*0.45;
+            z=(Math.random()-0.5)*spread*0.35;
+            vels[i].life=0;
+          }
+          pos.setXYZ(i,x,y,z);
+        }
+        pos.needsUpdate=true;
+      }
+      s.renderer.render(s.scene, s.camera);
+    });
+  }
+
+  function bootThree(){
+    if(reduced) return;
+    /* wait a tick for CDN onload flags */
+    const tryInit = (attempt)=>{
+      if(hasThree()){
+        threeState.hero = initThreeScene($("threeHero"), {scale:0.85, camZ:3.6, w:160, h:160, embers:false});
+        threeState.ritual = initThreeScene($("threeRitual"), {scale:1.35, camZ:4.8, embers:true, emberCount:48, emberSpread:3.2});
+        if(threeState.ritual) threeState.ritual.active=false;
+        if(threeState.hero || threeState.ritual){
+          cancelAnimationFrame(threeState.raf);
+          threeState.raf = requestAnimationFrame(tickThree);
+          /* hide CSS seal when Three ritual is available */
+          if(threeState.ritual) sealStage.style.opacity = "0.35";
+        }
+        return;
+      }
+      if(attempt < 12) setTimeout(()=>tryInit(attempt+1), 120);
+      /* else: CSS fallback already visible */
+    };
+    tryInit(0);
+    addEventListener("resize", ()=>{
+      if(threeState.hero) threeState.hero.resize();
+      if(threeState.ritual) threeState.ritual.resize();
+    }, {passive:true});
+  }
+  bootThree();
+
   async function runRitual(){
     if(casting) return;
     const name=victim.value.trim();
-    if(!name){ failEmpty(); return; }
+    if(!name){ failEmpty("name"); return; }
+    if(!gender){ failEmpty("gender"); return; }
 
     casting=true;
     cast.disabled=true;
     cast.classList.add("busy");
     cast.textContent="Печать тлеет…";
     emptyHint.classList.remove("show");
+    genderHint.classList.remove("show");
 
     const pow=powers.find(p=>p.id===powerId)||powers[1];
-    const sin=pick(sins);
+    const sinRaw=pick(sins);
+    const sin=conjugate(sinRaw, gender);
 
+    overlay.style.opacity="0";
     overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
+    if(threeState.ritual){ threeState.ritual.active=true; threeState.ritual.resize(); }
+    anim({
+      targets:overlay,
+      opacity:[0,1],
+      duration:420,
+      easing:"easeOutQuad"
+    });
+    anim({
+      targets:sealStage,
+      scale:[0.72,1.08,1],
+      opacity:[0.5,1],
+      duration:900,
+      easing:"easeOutElastic(1, .7)"
+    });
     progress.style.width="0%";
     haptic([30,40,30]);
     particlesBurst(reduced?0:2200);
@@ -748,25 +1132,54 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     }
     ritualFlash();
     haptic([20,30,20,30,60]);
-    await sleep(420);
-    overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
+    await sleep(280);
 
-    const title=pick(verdictTemplates)(name, sin);
-    const text=pick(flavorLines);
+    await new Promise(resolve=>{
+      anim({
+        targets:overlay,
+        opacity:[1,0],
+        duration:380,
+        easing:"easeInQuad",
+        complete:resolve
+      });
+      if(reduced || !hasAnime()) resolve();
+    });
+    overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
+    overlay.style.opacity="";
+    if(threeState.ritual) threeState.ritual.active=false;
+
+    const tpl = pick(eligibleVerdicts(gender));
+    const title = fillVerdict(tpl, name, gender);
+    const text = pick(flavorLines);
     $("vSin").textContent=sin;
+    $("vGender").textContent="Пол: "+genderLabel(gender);
     $("vTitle").textContent=title;
     $("vText").textContent=text;
     $("vSev").textContent=pow.label;
 
     lastVerdict={
       name, sin, title, text,
+      gender, genderLabel: genderLabel(gender)+" · "+genderLong(gender),
       sevLabel:pow.label, sevId:pow.id, mul:pow.mul
     };
 
     castScreen.classList.add("hidden");
     result.classList.remove("hidden");
     result.classList.add("show");
+    result.style.opacity="0";
+    result.style.transform="translateY(18px) scale(.98)";
     ctaBar.style.display="none";
+
+    anim({
+      targets:result,
+      opacity:[0,1],
+      translateY:[18,0],
+      scale:[0.98,1],
+      duration:620,
+      easing:"easeOutCubic",
+      complete:()=>{ result.style.opacity=""; result.style.transform=""; }
+    });
+    if(reduced){ result.style.opacity="1"; result.style.transform="none"; }
 
     casting=false;
     cast.disabled=false;
@@ -790,19 +1203,27 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
     castScreen.classList.remove("hidden");
     ctaBar.style.display="";
     victim.value="";
+    gender=null;
+    genderEl.querySelectorAll(".gen").forEach(x=>{
+      x.classList.remove("on");
+      x.setAttribute("aria-checked","false");
+    });
     emptyHint.classList.remove("show");
+    genderHint.classList.remove("show");
     cast.textContent="Скрепить печатью";
-    cast.disabled=false;
-    cast.classList.remove("busy");
-    haptic(8);
-    window.scrollTo({top:0, behavior:reduced?"auto":"smooth"});
+    victim.focus();
   };
 
-  try{
-    const manifest={name:"ПРОКЛИНАТОР",short_name:"Проклинатор",start_url:".",display:"standalone",background_color:"#0E0C0B",theme_color:"#0E0C0B",lang:"ru"};
-    const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});
-    const link=document.createElement("link"); link.rel="manifest"; link.href=URL.createObjectURL(blob); document.head.appendChild(link);
-  }catch(e){}
+  /* Expose build markers for QA */
+  window.__PROKLINATOR_V7 = {
+    version:7,
+    sins:sins.length,
+    verdictsN:verdictsN.length,
+    verdictsM:verdictsM.length,
+    verdictsF:verdictsF.length,
+    three:()=>hasThree(),
+    anime:()=>hasAnime()
+  };
 })();
 </script>
 </body>
