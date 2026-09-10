@@ -37,6 +37,77 @@
   }
   // PRO bullet 2: «Категория „Авторские“ — для вкуса поострее.» → 9th, PRO-gated category; blurb is Freya's own phrase.
   const AUTHOR_CAT = { id: "author", title: "Авторские", blurb: "Для вкуса поострее.", sinBias: ["byt", "ovik"], placeholderWhat: "", pro: true };
+  /* ---------- v20 INTRO copy — DROP-IN POINT for Freya's locked INTRO_COPY (staff paths; not in this repo yet).
+     Keep the shape: key, eyebrow, steps[{id,title,body,note?,cta,alt?,under?,refusal?}], matLocked. Accepted state lives in localStorage[key]. ---------- */
+  const INTRO_COPY = {
+    key: "pk_intro_v20",
+    eyebrow: "Шаг {n} из {total}",
+    steps: [
+      {
+        id: "humor",
+        title: "Это сатира",
+        body: "Проклинатор — развлечение с чёрным юмором. Никаких настоящих проклятий, оккультизма и угроз: только сарказм о привычках, которые всех бесят.",
+        cta: "Дальше"
+      },
+      {
+        id: "rules",
+        title: "Правила игры",
+        body: "«Проклятие» здесь — шутка, а не угроза. Тексты нельзя использовать для реальной травли, запугивания или угроз насилием. Чем и с кем делиться — ваша ответственность.",
+        note: "Полные условия — в Профиле → Документы.",
+        cta: "Принимаю правила"
+      },
+      {
+        id: "age",
+        title: "Возраст",
+        body: "Внутри возможна грубая лексика. С 18 лет — полный доступ. С 16 — вход только с «Без мата»: тумблер будет закреплён.",
+        cta: "Мне есть 18 — войти",
+        alt: "Мне 16–17 — войти без мата",
+        under: "Мне меньше 16",
+        refusal: { title: "Тогда пока", body: "Проклинатор — с 16 лет. Возвращайтесь позже. Мир подождёт.", back: "Назад" }
+      }
+    ],
+    matLocked: "«Без мата» закреплён: вход с 16 лет. Снять можно, пройдя вступление заново (Настройки)."
+  };
+  /* ---------- v20 LEGAL copy — DROP-IN POINT for Tyr §5 (Privacy / Terms / About; not in this repo yet). Nothing personal is filled in:
+     the 149-ФЗ requisites render as a clearly marked placeholder until the owner approves them. ---------- */
+  const LEGAL_COPY = {
+    updated: "Обновлено 10 сентября 2026 · версия v20",
+    draft: "Черновик редакции v20: формулировки уточняются.",
+    // 149-ФЗ (ст. 10 п. 2) owner requisites: a placeholder until approved. Do not fill in personal data here — the block renders «ожидается».
+    requisites: {
+      title: "Реквизиты владельца — ожидаются",
+      law: "149-ФЗ, ст. 10, п. 2",
+      pending: "ожидается",
+      fields: ["Наименование", "Место нахождения", "Адрес", "Электронная почта"],
+      note: "Заполняется после утверждения владельцем. До этого — черновик."
+    },
+    brand: { label: "Издатель (бренд)", name: "Singularity" },
+    contact: { label: "Связь (черновик)", email: "singularitygrimnir@gmail.com" },
+    site: "Сайт",
+    publisher: "Издатель: Singularity. Вопросы — на почту singularitygrimnir@gmail.com (черновик). Реквизиты владельца по 149-ФЗ — ожидаются.",
+    privacy: {
+      title: "Конфиденциальность",
+      sections: [
+        { h: "Где данные", p: "История, избранное, ник, настройки и статистика хранятся только на этом устройстве — в localStorage браузера. Сервера, аккаунтов и синхронизации у Проклинатора нет." },
+        { h: "Чего нет", p: "Аналитики, куки, рекламы и трекеров. Мы не видим, кого вы прокляли." },
+        { h: "Сетевые запросы", p: "При загрузке браузер скачивает две библиотеки анимации с CDN jsDelivr; шрифт и картинки лежат на нашем адресе. CDN и хостинг сайта видят технический запрос — IP-адрес и тип браузера, как любой сайт. Адрес страницы им не передаётся (no-referrer)." },
+        { h: "Картинки и текст", p: "Приговор и картинка 9:16 создаются на устройстве. Куда вы их отправляете — решаете вы; копий мы не получаем." },
+        { h: "Удаление и экспорт", p: "Настройки → «Стереть все данные» удаляет всё локально и сразу. Там же — экспорт истории в JSON." },
+        { h: "Издатель", p: "Singularity (бренд). Реквизиты владельца по 149-ФЗ публикуются в блоке ниже, как только будут утверждены; до этого он помечен как ожидающий." }
+      ],
+      cta: "Открыть настройки данных"
+    },
+    terms: {
+      title: "Условия",
+      sections: [
+        { h: "Что это", p: "Проклинатор — сатирическое развлечение. Тексты — шутки о бытовых привычках, а не настоящие проклятия, не оккультная практика, не угрозы и не оценка личности." },
+        { h: "Что нельзя", p: "Использовать тексты и картинки для травли, запугивания, угроз насилием, дискриминации или преследования реальных людей. Ответственность за то, что и кому вы отправляете, лежит на вас." },
+        { h: "PRO", p: "«Стать легендой» — демо. Оплаты нет: ни платежей, ни подписок, ни списаний. Это локальная демонстрация функций." },
+        { h: "Возраст", p: "С 18 лет — полный доступ, возможна грубая лексика. С 16 до 17 — только режим «Без мата», тумблер закреплён. Младше 16 — приложение не для вас." },
+        { h: "Как есть", p: "Приложение предоставляется «как есть», без гарантий. Тексты и функции могут меняться без предупреждения." }
+      ]
+    }
+  };
   const SHELL = {
     splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200 },
     nav: [
@@ -153,7 +224,8 @@
         "Проклинатор — сатирическое развлечение: чёрный юмор о привычках, которые всех бесят. Не оккультизм, не угрозы, не кадровая процедура.",
         "Слова тоже имеют власть. Опишите ситуацию — остальное наша забота. Один ритуал — одна картинка на телефон, 1080×1920, безопасная зона для историй.",
         "Формула: кто → что случилось → сила сарказма → грех → проклятие → Снять:",
-        "Всё хранится на этом устройстве. Никаких аккаунтов, никакой рекламы, никаких реальных проклятий. 18+."
+        "Всё хранится на этом устройстве. Никаких аккаунтов, никакой рекламы, никаких реальных проклятий. 18+.",
+        "PRO «Стать легендой» — демо. Оплаты нет."
       ],
       whatsNew: {
         title: "Что нового в v20",
@@ -169,65 +241,8 @@
       disclaimer: "Не кадровая процедура. " + (DATA.disclaimer || ""),
       link: "Открыть сайт"
     },
-    // v20 first-launch gate. Accepted state lives in localStorage[intro.key]; Settings → «Показать вступление» clears it.
-    intro: {
-      key: "pk_intro_v20",
-      eyebrow: "Шаг {n} из {total}",
-      steps: [
-        {
-          id: "humor",
-          title: "Это сатира",
-          body: "Проклинатор — развлечение с чёрным юмором. Никаких настоящих проклятий, оккультизма и угроз: только сарказм о привычках, которые всех бесят.",
-          cta: "Дальше"
-        },
-        {
-          id: "rules",
-          title: "Правила игры",
-          body: "«Проклятие» здесь — шутка, а не угроза. Тексты нельзя использовать для реальной травли, запугивания или угроз насилием. Чем и с кем делиться — ваша ответственность.",
-          note: "Полные условия — в Профиле → Документы.",
-          cta: "Принимаю правила"
-        },
-        {
-          id: "age",
-          title: "Возраст",
-          body: "Внутри возможна грубая лексика. С 18 лет — полный доступ. С 16 — вход только с «Без мата»: тумблер будет закреплён.",
-          cta: "Мне есть 18 — войти",
-          alt: "Мне 16–17 — войти без мата",
-          under: "Мне меньше 16",
-          refusal: { title: "Тогда пока", body: "Проклинатор — с 16 лет. Возвращайтесь позже. Мир подождёт.", back: "Назад" }
-        }
-      ],
-      matLocked: "«Без мата» закреплён: вход с 16 лет. Снять можно, пройдя вступление заново (Настройки)."
-    },
-    legal: {
-      updated: "Обновлено 10 сентября 2026 · версия v20",
-      draft: "Черновик редакции v20: формулировки уточняются.",
-      owner: { name: "Singularity", email: "singularitygrimnir@gmail.com", address: "уточняется" },
-      contact: { title: "Контакты", owner: "Владелец", email: "Почта", address: "Адрес", site: "Сайт" },
-      publisher: "Издатель: Singularity. Вопросы и жалобы — на почту singularitygrimnir@gmail.com.",
-      privacy: {
-        title: "Конфиденциальность",
-        sections: [
-          { h: "Где данные", p: "История, избранное, ник, настройки и статистика хранятся только на этом устройстве — в localStorage браузера. Сервера, аккаунтов и синхронизации у Проклинатора нет." },
-          { h: "Чего нет", p: "Аналитики, куки, рекламы и трекеров. Мы не видим, кого вы прокляли." },
-          { h: "Сетевые запросы", p: "При загрузке браузер скачивает две библиотеки анимации с CDN jsDelivr; шрифт и картинки лежат на нашем адресе. CDN и хостинг сайта видят технический запрос — IP-адрес и тип браузера, как любой сайт. Адрес страницы им не передаётся (no-referrer)." },
-          { h: "Картинки и текст", p: "Приговор и картинка 9:16 создаются на устройстве. Куда вы их отправляете — решаете вы; копий мы не получаем." },
-          { h: "Удаление и экспорт", p: "Настройки → «Стереть все данные» удаляет всё локально и сразу. Там же — экспорт истории в JSON." },
-          { h: "Издатель", p: "Singularity. Связь — по почте из блока контактов ниже." }
-        ],
-        cta: "Открыть настройки данных"
-      },
-      terms: {
-        title: "Условия",
-        sections: [
-          { h: "Что это", p: "Проклинатор — сатирическое развлечение. Тексты — шутки о бытовых привычках, а не настоящие проклятия, не оккультная практика, не угрозы и не оценка личности." },
-          { h: "Что нельзя", p: "Использовать тексты и картинки для травли, запугивания, угроз насилием, дискриминации или преследования реальных людей. Ответственность за то, что и кому вы отправляете, лежит на вас." },
-          { h: "PRO", p: "«Стать легендой» — демо. Оплаты нет: ни платежей, ни подписок, ни списаний. Это локальная демонстрация функций." },
-          { h: "Возраст", p: "С 18 лет — полный доступ, возможна грубая лексика. С 16 до 17 — только режим «Без мата», тумблер закреплён. Младше 16 — приложение не для вас." },
-          { h: "Как есть", p: "Приложение предоставляется «как есть», без гарантий. Тексты и функции могут меняться без предупреждения." }
-        ]
-      }
-    },
+    intro: INTRO_COPY,
+    legal: LEGAL_COPY,
     share: {
       disclaimer: "Сатира. Не проклятие и не угроза. 18+",
       saved: "Картинка сохранена. Кидай в чат.",
@@ -3370,29 +3385,49 @@
     a.classList.toggle("hidden", !APP_URL);
     if(APP_URL) a.href = APP_URL; else a.removeAttribute("href");
   }
-  // Owner / contact block shared by About and both legal pages. Every value is static copy (SHELL.legal.owner).
+  // Owner block shared by About and both legal pages: the 149-ФЗ requisites as a clearly marked placeholder («ожидается» per field),
+  // then the brand and the draft contact e-mail. Every value is static copy (LEGAL_COPY); nothing personal is rendered.
   function contactCard(){
-    const L = SHELL.legal, o = L.owner;
+    const L = SHELL.legal, R = L.requisites;
     const card = document.createElement("div");
-    card.className = "card contact";
-    const row = function(label, value, href){
+    card.className = "card contact requisites";
+    const head = document.createElement("div");
+    head.className = "req-head";
+    const title = document.createElement("b"), law = document.createElement("span");
+    title.textContent = R.title;
+    law.className = "tag gold";
+    law.textContent = R.law;
+    head.appendChild(title);
+    head.appendChild(law);
+    card.appendChild(head);
+    const row = function(label, value, href, pending){
       const p = document.createElement("p");
+      if(pending) p.className = "pending";
       const b = document.createElement("b"), s = document.createElement("span");
       b.textContent = label;
       if(href){
         const a = document.createElement("a");
         a.href = href;
         a.rel = "noopener noreferrer";
-        a.textContent = value;
+        const at = value.indexOf("@");
+        if(at > 0){   // let a long e-mail wrap before the «@» instead of mid-word
+          a.appendChild(document.createTextNode(value.slice(0, at)));
+          a.appendChild(document.createElement("wbr"));
+          a.appendChild(document.createTextNode(value.slice(at)));
+        } else a.textContent = value;
         s.appendChild(a);
       } else s.textContent = value;
       p.appendChild(b); p.appendChild(s);
       card.appendChild(p);
     };
-    row(L.contact.owner, o.name);
-    row(L.contact.email, o.email, "mailto:" + o.email);
-    row(L.contact.address, o.address);
-    if(APP_HOST) row(L.contact.site, APP_HOST, APP_URL);
+    R.fields.forEach(function(f){ row(f, R.pending, null, true); });
+    const note = document.createElement("p");
+    note.className = "req-note";
+    note.textContent = R.note;
+    card.appendChild(note);
+    row(L.brand.label, L.brand.name);
+    row(L.contact.label, L.contact.email, "mailto:" + L.contact.email);
+    if(APP_HOST) row(L.site, APP_HOST, APP_URL);
     return card;
   }
   function renderLegal(kind){
