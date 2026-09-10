@@ -9,9 +9,18 @@
 <meta name="apple-mobile-web-app-title" content="ПРОКЛИНАТОР"/>
 <meta name="application-name" content="ПРОКЛИНАТОР"/>
 <meta name="description" content="Канцелярия личной печати. Имя → сила → грех. Один удар — одна картинка на телефон."/>
+<meta property="og:title" content="ПРОКЛИНАТОР"/>
+<meta property="og:description" content="Канцелярия личной печати. Имя → сила → грех. Один удар — одна картинка на телефон."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230E0C0B'/%3E%3Ccircle cx='600' cy='300' r='120' fill='none' stroke='%23C45C26' stroke-width='4'/%3E%3Ccircle cx='600' cy='300' r='70' fill='none' stroke='%23C45C26' stroke-width='2.5' opacity='.7'/%3E%3Ccircle cx='600' cy='300' r='18' fill='%23C45C26'/%3E%3Ctext x='600' y='520' text-anchor='middle' fill='%23F2EBE0' font-family='system-ui,sans-serif' font-size='48' font-weight='700' letter-spacing='12'>ПРОКЛИНАТОР%3C/text%3E%3C/svg%3E"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="ПРОКЛИНАТОР"/>
+<meta name="twitter:description" content="Канцелярия личной печати. Имя → сила → грех. Один удар — одна картинка на телефон."/>
 <title>ПРОКЛИНАТОР</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230E0C0B'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23C45C26' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='32' r='10' fill='none' stroke='%23C45C26' stroke-width='1' opacity='.7'/%3E%3Ccircle cx='32' cy='32' r='2.5' fill='%23C45C26'/%3E%3C/svg%3E"/>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%230E0C0B'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23C45C26' stroke-width='3'/%3E%3Ccircle cx='90' cy='90' r='28' fill='none' stroke='%23C45C26' stroke-width='2' opacity='.7'/%3E%3Ccircle cx='90' cy='90' r='7' fill='%23C45C26'/%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
 <style>
@@ -157,18 +166,27 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .pow[data-id="seal"].on .seal .dot{fill:var(--amber)}
 .pow[data-id="seal"].on .seal .ring-s{stroke:var(--amber);opacity:1}
 .pow[data-id="anathema"].on{
-  border-color:rgba(255,42,26,.65);color:var(--bone-text);
-  background:linear-gradient(105deg,rgba(255,42,26,.2),var(--soot) 55%);
-  box-shadow:inset 0 0 0 1px rgba(255,42,26,.45),0 0 32px rgba(255,42,26,.22);
+  border-color:rgba(255,42,26,.7);color:var(--bone-text);
+  background:linear-gradient(105deg,rgba(255,42,26,.24),var(--soot) 55%);
+  box-shadow:inset 0 0 0 1px rgba(255,42,26,.5),0 0 36px rgba(255,42,26,.28),0 0 64px rgba(255,42,26,.12);
+  animation:anathemaBreathe 2.3s ease-in-out infinite;
 }
 .pow[data-id="anathema"].on::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 80% at 12% 50%,rgba(255,42,26,.28),transparent 70%);
-  animation:innerPulse 1.4s ease-in-out infinite;
+  background:radial-gradient(ellipse 70% 80% at 12% 50%,rgba(255,42,26,.34),transparent 70%);
+  animation:innerPulse 1.2s ease-in-out infinite;
 }
 .pow[data-id="anathema"].on .seal .dot{fill:var(--blood)}
 .pow[data-id="anathema"].on .seal .ring-s{stroke:var(--blood);opacity:1}
 @keyframes innerPulse{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes anathemaBreathe{
+  0%,100%{transform:scale(1);box-shadow:inset 0 0 0 1px rgba(255,42,26,.5),0 0 28px rgba(255,42,26,.22),0 0 52px rgba(255,42,26,.1)}
+  50%{transform:scale(1.04);box-shadow:inset 0 0 0 1px rgba(255,42,26,.65),0 0 44px rgba(255,42,26,.4),0 0 80px rgba(255,42,26,.18)}
+}
+/* idle power preview glow */
+.pow[data-id="whisper"]:not(.on){box-shadow:0 0 12px rgba(139,115,85,.06)}
+.pow[data-id="seal"]:not(.on){box-shadow:0 0 14px rgba(196,92,38,.08)}
+.pow[data-id="anathema"]:not(.on){box-shadow:0 0 16px rgba(255,42,26,.1);border-color:rgba(255,42,26,.22)}
 .home-hint{
   margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
   font-size:14px;color:var(--faint);line-height:1.5;
@@ -199,8 +217,12 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
   opacity:.08;pointer-events:none;
 }
-.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;font-weight:700}
-.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-weight:700}
+.cursed-name{
+  margin:0 0 12px;font-size:clamp(28px,7.2vw,36px);line-height:1.15;font-weight:800;
+  letter-spacing:.02em;color:var(--bone-text);word-break:break-word;
+}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px;align-items:center}
 .gender-tag,.power-tag{
   display:inline-block;padding:6px 12px;border-radius:999px;
   border:1px solid rgba(242,235,224,.22);color:var(--muted);font-size:13px;
@@ -209,8 +231,15 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .power-tag{border-color:rgba(196,92,38,.4);color:var(--amber)}
 .power-tag[data-power="whisper"]{border-color:rgba(139,115,85,.45);color:var(--whisper)}
 .power-tag[data-power="anathema"]{border-color:rgba(255,42,26,.5);color:var(--blood)}
+.stamp-mark{
+  width:56px;height:56px;margin:0 0 16px;opacity:0;transform:scale(2.4) rotate(-12deg);
+  display:grid;place-items:center;
+}
+.stamp-mark svg{width:100%;height:100%;display:block}
 .block{margin:0 0 18px;padding:14px 0 0;border-top:1px solid var(--line)}
 .block:first-of-type{border-top:0;padding-top:0}
+.block.sin-block{padding-top:0;border-top:0;margin-bottom:12px}
+.block.punch-block{border-top:0;padding-top:4px;margin-bottom:20px}
 .block-label{
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--amber);font-weight:700;margin:0 0 8px;
@@ -219,7 +248,25 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   margin:0 0 10px;font-size:14px;line-height:1.45;color:var(--faint);font-weight:400;
 }
 .block-body{margin:0;font-size:17px;line-height:1.5;color:var(--bone-text);font-weight:500}
-.block.lift .block-body{color:var(--muted);font-size:16px;font-weight:400}
+.block.punch-block .block-body{
+  font-size:clamp(20px,5.2vw,24px);line-height:1.4;font-weight:650;
+  letter-spacing:.01em;color:var(--bone-text);
+}
+.block.lift .block-body{color:var(--muted);font-size:15px;font-weight:400;line-height:1.5}
+.verdict.flash-anathema{
+  animation:anaFlash .55s var(--ease);
+}
+@keyframes anaFlash{
+  0%{box-shadow:inset 0 0 0 0 transparent}
+  18%{box-shadow:inset 0 0 80px rgba(255,42,26,.35),0 0 40px rgba(255,42,26,.25);border-color:rgba(255,42,26,.7)}
+  100%{box-shadow:inset 0 0 0 0 transparent}
+}
+.red-flash{
+  position:fixed;inset:0;z-index:60;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse 80% 70% at 50% 40%,rgba(255,42,26,.45),transparent 70%);
+}
+.red-flash.on{animation:redFlashBurst .48s ease-out forwards}
+@keyframes redFlashBurst{0%{opacity:.85}100%{opacity:0}}
 .actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
 .actions button{
   min-height:52px;border-radius:14px;border:1px solid var(--bone);
@@ -269,17 +316,29 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 .overlay.on{display:flex}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .seal-stage{
-  width:132px;height:132px;position:relative;z-index:2;display:grid;place-items:center;
-  transform:scale(.86);opacity:.9;
+  width:168px;height:168px;position:relative;z-index:2;display:grid;place-items:center;
+  transform:scale(.92);opacity:.9;
 }
+.seal-stage[data-power="whisper"]{width:148px;height:148px}
+.seal-stage[data-power="seal"]{width:168px;height:168px}
+.seal-stage[data-power="anathema"]{width:196px;height:196px}
 .seal-stage.svg-fallback{display:grid}
 .seal-stage.three-mode{opacity:0;pointer-events:none;position:absolute;width:1px;height:1px;overflow:hidden}
 .seal-stage svg{width:100%;height:100%}
 .seal-stage .spin{animation:sealSpin 8s linear infinite;transform-origin:center}
 .chant{
-  position:relative;z-index:2;color:var(--muted);font-size:16px;
-  text-align:center;min-height:1.4em;letter-spacing:.02em;max-width:300px;line-height:1.45;
+  position:relative;z-index:2;color:var(--bone-text);font-size:clamp(18px,4.6vw,22px);
+  text-align:center;min-height:1.5em;letter-spacing:.02em;max-width:340px;line-height:1.4;
+  font-weight:550;text-shadow:0 0 24px rgba(196,92,38,.25);
 }
+.progress-wrap.power-whisper .progress-bar{background:var(--whisper)}
+.progress-wrap.power-seal .progress-bar{background:var(--amber)}
+.progress-wrap.power-anathema .progress-bar{
+  background:var(--blood);
+  box-shadow:0 0 12px rgba(255,42,26,.55);
+  animation:progPulse 0.7s ease-in-out infinite;
+}
+@keyframes progPulse{0%,100%{opacity:.7}50%{opacity:1}}
 .progress-wrap{
   position:relative;z-index:2;width:min(240px,65vw);height:2px;
   background:rgba(242,235,224,.1);overflow:hidden;
@@ -300,6 +359,8 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .mark .ring,.seal-stage .spin{animation:none!important}
+  .pow[data-id="anathema"].on,.pow[data-id="anathema"].on::after{animation:none!important;transform:none!important}
+  .progress-wrap.power-anathema .progress-bar{animation:none!important}
   .cta-bar-inner::before{opacity:.5}
   input.pulse-inner,.gen.pulse-err{box-shadow:0 0 0 3px rgba(196,92,38,.32);border-color:var(--amber)}
   .verdict.show{opacity:1;transform:none}
@@ -367,15 +428,27 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 
   <section class="verdict screen-result hidden" id="result" aria-live="polite">
     <div class="eyebrow">Приговор</div>
+    <h2 class="cursed-name" id="vName"></h2>
     <div class="meta-row">
-      <div class="gender-tag" id="vGender"></div>
       <div class="power-tag" id="vPower"></div>
+      <div class="gender-tag" id="vGender"></div>
     </div>
-    <div class="block">
+    <div class="stamp-mark" id="stampMark" aria-hidden="true">
+      <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="24" stroke="#C45C26" stroke-width="1.6"/>
+        <circle cx="28" cy="28" r="15" stroke="#C45C26" stroke-width="1.2" opacity=".75"/>
+        <circle cx="28" cy="28" r="4.5" fill="#C45C26"/>
+        <line x1="28" y1="4" x2="28" y2="12" stroke="#C45C26" stroke-width="1.4"/>
+        <line x1="28" y1="44" x2="28" y2="52" stroke="#C45C26" stroke-width="1.4"/>
+        <line x1="4" y1="28" x2="12" y2="28" stroke="#C45C26" stroke-width="1.4"/>
+        <line x1="44" y1="28" x2="52" y2="28" stroke="#C45C26" stroke-width="1.4"/>
+      </svg>
+    </div>
+    <div class="block sin-block">
       <div class="block-label" id="lblSin"></div>
       <p class="block-body" id="vSin"></p>
     </div>
-    <div class="block">
+    <div class="block punch-block">
       <div class="block-label" id="lblPunch"></div>
       <p class="block-setup" id="vSetup" hidden></p>
       <p class="block-body" id="vPunch"></p>
@@ -385,11 +458,13 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
       <p class="block-body" id="vLift"></p>
     </div>
     <div class="actions">
-      <button type="button" class="primary" id="saveBtn"></button>
+      <button type="button" class="primary" id="copyCurseBtn">Скопировать проклятие</button>
+      <button type="button" id="saveBtn"></button>
       <button type="button" id="shareBtn"></button>
       <button type="button" id="againBtn"></button>
     </div>
   </section>
+  <div class="red-flash" id="redFlash" aria-hidden="true"></div>
 
   <p class="disclaimer">Это шутка. Не кадровая процедура и не юридический документ.</p>
 </main>
@@ -422,7 +497,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
 
 <script>
 (function(){
-  const DATA = {"version":"v13","owner":"Мия","date":"2026-09-10","formula":"грех → сетап → проклятие×сила → Снять:","notes":"v13 PRODUCTION: панч и ритуал зависят от силы. Шёпот / Печать / Анафема. Голос «Проклятие — …». Мат/пошлость на Анафеме ок. Бренд не светить.","header":"Канцелярия личной печати","subheader":"Имя → сила → грех. Один удар — одна картинка на телефон.","namePlaceholder":"Кого проклинаем?","gender":{"m":"Мужской","f":"Женский","n":"Без пола"},"emptyName":"Сначала имя.","emptyGender":"Выбери пол — строки сойдутся.","cta":"Скрепить печатью","busy":"Печать тлеет…","toastOk":"Печать легла.","toastShare":"Карточка готова. Кидай в чат.","toastCopy":"Текст скопирован.","after":["Сохранить картинку","Поделиться","Ещё ритуал"],"verdictBlocks":["Грех","Приговор","Снять"],"powers":[{"id":"whisper","label":"Шёпот","desc":"лёгкая порча: стеб мягче, ещё можно отмахнуться","fx":"soft"},{"id":"seal","label":"Печать","desc":"приговор на виду: эталонный удар","fx":"mid"},{"id":"anathema","label":"Анафема","desc":"в лоб: жёстко, пошло, хлёстко","fx":"hard"}],"ritual":["Открываем дело на {имя}…","Сверяем пол.","Берём силу…","Достаём грех из живых привычек…","Печать греется.","Пишем, что сделал(а)…","Пишем, чем аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно кинуть в чат."],"sins":[{"id":1,"category":"byt","name":"Постоянный пиздеж","blurb":"хлещет словами, дела не видно"},{"id":2,"category":"byt","name":"Пустые обещания","blurb":"пообещал(а) — и забил(а)"},{"id":3,"category":"byt","name":"Уже выхожу","blurb":"пишет «уже выхожу», а ещё в душе"},{"id":4,"category":"byt","name":"Вечно «щас»","blurb":"говорит «сейчас» и исчезает на час"},{"id":5,"category":"byt","name":"Прочитал — молчит","blurb":"две галочки, ответа нет днями"},{"id":6,"category":"byt","name":"Громко жуёт","blurb":"хруст на весь вагон"},{"id":7,"category":"byt","name":"Перебивает","blurb":"не даёт договорить вторую фразу"},{"id":8,"category":"byt","name":"Спойлерит","blurb":"убивает финал чужого фильма"},{"id":9,"category":"byt","name":"На день","blurb":"взял(а) «на день», держит неделями"},{"id":10,"category":"byt","name":"Басы наружу","blurb":"наушники орют на три сиденья"},{"id":11,"category":"byt","name":"Фото еды","blurb":"снимает вечность, суп стынет"},{"id":12,"category":"byt","name":"Мокрый пол","blurb":"после душа пол — каток"},{"id":13,"category":"byt","name":"Кружка «потом»","blurb":"не моет, растёт археология"},{"id":14,"category":"byt","name":"Сортир без бумаги","blurb":"ушёл(ушла), рулона нет"},{"id":15,"category":"byt","name":"Звонок в три","blurb":"«ты не спишь?» среди ночи"},{"id":16,"category":"byt","name":"Чужой контейнер","blurb":"«чуть-чуть» — контейнер пуст"},{"id":17,"category":"byt","name":"Ответил «ок»","blurb":"на абзац души — две буквы"},{"id":18,"category":"byt","name":"Ломает планы","blurb":"«давай завтра» в последний миг"},{"id":19,"category":"byt","name":"Голосовое на три минуты","blurb":"вместо двух строк"},{"id":20,"category":"byt","name":"Стикером на серьёзное","blurb":"картинкой на боль"},{"id":21,"category":"byt","name":"Видео без наушников","blurb":"короткие ролики вслух, сосед в заложниках"},{"id":22,"category":"byt","name":"Будильник орёт — спит","blurb":"всех поднял(а), сам(а) дальше спит"},{"id":23,"category":"byt","name":"Пятиминутка","blurb":"созвон «на пять» съел час"},{"id":24,"category":"byt","name":"Почти готово","blurb":"«почти» третий месяц"},{"id":25,"category":"byt","name":"Спорит до победы","blurb":"даже когда уже не прав(а)"},{"id":26,"category":"byt","name":"Нытик","blurb":"погода, люди, судьба — всё против"},{"id":27,"category":"byt","name":"Письмо всем","blurb":"копия пол-отдела без нужды"},{"id":28,"category":"byt","name":"Правки после «да»","blurb":"вернул(а) правки после утверждения"},{"id":29,"category":"ovik","name":"Временная схема","blurb":"времянка на годы, уже в паспорте"},{"id":30,"category":"ovik","name":"В смету не влезло","blurb":"фильтры вырезали первыми"},{"id":31,"category":"ovik","name":"Это не наша зона","blurb":"мяч по кругу: вентиляция ↔ электрика"},{"id":32,"category":"ovik","name":"По проекту можно","blurb":"на бумаге — да, на монтаже — лыжи"},{"id":33,"category":"ovik","name":"Включили — шумит","blurb":"пуск без замеров, «характер» установки"},{"id":34,"category":"ovik","name":"Фильтры потом","blurb":"криво / забыли / «поменяем после сдачи»"},{"id":35,"category":"ovik","name":"Короб пошёл не туда","blurb":"в проекте прямо, по факту — змея"},{"id":36,"category":"ovik","name":"Ручной режим навсегда","blurb":"щит есть, логики нет"},{"id":37,"category":"ovik","name":"Конденсат на чужой","blurb":"капает на соседний потолок"},{"id":38,"category":"ovik","name":"Зимой на кровле","blurb":"срок горит — лезьте в мороз"},{"id":39,"category":"ovik","name":"Решётки задом","blurb":"вставили наоборот, «тяга есть»"},{"id":40,"category":"ovik","name":"Пуск перед комиссией","blurb":"завтра приёмка — сегодня схема"}],"verdicts":{"N":[{"id":"N1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"N2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал(а)."},{"id":"N3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а тело всё ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"N4","sinId":4,"setup":"Сказал(а) «щас».","punch":{"whisper":"Проклятие вечного «щас» — минута растянется в час ожидания.","seal":"Проклятие вечного «щас» — ожидание сожрёт нервы.","anathema":"Проклятие вечного «щас» — ожидание выжрет нервы к хуям, останется пустой чат."},"lift":"Снять: явиться за десять минут."},{"id":"N5","sinId":5,"setup":"Прочитано. Тишина.","punch":{"whisper":"Проклятие двух галочек — ответ придёт, но совесть уже чешется.","seal":"Проклятие двух галочек без ответа — совесть орёт громче уведомлений.","anathema":"Проклятие двух галочек без ответа — совесть орёт, пальцы в жопе, дни летят."},"lift":"Снять: ответить в тот же день."},{"id":"N6","sinId":6,"setup":"Хруст на весь вагон.","punch":{"whisper":"Проклятие — челюсть щёлкнет громче хруста, когда рядом люди.","seal":"Проклятие — челюсть заедает на каждом хрусте при людях.","anathema":"Проклятие — челюсть клинит на каждом хрусте, пока весь вагон не встанет смотреть."},"lift":"Снять: жевать с закрытым ртом."},{"id":"N7","sinId":7,"setup":"Не дал(а) договорить.","punch":{"whisper":"Проклятие перебивалы — мысль оборвётся ровно на интересном месте.","seal":"Проклятие перебивалы — собственная мысль обрывается на полуслове.","anathema":"Проклятие перебивалы — язык сам обломается на полуслове, сам(а) себя перебьёшь в пустоту."},"lift":"Снять: дослушать до точки."},{"id":"N8","sinId":8,"setup":"Финал вслух.","punch":{"whisper":"Проклятие спойлера — финал узнают раньше титров, и смотреть стыдно.","seal":"Проклятие спойлера — все чужие финалы узнают раньше него/неё.","anathema":"Проклятие спойлера — финал плюнет ему/ей в лицо раньше титров, и всем заодно."},"lift":"Снять: рот на замок до титров."},{"id":"N9","sinId":9,"setup":"Взял(а) «на день».","punch":{"whisper":"Проклятие «на день» — чужое задержится, своё начнёт пропадать.","seal":"Проклятие чужой вещи «на день» — своё пропадёт навсегда.","anathema":"Проклятие чужой вещи «на день» — своё сгинет нахуй и всплывёт у того, кому «на денёк»."},"lift":"Снять: вернуть лично и в срок."},{"id":"N10","sinId":10,"setup":"Басы на три сиденья.","punch":{"whisper":"Проклятие басов наружу — соседи крутанут громкость за него/неё.","seal":"Проклятие басов наружу — соседи решат громкость за него/неё.","anathema":"Проклятие басов наружу — соседи выкрутят громкость, пока уши не сдадут смену."},"lift":"Снять: звук только себе."},{"id":"N11","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"N12","sinId":12,"setup":"После душа — каток.","punch":{"whisper":"Проклятие мокрого пола — сам(а) первым(ой) поскользнёшься на своём катке.","seal":"Проклятие мокрого пола — сам(а) первым(ой) поскользнётся.","anathema":"Проклятие мокрого пола — сам(а) ёбнешься на своём катке при полном зале свидетелей."},"lift":"Снять: вытереть досуха."},{"id":"N13","sinId":13,"setup":"Кружка третий день.","punch":{"whisper":"Проклятие «потом» — кружка дождётся плесени раньше мытья.","seal":"Проклятие «потом» — плесень подпишет приговор.","anathema":"Проклятие «потом» — плесень подпишет приговор и запрёт кружку в музей срама."},"lift":"Снять: помыть сегодня."},{"id":"N14","sinId":14,"setup":"Рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — застанет без бумаги в самый момент.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"N15","sinId":15,"setup":"Звонок в три.","punch":{"whisper":"Проклятие ночного «ты не спишь?» — сон станет редким гостем.","seal":"Проклятие ночного «ты не спишь?» — сон уйдёт насовсем.","anathema":"Проклятие ночного «ты не спишь?» — сон сдохнет; сам(а) станешь этим звонком в три."},"lift":"Снять: писать днём."},{"id":"N16","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — свой всегда будет пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену."},{"id":"N17","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетят две буквы вместо мысли.","seal":"Проклятие ответа «ок» — на важное приходит одна пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"N18","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — его/её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — его/её самого(у) кинут в последний миг.","anathema":"Проклятие ломаных планов — его/её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"N19","sinId":19,"setup":"Голосовое на три минуты.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — суть тонет в ветре и кашле.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"N20","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"N21","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"N22","sinId":22,"setup":"Будильник орёт — спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его/её — последним(ей).","seal":"Проклятие чужого будильника — сам(а) не проспит ни разу спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"N23","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"N24","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание в неё."},{"id":"N25","sinId":25,"setup":"Спорит из принципа.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — победит тишина и все уйдут.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: один раз сказать «ладно, ты прав(а)»."},{"id":"N26","sinId":26,"setup":"Всё против.","punch":{"whisper":"Проклятие нытья — жалобы вернутся эхом без одного сочувствия.","seal":"Проклятие нытья — жалобы вернутся бумерангом без слушателя.","anathema":"Проклятие нытья — жалобы вернутся бумерангом: слушателей ноль, пиздеца полно."},"lift":"Снять: день без жалобы вслух."},{"id":"N27","sinId":27,"setup":"Копия пол-отдела.","punch":{"whisper":"Проклятие письма «всем» — ответит толпа, а делать будет некому.","seal":"Проклятие письма «всем» — ответит толпа, а дела — ноль.","anathema":"Проклятие письма «всем» — ответит толпа пиздежом, дела — ноль целых ноль десятых."},"lift":"Снять: одному адресату."},{"id":"N28","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — «да» всегда будет черновиком.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"N29","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — она впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"N30","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"N31","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа останется общей и вечной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону на себя."},{"id":"N32","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо него/неё.","seal":"Проклятие пуска без замеров — шум станет единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."}],"M":[{"id":"M1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"M2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал."},{"id":"M3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а он ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"M4","sinId":14,"setup":"Вышел — рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — его застанет без бумаги.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"M5","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — его холодильник всегда пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену в тот же день."},{"id":"M6","sinId":19,"setup":"Голосовое вместо двух строк.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — его суть тонет в ветре.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"M7","sinId":22,"setup":"Будильник орёт — он спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его — последним.","seal":"Проклятие чужого будильника — сам не проспит спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"M8","sinId":25,"setup":"Спорит, хотя неправ.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — все уйдут, а он останется с правотой.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: сказать «ладно, ты права» и замолчать."},{"id":"M9","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"M10","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа будет его личной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону и вытереть."},{"id":"M11","sinId":32,"setup":"По бумаге можно.","punch":{"whisper":"Проклятие «по проекту можно» — на бумаге да, на монтаже — сюрприз.","seal":"Проклятие «по проекту можно» — на монтаже встанет в лыжи.","anathema":"Проклятие «по проекту можно» — на монтаже уедет в лыжи, «можно» останется в пдф."},"lift":"Снять: чертёж, который можно смонтировать."},{"id":"M12","sinId":35,"setup":"Короб — змея.","punch":{"whisper":"Проклятие короба не туда — метр тихо соврёт чертежу.","seal":"Проклятие короба не туда — каждый метр врёт чертежу.","anathema":"Проклятие короба не туда — змея пойдёт мимо чертежа, метр соврёт в лицо."},"lift":"Снять: короб по проекту."},{"id":"M13","sinId":36,"setup":"Щит без логики.","punch":{"whisper":"Проклятие ручного режима — палец устанет думать за щит.","seal":"Проклятие ручного режима навсегда — палец устанет за систему.","anathema":"Проклятие ручного режима — палец отвалится жать за систему, щит отомстит ночью."},"lift":"Снять: щит думает сам."},{"id":"M14","sinId":38,"setup":"Мороз, кровля, «лезьте».","punch":{"whisper":"Проклятие зимы на кровле — график утащит в минус вместе с пальцами.","seal":"Проклятие зимы на кровле — график сам полезет в минус.","anathema":"Проклятие зимы на кровле — график в минус, пальцы дубеют, героизм никто не оплатит."},"lift":"Снять: монтаж без героизма в мороз."},{"id":"M15","sinId":39,"setup":"Решётки задом.","punch":{"whisper":"Проклятие решёток задом — тяга будет, воздуха — в стену.","seal":"Проклятие решёток задом — «тяга есть» дует в стену.","anathema":"Проклятие решёток задом — тяга дует в стену; свежий воздух только для бетона."},"lift":"Снять: лицом к воздуху."},{"id":"M16","sinId":40,"setup":"Завтра комиссия.","punch":{"whisper":"Проклятие пуска перед комиссией — схема соберётся в панике и вспотеет.","seal":"Проклятие пуска перед комиссией — схема родится в панике.","anathema":"Проклятие пуска перед комиссией — схема соберётся в панике за ночь и развалится на глазах."},"lift":"Снять: пуск за день, с замерами."}],"F":[{"id":"F1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"F2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещала."},{"id":"F3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а она ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"F4","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше её кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"F5","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетит пустота в две буквы.","seal":"Проклятие ответа «ок» — на важное ей приходит пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"F6","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — её кинут в последний миг.","anathema":"Проклятие ломаных планов — её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"F7","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"F8","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — её алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"F9","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — её час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"F10","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание."},{"id":"F11","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — её «да» всегда черновик.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"F12","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"F13","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на её пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"F14","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо неё.","seal":"Проклятие пуска без замеров — шум станет её единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."},{"id":"F15","sinId":34,"setup":"Фильтры «потом».","punch":{"whisper":"Проклятие фильтров «потом» — «потом» приедет уже с претензией.","seal":"Проклятие фильтров потом — «потом» придёт после потопа.","anathema":"Проклятие фильтров потом — «потом» припрётся после потопа и чужого потолка."},"lift":"Снять: фильтры до пуска."},{"id":"F16","sinId":37,"setup":"Капает на чужой.","punch":{"whisper":"Проклятие конденсата на чужой — капля найдёт соседний потолок.","seal":"Проклятие конденсата на чужой — лужа придёт к ней домой.","anathema":"Проклятие конденсата на чужой — лужа приползёт к ней домой и устроит потоп лично ей."},"lift":"Снять: в свою трубу до чужого потолка."}]},"shareCaptions":{"bySinId":{"1":{"top":"ПОСТОЯННЫЙ ПИЗДЕЖ","mid":"ОСТАНОВИЛСЯ ЖЕЛУДОК","bottom":"Снять: заткнуться и сделать"},"2":{"top":"ПУСТЫЕ ОБЕЩАНИЯ","mid":"НЕ ВЫПОЛНЕННЫХ ЗАДАЧ","bottom":"Снять: сделать обещанное"},"3":{"top":"УЖЕ ВЫХОЖУ","mid":"УЖЕ — НА ЯЗЫКЕ","bottom":"Снять: текст с улицы"},"4":{"top":"ВЕЧНО «ЩАС»","mid":"ОЖИДАНИЕ СОЖРЁТ НЕРВЫ","bottom":"Снять: за 10 минут"},"5":{"top":"ПРОЧИТАЛ — МОЛЧИТ","mid":"ГАЛОЧКИ БЕЗ ОТВЕТА","bottom":"Снять: ответ в тот же день"},"6":{"top":"ГРОМКО ЖУЁТ","mid":"ЧЕЛЮСТЬ ЗАЕДАЕТ","bottom":"Снять: закрытый рот"},"7":{"top":"ПЕРЕБИВАЕТ","mid":"МЫСЛЬ ОБРЫВАЕТСЯ","bottom":"Снять: до точки"},"8":{"top":"СПОЙЛЕРИТ","mid":"ФИНАЛ РАНЬШЕ ВСЕХ","bottom":"Снять: рот до титров"},"9":{"top":"НА ДЕНЬ","mid":"ЧУЖОЕ НАВСЕГДА","bottom":"Снять: вернуть в срок"},"10":{"top":"БАСЫ НАРУЖУ","mid":"ГРОМКОСТЬ ЗА НЕГО","bottom":"Снять: только себе"},"11":{"top":"ФОТО ЕДЫ","mid":"ЕДА ОСТЫНЕТ РАНЬШЕ","bottom":"Снять: один кадр — и есть"},"12":{"top":"МОКРЫЙ ПОЛ","mid":"ПЕРВЫМ ПОСКОЛЬЗНЁТСЯ","bottom":"Снять: вытереть досуха"},"13":{"top":"КРУЖКА «ПОТОМ»","mid":"ПЛЕСЕНЬ ПОДПИШЕТ","bottom":"Снять: помыть сегодня"},"14":{"top":"СОРТИР БЕЗ БУМАГИ","mid":"ЗАСТАНЕТ БЕЗ БУМАГИ","bottom":"Снять: глянуть на рулон"},"15":{"top":"ЗВОНОК В ТРИ","mid":"СОН УЙДЁТ НАСОВСЕМ","bottom":"Снять: писать днём"},"16":{"top":"ЧУЖОЙ КОНТЕЙНЕР","mid":"СВОЙ ВСЕГДА ПУСТ","bottom":"Снять: купить замену"},"17":{"top":"ОТВЕТИЛ «ОК»","mid":"НА ВАЖНОЕ — ПУСТОТА","bottom":"Снять: целое предложение"},"18":{"top":"ЛОМАЕТ ПЛАНЫ","mid":"КИНУТ В ПОСЛЕДНИЙ МИГ","bottom":"Снять: за три часа"},"19":{"top":"ГОЛОСОВОЕ НА ТРИ","mid":"СУТЬ ТОНЕТ В ВЕТРЕ","bottom":"Снять: сначала две строки"},"20":{"top":"СТИКЕРОМ НА БОЛЬ","mid":"В ОТВЕТ — ПОШЛОСТЬ","bottom":"Снять: словами"},"21":{"top":"ВИДЕО БЕЗ НАУШНИКОВ","mid":"АЛГОРИТМ ОРЁТ","bottom":"Снять: наушники"},"22":{"top":"БУДИЛЬНИК ОРЁТ","mid":"САМ НЕ ПРОСПИТ","bottom":"Снять: с первым сигналом"},"23":{"top":"ПЯТИМИНУТКА","mid":"ЧАС СГОРИТ БЕЗ ИТОГА","bottom":"Снять: пять по таймеру"},"24":{"top":"ПОЧТИ ГОТОВО","mid":"ГОТОВОЕ НЕ НАСТУПИТ","bottom":"Снять: честная дата"},"25":{"top":"СПОРИТ ДО ПОБЕДЫ","mid":"ПОБЕДИТ ТИШИНА","bottom":"Снять: «ладно, ты прав(а)»"},"26":{"top":"НЫТИК","mid":"ЖАЛОБЫ БУМЕРАНГОМ","bottom":"Снять: день без жалобы"},"27":{"top":"ПИСЬМО ВСЕМ","mid":"ТОЛПА БЕЗ ДЕЛА","bottom":"Снять: одному"},"28":{"top":"ПРАВКИ ПОСЛЕ «ДА»","mid":"«ДА» — ЧЕРНОВИК","bottom":"Снять: правки до «да»"},"29":{"top":"ВРЕМЕННАЯ СХЕМА","mid":"В ПАСПОРТ НАВЕКИ","bottom":"Снять: нормальный пуск"},"30":{"top":"В СМЕТУ НЕ ВЛЕЗЛО","mid":"ЗАДОХНЁТСЯ НА ПУСКЕ","bottom":"Снять: вернуть в смету"},"31":{"top":"ЭТО НЕ НАША ЗОНА","mid":"ЛУЖА ОБЩАЯ И ВЕЧНАЯ","bottom":"Снять: взять зону"},"32":{"top":"ПО ПРОЕКТУ МОЖНО","mid":"НА МОНТАЖЕ — В ЛЫЖИ","bottom":"Снять: чертёж = монтаж"},"33":{"top":"ВКЛЮЧИЛИ — ШУМИТ","mid":"ШУМ — ЕДИНСТВЕННЫЙ АКТ","bottom":"Снять: пуск с замерами"},"34":{"top":"ФИЛЬТРЫ ПОТОМ","mid":"ПОТОМ = ПОСЛЕ ПОТОПА","bottom":"Снять: фильтры до пуска"},"35":{"top":"КОРОБ ПОШЁЛ НЕ ТУДА","mid":"МЕТР ВРЁТ ЧЕРТЕЖУ","bottom":"Снять: по проекту"},"36":{"top":"РУЧНОЙ РЕЖИМ","mid":"ПАЛЕЦ УСТАНЕТ ЗА СИСТЕМУ","bottom":"Снять: щит думает сам"},"37":{"top":"КОНДЕНСАТ НА ЧУЖОЙ","mid":"ЛУЖА ПРИДЁТ ДОМОЙ","bottom":"Снять: в свою трубу"},"38":{"top":"ЗИМОЙ НА КРОВЛЕ","mid":"ГРАФИК В МИНУС","bottom":"Снять: без героизма в мороз"},"39":{"top":"РЕШЁТКИ ЗАДОМ","mid":"ТЯГА ДУЕТ В СТЕНУ","bottom":"Снять: лицом к воздуху"},"40":{"top":"ПУСК ПЕРЕД КОМИССИЕЙ","mid":"СХЕМА В ПАНИКЕ","bottom":"Снять: за день, с замерами"}},"byCategory":{"byt":{"top":"ГРЕХ БЫТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: исправиться при людях"},"ovik":{"top":"ГРЕХ ОБЪЕКТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: нормальный пуск"},"generic":{"top":"ПРОКЛИНАТОР","mid":"ПРИГОВОР","bottom":"Снять: по условию ниже"}}},"ritualByPower":{"whisper":["Тихо открываем дело на {имя}…","Сверяем пол.","Сила: шёпот.","Достаём мелкий грех…","Печать едва греется.","Пишем, что сделал(а)…","Лёгкий удар…","Как снять…","Ставим тихую печать.","Готово. Можно кинуть в чат."],"seal":["Открываем дело на {имя}…","Сверяем пол.","Берём силу…","Достаём грех из живых привычек…","Печать греется.","Пишем, что сделал(а)…","Пишем, чем аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно кинуть в чат."],"anathema":["Ломаем дело на {имя}.","Пол — без поблажек.","Сила: анафема.","Достаём грех с корнем…","Печать орёт от жара.","Пишем, что натворил(а)…","Бьём наотмашь…","Снятие — только через дело…","Ставим клеймо.","Готово. Пусть все видят."]},"fx":{"whisper":{"spin":0.4,"glow":0.35,"particles":24,"shake":2,"duration":2200,"rings":2,"vibrate":0,"color":"#8B7355"},"seal":{"spin":1.0,"glow":0.7,"particles":56,"shake":6,"duration":3200,"rings":4,"vibrate":18,"color":"#C45C26"},"anathema":{"spin":2.2,"glow":1.0,"particles":120,"shake":14,"duration":4800,"rings":7,"vibrate":40,"color":"#FF2A1A"}}};
+  const DATA = {"version":"v14","owner":"Мия","date":"2026-09-10","formula":"грех → сетап → проклятие×сила → Снять:","notes":"v14 PRODUCTION: punch-first result+poster, copy curse CTA, anathema breathe, ritual wow. Freya PASS punches intact.","header":"Канцелярия личной печати","subheader":"Имя → сила → грех. Один удар — одна картинка на телефон.","namePlaceholder":"Кого проклинаем?","gender":{"m":"Мужской","f":"Женский","n":"Без пола"},"emptyName":"Сначала имя.","emptyGender":"Выбери пол — строки сойдутся.","cta":"Скрепить печатью","busy":"Печать тлеет…","toastOk":"Печать легла.","toastShare":"Карточка готова. Кидай в чат.","toastCopy":"Скопировано.","after":["Сохранить картинку","Поделиться","Ещё ритуал"],"copyCurse":"Скопировать проклятие","appUrl":"https://singularitygrim.github.io/proklinator/","verdictBlocks":["Грех","Приговор","Снять"],"powers":[{"id":"whisper","label":"Шёпот","desc":"лёгкая порча: стеб мягче, ещё можно отмахнуться","fx":"soft"},{"id":"seal","label":"Печать","desc":"приговор на виду: эталонный удар","fx":"mid"},{"id":"anathema","label":"Анафема","desc":"в лоб: жёстко, пошло, хлёстко","fx":"hard"}],"ritual":["Открываем дело на {имя}…","Сверяем пол.","Берём силу…","Достаём грех из живых привычек…","Печать греется.","Пишем, что сделал(а)…","Пишем, чем аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно кинуть в чат."],"sins":[{"id":1,"category":"byt","name":"Постоянный пиздеж","blurb":"хлещет словами, дела не видно"},{"id":2,"category":"byt","name":"Пустые обещания","blurb":"пообещал(а) — и забил(а)"},{"id":3,"category":"byt","name":"Уже выхожу","blurb":"пишет «уже выхожу», а ещё в душе"},{"id":4,"category":"byt","name":"Вечно «щас»","blurb":"говорит «сейчас» и исчезает на час"},{"id":5,"category":"byt","name":"Прочитал — молчит","blurb":"две галочки, ответа нет днями"},{"id":6,"category":"byt","name":"Громко жуёт","blurb":"хруст на весь вагон"},{"id":7,"category":"byt","name":"Перебивает","blurb":"не даёт договорить вторую фразу"},{"id":8,"category":"byt","name":"Спойлерит","blurb":"убивает финал чужого фильма"},{"id":9,"category":"byt","name":"На день","blurb":"взял(а) «на день», держит неделями"},{"id":10,"category":"byt","name":"Басы наружу","blurb":"наушники орют на три сиденья"},{"id":11,"category":"byt","name":"Фото еды","blurb":"снимает вечность, суп стынет"},{"id":12,"category":"byt","name":"Мокрый пол","blurb":"после душа пол — каток"},{"id":13,"category":"byt","name":"Кружка «потом»","blurb":"не моет, растёт археология"},{"id":14,"category":"byt","name":"Сортир без бумаги","blurb":"ушёл(ушла), рулона нет"},{"id":15,"category":"byt","name":"Звонок в три","blurb":"«ты не спишь?» среди ночи"},{"id":16,"category":"byt","name":"Чужой контейнер","blurb":"«чуть-чуть» — контейнер пуст"},{"id":17,"category":"byt","name":"Ответил «ок»","blurb":"на абзац души — две буквы"},{"id":18,"category":"byt","name":"Ломает планы","blurb":"«давай завтра» в последний миг"},{"id":19,"category":"byt","name":"Голосовое на три минуты","blurb":"вместо двух строк"},{"id":20,"category":"byt","name":"Стикером на серьёзное","blurb":"картинкой на боль"},{"id":21,"category":"byt","name":"Видео без наушников","blurb":"короткие ролики вслух, сосед в заложниках"},{"id":22,"category":"byt","name":"Будильник орёт — спит","blurb":"всех поднял(а), сам(а) дальше спит"},{"id":23,"category":"byt","name":"Пятиминутка","blurb":"созвон «на пять» съел час"},{"id":24,"category":"byt","name":"Почти готово","blurb":"«почти» третий месяц"},{"id":25,"category":"byt","name":"Спорит до победы","blurb":"даже когда уже не прав(а)"},{"id":26,"category":"byt","name":"Нытик","blurb":"погода, люди, судьба — всё против"},{"id":27,"category":"byt","name":"Письмо всем","blurb":"копия пол-отдела без нужды"},{"id":28,"category":"byt","name":"Правки после «да»","blurb":"вернул(а) правки после утверждения"},{"id":29,"category":"ovik","name":"Временная схема","blurb":"времянка на годы, уже в паспорте"},{"id":30,"category":"ovik","name":"В смету не влезло","blurb":"фильтры вырезали первыми"},{"id":31,"category":"ovik","name":"Это не наша зона","blurb":"мяч по кругу: вентиляция ↔ электрика"},{"id":32,"category":"ovik","name":"По проекту можно","blurb":"на бумаге — да, на монтаже — лыжи"},{"id":33,"category":"ovik","name":"Включили — шумит","blurb":"пуск без замеров, «характер» установки"},{"id":34,"category":"ovik","name":"Фильтры потом","blurb":"криво / забыли / «поменяем после сдачи»"},{"id":35,"category":"ovik","name":"Короб пошёл не туда","blurb":"в проекте прямо, по факту — змея"},{"id":36,"category":"ovik","name":"Ручной режим навсегда","blurb":"щит есть, логики нет"},{"id":37,"category":"ovik","name":"Конденсат на чужой","blurb":"капает на соседний потолок"},{"id":38,"category":"ovik","name":"Зимой на кровле","blurb":"срок горит — лезьте в мороз"},{"id":39,"category":"ovik","name":"Решётки задом","blurb":"вставили наоборот, «тяга есть»"},{"id":40,"category":"ovik","name":"Пуск перед комиссией","blurb":"завтра приёмка — сегодня схема"}],"verdicts":{"N":[{"id":"N1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"N2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал(а)."},{"id":"N3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а тело всё ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"N4","sinId":4,"setup":"Сказал(а) «щас».","punch":{"whisper":"Проклятие вечного «щас» — минута растянется в час ожидания.","seal":"Проклятие вечного «щас» — ожидание сожрёт нервы.","anathema":"Проклятие вечного «щас» — ожидание выжрет нервы к хуям, останется пустой чат."},"lift":"Снять: явиться за десять минут."},{"id":"N5","sinId":5,"setup":"Прочитано. Тишина.","punch":{"whisper":"Проклятие двух галочек — ответ придёт, но совесть уже чешется.","seal":"Проклятие двух галочек без ответа — совесть орёт громче уведомлений.","anathema":"Проклятие двух галочек без ответа — совесть орёт, пальцы в жопе, дни летят."},"lift":"Снять: ответить в тот же день."},{"id":"N6","sinId":6,"setup":"Хруст на весь вагон.","punch":{"whisper":"Проклятие — челюсть щёлкнет громче хруста, когда рядом люди.","seal":"Проклятие — челюсть заедает на каждом хрусте при людях.","anathema":"Проклятие — челюсть клинит на каждом хрусте, пока весь вагон не встанет смотреть."},"lift":"Снять: жевать с закрытым ртом."},{"id":"N7","sinId":7,"setup":"Не дал(а) договорить.","punch":{"whisper":"Проклятие перебивалы — мысль оборвётся ровно на интересном месте.","seal":"Проклятие перебивалы — собственная мысль обрывается на полуслове.","anathema":"Проклятие перебивалы — язык сам обломается на полуслове, сам(а) себя перебьёшь в пустоту."},"lift":"Снять: дослушать до точки."},{"id":"N8","sinId":8,"setup":"Финал вслух.","punch":{"whisper":"Проклятие спойлера — финал узнают раньше титров, и смотреть стыдно.","seal":"Проклятие спойлера — все чужие финалы узнают раньше него/неё.","anathema":"Проклятие спойлера — финал плюнет ему/ей в лицо раньше титров, и всем заодно."},"lift":"Снять: рот на замок до титров."},{"id":"N9","sinId":9,"setup":"Взял(а) «на день».","punch":{"whisper":"Проклятие «на день» — чужое задержится, своё начнёт пропадать.","seal":"Проклятие чужой вещи «на день» — своё пропадёт навсегда.","anathema":"Проклятие чужой вещи «на день» — своё сгинет нахуй и всплывёт у того, кому «на денёк»."},"lift":"Снять: вернуть лично и в срок."},{"id":"N10","sinId":10,"setup":"Басы на три сиденья.","punch":{"whisper":"Проклятие басов наружу — соседи крутанут громкость за него/неё.","seal":"Проклятие басов наружу — соседи решат громкость за него/неё.","anathema":"Проклятие басов наружу — соседи выкрутят громкость, пока уши не сдадут смену."},"lift":"Снять: звук только себе."},{"id":"N11","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"N12","sinId":12,"setup":"После душа — каток.","punch":{"whisper":"Проклятие мокрого пола — сам(а) первым(ой) поскользнёшься на своём катке.","seal":"Проклятие мокрого пола — сам(а) первым(ой) поскользнётся.","anathema":"Проклятие мокрого пола — сам(а) ёбнешься на своём катке при полном зале свидетелей."},"lift":"Снять: вытереть досуха."},{"id":"N13","sinId":13,"setup":"Кружка третий день.","punch":{"whisper":"Проклятие «потом» — кружка дождётся плесени раньше мытья.","seal":"Проклятие «потом» — плесень подпишет приговор.","anathema":"Проклятие «потом» — плесень подпишет приговор и запрёт кружку в музей срама."},"lift":"Снять: помыть сегодня."},{"id":"N14","sinId":14,"setup":"Рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — застанет без бумаги в самый момент.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"N15","sinId":15,"setup":"Звонок в три.","punch":{"whisper":"Проклятие ночного «ты не спишь?» — сон станет редким гостем.","seal":"Проклятие ночного «ты не спишь?» — сон уйдёт насовсем.","anathema":"Проклятие ночного «ты не спишь?» — сон сдохнет; сам(а) станешь этим звонком в три."},"lift":"Снять: писать днём."},{"id":"N16","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — свой всегда будет пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену."},{"id":"N17","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетят две буквы вместо мысли.","seal":"Проклятие ответа «ок» — на важное приходит одна пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"N18","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — его/её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — его/её самого(у) кинут в последний миг.","anathema":"Проклятие ломаных планов — его/её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"N19","sinId":19,"setup":"Голосовое на три минуты.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — суть тонет в ветре и кашле.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"N20","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"N21","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"N22","sinId":22,"setup":"Будильник орёт — спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его/её — последним(ей).","seal":"Проклятие чужого будильника — сам(а) не проспит ни разу спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"N23","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"N24","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание в неё."},{"id":"N25","sinId":25,"setup":"Спорит из принципа.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — победит тишина и все уйдут.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: один раз сказать «ладно, ты прав(а)»."},{"id":"N26","sinId":26,"setup":"Всё против.","punch":{"whisper":"Проклятие нытья — жалобы вернутся эхом без одного сочувствия.","seal":"Проклятие нытья — жалобы вернутся бумерангом без слушателя.","anathema":"Проклятие нытья — жалобы вернутся бумерангом: слушателей ноль, пиздеца полно."},"lift":"Снять: день без жалобы вслух."},{"id":"N27","sinId":27,"setup":"Копия пол-отдела.","punch":{"whisper":"Проклятие письма «всем» — ответит толпа, а делать будет некому.","seal":"Проклятие письма «всем» — ответит толпа, а дела — ноль.","anathema":"Проклятие письма «всем» — ответит толпа пиздежом, дела — ноль целых ноль десятых."},"lift":"Снять: одному адресату."},{"id":"N28","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — «да» всегда будет черновиком.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"N29","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — она впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"N30","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"N31","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа останется общей и вечной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону на себя."},{"id":"N32","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо него/неё.","seal":"Проклятие пуска без замеров — шум станет единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."}],"M":[{"id":"M1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"M2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещал."},{"id":"M3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а он ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"M4","sinId":14,"setup":"Вышел — рулона нет.","punch":{"whisper":"Проклятие пустого сортира — рулон кончится ровно в нужный момент.","seal":"Проклятие пустого сортира — его застанет без бумаги.","anathema":"Проклятие пустого сортира — застанет без бумаги в самый пиздец, и соседи всё услышат."},"lift":"Снять: глянуть на рулон перед уходом."},{"id":"M5","sinId":16,"setup":"«Чуть-чуть» из чужого.","punch":{"whisper":"Проклятие чужого контейнера — свой будет пустеть быстрее чужого.","seal":"Проклятие чужого контейнера — его холодильник всегда пуст.","anathema":"Проклятие чужого контейнера — свой всегда вылизан до дна, чужой — святой."},"lift":"Снять: купить замену в тот же день."},{"id":"M6","sinId":19,"setup":"Голосовое вместо двух строк.","punch":{"whisper":"Проклятие голосовых — две мысли утонут в трёх минутах ветра.","seal":"Проклятие голосовых — его суть тонет в ветре.","anathema":"Проклятие голосовых — суть утонет в трёх минутах ветра, кашля и пиздежа без текста."},"lift":"Снять: сначала две строки текстом."},{"id":"M7","sinId":22,"setup":"Будильник орёт — он спит.","punch":{"whisper":"Проклятие чужого будильника — всех поднимет, его — последним.","seal":"Проклятие чужого будильника — сам не проспит спокойно.","anathema":"Проклятие чужого будильника — всех поднимет в ад, сам(а) проспишь и получишь пизды."},"lift":"Снять: встать с первым сигналом."},{"id":"M8","sinId":25,"setup":"Спорит, хотя неправ.","punch":{"whisper":"Проклятие спора до победы — победишь, а слушателей не останется.","seal":"Проклятие спора до победы — все уйдут, а он останется с правотой.","anathema":"Проклятие спора до победы — победит тишина: все съёбут, ты останешься прав(а) в пустоте."},"lift":"Снять: сказать «ладно, ты права» и замолчать."},{"id":"M9","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"M10","sinId":31,"setup":"Не наша зона.","punch":{"whisper":"Проклятие «не наша зона» — лужа станет общей и ничьей.","seal":"Проклятие «не наша зона» — лужа будет его личной.","anathema":"Проклятие «не наша зона» — лужа общая, вечная, с твоим именем на табличке «кто кинул»."},"lift":"Снять: взять зону и вытереть."},{"id":"M11","sinId":32,"setup":"По бумаге можно.","punch":{"whisper":"Проклятие «по проекту можно» — на бумаге да, на монтаже — сюрприз.","seal":"Проклятие «по проекту можно» — на монтаже встанет в лыжи.","anathema":"Проклятие «по проекту можно» — на монтаже уедет в лыжи, «можно» останется в пдф."},"lift":"Снять: чертёж, который можно смонтировать."},{"id":"M12","sinId":35,"setup":"Короб — змея.","punch":{"whisper":"Проклятие короба не туда — метр тихо соврёт чертежу.","seal":"Проклятие короба не туда — каждый метр врёт чертежу.","anathema":"Проклятие короба не туда — змея пойдёт мимо чертежа, метр соврёт в лицо."},"lift":"Снять: короб по проекту."},{"id":"M13","sinId":36,"setup":"Щит без логики.","punch":{"whisper":"Проклятие ручного режима — палец устанет думать за щит.","seal":"Проклятие ручного режима навсегда — палец устанет за систему.","anathema":"Проклятие ручного режима — палец отвалится жать за систему, щит отомстит ночью."},"lift":"Снять: щит думает сам."},{"id":"M14","sinId":38,"setup":"Мороз, кровля, «лезьте».","punch":{"whisper":"Проклятие зимы на кровле — график утащит в минус вместе с пальцами.","seal":"Проклятие зимы на кровле — график сам полезет в минус.","anathema":"Проклятие зимы на кровле — график в минус, пальцы дубеют, героизм никто не оплатит."},"lift":"Снять: монтаж без героизма в мороз."},{"id":"M15","sinId":39,"setup":"Решётки задом.","punch":{"whisper":"Проклятие решёток задом — тяга будет, воздуха — в стену.","seal":"Проклятие решёток задом — «тяга есть» дует в стену.","anathema":"Проклятие решёток задом — тяга дует в стену; свежий воздух только для бетона."},"lift":"Снять: лицом к воздуху."},{"id":"M16","sinId":40,"setup":"Завтра комиссия.","punch":{"whisper":"Проклятие пуска перед комиссией — схема соберётся в панике и вспотеет.","seal":"Проклятие пуска перед комиссией — схема родится в панике.","anathema":"Проклятие пуска перед комиссией — схема соберётся в панике за ночь и развалится на глазах."},"lift":"Снять: пуск за день, с замерами."}],"F":[{"id":"F1","sinId":1,"setup":"","punch":{"whisper":"Проклятие — слова хлещут, а желудок уже скучает по делу.","seal":"Проклятие — остановился желудок в связи с постоянным пиздежом.","anathema":"Проклятие — желудок встал наглухо от вечного пиздежа, пока рот не заткнёшь делом."},"lift":"Снять: заткнуться и сделать."},{"id":"F2","sinId":2,"setup":"","punch":{"whisper":"Проклятие пустых обещаний — задачи сами себя не сделают.","seal":"Проклятие пустых обещаний и не выполненных задач.","anathema":"Проклятие пустых обещаний — каждый «сделаю» возвращается пиздецом по сроку."},"lift":"Снять: сделать то, что пообещала."},{"id":"F3","sinId":3,"setup":"Пишет «уже выхожу».","punch":{"whisper":"Проклятие — «уже выхожу» звучит громче, чем шаги у двери.","seal":"Проклятие — «уже» на языке, а она ещё в душе.","anathema":"Проклятие — «уже» орёт в чате, а жопа всё ещё в душе под пеной."},"lift":"Снять: текст уже с улицы."},{"id":"F4","sinId":11,"setup":"Суп стынет.","punch":{"whisper":"Проклятие вечного ракурса — суп остынет, кадр всё равно «не тот».","seal":"Проклятие вечного ракурса — еда остынет раньше её кадра.","anathema":"Проклятие вечного ракурса — еда протухнет, пока ловишь «тот самый» кадр для сторис."},"lift":"Снять: один кадр — и есть."},{"id":"F5","sinId":17,"setup":"На душу — «ок».","punch":{"whisper":"Проклятие ответа «ок» — на важное прилетит пустота в две буквы.","seal":"Проклятие ответа «ок» — на важное ей приходит пустота.","anathema":"Проклятие ответа «ок» — на крик души прилетит две буквы и тишина в жопу."},"lift":"Снять: целое предложение."},{"id":"F6","sinId":18,"setup":"Все в куртках.","punch":{"whisper":"Проклятие ломаных планов — её тоже кинут, когда уже в куртке.","seal":"Проклятие ломаных планов — её кинут в последний миг.","anathema":"Проклятие ломаных планов — её кинут в последний миг, куртка уже на плечах, такси ждёт."},"lift":"Снять: отменить за три часа."},{"id":"F7","sinId":20,"setup":"На боль — стикер.","punch":{"whisper":"Проклятие стикера на серьёзное — в ответ придёт такая же пустота.","seal":"Проклятие стикера на серьёзное — в ответ придёт такая же пошлость.","anathema":"Проклятие стикера на боль — в ответ прилетит ещё пошлее, а боль останется голой."},"lift":"Снять: словами, не картинкой."},{"id":"F8","sinId":21,"setup":"Видео вслух.","punch":{"whisper":"Проклятие чужого звука — ролик орёт, а наушники «где-то рядом».","seal":"Проклятие чужого звука — её алгоритм орёт без остановки.","anathema":"Проклятие чужого звука — алгоритм орёт без остановки, подъезд выучит трек наизусть."},"lift":"Снять: наушники."},{"id":"F9","sinId":23,"setup":"«На пять минут».","punch":{"whisper":"Проклятие пятиминутки — «на пять» спокойно съест час.","seal":"Проклятие пятиминутки — её час сгорит без итога.","anathema":"Проклятие пятиминутки — час сгорит к хуям без одной полезной мысли и без итога."},"lift":"Снять: уложиться в пять по таймеру."},{"id":"F10","sinId":24,"setup":"«Почти» третий месяц.","punch":{"whisper":"Проклятие вечного «почти» — готовое снова отодвинется на месяц.","seal":"Проклятие вечного «почти» — готовое так и не наступит.","anathema":"Проклятие вечного «почти» — «почти» сожрёт год, готового не будет никогда."},"lift":"Снять: честная дата и попадание."},{"id":"F11","sinId":28,"setup":"Правки после «да».","punch":{"whisper":"Проклятие правок после «да» — утверждение снова станет черновиком.","seal":"Проклятие правок после утверждения — её «да» всегда черновик.","anathema":"Проклятие правок после «да» — каждое «да» станет черновиком, пока проект не сдохнет."},"lift":"Снять: правки до «да»."},{"id":"F12","sinId":29,"setup":"Времянка «на неделю».","punch":{"whisper":"Проклятие временной схемы — «на неделю» задержится до паспорта.","seal":"Проклятие временной схемы — впишется в паспорт навеки.","anathema":"Проклятие временной схемы — времянка впишется в паспорт навеки и капнет на комиссию."},"lift":"Снять: снять времянку, нормальный пуск."},{"id":"F13","sinId":30,"setup":"Фильтры вырезали.","punch":{"whisper":"Проклятие сметы без дыхания — фильтры вырежут первыми, воздух — потом.","seal":"Проклятие сметы без дыхания — система задохнётся на её пуске.","anathema":"Проклятие сметы без дыхания — система задохнётся на пуске: фильтры вырезали, дышать нечем."},"lift":"Снять: вернуть в смету то, чем дышит."},{"id":"F14","sinId":33,"setup":"Включили — шумит.","punch":{"whisper":"Проклятие пуска без замеров — шум подпишет акт вместо неё.","seal":"Проклятие пуска без замеров — шум станет её единственным «актом».","anathema":"Проклятие пуска без замеров — шум станет единственным актом; приёмка услышит всё."},"lift":"Снять: пуск с замерами."},{"id":"F15","sinId":34,"setup":"Фильтры «потом».","punch":{"whisper":"Проклятие фильтров «потом» — «потом» приедет уже с претензией.","seal":"Проклятие фильтров потом — «потом» придёт после потопа.","anathema":"Проклятие фильтров потом — «потом» припрётся после потопа и чужого потолка."},"lift":"Снять: фильтры до пуска."},{"id":"F16","sinId":37,"setup":"Капает на чужой.","punch":{"whisper":"Проклятие конденсата на чужой — капля найдёт соседний потолок.","seal":"Проклятие конденсата на чужой — лужа придёт к ней домой.","anathema":"Проклятие конденсата на чужой — лужа приползёт к ней домой и устроит потоп лично ей."},"lift":"Снять: в свою трубу до чужого потолка."}]},"shareCaptions":{"bySinId":{"1":{"top":"ПОСТОЯННЫЙ ПИЗДЕЖ","mid":"ОСТАНОВИЛСЯ ЖЕЛУДОК","bottom":"Снять: заткнуться и сделать"},"2":{"top":"ПУСТЫЕ ОБЕЩАНИЯ","mid":"НЕ ВЫПОЛНЕННЫХ ЗАДАЧ","bottom":"Снять: сделать обещанное"},"3":{"top":"УЖЕ ВЫХОЖУ","mid":"УЖЕ — НА ЯЗЫКЕ","bottom":"Снять: текст с улицы"},"4":{"top":"ВЕЧНО «ЩАС»","mid":"ОЖИДАНИЕ СОЖРЁТ НЕРВЫ","bottom":"Снять: за 10 минут"},"5":{"top":"ПРОЧИТАЛ — МОЛЧИТ","mid":"ГАЛОЧКИ БЕЗ ОТВЕТА","bottom":"Снять: ответ в тот же день"},"6":{"top":"ГРОМКО ЖУЁТ","mid":"ЧЕЛЮСТЬ ЗАЕДАЕТ","bottom":"Снять: закрытый рот"},"7":{"top":"ПЕРЕБИВАЕТ","mid":"МЫСЛЬ ОБРЫВАЕТСЯ","bottom":"Снять: до точки"},"8":{"top":"СПОЙЛЕРИТ","mid":"ФИНАЛ РАНЬШЕ ВСЕХ","bottom":"Снять: рот до титров"},"9":{"top":"НА ДЕНЬ","mid":"ЧУЖОЕ НАВСЕГДА","bottom":"Снять: вернуть в срок"},"10":{"top":"БАСЫ НАРУЖУ","mid":"ГРОМКОСТЬ ЗА НЕГО","bottom":"Снять: только себе"},"11":{"top":"ФОТО ЕДЫ","mid":"ЕДА ОСТЫНЕТ РАНЬШЕ","bottom":"Снять: один кадр — и есть"},"12":{"top":"МОКРЫЙ ПОЛ","mid":"ПЕРВЫМ ПОСКОЛЬЗНЁТСЯ","bottom":"Снять: вытереть досуха"},"13":{"top":"КРУЖКА «ПОТОМ»","mid":"ПЛЕСЕНЬ ПОДПИШЕТ","bottom":"Снять: помыть сегодня"},"14":{"top":"СОРТИР БЕЗ БУМАГИ","mid":"ЗАСТАНЕТ БЕЗ БУМАГИ","bottom":"Снять: глянуть на рулон"},"15":{"top":"ЗВОНОК В ТРИ","mid":"СОН УЙДЁТ НАСОВСЕМ","bottom":"Снять: писать днём"},"16":{"top":"ЧУЖОЙ КОНТЕЙНЕР","mid":"СВОЙ ВСЕГДА ПУСТ","bottom":"Снять: купить замену"},"17":{"top":"ОТВЕТИЛ «ОК»","mid":"НА ВАЖНОЕ — ПУСТОТА","bottom":"Снять: целое предложение"},"18":{"top":"ЛОМАЕТ ПЛАНЫ","mid":"КИНУТ В ПОСЛЕДНИЙ МИГ","bottom":"Снять: за три часа"},"19":{"top":"ГОЛОСОВОЕ НА ТРИ","mid":"СУТЬ ТОНЕТ В ВЕТРЕ","bottom":"Снять: сначала две строки"},"20":{"top":"СТИКЕРОМ НА БОЛЬ","mid":"В ОТВЕТ — ПОШЛОСТЬ","bottom":"Снять: словами"},"21":{"top":"ВИДЕО БЕЗ НАУШНИКОВ","mid":"АЛГОРИТМ ОРЁТ","bottom":"Снять: наушники"},"22":{"top":"БУДИЛЬНИК ОРЁТ","mid":"САМ НЕ ПРОСПИТ","bottom":"Снять: с первым сигналом"},"23":{"top":"ПЯТИМИНУТКА","mid":"ЧАС СГОРИТ БЕЗ ИТОГА","bottom":"Снять: пять по таймеру"},"24":{"top":"ПОЧТИ ГОТОВО","mid":"ГОТОВОЕ НЕ НАСТУПИТ","bottom":"Снять: честная дата"},"25":{"top":"СПОРИТ ДО ПОБЕДЫ","mid":"ПОБЕДИТ ТИШИНА","bottom":"Снять: «ладно, ты прав(а)»"},"26":{"top":"НЫТИК","mid":"ЖАЛОБЫ БУМЕРАНГОМ","bottom":"Снять: день без жалобы"},"27":{"top":"ПИСЬМО ВСЕМ","mid":"ТОЛПА БЕЗ ДЕЛА","bottom":"Снять: одному"},"28":{"top":"ПРАВКИ ПОСЛЕ «ДА»","mid":"«ДА» — ЧЕРНОВИК","bottom":"Снять: правки до «да»"},"29":{"top":"ВРЕМЕННАЯ СХЕМА","mid":"В ПАСПОРТ НАВЕКИ","bottom":"Снять: нормальный пуск"},"30":{"top":"В СМЕТУ НЕ ВЛЕЗЛО","mid":"ЗАДОХНЁТСЯ НА ПУСКЕ","bottom":"Снять: вернуть в смету"},"31":{"top":"ЭТО НЕ НАША ЗОНА","mid":"ЛУЖА ОБЩАЯ И ВЕЧНАЯ","bottom":"Снять: взять зону"},"32":{"top":"ПО ПРОЕКТУ МОЖНО","mid":"НА МОНТАЖЕ — В ЛЫЖИ","bottom":"Снять: чертёж = монтаж"},"33":{"top":"ВКЛЮЧИЛИ — ШУМИТ","mid":"ШУМ — ЕДИНСТВЕННЫЙ АКТ","bottom":"Снять: пуск с замерами"},"34":{"top":"ФИЛЬТРЫ ПОТОМ","mid":"ПОТОМ = ПОСЛЕ ПОТОПА","bottom":"Снять: фильтры до пуска"},"35":{"top":"КОРОБ ПОШЁЛ НЕ ТУДА","mid":"МЕТР ВРЁТ ЧЕРТЕЖУ","bottom":"Снять: по проекту"},"36":{"top":"РУЧНОЙ РЕЖИМ","mid":"ПАЛЕЦ УСТАНЕТ ЗА СИСТЕМУ","bottom":"Снять: щит думает сам"},"37":{"top":"КОНДЕНСАТ НА ЧУЖОЙ","mid":"ЛУЖА ПРИДЁТ ДОМОЙ","bottom":"Снять: в свою трубу"},"38":{"top":"ЗИМОЙ НА КРОВЛЕ","mid":"ГРАФИК В МИНУС","bottom":"Снять: без героизма в мороз"},"39":{"top":"РЕШЁТКИ ЗАДОМ","mid":"ТЯГА ДУЕТ В СТЕНУ","bottom":"Снять: лицом к воздуху"},"40":{"top":"ПУСК ПЕРЕД КОМИССИЕЙ","mid":"СХЕМА В ПАНИКЕ","bottom":"Снять: за день, с замерами"}},"byCategory":{"byt":{"top":"ГРЕХ БЫТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: исправиться при людях"},"ovik":{"top":"ГРЕХ ОБЪЕКТА","mid":"ПРОКЛЯТИЕ","bottom":"Снять: нормальный пуск"},"generic":{"top":"ПРОКЛИНАТОР","mid":"ПРИГОВОР","bottom":"Снять: по условию ниже"}}},"ritualByPower":{"whisper":["Тихо открываем дело на {имя}…","Сверяем пол.","Сила: шёпот.","Достаём мелкий грех…","Печать едва греется.","Пишем, что сделал(а)…","Лёгкий удар…","Как снять…","Ставим тихую печать.","Готово. Можно кинуть в чат."],"seal":["Открываем дело на {имя}…","Сверяем пол.","Берём силу…","Достаём грех из живых привычек…","Печать греется.","Пишем, что сделал(а)…","Пишем, чем аукнется…","Пишем, как снять…","Ставим печать.","Готово. Можно кинуть в чат."],"anathema":["Ломаем дело на {имя}.","Пол — без поблажек.","Сила: анафема.","Достаём грех с корнем…","Печать орёт от жара.","Пишем, что натворил(а)…","Бьём наотмашь…","Снятие — только через дело…","Ставим клеймо.","Готово. Пусть все видят."]},"fx":{"whisper":{"spin":0.4,"glow":0.35,"particles":24,"shake":2,"duration":2200,"rings":2,"vibrate":0,"color":"#8B7355","orbScale":0.95},"seal":{"spin":1.0,"glow":0.7,"particles":56,"shake":6,"duration":3200,"rings":4,"vibrate":18,"color":"#C45C26","orbScale":1.2},"anathema":{"spin":2.6,"glow":1.15,"particles":160,"shake":18,"duration":5000,"rings":8,"vibrate":45,"color":"#FF2A1A","orbScale":1.55}}};
   function formatLift(L){
     L = String(L || "").trim();
     if(!L) return "";
@@ -470,6 +545,8 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
   $("saveBtn").textContent = after[0];
   $("shareBtn").textContent = after[1];
   $("againBtn").textContent = after[2];
+  if($("copyCurseBtn")) $("copyCurseBtn").textContent = DATA.copyCurse || "Скопировать проклятие";
+  const APP_URL = DATA.appUrl || "https://singularitygrim.github.io/proklinator/";
 
   function fillName(tpl, name){
     return String(tpl || "").split("{имя}").join(name);
@@ -695,15 +772,17 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     point.position.set(0, 0.4, 3);
     scene.add(point);
 
-    var orbGeo = new THREE.SphereGeometry(0.55, 32, 32);
+    var baseOrb = 0.55 * (fx.orbScale || 1.15);
+    var orbGeo = new THREE.SphereGeometry(baseOrb, 32, 32);
     var orbMat = new THREE.MeshStandardMaterial({
       color: 0x1a1210,
       emissive: color,
-      emissiveIntensity: 0.35 + fx.glow * 1.1,
-      roughness: 0.35,
-      metalness: 0.55
+      emissiveIntensity: 0.35 + fx.glow * 1.25,
+      roughness: 0.32,
+      metalness: 0.58
     });
     var orb = new THREE.Mesh(orbGeo, orbMat);
+    orb.userData.scaleBoost = 1;
     scene.add(orb);
 
     var rings = [];
@@ -716,7 +795,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
         new THREE.MeshStandardMaterial({
           color: 0x0a0807,
           emissive: color,
-          emissiveIntensity: 0.25 + fx.glow * 0.55 - i * 0.03,
+          emissiveIntensity: 0.32 + fx.glow * 0.75 - i * 0.025,
           roughness: 0.4,
           metalness: 0.7,
           transparent: true,
@@ -752,9 +831,9 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     pGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     var pMat = new THREE.PointsMaterial({
       color: color,
-      size: 0.045 + fx.glow * 0.03,
+      size: 0.055 + fx.glow * 0.045,
       transparent: true,
-      opacity: 0.35 + fx.glow * 0.45,
+      opacity: 0.4 + fx.glow * 0.5,
       depthWrite: false,
       blending: THREE.AdditiveBlending
     });
@@ -857,6 +936,12 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
   }
 
   function openOverlay(fx){
+    sealStage.dataset.power = powerId || "seal";
+    var pw = $("progress") && $("progress").parentElement;
+    if(pw && pw.classList){
+      pw.classList.remove("power-whisper","power-seal","power-anathema");
+      pw.classList.add("power-" + (powerId || "seal"));
+    }
     overlay.style.display = "flex";
     overlay.classList.add("on");
     overlay.setAttribute("aria-hidden", "false");
@@ -1185,12 +1270,26 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     };
   }
 
-  function shortPunch(punch){
+  function shortPunch(punch, maxLen){
+    var lim = (maxLen == null) ? 280 : maxLen;
     var t = String(punch || "").replace(/^А\s+/i, "").trim();
-    if(t.length <= 90) return t;
-    var cut = t.slice(0, 88);
+    if(t.length <= lim) return t;
+    var cut = t.slice(0, lim - 1);
     var sp = cut.lastIndexOf(" ");
-    return (sp > 40 ? cut.slice(0, sp) : cut) + "…";
+    return (sp > Math.floor(lim * 0.45) ? cut.slice(0, sp) : cut) + "…";
+  }
+
+  function buildCurseText(v, withUrl){
+    if(!v) return "";
+    var lines = [
+      v.name + " · " + v.powerLabel,
+      v.punch,
+      formatLift(v.lift),
+      "",
+      "ПРОКЛИНАТОР"
+    ];
+    if(withUrl) lines.push(APP_URL);
+    return lines.join("\n");
   }
 
   function paintPoster(){
@@ -1200,6 +1299,9 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     var ctx = exportCanvas.getContext("2d");
     if(!ctx || !lastVerdict) return exportCanvas;
 
+    var powerColor = lastVerdict.powerId === "anathema" ? "#FF2A1A"
+      : lastVerdict.powerId === "whisper" ? "#8B7355" : "#C45C26";
+
     var bg = ctx.createLinearGradient(0, 0, 0, H);
     bg.addColorStop(0, "#141210");
     bg.addColorStop(0.45, "#0E0C0B");
@@ -1208,73 +1310,64 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     ctx.fillRect(0, 0, W, H);
     addGrain(ctx, 0, 0, W, H, 5000);
 
-    var caps = getCaptions(lastVerdict.sinObj);
     var pad = 72;
-    var y = 96;
+    var y = 64;
+    var artH = Math.floor(H * 0.28);
+    drawMetaphor(ctx, lastVerdict.sinId, lastVerdict.category, pad - 12, y, W - (pad - 12) * 2, artH);
+    y += artH + 40;
 
+    // NAME hero
     ctx.fillStyle = "#F2EBE0";
-    ctx.font = "800 52px system-ui,-apple-system,sans-serif";
+    ctx.font = "800 64px system-ui,-apple-system,sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    var topLines = wrapText(ctx, String(caps.top).toUpperCase(), W - pad * 2);
-    for(var ti=0;ti<topLines.length;ti++){
-      ctx.fillText(topLines[ti], W/2, y);
-      y += 62;
+    var nameLines = wrapText(ctx, String(lastVerdict.name || "").toUpperCase(), W - pad * 2);
+    for(var ni=0;ni<Math.min(nameLines.length, 2);ni++){
+      ctx.fillText(nameLines[ni], W/2, y);
+      y += 74;
     }
-    y += 18;
-    ctx.strokeStyle = "#C45C26";
+    y += 8;
+
+    // Power badge accent
+    ctx.fillStyle = powerColor;
+    ctx.font = "700 28px system-ui,-apple-system,sans-serif";
+    ctx.fillText(String(lastVerdict.powerLabel || "").toUpperCase(), W/2, y);
+    y += 36;
+    ctx.strokeStyle = powerColor;
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.moveTo(pad + 40, y);
-    ctx.lineTo(W - pad - 40, y);
+    ctx.moveTo(W/2 - 80, y);
+    ctx.lineTo(W/2 + 80, y);
     ctx.stroke();
     y += 36;
 
-    var artH = Math.floor(H * 0.48);
-    var artY = y;
-    var maxArtBottom = H - 520;
-    if(artY + artH > maxArtBottom) artH = maxArtBottom - artY;
-    drawMetaphor(ctx, lastVerdict.sinId, lastVerdict.category, pad - 12, artY, W - (pad - 12) * 2, artH);
-    y = artY + artH + 36;
-
-    ctx.fillStyle = "#C45C26";
-    ctx.font = "800 44px system-ui,-apple-system,sans-serif";
-    var midLines = wrapText(ctx, String(caps.mid).toUpperCase(), W - pad * 2);
-    for(var mi=0;mi<midLines.length;mi++){
-      ctx.fillText(midLines[mi], W/2, y);
-      y += 54;
+    // Punch FULL — hero typography, wrap up to ~6 lines, no 90-char kill
+    ctx.fillStyle = powerColor;
+    var fullPunch = shortPunch(lastVerdict.punch, 320);
+    ctx.font = "700 40px system-ui,-apple-system,sans-serif";
+    var punchLines = wrapText(ctx, fullPunch, W - pad * 2);
+    var punchLH = 50;
+    if(punchLines.length > 6){
+      ctx.font = "650 34px system-ui,-apple-system,sans-serif";
+      punchLines = wrapText(ctx, fullPunch, W - pad * 2);
+      punchLH = 44;
     }
-    y += 14;
-
-    // Resolved punch (power-aware)
-    ctx.fillStyle = "rgba(242,235,224,.9)";
-    ctx.font = "600 30px system-ui,-apple-system,sans-serif";
-    var punchLines = wrapText(ctx, shortPunch(lastVerdict.punch), W - pad * 2);
-    for(var pi=0;pi<Math.min(punchLines.length, 4);pi++){
+    for(var pi=0;pi<Math.min(punchLines.length, 7);pi++){
       ctx.fillText(punchLines[pi], W/2, y);
-      y += 38;
+      y += punchLH;
     }
-    y += 18;
+    y += 28;
 
+    // Lift softer
     ctx.fillStyle = "rgba(242,235,224,.55)";
-    ctx.font = "500 24px system-ui,-apple-system,sans-serif";
+    ctx.font = "500 26px system-ui,-apple-system,sans-serif";
     var liftLine = formatLift(lastVerdict.lift);
     var botLines = wrapText(ctx, liftLine, W - pad * 2);
-    for(var bi=0;bi<Math.min(botLines.length, 2);bi++){
+    for(var bi=0;bi<Math.min(botLines.length, 3);bi++){
       ctx.fillText(botLines[bi], W/2, y);
-      y += 32;
+      y += 34;
     }
-    y += 24;
 
-    ctx.fillStyle = "#F2EBE0";
-    ctx.font = "700 34px system-ui,-apple-system,sans-serif";
-    ctx.fillText(lastVerdict.name, W/2, y);
-    y += 44;
-    ctx.fillStyle = lastVerdict.powerId === "anathema" ? "#FF2A1A" : lastVerdict.powerId === "whisper" ? "#8B7355" : "rgba(196,92,38,.9)";
-    ctx.font = "600 24px system-ui,-apple-system,sans-serif";
-    ctx.fillText(lastVerdict.powerLabel, W/2, y);
-
-    // Product title only — no external brand
     ctx.fillStyle = "rgba(242,235,224,.28)";
     ctx.font = "600 22px system-ui,-apple-system,sans-serif";
     ctx.fillText("ПРОКЛИНАТОР", W/2, H - 72);
@@ -1310,7 +1403,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
   async function shareCard(){
     if(!lastVerdict) return;
     paintPoster();
-    var shareText = lastVerdict.sin + "\n\n" + (lastVerdict.setup ? lastVerdict.setup + "\n" : "") + lastVerdict.punch + "\n\n" + lastVerdict.lift;
+    var shareText = buildCurseText(lastVerdict, true);
     try{
       var blob = await new Promise(function(res){ exportCanvas.toBlob(res, "image/png"); });
       if(blob && navigator.share && navigator.canShare){
@@ -1322,7 +1415,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
         }
       }
       if(navigator.share){
-        await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText + "\n— ПРОКЛИНАТОР" });
+        await navigator.share({ title: "ПРОКЛИНАТОР", text: shareText });
         showToast(DATA.toastShare);
         return;
       }
@@ -1330,7 +1423,7 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
       if(e && e.name === "AbortError") return;
     }
     downloadPng(exportCanvas, "proklinator-" + (lastVerdict.sinId || "card") + ".png");
-    var copied = await copyText(shareText + "\n— ПРОКЛИНАТОР");
+    var copied = await copyText(shareText);
     if(!copied) showToast(DATA.toastShare);
   }
 
@@ -1340,13 +1433,18 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     result.classList.remove("hidden");
     result.classList.add("show");
     document.body.classList.add("is-result");
+    $("vName").textContent = lastVerdict.name;
     $("vGender").textContent = genderLong(gender);
     $("vPower").textContent = lastVerdict.powerLabel;
     $("vPower").dataset.power = lastVerdict.powerId || "";
     $("vSin").textContent = lastVerdict.sin;
-    if(lastVerdict.setup){
+
+    var setup = (lastVerdict.setup || "").trim();
+    var sinName = (lastVerdict.sin || "").trim();
+    var setupDup = !setup || setup.toLowerCase() === sinName.toLowerCase();
+    if(setup && !setupDup){
       $("vSetup").hidden = false;
-      $("vSetup").textContent = lastVerdict.setup;
+      $("vSetup").textContent = setup;
     } else {
       $("vSetup").hidden = true;
       $("vSetup").textContent = "";
@@ -1354,6 +1452,74 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     $("vPunch").textContent = lastVerdict.punch;
     $("lblLift").textContent = formatLiftLabel(lastVerdict.lift);
     $("vLift").textContent = formatLift(lastVerdict.lift);
+
+    // Stamp color by power
+    var stampSvg = $("stampMark") && $("stampMark").querySelector("svg");
+    if(stampSvg){
+      var sc = lastVerdict.powerId === "anathema" ? "#FF2A1A" : lastVerdict.powerId === "whisper" ? "#8B7355" : "#C45C26";
+      stampSvg.querySelectorAll("[stroke]").forEach(function(el){ el.setAttribute("stroke", sc); });
+      stampSvg.querySelectorAll("[fill]").forEach(function(el){ el.setAttribute("fill", sc); });
+    }
+
+    result.classList.remove("flash-anathema");
+    var flash = $("redFlash");
+    if(flash){ flash.classList.remove("on"); void flash.offsetWidth; }
+
+    if(!reduced && hasAnime){
+      var stamp = $("stampMark");
+      var punchEl = $("vPunch");
+      var nameEl = $("vName");
+      if(stamp){ stamp.style.opacity = "0"; stamp.style.transform = "scale(2.6) rotate(-14deg)"; }
+      if(punchEl){ punchEl.style.opacity = "0"; punchEl.style.transform = "translateY(18px)"; }
+      if(nameEl){ nameEl.style.opacity = "0"; nameEl.style.transform = "translateY(8px)"; }
+
+      var hard = lastVerdict.powerId === "anathema";
+      if(hard && flash){
+        flash.classList.add("on");
+        result.classList.add("flash-anathema");
+      }
+
+      anime.timeline({ easing: "easeOutExpo" })
+        .add({
+          targets: nameEl,
+          opacity: [0, 1],
+          translateY: [10, 0],
+          duration: 380
+        })
+        .add({
+          targets: stamp,
+          opacity: [0, 1],
+          scale: hard ? [3.2, 1] : [2.4, 1],
+          rotate: hard ? [-18, 0] : [-12, 0],
+          duration: hard ? 520 : 420,
+          easing: hard ? "easeOutElastic(1, .55)" : "easeOutBack(1.4)"
+        }, "-=120")
+        .add({
+          targets: punchEl,
+          opacity: [0, 1],
+          translateY: [hard ? 28 : 16, 0],
+          duration: hard ? 520 : 420
+        }, "-=200");
+
+      if(hard){
+        anime({
+          targets: result,
+          translateX: [
+            { value: -10, duration: 40 },
+            { value: 12, duration: 50 },
+            { value: -8, duration: 45 },
+            { value: 6, duration: 40 },
+            { value: 0, duration: 60 }
+          ],
+          easing: "easeInOutSine"
+        });
+        try{ if(navigator.vibrate) navigator.vibrate([30, 40, 50]); }catch(e){}
+      }
+    } else {
+      var stamp2 = $("stampMark");
+      if(stamp2){ stamp2.style.opacity = "1"; stamp2.style.transform = "none"; }
+    }
+
     showToast(DATA.toastOk);
     try{ result.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }); }catch(e){}
   }
@@ -1539,17 +1705,43 @@ body.is-result .toast{bottom:calc(24px + var(--safe-b))}
     showToast(DATA.toastShare);
   });
   $("shareBtn").addEventListener("click", function(){ shareCard(); });
+  $("copyCurseBtn").addEventListener("click", async function(){
+    if(!lastVerdict) return;
+    var text = buildCurseText(lastVerdict, true);
+    var ok = await copyText(text);
+    if(!ok){
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast(DATA.toastCopy);
+      }catch(e){}
+    }
+  });
   $("againBtn").addEventListener("click", function(){
+    if(casting) return;
     hardCloseOverlay();
-    lastVerdict = null;
     result.classList.remove("show");
+    result.classList.remove("flash-anathema");
     result.classList.add("hidden");
     castScreen.classList.remove("hidden");
     document.body.classList.remove("is-result");
     cast.disabled = false;
     cast.classList.remove("busy");
     cast.textContent = DATA.cta;
-    try{ victim.focus(); }catch(e){}
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+    var name = (victim.value || "").trim() || (lastVerdict && lastVerdict.name) || "";
+    if(!name || !gender){
+      try{ victim.focus(); }catch(e){}
+      return;
+    }
+    // Keep name / gender / power — new verdict only
+    runRitual(name);
   });
 
   document.addEventListener("visibilitychange", function(){
