@@ -1,0 +1,80 @@
+{
+  "app": "ПРОКЛИНАТОР",
+  "version": "v20",
+  "url": "https://proklinator-static.vercel.app",
+  "deploymentId": "dpl_5UKG9zyD6FiaGoZTNechrcZWYyjC",
+  "sso": "off",
+  "full": true,
+  "target": "production",
+  "project": "proklinator-static",
+  "scope": {
+    "slug": "singularity16",
+    "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
+    "plan": "hobby"
+  },
+  "deploymentUrl": "https://proklinator-static-q4yi2kgcx-singularity16.vercel.app",
+  "aliases": [
+    "https://proklinator-static.vercel.app",
+    "https://proklinator-static-singularity16.vercel.app"
+  ],
+  "inspector": "https://vercel.com/singularity16/proklinator-static/5UKG9zyD6FiaGoZTNechrcZWYyjC",
+  "sourceCommit": "f87ee40d4f4dd3888654eda8d36b74f184201519",
+  "sourceRef": "origin/main (merge of PR #3, singularity/v20-production-complete-5942)",
+  "sourceRepo": "https://github.com/singularitygrim/proklinator",
+  "files": {
+    "index.html": { "bytes": 91190, "sha256": "e07832bba795ba4a3c13884d142da3ca4df72af355ad2e869f3dece1d449a1e7" },
+    "app.js": { "bytes": 241275, "sha256": "907457e4d4127e167a14fe54ef144271aace55d717b07b41bceee01c22a2093f" },
+    "manifest.webmanifest": { "bytes": 820, "sha256": "926e7e1434856e93ae3b237fa553df99c8cc98ee3d3aaba61e7abea8f5e84adb" },
+    "hero-altar.jpg": { "bytes": 97618, "sha256": "7b145496fbd6aac18189c5087265e0db0b461e06f944e2324e36a7cb347156b4" },
+    "fonts/OFL.txt": { "bytes": 4449, "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e" },
+    "fonts/playfair-display-cyrillic.woff2": { "bytes": 21152, "sha256": "c108681cba6a9820bff52f4a1a4a1d9edf356b347bd79b7c61e916028e8a8b54" },
+    "fonts/playfair-display-italic-cyrillic.woff2": { "bytes": 23304, "sha256": "51b2dac698333379dc3a3486393fba787d17f1dcbcb50f46582ca759d53c25fc" },
+    "fonts/playfair-display-italic-latin.woff2": { "bytes": 38804, "sha256": "54af24bd0f911f0fd7399d5445ea2023ff501d6a69f2d728f1213072f977ab14" },
+    "fonts/playfair-display-latin.woff2": { "bytes": 38404, "sha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2" },
+    "icons/apple-touch-icon.png": { "bytes": 8406, "sha256": "b44eb4fde0f2ed86437aa4de6c2f309d41bac2287a932a42a95430f563a90494" },
+    "icons/icon-192.png": { "bytes": 10519, "sha256": "36b6bf852a5e211fc490319f38027640a970a30315e4c0cb22fe3e6b26ceaea4" },
+    "icons/icon-512.png": { "bytes": 43228, "sha256": "842e7f42361bbb38930331cba9b4687251fbc9ef44130961c3eb80a31111a50d" },
+    "icons/maskable-512.png": { "bytes": 25334, "sha256": "e7daa167a4620fcac5ba66424ce7529394d2c9894b63bd89c9756e92371fbd45" },
+    "vercel.json": { "bytes": 721, "sha256": "b32cc59627e5361fc3ceb0496a1b0a633fe26e06e62e6fd78fde67f4548b283f", "note": "included verbatim in the deployment source; applied as project config, not served" }
+  },
+  "verification": {
+    "checkedAt": "2026-09-10T23:32:41Z",
+    "publicUrlHttpStatus": 200,
+    "publicUrlRedirect": null,
+    "publicUrlContentLength": 91190,
+    "indexHtmlSha256MatchesRepo": true,
+    "appJsHttpStatus": 200,
+    "appJsSha256MatchesRepo": true,
+    "appJsContentType": "application/javascript; charset=utf-8",
+    "allThirteenFilesByteIdenticalToRepo": true,
+    "markers": {
+      "indexHtml_Intro": 1,
+      "indexHtml_scriptTag_app.js?v=20": 1,
+      "appJs_pk_intro": 3,
+      "appJs_singularitygrimnir@gmail.com": 2,
+      "appJs_ЗапуститьРитуал": 1
+    },
+    "headlessChromeRender": "app.js executes under the strict meta CSP (script-src 'self' https://cdn.jsdelivr.net + SRI): the rendered DOM grows from 91190 B to ~98.6 KB and contains the intro gate (.intro, .intro-brand, .intro-body, .intro-cta) with the «Запустить ритуал» CTA; no CSP or SRI violations in the console.",
+    "ssoCheck": "All three URLs of the project (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 91190-byte v20 page and no vercel.com/sso-api redirect, so Vercel Authentication remains off at the project level. No protection settings were changed.",
+    "previousLiveVersion": "v21 monolith (index.html 288261 B, sha256 8169dfc4…, no app.js) — replaced.",
+    "cleanUrlsRedirect": "/index.html -> 308 -> /",
+    "securityHeadersApplied": ["X-Frame-Options: DENY", "X-Content-Type-Options: nosniff", "Referrer-Policy: no-referrer", "Permissions-Policy: camera=(), microphone=(), geolocation=()", "Strict-Transport-Security: max-age=63072000; includeSubDomains"],
+    "immutableCacheOn": ["/fonts/*", "/icons/*"],
+    "buildScaffoldingNotServed": ["build.mjs", "package.json", "vercel.json", "README.md", "docs/"],
+    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy of v21 on main) was intentionally excluded from the deployment; /docs -> 404."
+  },
+  "method": {
+    "tool": "Vercel MCP deploy_to_vercel (target=production, name=proklinator-static, teamId omitted)",
+    "projectSettings": { "framework": null, "buildCommand": "node build.mjs", "outputDirectory": "public" },
+    "sourceFilesInRequest": ["build.mjs", "package.json", "vercel.json"],
+    "buildMjsSha256": "7f0ede67ed2b65a73148441dd4a56f779931a62fa397a1d957b0864e2fc1c3aa",
+    "description": "build.mjs fetches the 13 site files from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh) at the pinned commit f87ee40 and aborts unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit."
+  },
+  "notes": [
+    "PR #3 was already merged into main (f87ee40) at deploy time, so main was used as the source rather than the branch singularity/v20-production-complete-5942 (same tree: 5ef7313 is the branch head and the second parent of f87ee40).",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploy; the deployment landed in the singularity16 scope. Team-scoped read endpoints (get_project, list_projects, get_deployment) return 404 / empty for this token, so verification was done over HTTP against the public alias, the -singularity16 alias and the raw deployment URL.",
+    "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/protection settings were touched.",
+    "Site files were not inlined in the MCP request (payload was 4.6 KB of build scaffolding); the ~644 KB of site bytes were fetched and SHA-256-verified during the Vercel build.",
+    "HUGINN was not touched."
+  ]
+}
