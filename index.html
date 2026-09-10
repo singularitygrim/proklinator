@@ -39,7 +39,7 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-html,body{margin:0;min-height:100%;min-height:100dvh;background:var(--bg);color:var(--bone-text)}
+html,body{overflow-x:hidden;margin:0;min-height:100%;min-height:100dvh;background:var(--bg);color:var(--bone-text)}
 body{
   overflow-x:hidden;touch-action:manipulation;-webkit-tap-highlight-color:transparent;
   padding:var(--safe-t) var(--safe-r) 0 var(--safe-l);
@@ -87,9 +87,11 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   display:flex;align-items:center;justify-content:flex-start;
 }
 #threeHero{
-  position:absolute;inset:-20px -40px auto auto;width:160px;height:160px;
-  pointer-events:none;opacity:.55;z-index:0;
+  position:absolute;top:-12px;right:0;width:120px;height:120px;
+  pointer-events:none;opacity:.45;z-index:0;
+  overflow:hidden;
 }
+.hero-stage{position:relative;overflow:hidden;margin:0 -4px 0 0;}
 .brand{display:flex;align-items:center;gap:14px;margin-bottom:12px;position:relative;z-index:1}
 .mark{width:44px;height:44px;min-width:44px;display:grid;place-items:center}
 .mark svg{width:100%;height:100%;display:block}
@@ -181,7 +183,8 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
   overflow:hidden;opacity:0;transform:translateY(18px) scale(.98);
 }
-.verdict.show{display:block}
+.verdict.show{display:block;opacity:1;visibility:visible;position:relative;z-index:2}
+.verdict.show .actions{opacity:1}
 .verdict::before{
   content:"";position:absolute;right:-24px;top:-24px;width:150px;height:150px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -1166,27 +1169,41 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
     castScreen.classList.add("hidden");
     result.classList.remove("hidden");
     result.classList.add("show");
-    result.style.opacity="0";
-    result.style.transform="translateY(18px) scale(.98)";
     ctaBar.style.display="none";
-
-    anim({
-      targets:result,
-      opacity:[0,1],
-      translateY:[18,0],
-      scale:[0.98,1],
-      duration:620,
-      easing:"easeOutCubic",
-      complete:()=>{ result.style.opacity=""; result.style.transform=""; }
-    });
-    if(reduced){ result.style.opacity="1"; result.style.transform="none"; }
+    /* Always force visible — anime must never leave opacity:0 */
+    const reveal = ()=>{
+      result.style.opacity="1";
+      result.style.transform="none";
+      result.style.visibility="visible";
+    };
+    if(reduced || !hasAnime()){
+      reveal();
+    } else {
+      result.style.opacity="0";
+      result.style.transform="translateY(18px) scale(.98)";
+      let done=false;
+      const finish=()=>{ if(done) return; done=true; reveal(); };
+      anime({
+        targets:result,
+        opacity:[0,1],
+        translateY:[18,0],
+        scale:[0.98,1],
+        duration:520,
+        easing:"easeOutCubic",
+        complete:finish
+      });
+      setTimeout(finish, 700);
+    }
 
     casting=false;
     cast.disabled=false;
     cast.classList.remove("busy");
     cast.textContent="Скрепить печатью";
     showToast("Печать легла.");
-    result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"nearest"});
+    requestAnimationFrame(()=>{
+      result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"start"});
+      window.scrollTo({top: Math.max(0, result.offsetTop - 12), behavior: reduced?"auto":"smooth"});
+    });
   }
 
   cast.addEventListener("click",()=>runRitual());
