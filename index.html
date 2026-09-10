@@ -594,7 +594,7 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
     requestAnimationFrame(frame);
   }
 
-  function confettiBoom(){
+  function ritualFlash(){
     if(reduced) return;
     spawnRain();
     flash.classList.add("on"); setTimeout(()=>flash.classList.remove("on"),450);
@@ -657,7 +657,7 @@ input:focus{border-color:rgba(196,92,38,.45);box-shadow:none}
       await sleep(380);
     }
     chant.textContent="Ритуал завершён.";
-    confettiBoom();
+    ritualFlash();
     haptic([20,30,20,30,60]);
     await sleep(420);
     overlay.classList.remove("on"); overlay.setAttribute("aria-hidden","true");
