@@ -850,15 +850,15 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
 
 /* ---- Result: fav + harder + ritual line ---- */
 .action-icons{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.icon-btn{
+.actions .icon-btn{
   min-height:64px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 6px;min-width:0;
   background:rgba(237,228,214,.05);border:1px solid var(--line-strong);color:var(--bone-dim);font-size:10.5px;font-weight:600;letter-spacing:0;
   transition:color var(--dur),border-color var(--dur),background var(--dur),transform 150ms var(--ease);
 }
-.icon-btn span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.icon-btn svg{width:20px;height:20px}
-.icon-btn.on{color:var(--blood-hot);border-color:rgba(229,38,47,.5);background:rgba(179,18,31,.12)}
-.icon-btn.on svg path{fill:currentColor}
+.actions .icon-btn span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.actions .icon-btn svg{width:20px;height:20px}
+.actions .icon-btn.on{color:var(--blood-hot);border-color:rgba(229,38,47,.5);background:rgba(179,18,31,.12)}
+.actions .icon-btn.on svg path{fill:currentColor}
 .actions .btn-primary .flame{width:20px;height:20px;margin-right:8px;vertical-align:-3px}
 .block.ritual-line{margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(201,162,74,.14)}
 .block.ritual-line[hidden]{display:none}
