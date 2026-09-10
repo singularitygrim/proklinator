@@ -181,10 +181,24 @@ input.pulse-inner{animation:pulseInner .7s var(--ease)}
 .verdict{
   display:none;margin-top:8px;position:relative;padding:28px 22px 24px;
   background:var(--bg-elev);border:1px solid var(--bone);border-radius:var(--radius);
-  overflow:hidden;opacity:0;transform:translateY(18px) scale(.98);
+  overflow:hidden;z-index:2;
 }
-.verdict.show{display:block;opacity:1;visibility:visible;position:relative;z-index:2}
+.verdict.show{
+  display:block!important;opacity:1!important;visibility:visible!important;
+  transform:none;position:relative;z-index:5;
+}
 .verdict.show .actions{opacity:1}
+body.is-result .cta-bar{display:none!important}
+body.is-result .app{padding-bottom:calc(28px + var(--safe-b))}
+body.is-result .overlay{display:none!important;opacity:0!important;pointer-events:none!important}
+.pow{scroll-margin-bottom:calc(var(--cta-h) + var(--safe-b) + 16px)}
+@media (max-height:900px){
+  .home-hint{display:none}
+  .pow{min-height:72px;padding:14px 16px}
+  .power{margin-bottom:4px;gap:10px}
+  .field{margin-bottom:20px}
+  .gender{margin-bottom:20px}
+}
 .verdict::before{
   content:"";position:absolute;right:-24px;top:-24px;width:150px;height:150px;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%23C45C26' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23C45C26' stroke-width='.8'/%3E%3Ccircle cx='50' cy='50' r='6' fill='%23C45C26'/%3E%3Cline x1='50' y1='8' x2='50' y2='22' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='50' y1='78' x2='50' y2='92' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='8' y1='50' x2='22' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3Cline x1='78' y1='50' x2='92' y2='50' stroke='%23C45C26' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat;
@@ -1106,6 +1120,7 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
     const sinRaw=pick(sins);
     const sin=conjugate(sinRaw, gender);
 
+    overlay.style.display="";
     overlay.style.opacity="0";
     overlay.classList.add("on"); overlay.setAttribute("aria-hidden","false");
     if(threeState.ritual){ threeState.ritual.active=true; threeState.ritual.resize(); }
@@ -1166,33 +1181,41 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
       sevLabel:pow.label, sevId:pow.id, mul:pow.mul
     };
 
+    /* Hard-close ritual chrome first — never leave a black full-screen layer */
+    overlay.classList.remove("on");
+    overlay.setAttribute("aria-hidden","true");
+    overlay.style.opacity="0";
+    overlay.style.display="none";
+    if(threeState.ritual) threeState.ritual.active=false;
+
     castScreen.classList.add("hidden");
     result.classList.remove("hidden");
     result.classList.add("show");
+    document.body.classList.add("is-result");
     ctaBar.style.display="none";
-    /* Always force visible — anime must never leave opacity:0 */
+
+    /* Force readable card immediately (anime is optional polish only) */
     const reveal = ()=>{
+      result.style.display="block";
       result.style.opacity="1";
       result.style.transform="none";
       result.style.visibility="visible";
+      result.removeAttribute("hidden");
     };
-    if(reduced || !hasAnime()){
-      reveal();
-    } else {
-      result.style.opacity="0";
-      result.style.transform="translateY(18px) scale(.98)";
-      let done=false;
-      const finish=()=>{ if(done) return; done=true; reveal(); };
-      anime({
-        targets:result,
-        opacity:[0,1],
-        translateY:[18,0],
-        scale:[0.98,1],
-        duration:520,
-        easing:"easeOutCubic",
-        complete:finish
-      });
-      setTimeout(finish, 700);
+    reveal();
+    if(!reduced && hasAnime()){
+      try{
+        result.style.opacity="0.01";
+        anime({
+          targets:result,
+          opacity:[0.01,1],
+          translateY:[12,0],
+          duration:420,
+          easing:"easeOutCubic",
+          complete:reveal
+        });
+        setTimeout(reveal, 500);
+      }catch(e){ reveal(); }
     }
 
     casting=false;
@@ -1201,8 +1224,12 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
     cast.textContent="Скрепить печатью";
     showToast("Печать легла.");
     requestAnimationFrame(()=>{
-      result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"start"});
-      window.scrollTo({top: Math.max(0, result.offsetTop - 12), behavior: reduced?"auto":"smooth"});
+      window.scrollTo(0, 0);
+      result.scrollIntoView({behavior:"auto", block:"start"});
+      setTimeout(()=>{
+        window.scrollTo({top:0, behavior:"auto"});
+        result.scrollIntoView({behavior:reduced?"auto":"smooth", block:"start"});
+      }, 30);
     });
   }
 
@@ -1217,7 +1244,14 @@ window.__THREE_OK=false; window.__ANIME_OK=false;
     lastVerdict=null;
     result.classList.remove("show");
     result.classList.add("hidden");
+    result.style.display="";
+    result.style.opacity="";
+    result.style.transform="";
+    result.style.visibility="";
     castScreen.classList.remove("hidden");
+    document.body.classList.remove("is-result");
+    overlay.style.display="";
+    overlay.style.opacity="";
     ctaBar.style.display="";
     victim.value="";
     gender=null;
