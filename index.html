@@ -515,25 +515,40 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 /* =========================================================
    v19 PRODUCT SHELL — tabs, splash, lists, profile, paywall
    ========================================================= */
-.app{padding-bottom:calc(96px + var(--safe-b))}
-.toast{bottom:calc(94px + var(--safe-b))}
+/* v20.4: one source of truth for the bar's own height (8px + 52px buttons + 10px + 1px border; the safe-area inset is
+   added on top of it by both the bar and the content), so the scroll content always clears the fixed bar — last cards
+   are never hidden under it, and the toast keeps floating above it. */
+:root{--tabbar-h:71px}
+.app{padding-bottom:calc(var(--tabbar-h) + 25px + var(--safe-b))}
+.toast{bottom:calc(var(--tabbar-h) + 23px + var(--safe-b))}
 body.is-casting .toast,body.is-splash .toast{bottom:calc(24px + var(--safe-b))}
 .tab{position:relative;z-index:1}
 .tab.hidden,.page.hidden{display:none}
 body:not([data-tab="ritual"]) .hero-bg,body:not([data-tab="ritual"]) .close-btn{display:none}
 .hidden{display:none!important}
 
-/* ---- Bottom nav ---- */
+/* ---- Bottom nav ----
+   v20.4 (Vladimir: «нижнее меню не закреплено правильно и под ним видно другую часть приложения»):
+   - pinned to the viewport bottom with left/right + auto margins — no transform. WebKit mispositions and re-rasterises a
+     fixed box that carries transform + backdrop-filter while the page scrolls (the bar lagged and looked unpinned) and a
+     translateX(-50%) on odd widths lands on a half pixel;
+   - opaque soot, no backdrop-filter: the old .94/.985 gradient + blur let the cards scroll through the bar, most visibly
+     in the empty safe-area strip under the buttons (home indicator / gesture bar), which read as another part of the app;
+   - the safe-area inset is part of the bar's own padding, so the strip is painted by the bar itself;
+   - its own stacking context: content (z 1) stays under it, overlays (sheet 68, toast 70, intro 65, splash 80) above;
+   - ::after is a soot curtain hanging below the viewport edge: while a browser animates its toolbar or gesture inset
+     (iOS Safari, Chrome Android edge-to-edge) the layout viewport's bottom sits above the visible bottom for a few frames;
+     the curtain covers that strip instead of the page. Fixed boxes never extend the scrollable area, so it costs nothing. */
 .tabbar{
-  position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;z-index:40;
+  position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:430px;z-index:40;isolation:isolate;
   display:grid;grid-template-columns:repeat(5,1fr);gap:2px;
   padding:8px 8px calc(10px + var(--safe-b));
-  background:linear-gradient(180deg,rgba(16,11,10,.94),rgba(9,7,6,.985));
+  background:linear-gradient(180deg,#100B0A,#090706);
   border-top:1px solid var(--line);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   box-shadow:0 -14px 34px rgba(0,0,0,.5);
 }
-.tabbar::before{content:"";position:absolute;left:8%;right:8%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(237,228,214,.22),transparent)}
+.tabbar::before{content:"";position:absolute;left:8%;right:8%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(237,228,214,.22),transparent);pointer-events:none}
+.tabbar::after{content:"";position:absolute;left:0;right:0;top:100%;height:160px;background:#090706;pointer-events:none}
 .tab-btn{
   position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
   min-height:52px;padding:6px 2px 4px;border-radius:14px;color:var(--bone-mute);
@@ -820,9 +835,12 @@ body.is-pro .av-pro-hint:not(:empty){display:block}
 /* A2HS (UX_V202): the quiet row reuses .btn-row (label + sub, ≥44px); the sheet is a bottom dialog below the toast (70), above the app */
 #a2hsRowBox{margin:12px 0 0}
 #a2hsRowBox .btn-row{margin:0}
-.sheet{position:fixed;inset:0;z-index:68;display:flex;align-items:flex-end;justify-content:center}
+.sheet{position:fixed;inset:0;z-index:68;display:flex;align-items:flex-end;justify-content:center;isolation:isolate}
 .sheet.hidden{display:none!important}
 .sheet-veil{position:absolute;inset:0;background:rgba(7,5,5,.72)}
+/* v20.4: like .tabbar::after — the card ends at the viewport edge, this curtain covers the strip a browser exposes below it
+   while its toolbar animates, so neither the tabbar nor the page shows under the sheet (absolute → not a flex item) */
+.sheet::after{content:"";position:absolute;left:0;right:0;top:100%;height:160px;background:#100D0C;pointer-events:none}
 .sheet-card{
   position:relative;width:100%;max-width:430px;max-height:calc(100dvh - 24px);overflow:auto;border-radius:26px 26px 0 0;
   padding:10px 20px calc(18px + var(--safe-b));background:linear-gradient(180deg,#171312,#100D0C);
