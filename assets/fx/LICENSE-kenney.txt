@@ -1,0 +1,26 @@
+	
+
+	Particle Pack (1.1)
+
+	by Kenney Vleugels (Kenney.nl)
+
+	Additional credit for creating filter templates:
+	Indigo Ray, Craig Nisbet, Zoltan Erdokovy, Heliagon, ThreeDee, Killst4r and Tim2501
+
+			------------------------------
+
+	License (Creative Commons Zero, CC0)
+	http://creativecommons.org/publicdomain/zero/1.0/
+
+	You may use these assets in personal and commercial projects.
+	Credit (Kenney or www.kenney.nl) would be nice but is not mandatory.
+
+			------------------------------
+
+	Donate:   http://support.kenney.nl
+	Request:  http://request.kenney.nl
+
+	Follow on Twitter for updates: @KenneyNL (www.twitter.com/kenneynl)
+
+---
+The PNGs in this folder are downscaled, recoloured derivatives of the Kenney Particle Pack / Smoke Particles sprites listed in tools/build_assets.py (FX_SPRITES). CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/

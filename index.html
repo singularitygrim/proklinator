@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <!-- The CSP ships in the document so it holds on any static host; vercel.json adds the header-only protections (X-Frame-Options, Permissions-Policy, nosniff, HSTS).
      Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. worker-src 'self' admits only our own sw.js
-     (the light offline shell cache, v20.4); no other workers. v21 (Supabase) must extend connect-src here. -->
+     (the light offline shell cache, v20.5); no other workers. v21 (Supabase) must extend connect-src here. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'self'; base-uri 'self'; form-action 'self'"/>
 <meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
@@ -474,6 +474,10 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   flex-direction:column;gap:22px;background:rgba(7,5,5,.97);padding:24px;opacity:0;
 }
 .overlay.on{display:flex}
+/* v20.5 ritual FX: with the WebGL / 2D altar disc drawn in the upper part of the screen, the chant block drops to the lower
+   half so the words read on plain soot; the reduced-motion SVG seal keeps the centred layout. */
+.overlay.fx-three,.overlay.fx-canvas{justify-content:flex-start;padding-top:52vh;padding-top:52dvh}
+.overlay.fx-canvas .seal-stage{display:none}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .seal-stage{
   width:168px;height:168px;position:relative;z-index:2;display:grid;place-items:center;
@@ -578,19 +582,33 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
   -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
   mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
 }
-/* v20.2: the altar (assets/splash/altar-9x16.png) fades in over the fallback once the intro's <img> of the same file has decoded —
-   `html.has-splash-art` is the only CSS reference to it, so a missing asset leaves the old hero (the file is 1280×720: crown biased into view). */
+/* v20.2: the altar fades in over the fallback once the intro's <img> of the same file has decoded — `html.has-splash-art` is the only
+   CSS reference to it, so a missing asset leaves the old hero. v20.5: the file is a true 9:16 (1080×1920, cropped from hero-altar.jpg by
+   tools/build_assets.py), so it is simply centred — no more biasing a 1280×720 frame. */
 .splash-art-alt{background-image:none;opacity:0;transition:opacity 600ms ease}
-html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:42% 50%;opacity:.55}
+html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.jpg");background-position:50% 50%;opacity:.55}
 .splash-veil{
   position:absolute;inset:0;
   background:
     radial-gradient(ellipse 70% 46% at 50% 44%,rgba(179,18,31,.32),transparent 66%),
     linear-gradient(180deg,rgba(7,5,5,.55) 0,rgba(7,5,5,.1) 36%,rgba(7,5,5,.9) 76%,#070505 100%);
 }
+/* v20.5: paper grain — ambientCG Paper001 (CC0) high-passed to neutral grey by tools/build_assets.py; `overlay` keeps the soot black
+   and only textures the lit reds, 6 % is the ceiling set by ASSETS_UPGRADE. */
+.splash-grain{position:absolute;inset:0;background:url("assets/splash/paper-grain.jpg") 0 0/320px 188px repeat;opacity:.06;mix-blend-mode:overlay;pointer-events:none}
 .splash-sigil{position:relative;width:min(58vw,224px);height:auto;margin:0 0 20px;filter:drop-shadow(0 0 34px rgba(179,18,31,.5))}
 .splash-sigil .spin{animation:sealSpin 16s linear infinite;transform-origin:center}
 .splash-sigil .spin-r{animation:sealSpin 24s linear infinite reverse;transform-origin:center}
+/* splash-seal-draw: each stroke is one dash the length of its own perimeter (r86 → 541, r64 → 403, triangle → 302, r40 → 252) pulled in
+   over 1.4 s; explicit lengths instead of pathLength so browsers that ignore it never show a dotted ring. */
+.splash-sigil .draw{animation:sealDraw 1.4s cubic-bezier(.4,0,.2,1) both}
+.splash-sigil .d-541{stroke-dasharray:541;stroke-dashoffset:541}
+.splash-sigil .d-403{stroke-dasharray:403;stroke-dashoffset:403;animation-delay:.2s}
+.splash-sigil .d-302{stroke-dasharray:302;stroke-dashoffset:302;animation-delay:.45s}
+.splash-sigil .d-252{stroke-dasharray:252;stroke-dashoffset:252;animation-delay:.7s}
+.splash-sigil .fade-in{animation:sealFade .9s ease-out .9s both}
+@keyframes sealDraw{to{stroke-dashoffset:0}}
+@keyframes sealFade{from{opacity:0}}
 .splash-brand{
   position:relative;font-family:var(--serif);font-size:clamp(30px,9.2vw,38px);letter-spacing:.14em;text-transform:uppercase;
   color:var(--bone);text-shadow:0 2px 26px rgba(0,0,0,.75);line-height:1;
@@ -650,7 +668,7 @@ html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x
 .tag.gold{color:var(--gold-hot);border:1px solid rgba(201,162,74,.45);background:rgba(201,162,74,.1)}
 .tag.blood{color:#F2A7A7;border:1px solid rgba(229,38,47,.5);background:rgba(179,18,31,.14)}
 .empty{padding:34px 20px 30px;text-align:center;color:var(--bone-mute);font-size:14px;line-height:1.5}
-.empty .sig{width:64px;height:48px;margin:0 auto 12px;opacity:.55}
+.empty .art{width:96px;height:72px;margin:0 auto 14px;opacity:.8;filter:drop-shadow(0 0 14px rgba(179,18,31,.28))}   /* v20.5 in-house empty-state art */
 .empty b{display:block;font-family:var(--serif);font-weight:400;font-size:19px;line-height:1.2;color:var(--bone);margin:0 0 6px}
 .empty .body{max-width:280px;margin:0 auto}
 .empty button{
@@ -1052,7 +1070,7 @@ body.is-sheet{overflow:hidden}
    near-opaque body, so Freya's copy is untouched and legible. The shipped file is a 1280×720 frame — object-fit cover with the
    crown biased into view; a failed load swaps in hero-altar.jpg (app.js), and until either decodes the layer stays invisible. */
 .intro-art{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 600ms ease}
-.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:42% 55%;filter:saturate(.9) contrast(1.04)}
+.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 50%;filter:saturate(.9) contrast(1.04)}   /* v20.5: true 9:16 file, centred */
 .intro-art.ready{opacity:1}
 .intro-scrim{position:fixed;inset:0;pointer-events:none;background:rgba(7,5,5,.5)}
 .intro-veil{
@@ -1156,6 +1174,7 @@ body.is-intro .tabbar{display:none}
 @media(prefers-reduced-motion:reduce){
   .splash-sigil .spin,.splash-sigil .spin-r,.pay-hero::before{animation:none!important}
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .splash-sigil .draw{stroke-dasharray:none!important;stroke-dashoffset:0!important}   /* no draw-in: the seal is simply there */
   .seal-stage .spin{animation:none!important}
   .pow[data-id="anathema"].on,.pow.on::after{animation:none!important;transform:none!important}
   .progress-wrap.power-anathema .progress-bar{animation:none!important}
@@ -1498,6 +1517,8 @@ body.is-intro .tabbar{display:none}
   <div class="splash-art" aria-hidden="true"></div>
   <div class="splash-art splash-art-alt" aria-hidden="true"></div>
   <div class="splash-veil" aria-hidden="true"></div>
+  <!-- v20.5 WOW-2: paper grain (ambientCG Paper001, CC0) at 6 % over the lit areas only; the rings below draw themselves in (splash-seal-draw) -->
+  <div class="splash-grain" aria-hidden="true"></div>
   <svg class="splash-sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <radialGradient id="spG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#E5262F" stop-opacity=".55"/><stop offset="1" stop-color="#B3121F" stop-opacity="0"/></radialGradient>
@@ -1505,16 +1526,16 @@ body.is-intro .tabbar{display:none}
     </defs>
     <circle cx="100" cy="100" r="96" fill="url(#spG)"/>
     <g class="spin">
-      <circle cx="100" cy="100" r="86" stroke="#D6202B" stroke-width="1.2" opacity=".9"/>
-      <circle cx="100" cy="100" r="80" stroke="#FF5A4F" stroke-width=".6" opacity=".7" stroke-dasharray="3 6"/>
-      <path d="M100 14 108 30 92 30Z M100 186 92 170 108 170Z M14 100 30 92 30 108Z M186 100 170 108 170 92Z" fill="#FF5A4F" opacity=".8"/>
+      <circle class="draw d-541" cx="100" cy="100" r="86" stroke="#D6202B" stroke-width="1.2" opacity=".9"/>
+      <circle class="fade-in" cx="100" cy="100" r="80" stroke="#FF5A4F" stroke-width=".6" opacity=".7" stroke-dasharray="3 6"/>
+      <path class="fade-in" d="M100 14 108 30 92 30Z M100 186 92 170 108 170Z M14 100 30 92 30 108Z M186 100 170 108 170 92Z" fill="#FF5A4F" opacity=".8"/>
     </g>
     <g class="spin-r">
-      <circle cx="100" cy="100" r="64" stroke="#D6202B" stroke-width="1" opacity=".8"/>
-      <polygon points="100,42 150,129 50,129" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
-      <polygon points="100,158 50,71 150,71" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+      <circle class="draw d-403" cx="100" cy="100" r="64" stroke="#D6202B" stroke-width="1" opacity=".8"/>
+      <polygon class="draw d-302" points="100,42 150,129 50,129" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+      <polygon class="draw d-302" points="100,158 50,71 150,71" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
     </g>
-    <circle cx="100" cy="100" r="40" stroke="#D6202B" stroke-width="1.4" opacity=".95"/>
+    <circle class="draw d-252" cx="100" cy="100" r="40" stroke="#D6202B" stroke-width="1.4" opacity=".95"/>
     <g transform="translate(100 102)">
       <path d="M-24 10 -19-8l8 7L0-14l11 13 8-7 5 18Z" fill="url(#spGold)"/>
       <rect x="-24" y="12" width="48" height="4" rx="1.6" fill="url(#spGold)"/>
@@ -1533,7 +1554,7 @@ body.is-intro .tabbar{display:none}
 
 <div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
   <!-- UX_V202: full-bleed altar behind the gate (decorative: alt="" + aria-hidden) under a 50% soot scrim; app.js swaps in hero-altar.jpg if the file fails -->
-  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.png" alt="" aria-hidden="true" decoding="async"/></div>
+  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.jpg" alt="" aria-hidden="true" decoding="async"/></div>
   <div class="intro-scrim" aria-hidden="true"></div>
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
@@ -1580,15 +1601,23 @@ body.is-intro .tabbar{display:none}
 
 <div class="overlay" id="overlay" aria-hidden="true">
   <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
+  <!-- v20.5: static sigil for prefers-reduced-motion (and the split second before WebGL takes over) — rune ring, heptagram, crown -->
   <div class="seal-stage svg-fallback" id="sealStage" aria-hidden="true">
-    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle class="spin" cx="60" cy="60" r="48" stroke="#B3121F" stroke-width="1.2" opacity=".8"/>
-      <circle cx="60" cy="60" r="32" stroke="#B3121F" stroke-width="1" opacity=".5"/>
-      <circle cx="60" cy="60" r="8" fill="#B3121F" opacity=".9"/>
-      <line x1="60" y1="12" x2="60" y2="24" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="60" y1="96" x2="60" y2="108" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="12" y1="60" x2="24" y2="60" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="96" y1="60" x2="108" y2="60" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+      <g class="spin" stroke="#B3121F">
+        <circle cx="60" cy="60" r="54" stroke-width="1.4" opacity=".9"/>
+        <circle cx="60" cy="60" r="46" stroke-width="1" opacity=".75"/>
+        <path stroke-width="1.1" opacity=".85" d="M60 8v5M60 107v5M8 60h5M107 60h5M23.2 23.2l3.5 3.5M93.3 93.3l3.5 3.5M23.2 96.8l3.5-3.5M93.3 26.7l3.5-3.5
+          M60 10.5l-2.4 3.8M60 10.5l2.4 3.8M109.5 60l-3.8-2.4M109.5 60l-3.8 2.4M60 109.5l-2.4-3.8M60 109.5l2.4-3.8M10.5 60l3.8-2.4M10.5 60l3.8 2.4
+          M84 17.5l-3 1.2-1-2.8M102.5 36l-1.2-3 2.8-1M102.5 84l-2.8-1 1.2-3M84 102.5l-1-2.8 3 1.2M36 102.5l3 1.2 1-2.8M17.5 84l1.2 3-2.8 1M17.5 36l2.8 1-1.2 3M36 17.5l1 2.8-3-1.2"/>
+      </g>
+      <circle cx="60" cy="60" r="38" stroke="#B3121F" stroke-width=".9" opacity=".6" stroke-dasharray="1.6 3.4"/>
+      <polygon points="60.0,22.0 76.5,94.2 30.3,36.3 97.0,68.5 23.0,68.5 89.7,36.3 43.5,94.2" stroke="#B3121F" stroke-width=".9" opacity=".55"/>
+      <circle cx="60" cy="60" r="18" stroke="#B3121F" stroke-width="1" opacity=".8"/>
+      <g transform="translate(60 61)">
+        <path d="M-11 4.6-8-4l4 3.2L0-7.4l4 6.6 4-3.2 3 8.6Z" fill="#C9A24A"/>
+        <rect x="-11" y="5.6" width="22" height="2" rx=".8" fill="#C9A24A"/>
+      </g>
     </svg>
   </div>
   <div class="chant" id="chant" aria-live="polite"></div>
@@ -1598,6 +1627,6 @@ body.is-intro .tabbar{display:none}
 
 <canvas id="exportCanvas" width="1080" height="1920" style="display:none" aria-hidden="true"></canvas>
 
-<script src="app.js?v=20.4" defer></script>
+<script src="app.js?v=20.5" defer></script>
 </body>
 </html>
