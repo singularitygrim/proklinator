@@ -1,8 +1,8 @@
 {
   "app": "ПРОКЛИНАТОР",
-  "version": "v20.5",
+  "version": "v20.6",
   "url": "https://proklinator-static.vercel.app",
-  "deploymentId": "dpl_8xWfZ94NgxkmrZcF22a9jQioo6cT",
+  "deploymentId": "dpl_98RXX3fh636oKutKKMkno1CS88Tt",
   "sso": "off",
   "full": true,
   "target": "production",
@@ -12,26 +12,31 @@
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-static-ms98oanun-singularity16.vercel.app",
+  "deploymentUrl": "https://proklinator-static-d2ky5sb67-singularity16.vercel.app",
   "aliases": [
     "https://proklinator-static.vercel.app",
     "https://proklinator-static-singularity16.vercel.app"
   ],
-  "inspector": "https://vercel.com/singularity16/proklinator-static/8xWfZ94NgxkmrZcF22a9jQioo6cT",
-  "sourceCommit": "5771dca0b67c11f2f17ffdb9646b6434b862b44b",
-  "sourceRef": "origin/main (merge of PR #14, singularity/v20-5-assets-ritual-fx-77f1)",
+  "inspector": "https://vercel.com/singularity16/proklinator-static/98RXX3fh636oKutKKMkno1CS88Tt",
+  "sourceCommit": "080a3a44cc8644b0b772d1ef0d44db8bb47db551",
+  "sourceRef": "origin/main (merge of PR #16, singularity/v20-6-punch-pack-v1)",
   "sourceRepo": "https://github.com/singularitygrim/proklinator",
   "timestamp": {
-    "deployRequestedAt": "~2026-09-11T11:54Z (right after the 11:54:03Z pre-deploy check of the live v20.4; deploy_to_vercel answered INITIALIZING)",
-    "liveAt": "2026-09-11T11:56:38Z (first raw-URL poll; the build had already finished and served the verified v20.5 index, 109439 B)",
-    "publicAliasObservedAt": "2026-09-11T11:56:47Z",
-    "verifiedAt": "2026-09-11T11:59:30Z (HTTP sweep of all 73 files 11:57:43Z–11:57:50Z, then the headless Chrome render check)"
+    "preDeployCheckAt": "2026-09-11T12:23:41Z (live public alias still v20.5: index 109439 B with app.js?v=20.5, sw VERSION v20.5, app.js 301816 B with 40 sins)",
+    "deployRequestedAt": "2026-09-11T12:24:07Z (deploy_to_vercel answered INITIALIZING with the deployment id and raw URL)",
+    "liveAt": "2026-09-11T12:26:44Z (first raw-URL poll; the build had already finished and served the verified v20.6 index, 109439 B, sha256 da421148…)",
+    "publicAliasObservedAt": "2026-09-11T12:27:08Z (first public-alias poll, already v20.6)",
+    "verifiedAt": "2026-09-11T12:32:55Z (HTTP sweep of all 73 files 12:27:46Z–12:27:47Z, then three headless Chrome ritual runs 12:31:04Z–12:32:55Z)"
   },
   "files": {
+    "ATTRIBUTIONS.md": {
+      "bytes": 9222,
+      "sha256": "41287a5cb17cfbefb693dbbe8afaa1fe77a92a70c4bf143f4e99d3f76831371e"
+    },
     "app.js": {
-      "bytes": 301816,
-      "sha256": "dd0cf02469751b1f5a28d6dc9a82f84c9165f55142d0614232e605f2614b9228",
-      "note": "changed in v20.5: DATA.version v20.5 + release notes; What's new «Что нового в v20.5» (five v20.5 items, older releases folded to one line each); ritual FX (WOW-1) — three.js rune-ring altar disc over a sigil glow with CPU-simulated sprite particles (assets/fx/*, lazily loaded, procedural glow until they decode) and an anime.js per-power director (Ехидно / Жёстко / Апокалипсис), 2D canvas fallback with the same rune rings, reduced-motion static SVG sigil; EMPTY_ART inlined empty-state illustrations (WOW-3) replacing the shared ICO.sig ellipse; share poster (1080×1920) and OG card (1200×630) burn in «Шутка, не угроза» (SAFETY_SHOW_RULES v1.2)"
+      "bytes": 325508,
+      "sha256": "96879f528e8ffc0c4d6e981baa78ee0ff35990963651bd0f17316bb2804731fc",
+      "note": "changed in v20.6 (+23692 B): DATA.version v20.6 + release notes; PUNCH_PACK_v1 catalog appended — sins 41–60 (20 new office / household / relationship scenes, e.g. 41 status-созвон … 60 «Мы на связи»), verdicts.N N41–N60 (32 → 52, each with whisper / seal / anathema punch and its own «Снять:»), sinKeywords 41–60 for matchSin, shareCaptions.bySinId 40 → 60; What's new «Что нового в v20.6» (two v20.6 items, v20.5 folded to one line). No code paths changed — catalog data + copy only"
     },
     "assets/avatars/hood.png": {
       "bytes": 191453,
@@ -51,68 +56,55 @@
     },
     "assets/empty/cold-ash.svg": {
       "bytes": 881,
-      "sha256": "dee70ed4b7765688925296ae0e76c6e86611a2ef8c3cc2f2d1f1fb9af992abdb",
-      "note": "new in v20.5: in-house default empty-state illustration for any future empty list — design source; inlined as EMPTY_ART"
+      "sha256": "dee70ed4b7765688925296ae0e76c6e86611a2ef8c3cc2f2d1f1fb9af992abdb"
     },
     "assets/empty/hollow-heart.svg": {
       "bytes": 693,
-      "sha256": "d9aef79956db64667168be840b8bb4625bb180e28fc1aff75ece34afcadd4d0d",
-      "note": "new in v20.5: in-house empty-state illustration for «Избранное пусто» — design source; inlined as EMPTY_ART"
+      "sha256": "d9aef79956db64667168be840b8bb4625bb180e28fc1aff75ece34afcadd4d0d"
     },
     "assets/empty/quiet-candle.svg": {
       "bytes": 729,
-      "sha256": "245fd3a10cfbadca1c0d0d2a269637e9851a9a645eb1051065740c405190164e",
-      "note": "new in v20.5: in-house empty-state illustration for «Пока тихо» (history) — design source; inlined as EMPTY_ART in app.js, zero runtime requests"
+      "sha256": "245fd3a10cfbadca1c0d0d2a269637e9851a9a645eb1051065740c405190164e"
     },
     "assets/empty/unlit-altar.svg": {
       "bytes": 751,
-      "sha256": "24e669b57683d4fd8172b9b7ff77a6fb803ed479d2e191d29da54922e7811e8f",
-      "note": "new in v20.5: in-house empty-state illustration for «Нет любимых ритуалов» — design source; inlined as EMPTY_ART"
-    },
-    "assets/fx/ash-01.png": {
-      "bytes": 15772,
-      "sha256": "46809c826ec12a71ec9ef0a797d22dc7c1669b90210c243308fa41e86dcc4c8e",
-      "note": "new in v20.5: Kenney CC0 sprite, 128×128, ash ramp (soot puffs drifting down)"
-    },
-    "assets/fx/crack-01.png": {
-      "bytes": 45494,
-      "sha256": "7063f4861cc1089dada66459a499ba0e289192b5196aed67827108ec9bd4cf38",
-      "note": "new in v20.5: Kenney CC0 sprite, 256×256 (lightning cracks for «Апокалипсис»)"
-    },
-    "assets/fx/ember-01.png": {
-      "bytes": 16216,
-      "sha256": "18104236a3ec252f4f1593892ffefe5ced05af689a53f188a5ee6a74387292d0",
-      "note": "new in v20.5: Kenney CC0 sprite, downscaled to 128×128 and recoloured through the ember ramp (ritual embers rising off the disc)"
-    },
-    "assets/fx/ember-02.png": {
-      "bytes": 3777,
-      "sha256": "6fe7d9e66ed1374ecf6890af75a8c800d8d960eed0fe75ad3810dda45d020abf",
-      "note": "new in v20.5: Kenney CC0 sprite, 64×64, ember ramp (motes)"
+      "sha256": "24e669b57683d4fd8172b9b7ff77a6fb803ed479d2e191d29da54922e7811e8f"
     },
     "assets/fx/LICENSE-kenney.txt": {
       "bytes": 868,
-      "sha256": "370ba2612c309b48c8b1875c4ca252e04e815be4702254ef7189b0b5f3fb3ea6",
-      "note": "new in v20.5: Kenney CC0 licence text travelling with the sprites"
+      "sha256": "370ba2612c309b48c8b1875c4ca252e04e815be4702254ef7189b0b5f3fb3ea6"
+    },
+    "assets/fx/ash-01.png": {
+      "bytes": 15772,
+      "sha256": "46809c826ec12a71ec9ef0a797d22dc7c1669b90210c243308fa41e86dcc4c8e"
+    },
+    "assets/fx/crack-01.png": {
+      "bytes": 45494,
+      "sha256": "7063f4861cc1089dada66459a499ba0e289192b5196aed67827108ec9bd4cf38"
+    },
+    "assets/fx/ember-01.png": {
+      "bytes": 16216,
+      "sha256": "18104236a3ec252f4f1593892ffefe5ced05af689a53f188a5ee6a74387292d0"
+    },
+    "assets/fx/ember-02.png": {
+      "bytes": 3777,
+      "sha256": "6fe7d9e66ed1374ecf6890af75a8c800d8d960eed0fe75ad3810dda45d020abf"
     },
     "assets/fx/sigil-glow.png": {
       "bytes": 66513,
-      "sha256": "a387a782022dfc30c38bcb5d7c79a840caf9d4552d3f07bcff72ec8817947aac",
-      "note": "new in v20.5: 256×256 sigil glow under the rune-ring disc"
+      "sha256": "a387a782022dfc30c38bcb5d7c79a840caf9d4552d3f07bcff72ec8817947aac"
     },
     "assets/fx/smoke-01.png": {
       "bytes": 51623,
-      "sha256": "752a531b990120274da484576fae65053f8965bc0f6ea9fef601c07ccaeea5dd",
-      "note": "new in v20.5: Kenney Smoke Particles CC0 sprite, 256×256 (smoke billboards off the rim)"
+      "sha256": "752a531b990120274da484576fae65053f8965bc0f6ea9fef601c07ccaeea5dd"
     },
     "assets/fx/smoke-02.png": {
       "bytes": 54421,
-      "sha256": "6536b3d0fc9d917a0d535224973e526b9e12eb97bc56559693eb4ece10d95774",
-      "note": "new in v20.5: Kenney Smoke Particles CC0 sprite, 256×256"
+      "sha256": "6536b3d0fc9d917a0d535224973e526b9e12eb97bc56559693eb4ece10d95774"
     },
     "assets/fx/spark-01.png": {
       "bytes": 7108,
-      "sha256": "512cd1e1df125c3597a7e41b1b134fb62cfa64a15b4dd2ac30e80a5bfcd438b8",
-      "note": "new in v20.5: Kenney CC0 sprite, 128×128 (spark burst at «Ставим печать»)"
+      "sha256": "512cd1e1df125c3597a7e41b1b134fb62cfa64a15b4dd2ac30e80a5bfcd438b8"
     },
     "assets/icons/age-18.svg": {
       "bytes": 356,
@@ -268,18 +260,11 @@
     },
     "assets/splash/altar-9x16.jpg": {
       "bytes": 203738,
-      "sha256": "feb15bd9ac398cdd3754843fa34cae3c69aadc026b5f3fbfb2a4478d2ded838f",
-      "note": "new in v20.5: 1080×1920 centre-safe 9:16 cover crop of the in-house hero-altar.jpg (crown on axis, Lanczos + mild unsharp, progressive JPEG 4:4:4); replaces assets/splash/altar-9x16.png, which was a 1280×720 JPEG under a .png name. Headless Chrome on the live URL decodes it as 1080×1920 behind the splash / intro"
+      "sha256": "feb15bd9ac398cdd3754843fa34cae3c69aadc026b5f3fbfb2a4478d2ded838f"
     },
     "assets/splash/paper-grain.jpg": {
       "bytes": 118007,
-      "sha256": "b4f0a3f98a8bff0f3185744751537fe86937195c3a819b8534a97a1ceef565dd",
-      "note": "new in v20.5: ambientCG Paper001 (CC0) high-passed to neutral grey, tileable; the splash overlay grain at 6 %"
-    },
-    "ATTRIBUTIONS.md": {
-      "bytes": 9222,
-      "sha256": "41287a5cb17cfbefb693dbbe8afaa1fe77a92a70c4bf143f4e99d3f76831371e",
-      "note": "changed in v20.5: Kenney Particle Pack / Smoke Particles (CC0, per-file source table with pinned hashes, LICENSE-kenney.txt), ambientCG Paper001 (CC0), the CC0 / ISC / MIT / OFL floor restated, in-house provenance list updated (true 9:16 altar, icon derivatives, empty-state art)"
+      "sha256": "b4f0a3f98a8bff0f3185744751537fe86937195c3a819b8534a97a1ceef565dd"
     },
     "fonts/OFL.txt": {
       "bytes": 4449,
@@ -307,8 +292,7 @@
     },
     "icons/apple-touch-icon.png": {
       "bytes": 38140,
-      "sha256": "248cde5980f392b76bf477325fb1039c07bf4932e3b01eba56453ac54cc0ad5a",
-      "note": "changed in v20.5: regenerated by tools/build_assets.py from the in-house 512 master — 180×180, flattened on #0B0908, verified square"
+      "sha256": "248cde5980f392b76bf477325fb1039c07bf4932e3b01eba56453ac54cc0ad5a"
     },
     "icons/icon-192.png": {
       "bytes": 49900,
@@ -320,13 +304,12 @@
     },
     "icons/maskable-512.png": {
       "bytes": 252517,
-      "sha256": "dec8254c223000f3a66c42ede3bfeebca72600fc3ddd2ba4201e6a3dbcd2b618",
-      "note": "changed in v20.5: regenerated by tools/build_assets.py — opaque, sigil ring measured and kept inside the 80 % maskable safe zone, verified square"
+      "sha256": "dec8254c223000f3a66c42ede3bfeebca72600fc3ddd2ba4201e6a3dbcd2b618"
     },
     "index.html": {
       "bytes": 109439,
-      "sha256": "64553186ec5a8993ddf8d1e2787eea6776d53bae75ced6e77ad50bc00cc709cc",
-      "note": "changed in v20.5: splash .splash-grain tiles assets/splash/paper-grain.jpg (mix-blend-mode overlay, opacity .06) + splash-seal-draw stroke animation (dropped under prefers-reduced-motion); splash / intro altar <img> now assets/splash/altar-9x16.jpg, centred (no 42 % landscape bias); .overlay.fx-three / .fx-canvas chant block in the lower half; empty-state art CSS; <script src=\"app.js?v=20.5\">. The three remaining «v20.4» strings are CSS source comments on the tabbar rule, not references"
+      "sha256": "da421148a412bf0c7cd8fa421bd6ed4cc9115639f44655c7543e5a7f70579940",
+      "note": "changed in v20.6 (same 109439 B): <script src=\"app.js?v=20.6\"> and the CSP source comment now says v20.6; nothing else. The seven remaining «v20.5» strings are CSS / HTML source comments on the v20.5 FX, splash grain and empty-state rules, not references"
     },
     "manifest.webmanifest": {
       "bytes": 820,
@@ -334,8 +317,8 @@
     },
     "sw.js": {
       "bytes": 6029,
-      "sha256": "b0ecc6beda12acf55161d55ffbad0c27fa1230163cc38870380a82e0d260e3ca",
-      "note": "changed in v20.5: VERSION v20.5, APP_JS app.js?v=20.5 (new cache proklinator-v20.5; the v20.4 cache is dropped on activate); OPTIONAL precache list adds the eight assets/fx sprites and assets/splash/paper-grain.jpg and points at assets/splash/altar-9x16.jpg instead of the removed .png"
+      "sha256": "ff83a9b76ddc26dbd076332596c3314d32f45ac1177a69807ea5441b27856e08",
+      "note": "changed in v20.6 (same 6029 B): VERSION v20.6, APP_JS app.js?v=20.6 (new cache proklinator-v20.6; the v20.5 cache is dropped on activate); header comment v20.6. REQUIRED / OPTIONAL / CDN precache lists unchanged (the one «v20.5» string is the comment over the FX sprite entries)"
     },
     "vercel.json": {
       "bytes": 721,
@@ -344,13 +327,14 @@
     }
   },
   "verification": {
-    "checkedAt": "2026-09-11T11:57:43Z",
+    "checkedAt": "2026-09-11T12:27:46Z",
     "publicUrlHttpStatus": 200,
     "publicUrlRedirect": null,
     "publicUrlContentLength": 109439,
     "indexHtmlSha256MatchesRepo": true,
     "appJsHttpStatus": 200,
     "appJsSha256MatchesRepo": true,
+    "appJsContentLength": 325508,
     "appJsContentType": "application/javascript; charset=utf-8",
     "swJsHttpStatus": 200,
     "swJsSha256MatchesRepo": true,
@@ -360,44 +344,78 @@
     "attributionsMdHttpStatus": 200,
     "attributionsMdContentType": "text/markdown; charset=utf-8",
     "allSeventyThreeFilesByteIdenticalToRepo": true,
-    "servedFilesByteIdentical": "73/73",
+    "servedFilesByteIdentical": "73/73 (index.html checked at / — /index.html itself is the cleanUrls 308)",
     "requiredChecks": {
-      "sw.js VERSION": "v20.5 — served sw.js (6029 B) is byte-identical to the pinned blob and reads VERSION = \"v20.5\", APP_JS = \"app.js?v=20.5\"",
-      "/assets/splash/altar-9x16.jpg": "200, 203738 B, image/jpeg, sha256 feb15bd9… (matches), decodes as 1080×1920 in headless Chrome; same bytes on the raw deployment URL",
-      "/assets/fx/ember-01.png": "200, 16216 B, image/png, sha256 18104236… (matches), decodes as 128×128 in headless Chrome; same bytes on the raw deployment URL"
+      "sw.js VERSION / APP_JS": "v20.6 / app.js?v=20.6 — served sw.js (6029 B) is byte-identical to the pinned blob and reads const VERSION = \"v20.6\", const APP_JS = \"app.js?v=20.6\"; no VERSION = \"v20.5\" leftover",
+      "app.js?v=20.6": "index.html at / carries exactly one <script src=\"app.js?v=20.6\" defer> and zero app.js?v=20.5; /app.js?v=20.6 is 200, 325508 B, application/javascript, sha256 96879f52… (matches)",
+      "DATA.version": "\"version\":\"v20.6\" appears once in the served app.js (the DATA literal); What's new title «Что нового в v20.6» present",
+      "sins 41–60": "served app.js holds 60 sins (ids 1–60, previously 40); ids 41–60 all present, verdicts N41–N60 all present, sinKeywords 41–60 present, shareCaptions.bySinId 60 entries; id 60 = {\"id\":60,\"category\":\"byt\",\"name\":\"Мы на связи\",\"blurb\":\"галочки без звонка\"}",
+      "HTTP 200, no SSO redirect": "public alias, -singularity16 alias and raw deployment URL all 200 with the same 109439-byte v20.6 page, Location header absent, no vercel.com/sso-api"
     },
     "liveVersionMarkers": {
-      "DATA.version": "v20.5",
-      "sw VERSION": "v20.5",
-      "sw APP_JS": "app.js?v=20.5",
-      "index.html <script src>": "app.js?v=20.5"
+      "DATA.version": "v20.6",
+      "sw VERSION": "v20.6",
+      "sw APP_JS": "app.js?v=20.6",
+      "index.html <script src>": "app.js?v=20.6",
+      "sinCount": 60,
+      "verdictCount_N": 52
     },
     "markers": {
-      "indexHtml_v20.5": 8,
-      "indexHtml_scriptTag_app.js?v=20.5": 1,
-      "indexHtml_app.js?v=20.4_leftover": 0,
-      "indexHtml_v20.4_cssComments": 3,
-      "indexHtml_altar-9x16.jpg": 2,
-      "appJs_DATA.version_v20.5": 1,
-      "appJs_v20.5": 5,
-      "appJs_whatsNew_title_v20.5": 1,
-      "appJs_assetsFxSpritePaths": 8,
-      "swJs_VERSION_v20.5": 1,
-      "swJs_APP_JS_app.js?v=20.5": 1,
-      "swJs_assetsFx_precacheEntries": 8,
-      "swJs_v20.4_leftover_VERSION": 0
+      "indexHtml_v20.6": 1,
+      "indexHtml_scriptTag_app.js?v=20.6": 1,
+      "indexHtml_app.js?v=20.5_leftover": 0,
+      "indexHtml_v20.5_sourceComments": 7,
+      "appJs_DATA.version_v20.6": 1,
+      "appJs_v20.6": 3,
+      "appJs_whatsNew_title_v20.6": 1,
+      "appJs_PUNCH_PACK_v1_mentions": 2,
+      "appJs_v20.5_strings_releaseNotesAndComments": 4,
+      "appJs_sinIds_1to60": 60,
+      "appJs_sinIds_41to60_present": true,
+      "appJs_verdicts_N41toN60_present": true,
+      "swJs_VERSION_v20.6": 1,
+      "swJs_APP_JS_app.js?v=20.6": 1,
+      "swJs_v20.5_leftover_VERSION": 0,
+      "swJs_v20.5_sourceComment": 1
     },
-    "newAssetsServed": {
-      "assets/fx/*.png (8)": "200 image/png, byte-identical; ember-01 128×128, ember-02 64×64, spark-01 128×128, ash-01 128×128, smoke-01 256×256, smoke-02 256×256, crack-01 256×256, sigil-glow 256×256 (decoded in headless Chrome)",
-      "assets/fx/LICENSE-kenney.txt": "200 text/plain; charset=utf-8, 868 B, byte-identical",
-      "assets/splash/altar-9x16.jpg": "200 image/jpeg, 203738 B, 1080×1920",
-      "assets/splash/paper-grain.jpg": "200 image/jpeg, 118007 B, 640×375, requested by the live splash (.splash-grain)",
-      "assets/empty/*.svg (4)": "200 image/svg+xml, byte-identical, all four decode as images",
-      "assets/splash/altar-9x16.png (removed in v20.5)": "404"
+    "headlessChromeRender": "google-chrome 148.0.7778.96 --headless=new driven over the DevTools protocol (plain Node 22 WebSocket, no puppeteer) on the live public URL, 430x932 @2x mobile emulation, fresh profile, cache disabled. Page load event at 276 ms; DOM 116948 B after app.js ran under the strict meta CSP; <html> has-splash-art, body is-splash is-intro, <script src=\"app.js?v=20.6\">. Same-origin requests: /, hero-altar.jpg, the four fonts, assets/splash/altar-9x16.jpg, assets/splash/paper-grain.jpg, manifest.webmanifest, app.js?v=20.6, icons/icon-192.png — all 200 with the right content types; jsDelivr three@0.160.0 and animejs@3.2.2 200 (SRI held). 14 responses per run, 0 non-2xx, 0 failed loads, 0 CSP violations, 0 uncaught exceptions. Service worker registered from /sw.js, state activated, exactly one cache «proklinator-v20.6» holding 28 entries (2 REQUIRED + 24 OPTIONAL + 2 CDN — the whole precache list). Console: only the known three.js r160 deprecation notice; the Log panel shows Chrome's «Blocked call to navigator.vibrate» intervention because the automation clicked without a user gesture (harmless).",
+    "ritualSmoke": {
+      "sin": "id 60 «Мы на связи» (new in v20.6, category byt)",
+      "flow": "splash faded on its own (≈2.0 s) → intro / age gate clicked through its three steps («Это юмор. Не ритуал.» → «Играйте зло, не делайте зла» → «Возрастной режим», CTA «Мне 18+ · дальше»; pk_intro_v20 gate record written, age 18) → #who = name, #what = «мы на связи — наберу позже, галочки без звонка» → #cast → overlay .on with chant + progress, cast button «Ритуал идёт…», body is-casting → body is-result, #result.verdict.screen-result.show",
+      "runs": [
+        {
+          "at": "12:31:04Z–12:31:17Z",
+          "gpu": "--disable-gpu (no WebGL context)",
+          "fx": "overlay.fx-canvas — the 2D canvas fallback (three.js logged «A WebGL context could not be created» and the app fell back as designed)",
+          "name": "Гриша",
+          "resultAfterMs": 3358,
+          "vSin": "Мы на связи",
+          "history": "sinId 60, verdId N60, matched true, powerId seal, stub false"
+        },
+        {
+          "at": "12:31:53Z–12:32:07Z",
+          "gpu": "--use-angle=swiftshader --enable-unsafe-swiftshader",
+          "fx": "overlay.fx-three — the three.js rune-ring path",
+          "name": "Марина",
+          "resultAfterMs": 2933,
+          "vSin": "Мы на связи",
+          "history": "sinId 60, verdId N60, matched true, powerId seal"
+        },
+        {
+          "at": "12:32:39Z–12:32:55Z",
+          "gpu": "SwiftShader",
+          "fx": "overlay.fx-three",
+          "name": "Олег",
+          "resultAfterMs": 3792,
+          "vSin": "Мы на связи",
+          "history": "sinId 60, verdId N60, matched true, gender M, powerId seal",
+          "screenshot": "result card after the punch typewriter finished: «Олег» / Жёстко / грех «Мы на связи» / setup «„Мы на связи“. Связь — серые галочки и «наберу позже» без позже.» / punch «Проклятие — «наберу позже» станет вечным статусом без звонка.» / lift «Снять: либо позвони, либо честное «не сегодня» — без «позже».», achievement toast «Достижение открыто: Первая печать»"
+        }
+      ],
+      "verdict": "PASS — a new-catalog sin is matched from free text, its N60 verdict renders with setup / punch / lift, the entry lands in proklinator.v19.history with sinId 60, both FX paths finish and hand over to the result screen"
     },
-    "headlessChromeRender": "google-chrome 148 --headless=new via the DevTools protocol on the live public URL, 430x932 @2x mobile emulation, cache disabled. app.js executes under the strict meta CSP (default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: blob:; …): the rendered DOM grows from 109439 B to 113945 B, <html> carries class has-splash-art, body is-intro, 19 intro nodes, <script src=\"app.js?v=20.5\">. The page itself requested /assets/splash/altar-9x16.jpg (decoded 1080×1920, complete) and /assets/splash/paper-grain.jpg for the splash grain, hero-altar.jpg, the four fonts, manifest and icon-192 — all 200. The eight FX sprites, both JPGs and the four empty-state SVGs were additionally decoded via Image() inside the page (14/14 ok, no CSP img-src block). No 4xx/5xx, no failed loads, no CSP or SRI violations and no uncaught exceptions — the console holds only the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0 and Chrome's informational «Banner not shown: beforeinstallpromptevent.preventDefault() called» line (the A2HS row defers the prompt by design). Same baseline as the v20.4 check.",
-    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 109439-byte v20.5 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV205\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV205\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV205\":true,\"ssoRedirect\":false}}",
-    "previousLiveVersion": "v20.4 (dpl_5jk2zD7TNENwKKFgKuRyqLAwhCNR; index.html 106440 B with app.js?v=20.4, sw VERSION v20.4, 59 files; /assets/splash/altar-9x16.jpg, /assets/fx/ember-01.png, /assets/splash/paper-grain.jpg and /assets/empty/cold-ash.svg all 404) — observed at 11:47:39Z and again at 11:54:03Z, replaced.",
+    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 109439-byte v20.6 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check at 12:27:08Z: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false}}",
+    "previousLiveVersion": "v20.5 (dpl_8xWfZ94NgxkmrZcF22a9jQioo6cT; index.html 109439 B with app.js?v=20.5, sw VERSION v20.5, app.js 301816 B with 40 sins, 73 files) — observed at 12:23:41Z, replaced.",
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
     "securityHeadersApplied": [
       "X-Frame-Options: DENY",
@@ -412,10 +430,7 @@
     ],
     "mustRevalidateOn": {
       "note": "vercel.json (unchanged) only marks /fonts and /icons immutable; everything else is served with Vercel's default and the service worker caches the shell and the FX sprites best-effort",
-      "assets/fx/*.png": "public, max-age=0, must-revalidate",
-      "assets/splash/*.jpg": "public, max-age=0, must-revalidate",
-      "assets/icons/categories/*.svg": "public, max-age=0, must-revalidate",
-      "assets/avatars/*": "public, max-age=0, must-revalidate",
+      "assets/**": "public, max-age=0, must-revalidate",
       "app.js": "public, max-age=0, must-revalidate",
       "sw.js": "public, max-age=0, must-revalidate",
       "/": "public, max-age=0, must-revalidate"
@@ -429,11 +444,15 @@
       "tools/build_assets.py -> 404",
       "docs -> 404",
       "docs/index.html -> 308 -> /docs -> 404",
-      "public/index.html -> 308 -> /public -> 404"
+      "docs/content/PUNCH_PACK_v1.md -> 404",
+      "docs/content/DROPIN_PUNCH_PACK_v1.js -> 404",
+      "docs/content/SAFETY_PASS_v1.md -> 404",
+      "public/index.html -> 308 -> /public -> 404",
+      "assets/splash/altar-9x16.png (removed in v20.5) -> 404"
     ],
-    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main) was intentionally excluded again; /docs -> 404 and /docs/index.html -> 308 -> /docs -> 404. GitHub Pages was not touched. tools/build_assets.py (the asset pipeline) and .gitignore are build/repo scaffolding, not site files, and were excluded the same way.",
-    "assetsIcons": "assets/icons/*.svg (30 files) and assets/icons/categories/*.svg (8 files), all unchanged from v20.3, are served 200 as image/svg+xml and byte-identical.",
-    "assetsArt": "assets/avatars/{hood,seal,raven,pack-3}.png (unchanged from v20.2) are served 200 as image/png and byte-identical; the v20.5 art (assets/fx/*, assets/splash/altar-9x16.jpg, assets/splash/paper-grain.jpg, assets/empty/*.svg) is served 200 with the right content types and byte-identical."
+    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main plus the new docs/content/ punch-pack sources: DROPIN_PUNCH_PACK_v1.js / .md, PUNCH_PACK_v1.md, SAFETY_PASS_v1.md) was intentionally excluded again; /docs -> 404 and the docs/content files -> 404. GitHub Pages was not touched. tools/build_assets.py and .gitignore are build/repo scaffolding, not site files, and were excluded the same way.",
+    "assetsIcons": "assets/icons/*.svg (30 files) and assets/icons/categories/*.svg (8 files), all unchanged since v20.3, are served 200 as image/svg+xml and byte-identical.",
+    "assetsArt": "assets/avatars/*.png (4), assets/fx/* (9), assets/splash/*.jpg (2), assets/empty/*.svg (4), fonts (5), icons (4), hero-altar.jpg — all unchanged since v20.5 and served 200 with the right content types, byte-identical; woff2 as font/woff2."
   },
   "method": {
     "tool": "Vercel MCP deploy_to_vercel (target=production, name=proklinator-static, teamId omitted)",
@@ -447,51 +466,39 @@
       "package.json",
       "vercel.json"
     ],
-    "buildMjsSha256": "917cdd5a4d66d32a014541a7dd422a6caf08b44fe9112e4516d34baf1da13903",
-    "packageJsonSha256": "56e049565faaa987e3e2c2a6380ef2b1123f3b1b8f27f830977b39ad2cddd941",
-    "description": "build.mjs fetches the 73 site files (2802284 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source on network errors, 8 in flight, 30 s timeout per request; a hash or length mismatch is never retried on the same source) at the pinned commit 5771dca and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public and re-checks that the output tree holds exactly the manifest (nothing missing, nothing extra, sizes exact). The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20, v20.1, v20.2, v20.3 and v20.4 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == 5771dca after a fresh fetch, clean tree, blobs cross-checked against the working tree, 0 mismatches) and the script was dry-run locally before deploying with Node 22.14 (73/73 files fetched from raw.githubusercontent.com in 1.2 s and byte-identical to the checkout, output tree == manifest), together with a negative test (one tampered hash for assets/fx/ember-01.png -> both sources rejected, the build aborts with exit 1 after 72/73) and a fallback test (raw host replaced by an unreachable name -> all 73 files come from cdn.jsdelivr.net in 23.4 s, still byte-identical). The Vercel build finished in under three minutes; the raw deployment URL served the verified v20.5 index at the first poll (11:56:38Z) and the public alias followed at 11:56:47Z."
+    "buildMjsSha256": "3c586871fc853e8748bdd7def2b859808e311f7a4c603fef4284e0cb1b11f205",
+    "packageJsonSha256": "50821e11914e7f682a08f840f88f92a04b20e7c745a2151a282627de49fd4b48",
+    "description": "build.mjs fetches the 73 site files (2825976 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source on network errors / non-2xx / 30 s timeouts, 8 in flight; a hash or length mismatch is never retried on the same source) at the pinned commit 080a3a4 and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public and re-checks that the output tree holds exactly the manifest (nothing missing, nothing extra, sizes exact, total exact). The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20 … v20.5 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == 080a3a4 after a fresh fetch and fast-forward, clean tree, every blob cross-checked against the working tree, 0 mismatches) and the script was dry-run locally before deploying with Node 22.14 (73/73 files fetched from raw.githubusercontent.com in 1.6 s and byte-identical to the checkout, output tree == manifest, no README / DEPLOY_RESULT / docs / tools / .gitignore in the output), together with a negative test (one tampered hash for app.js -> both sources rejected, the build aborts with exit 1 after 72/73) and a fallback test (raw host replaced by an unreachable name -> all 73 files come from cdn.jsdelivr.net in 37.7 s, still byte-identical). The Vercel build finished in under 2.5 minutes; the raw deployment URL served the verified v20.6 index at the first poll (12:26:44Z) and the public alias followed by 12:27:08Z."
   },
-  "changesSinceV204": {
-    "newFiles": [
-      "assets/empty/cold-ash.svg",
-      "assets/empty/hollow-heart.svg",
-      "assets/empty/quiet-candle.svg",
-      "assets/empty/unlit-altar.svg",
-      "assets/fx/LICENSE-kenney.txt",
-      "assets/fx/ash-01.png",
-      "assets/fx/crack-01.png",
-      "assets/fx/ember-01.png",
-      "assets/fx/ember-02.png",
-      "assets/fx/sigil-glow.png",
-      "assets/fx/smoke-01.png",
-      "assets/fx/smoke-02.png",
-      "assets/fx/spark-01.png",
-      "assets/splash/altar-9x16.jpg",
-      "assets/splash/paper-grain.jpg"
-    ],
-    "removedFiles": [
-      "assets/splash/altar-9x16.png"
-    ],
+  "changesSinceV205": {
+    "newFiles": [],
+    "removedFiles": [],
     "changedFiles": [
-      "ATTRIBUTIONS.md",
       "app.js",
-      "icons/apple-touch-icon.png",
-      "icons/maskable-512.png",
       "index.html",
       "sw.js"
     ],
-    "unchangedFiles": 52,
-    "fileCount": "73 (up from 59: +15 new, -1 removed; includes vercel.json)",
-    "totalBytes": "2802284 B (up from 2498385 B: +586591 B of new assets, -319691 B for the removed altar-9x16.png; app.js +33266 B, index.html +2999 B, sw.js +429 B, ATTRIBUTIONS.md +3560 B, apple-touch-icon +128 B, maskable-512 -3383 B)",
-    "summary": "ASSETS_UPGRADE + ritual FX (PR #14): reproducible asset pipeline (tools/build_assets.py, not deployed) producing a true 9:16 1080×1920 altar (replacing the mislabeled altar-9x16.png), regenerated PWA icon derivatives, Kenney CC0 FX sprites recoloured for the ritual and the ambientCG Paper001 grain; WOW-1 rune-ring altar disc with ember / ash / smoke / spark / crack sprites and a per-power anime.js director (2D fallback, reduced-motion static sigil); WOW-2 splash paper grain at 6 % and splash-seal-draw; WOW-3 four in-house empty-state illustrations; the share poster and OG card burn in «Шутка, не угроза» (SAFETY_SHOW_RULES v1.2). Version bump to v20.5 in DATA.version, sw VERSION/APP_JS (FX sprites and grain precached best-effort) and the index.html script tag; What's new entry; README + ATTRIBUTIONS updated (Kenney CC0, ambientCG CC0)."
+    "unchangedFiles": 70,
+    "fileCount": "73 (unchanged; includes vercel.json)",
+    "totalBytes": "2825976 B (up from 2802284 B: app.js +23692 B; index.html and sw.js changed content at identical sizes 109439 B / 6029 B)",
+    "notDeployedButChangedOnMain": [
+      "README.md",
+      "docs/content/DROPIN_PUNCH_PACK_v1.js",
+      "docs/content/DROPIN_PUNCH_PACK_v1.md",
+      "docs/content/PUNCH_PACK_v1.md",
+      "docs/content/SAFETY_PASS_v1.md",
+      "DEPLOY_RESULT.json (v20.5 record)"
+    ],
+    "summary": "PUNCH_PACK_v1 catalog (PR #16): twenty new sins 41–60 across office, household and relationship scenes (status-созвон, reply-all, unmuted microphone, «пылесос потом», … «Мы на связи»), each with a verdict N41–N60 carrying whisper / seal / anathema punches and its own «Снять:», matcher keywords and share captions; SAFETY_PASS_v1 GREEN (mat only in «Апокалипсис» with «Без мата» off, 18+). Version bump to v20.6 in DATA.version, sw VERSION / APP_JS and the index.html script tag; What's new entry; README + docs/content sources (not deployed). No code paths, assets, FX, tabbar, auth or payments changed."
   },
   "notes": [
-    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~2.8 MB site tree (73 files, 2802284 B) was therefore not inlined into the MCP request.",
-    "The local checkout booted at e827d71 (v20.3); origin/main was fetched first and fast-forwarded to 5771dca (merge of PR #14) before the manifest was generated, so the pinned SHA is the one named in the task.",
+    "The task described the repository as private; gh reports visibility PUBLIC (isPrivate false), which is what makes the unauthenticated pinned-commit fetch in build.mjs possible. If the repo is ever made private, this deploy method needs a token or an inline file tree.",
+    "The local checkout booted at c32a5d1 (merge of PR #15, v20.5 record); origin/main was fetched first and fast-forwarded to 080a3a4 (merge of PR #16) before the manifest was generated, so the pinned SHA is the one named in the task.",
     "Git-linked auto-deploy was not used, for the same reasons as before: create_git_project requires teamId (the 403 trigger) and cannot re-link the existing unlinked project proklinator-static.",
-    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_project / list_projects / get_deployment with the known team id or slug return 404 'Not Found' / 'Deployment not found' / an empty list for this token) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
-    "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened.",
-    "README.md, DEPLOY_RESULT.json, docs/, .gitignore and tools/build_assets.py stay out of the deployment; ATTRIBUTIONS.md (updated) and assets/fx/LICENSE-kenney.txt (new) stay in so the CC0 / ISC / OFL attributions travel with the served files.",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment_build_logs with the known team id returned 404 'Deployment not found' for this token) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
+    "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened. Auth stays NO-GO.",
+    "README.md, DEPLOY_RESULT.json, docs/ (including the new docs/content punch-pack sources), .gitignore and tools/build_assets.py stay out of the deployment; ATTRIBUTIONS.md and assets/fx/LICENSE-kenney.txt stay in so the CC0 / ISC / OFL attributions travel with the served files.",
+    "The headless ritual smoke wrote only to the headless browser's own throwaway profile (localStorage gate record, one history entry); the site has no backend and nothing was sent anywhere.",
     "No app code was changed for this deploy; this commit updates DEPLOY_RESULT.json only.",
     "HUGINN was not touched."
   ]
