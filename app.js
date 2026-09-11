@@ -83,8 +83,10 @@
     matLocked: "«Без мата» закреплён: вход с 16 лет. Снять можно, пройдя вступление заново (Настройки)."
   };
   /* ---------- v20.1 LEGAL copy — Tyr's locked gist (Privacy / Terms / About). Nothing personal is filled in:
-     the 149-ФЗ requisites render as a clearly marked placeholder («ожидается» per field) until the owner approves them.
+     the 149-ФЗ requisites render as a clearly marked placeholder («ожидается» per field) until the owner approves them —
+     except the e-mail, which is the owner's draft contact already shown on the same card (v20.2 QA: filled as a draft).
      Publisher stays the brand «Singularity» + the draft contact e-mail; no address is invented. ---------- */
+  const OWNER_EMAIL_DRAFT = "singularitygrimnir@gmail.com";   // owner's draft contact — the one address that is public in the app
   const LEGAL_COPY = {
     updated: "Обновлено 11 сентября 2026 · версия v20.1",
     draft: "Черновик редакции v20.1: формулировки уточняются.",
@@ -93,12 +95,15 @@
       title: "Реквизиты владельца — ожидаются",
       law: "149-ФЗ, ст. 10, п. 2",
       pending: "ожидается",
-      // a field may override the pending word: the address is «уточняется» per canon, the rest «ожидается»
-      fields: ["Наименование", "Место нахождения", { label: "Адрес", pending: "уточняется" }, "Электронная почта"],
+      draftTag: "черновик",
+      // a field may override the pending word (the address is «уточняется» per canon, the rest «ожидается») or carry a filled draft
+      // value ({ value, href, draft: true }) — the e-mail mirrors the contact row below so the block does not contradict itself
+      fields: ["Наименование", "Место нахождения", { label: "Адрес", pending: "уточняется" },
+        { label: "Электронная почта", value: OWNER_EMAIL_DRAFT, href: "mailto:" + OWNER_EMAIL_DRAFT, draft: true }],
       note: "Заполняется после утверждения владельцем. До этого — черновик."
     },
     brand: { label: "Издатель (бренд)", name: "Singularity" },
-    contact: { label: "Связь (черновик)", email: "singularitygrimnir@gmail.com" },
+    contact: { label: "Связь (черновик)", email: OWNER_EMAIL_DRAFT },
     site: "Сайт",
     publisher: "Издатель: Singularity (черновик). Вопросы — на почту singularitygrimnir@gmail.com. Реквизиты и адрес владельца по 149-ФЗ — уточняются.",
     privacy: {
@@ -2436,6 +2441,10 @@
   function svgo(inner, sw){
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
   }
+  // Age badge: a ring with the label inside («18+» on the age step, «16+» on the under-16 refusal view)
+  function ageBadge(label){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><text x="12" y="15" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" font-size="7.4" font-weight="700" fill="currentColor" stroke="none">' + label + '</text></svg>';
+  }
   const ICO = {
     grid: svgo('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
     clock: svgo('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
@@ -2483,7 +2492,8 @@
     phone: svgo('<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 17.5h2"/><path d="M12 6v5"/><path d="m9.8 8.8 2.2 2.2 2.2-2.2"/>'),
     mask: svgo('<path d="M4 5.5c2.6 1.4 5.3 2 8 2s5.4-.6 8-2v5.5c0 5.2-3.6 9.5-8 9.5s-8-4.3-8-9.5Z"/><path d="M8.6 10.6h.01M15.4 10.6h.01" stroke-width="2.6"/><path d="M8.3 14.2c1 1.4 2.3 2.1 3.7 2.1s2.7-.7 3.7-2.1"/>'),
     scroll: svgo('<path d="M7 3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7"/><path d="M7 3a3 3 0 0 0-3 3v1.5h6V6a3 3 0 0 0-3-3Z"/><path d="M7 21a3 3 0 0 1-3-3v-1.5h6V18a3 3 0 0 1-3 3Z"/><path d="M11 9h5M11 13h5"/>'),
-    age18: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><text x="12" y="15" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" font-size="7.4" font-weight="700" fill="currentColor" stroke="none">18+</text></svg>',
+    age18: ageBadge("18+"),
+    age16: ageBadge("16+"),   // the under-16 refusal view: the badge follows Freya's «ПРОКЛИНАТОР с 16 лет.»
     sig: '<svg class="sig" viewBox="0 0 64 48" fill="none" aria-hidden="true"><ellipse cx="32" cy="30" rx="30" ry="12" stroke="#B3121F" stroke-width="1.4"/><ellipse cx="32" cy="30" rx="21" ry="8.4" stroke="#B3121F" stroke-width="1" opacity=".75"/><path d="M20 24 23 12l6 5.5L32 6l3 11.5 6-5.5 3 12Z" fill="#C9A24A"/><rect x="20" y="25" width="24" height="2.4" rx="1" fill="#C9A24A"/></svg>',
     crownGold: '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>'
   };
@@ -3607,11 +3617,19 @@
     head.appendChild(title);
     head.appendChild(law);
     card.appendChild(head);
-    const row = function(label, value, href, pending){
+    const row = function(label, value, href, pending, draft){
       const p = document.createElement("p");
       if(pending) p.className = "pending";
+      if(draft) p.className = "draft";
       const b = document.createElement("b"), s = document.createElement("span");
       b.textContent = label;
+      if(draft){   // a filled draft value: keep the label, add a small «черновик» tag so the row is not read as approved
+        const t = document.createElement("i");
+        t.className = "draft-tag";
+        t.textContent = R.draftTag || "";
+        b.appendChild(document.createTextNode(" "));
+        b.appendChild(t);
+      }
       if(href){
         const a = document.createElement("a");
         a.href = href;
@@ -3628,7 +3646,8 @@
       card.appendChild(p);
     };
     R.fields.forEach(function(f){
-      if(isObj(f)) row(String(f.label || ""), String(f.pending || R.pending), null, true);
+      if(isObj(f) && f.value) row(String(f.label || ""), String(f.value), f.href || null, false, f.draft === true);
+      else if(isObj(f)) row(String(f.label || ""), String(f.pending || R.pending), null, true);
       else row(String(f), R.pending, null, true);
     });
     const note = document.createElement("p");
@@ -3702,10 +3721,10 @@
       dots.appendChild(d);
     });
     $("introEyebrow").textContent = fmt(I.eyebrow, { n: introStep + 1, total: I.steps.length });
+    const refusing = introRefusal && st.refusal;
     const ico = $("introIco");
     ico.className = "intro-ico" + (st.id === "age" ? " age" : "");
-    ico.innerHTML = INTRO_ICONS[st.id] || ICO.info;
-    const refusing = introRefusal && st.refusal;
+    ico.innerHTML = refusing ? ICO.age16 : (INTRO_ICONS[st.id] || ICO.info);   // refusal view: «16+» to match «ПРОКЛИНАТОР с 16 лет.»
     $("introTitle").textContent = refusing ? st.refusal.title : st.title;
     $("introBody").textContent = refusing ? st.refusal.body : (st.body || "");
     const list = $("introList");
