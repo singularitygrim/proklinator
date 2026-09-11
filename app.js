@@ -1109,9 +1109,170 @@
     return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
   }
 
-  /* ---------- ritual: 2D ash fallback ---------- */
+  /* ---------- ritual FX v20.5 (ASSETS_UPGRADE / WOW-1): sigil rune rings + ember / ash / smoke sprites ----------
+     Replaces the v17 orb-and-torus scene. Three layers share one look:
+       • three.js (default): a tilted altar disc of procedural rune rings (canvas textures swept in by a small reveal shader),
+         Kenney CC0 sprites from assets/fx/ (recoloured blood / ember by tools/build_assets.py) as embers, sparks, ash, smoke
+         and — for «Апокалипсис» — lightning cracks; an anime.js «director» timeline casts the ritual per power.
+       • 2D canvas (three.js blocked, WebGL refused or lost): the same rune rings drawn flat in perspective plus rising embers.
+       • static SVG seal (prefers-reduced-motion): no motion at all — the sigil simply sits under the chant.
+     Sprites load lazily (TextureLoader, cached across rituals); until they arrive the points use a procedural glow so the
+     ritual never waits on the network. Everything is additive on the soot background — no lights, no meshes to shade. */
+  const FX_SPRITES = {
+    ember: "assets/fx/ember-02.png", mote: "assets/fx/ember-01.png", spark: "assets/fx/spark-01.png", ash: "assets/fx/ash-01.png",
+    smoke: "assets/fx/smoke-01.png", smoke2: "assets/fx/smoke-02.png", crack: "assets/fx/crack-01.png", glow: "assets/fx/sigil-glow.png"
+  };
+  const fxTexCache = {};      // sprite name → THREE.Texture (procedural stand-in swapped for the file once it decodes)
+  const fxImgCache = {};      // sprite name → HTMLImageElement for the 2D fallback
+  const ringCanvasCache = {}; // "kind:size" → white-on-transparent canvas
+
+  function mulberry(seed){
+    let a = seed >>> 0;
+    return function(){
+      a = (a + 0x6D2B79F5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  // One rune: a stem with branches from a small Futhark-like alphabet (in-house, decorative — no real inscription).
+  const RUNE_FORMS = [
+    [[0,0,0,1],[0,.15,1,.4],[0,.45,1,.7]], [[0,0,0,1],[0,0,1,.45],[0,1,1,.55]], [[0,0,0,1]], [[.5,0,.5,1],[.5,.5,0,.2],[.5,.5,1,.2]],
+    [[0,0,0,1],[1,0,1,1],[0,.35,1,.65]], [[1,0,0,.5],[0,.5,1,1]], [[0,0,1,.5],[1,.5,0,1]], [[0,1,.5,0],[.5,0,1,1]],
+    [[0,0,1,1],[1,0,0,1]], [[0,0,0,1],[0,.3,1,0]], [[0,0,0,1],[1,0,1,1],[0,0,1,1]], [[0,0,0,1],[0,.5,1,.2],[0,.5,1,.8]]
+  ];
+  function drawRune(g, x, y, w, h, rnd){
+    const f = RUNE_FORMS[Math.floor(rnd() * RUNE_FORMS.length)];
+    g.beginPath();
+    for(let i=0;i<f.length;i++){
+      g.moveTo(x + f[i][0] * w, y + f[i][1] * h);
+      g.lineTo(x + f[i][2] * w, y + f[i][3] * h);
+    }
+    g.stroke();
+  }
+  // kind: "runes" (outer band of glyphs) | "star" (dashed ring, heptagram, nodes) | "ticks" (dial with inner glyphs) | "crown".
+  // Drawn white on transparent so both renderers tint it with the power colour.
+  function runeRing(kind, size, seed){
+    const key = kind + ":" + size;
+    if(ringCanvasCache[key]) return ringCanvasCache[key];
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const g = c.getContext("2d");
+    const rnd = mulberry(seed || 7);
+    const cx = size / 2, cy = size / 2, R = size * 0.47, lw = Math.max(1.2, size / 420);
+    g.strokeStyle = "#fff"; g.fillStyle = "#fff"; g.lineCap = "round"; g.lineJoin = "round";
+    function circle(r, alpha, width, dash){
+      g.save(); g.globalAlpha = alpha; g.lineWidth = width; if(dash) g.setLineDash(dash);
+      g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke(); g.restore();
+    }
+    function ticks(r1, r2, n, alpha, width, every){
+      g.save(); g.globalAlpha = alpha; g.lineWidth = width; g.beginPath();
+      for(let i=0;i<n;i++){
+        if(every && i % every) continue;
+        const a = i / n * Math.PI * 2;
+        g.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1);
+        g.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
+      }
+      g.stroke(); g.restore();
+    }
+    function runeBand(r, n, rh, alpha, phase){
+      const rw = rh * 0.5;
+      g.save(); g.globalAlpha = alpha; g.lineWidth = lw * 1.1;
+      for(let i=0;i<n;i++){
+        const a = i / n * Math.PI * 2 + (phase || 0);
+        g.save(); g.translate(cx + Math.cos(a) * r, cy + Math.sin(a) * r); g.rotate(a + Math.PI / 2);
+        drawRune(g, -rw / 2, -rh / 2, rw, rh, rnd);
+        g.restore();
+      }
+      g.restore();
+    }
+    if(kind === "runes"){
+      circle(R, .95, lw * 1.4); circle(R * .84, .8, lw);
+      const n = 36 + Math.floor(rnd() * 5) * 2;
+      runeBand(R * .92, n, R * .1, .9);
+      ticks(R * .84, R * .8, n * 2, .6, lw * .8);
+    } else if(kind === "star"){
+      circle(R, .85, lw * 1.2, [size * .012, size * .02]);
+      circle(R * .9, .45, lw * .8);
+      const k = 7, r = R * .9;   // heptagram {7/3}
+      g.save(); g.globalAlpha = .55; g.lineWidth = lw; g.beginPath();
+      for(let i=0;i<=k;i++){
+        const a = -Math.PI / 2 + ((i * 3) % k) / k * Math.PI * 2;
+        const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r;
+        if(i) g.lineTo(x, y); else g.moveTo(x, y);
+      }
+      g.stroke(); g.restore();
+      g.save(); g.globalAlpha = .95;
+      for(let i=0;i<k;i++){
+        const a = -Math.PI / 2 + i / k * Math.PI * 2;
+        g.beginPath(); g.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, size * .014, 0, Math.PI * 2); g.fill();
+      }
+      g.restore();
+    } else if(kind === "ticks"){
+      circle(R, .9, lw * 1.3); circle(R * .78, .5, lw * .8);
+      ticks(R, R * .9, 72, .7, lw * .9); ticks(R, R * .82, 72, .9, lw * 1.3, 6);
+      runeBand(R * .68, 12 + Math.floor(rnd() * 4), R * .13, .85, .1);
+    } else {
+      circle(R * .96, .7, lw * 1.2);
+      const w = R * 1.1, h = w * .72;
+      g.save(); g.translate(cx, cy + h * .05);
+      g.beginPath();
+      g.moveTo(-w/2, h*.45); g.lineTo(-w*.36, -h*.2); g.lineTo(-w*.16, h*.05); g.lineTo(0, -h*.5);
+      g.lineTo(w*.16, h*.05); g.lineTo(w*.36, -h*.2); g.lineTo(w/2, h*.45); g.closePath(); g.fill();
+      g.fillRect(-w/2, h*.5, w, Math.max(2, h*.14));
+      g.restore();
+    }
+    ringCanvasCache[key] = c;
+    return c;
+  }
+  function tintCanvas(src, color){
+    const c = document.createElement("canvas");
+    c.width = src.width; c.height = src.height;
+    const g = c.getContext("2d");
+    g.drawImage(src, 0, 0);
+    g.globalCompositeOperation = "source-in";
+    g.fillStyle = color;
+    g.fillRect(0, 0, c.width, c.height);
+    return c;
+  }
+  // Soft radial glow; `warm` bakes an ember ramp in (the stand-in for sprites that have not decoded yet), otherwise white for tinting.
+  function glowCanvas(size, warm){
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const g = c.getContext("2d");
+    const grd = g.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+    if(warm){
+      grd.addColorStop(0, "rgba(255,226,180,1)");
+      grd.addColorStop(0.35, "rgba(255,96,52,0.6)");
+      grd.addColorStop(0.7, "rgba(150,16,26,0.18)");
+      grd.addColorStop(1, "rgba(80,6,10,0)");
+    } else {
+      grd.addColorStop(0, "rgba(255,255,255,1)");
+      grd.addColorStop(0.4, "rgba(255,255,255,0.45)");
+      grd.addColorStop(1, "rgba(255,255,255,0)");
+    }
+    g.fillStyle = grd;
+    g.fillRect(0, 0, size, size);
+    return c;
+  }
+  function fxImage(name){
+    if(fxImgCache[name]) return fxImgCache[name];
+    const img = new Image();
+    img.decoding = "async";
+    img.src = FX_SPRITES[name];
+    fxImgCache[name] = img;
+    return img;
+  }
+  function colorVec(hex){
+    const c = hexToRgb(hex || "#B3121F");
+    return new THREE.Vector3(c.r / 255, c.g / 255, c.b / 255);
+  }
+
+  /* ---------- ritual: 2D fallback (no three.js / no WebGL) — rune rings in flat perspective + rising embers ---------- */
   function stopAsh(){
     ashActive = false;
+    overlay.classList.remove("fx-canvas");
     if(ashRaf){ cancelAnimationFrame(ashRaf); ashRaf = 0; }
     const ctx = canvas.getContext("2d");
     if(ctx) ctx.clearRect(0, 0, canvas.width || 0, canvas.height || 0);
@@ -1123,80 +1284,218 @@
     ashActive = true;
     const ctx = canvas.getContext("2d");
     if(!ctx) return;
-    const rgb = hexToRgb(fx && fx.color);
+    fx = fx || {};
+    overlay.classList.add("fx-canvas");
+    const color = fx.color || "#B3121F";
+    const rgb = hexToRgb(color);
+    const spin = fx.spin || 1;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = canvas.width = Math.floor(innerWidth * dpr);
     const h = canvas.height = Math.floor(innerHeight * dpr);
     canvas.style.width = innerWidth + "px";
     canvas.style.height = innerHeight + "px";
-    const count = Math.max(16, Math.min(120, (fx && fx.particles) || 48));
+    const R = Math.min(w * 0.44, h * 0.24), cx = w / 2, cy = h * 0.4, squash = 0.42;
+    const rings = [
+      { img: tintCanvas(runeRing("runes", 1024, 11), color), k: 1, spin: 0.12 * spin, a: 0.95 },
+      { img: tintCanvas(runeRing("star", 512, 23), color), k: 0.66, spin: -0.2 * spin, a: 0.8 },
+      { img: tintCanvas(runeRing("crown", 512, 5), "#C9A24A"), k: 0.28, spin: 0, a: 0.95 }
+    ];
+    const count = Math.max(16, Math.min(120, (fx.particles | 0) || 48));
     const parts = [];
-    for(let i=0;i<count;i++){
-      parts.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: (1 + Math.random() * 2.2) * dpr,
-        vx: (Math.random() - .5) * (.2 + (fx && fx.spin || 1) * .2) * dpr,
-        vy: (.15 + Math.random() * (.5 + (fx && fx.spin || 1) * .2)) * dpr,
-        a: .12 + Math.random() * (.25 + (fx && fx.glow || .5) * .35)
-      });
+    function spawn(p){
+      const a = Math.random() * Math.PI * 2, rr = R * (0.3 + Math.random() * 0.7);
+      p.x = cx + Math.cos(a) * rr; p.y = cy + Math.sin(a) * rr * squash;
+      p.vx = (Math.random() - 0.5) * 0.3 * dpr; p.vy = -(0.3 + Math.random() * 0.6) * dpr * (0.8 + spin * 0.2);
+      p.r = (0.9 + Math.random() * 2.2) * dpr; p.life = Math.random() * 0.4; p.max = 1.4 + Math.random() * 1.8; p.hot = Math.random();
+      return p;
     }
-    function tick(){
+    for(let i=0;i<count;i++) parts.push(spawn({}));
+    const t0 = performance.now();
+    let last = t0;
+    function tick(now){
       if(!ashActive) return;
-      ctx.clearRect(0, 0, w, h);
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      const t = (now - t0) / 1000;
+      ctx.fillStyle = "#070505";   // opaque soot, like the WebGL clear colour — the form must not ghost through the 97 % overlay
+      ctx.fillRect(0, 0, w, h);
+      const reveal = Math.min(1, t / 1.3), sc = 0.72 + 0.28 * Math.min(1, t / 0.9);
+      const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.1);
+      glow.addColorStop(0, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + (0.22 * reveal) + ")");
+      glow.addColorStop(1, "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0)");
+      ctx.save(); ctx.translate(cx, cy); ctx.scale(1, squash); ctx.translate(-cx, -cy);
+      ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(cx, cy, R * 1.1, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+      for(let i=0;i<rings.length;i++){
+        const rg = rings[i], rr = R * rg.k;
+        ctx.save();
+        ctx.translate(cx, cy); ctx.scale(sc, sc * squash);
+        if(reveal < 1){   // sweep-in from the top, like the shader's reveal
+          ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R * 1.3, -Math.PI / 2, -Math.PI / 2 + reveal * Math.PI * 2); ctx.closePath(); ctx.clip();
+        }
+        ctx.rotate(t * rg.spin);
+        ctx.globalAlpha = rg.a * Math.min(1, t / 0.6);
+        ctx.drawImage(rg.img, -rr, -rr, rr * 2, rr * 2);
+        ctx.restore();
+      }
+      ctx.globalCompositeOperation = "lighter";
+      const emit = Math.min(1, Math.max(0, (t - 0.3) / 0.8));
       for(let i=0;i<parts.length;i++){
         const p = parts[i];
-        p.x += p.vx; p.y += p.vy;
-        if(p.y > h + 4){ p.y = -4; p.x = Math.random() * w; }
-        if(p.x < -4) p.x = w + 4;
-        if(p.x > w + 4) p.x = -4;
-        ctx.beginPath();
-        ctx.fillStyle = "rgba("+rgb.r+","+rgb.g+","+rgb.b+","+p.a+")";
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        p.life += dt;
+        if(p.life > p.max){ if(Math.random() < emit) spawn(p); else { p.life = p.max; continue; } }
+        p.x += p.vx + Math.sin(t * 2 + p.hot * 6) * 0.25 * dpr;
+        p.y += p.vy;
+        const e = p.life / p.max, a = Math.min(1, e * 6) * (1 - e) * 0.9;
+        const hot = p.hot * (1 - e);
+        ctx.fillStyle = "rgba(" + Math.round(rgb.r + (255 - rgb.r) * hot) + "," + Math.round(rgb.g + (190 - rgb.g) * hot) + "," + Math.round(rgb.b + (120 - rgb.b) * hot) + "," + a + ")";
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (1 - e * 0.5), 0, Math.PI * 2); ctx.fill();
       }
+      ctx.globalCompositeOperation = "source-over";
       ashRaf = requestAnimationFrame(tick);
     }
     ashRaf = requestAnimationFrame(tick);
   }
 
-  /* ---------- ritual: three.js (unlit MeshBasic, glow sprites, context-loss safe) ---------- */
-  function makeGlowTexture(){
-    const c = document.createElement("canvas");
-    c.width = c.height = 64;
-    const g = c.getContext("2d");
-    const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grd.addColorStop(0, "rgba(255,255,255,1)");
-    grd.addColorStop(0.4, "rgba(255,255,255,0.45)");
-    grd.addColorStop(1, "rgba(255,255,255,0)");
-    g.fillStyle = grd;
-    g.fillRect(0, 0, 64, 64);
-    const tex = new THREE.CanvasTexture(c);
+  /* ---------- ritual: three.js — rune-ring altar disc, sprite particles, director timeline (context-loss safe) ---------- */
+  const RING_VERT = "varying vec2 vUv;\nvoid main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }";
+  // Sweep reveal: fragments past the reveal angle are dropped; the leading edge burns brighter. Additive, so alpha is the only weight.
+  const RING_FRAG = [
+    "uniform sampler2D uMap; uniform vec3 uColor; uniform float uOpacity; uniform float uReveal; uniform float uFlash; uniform float uDir;",
+    "varying vec2 vUv;",
+    "void main(){",
+    "  vec2 p = vUv - 0.5;",
+    "  float ang = fract(atan(p.y, p.x) / 6.28318530718 + 0.75);",
+    "  if(uDir < 0.0) ang = 1.0 - ang;",
+    "  float edge = uReveal - ang;",
+    "  if(edge < 0.0) discard;",
+    "  float tip = (1.0 - smoothstep(0.0, 0.07, edge)) * 1.8 * step(uReveal, 0.999);",
+    "  vec4 t = texture2D(uMap, vUv);",
+    "  gl_FragColor = vec4(uColor * (1.0 + uFlash * 1.4 + tip), t.a * uOpacity);",
+    "}"
+  ].join("\n");
+  const PLANE_FRAG = [
+    "uniform sampler2D uMap; uniform vec3 uColor; uniform float uOpacity; uniform float uFlash;",
+    "varying vec2 vUv;",
+    "void main(){ vec4 t = texture2D(uMap, vUv); gl_FragColor = vec4(t.rgb * uColor * (1.0 + uFlash), t.a * uOpacity); }"
+  ].join("\n");
+  const POINT_VERT = [
+    "attribute float aSize; attribute float aAlpha; attribute float aRot;",
+    "uniform float uPixelRatio; uniform float uScale;",
+    "varying float vAlpha; varying float vRot;",
+    "void main(){",
+    "  vAlpha = aAlpha; vRot = aRot;",
+    "  vec4 mv = modelViewMatrix * vec4(position, 1.0);",
+    "  gl_PointSize = aSize * uScale * uPixelRatio / max(0.5, -mv.z);",
+    "  gl_Position = projectionMatrix * mv;",
+    "}"
+  ].join("\n");
+  const POINT_FRAG = [
+    "uniform sampler2D uMap; uniform vec3 uColor; uniform float uOpacity; uniform float uFlash;",
+    "varying float vAlpha; varying float vRot;",
+    "void main(){",
+    "  vec2 c = gl_PointCoord - 0.5;",
+    "  float s = sin(vRot), co = cos(vRot);",
+    "  vec2 r = vec2(c.x * co - c.y * s, c.x * s + c.y * co) + 0.5;",
+    "  if(r.x < 0.0 || r.x > 1.0 || r.y < 0.0 || r.y > 1.0) discard;",
+    "  vec4 t = texture2D(uMap, r);",
+    "  gl_FragColor = vec4(t.rgb * uColor * (1.0 + uFlash), t.a * vAlpha * uOpacity);",
+    "}"
+  ].join("\n");
+
+  // Sprite texture: a procedural glow stands in until the CC0 PNG decodes; the same THREE.Texture object is reused for
+  // every later ritual, so the swap happens once per session (and never if the file is blocked).
+  function fxTexture(name){
+    if(fxTexCache[name]) return fxTexCache[name];
+    const tex = new THREE.CanvasTexture(glowCanvas(64, true));
+    tex.needsUpdate = true;
+    fxTexCache[name] = tex;
+    try{
+      const loader = new THREE.TextureLoader();
+      loader.load(FX_SPRITES[name], function(loaded){
+        if(fxTexCache[name] !== tex) return;
+        tex.image = loaded.image;
+        tex.needsUpdate = true;
+        loaded.dispose();
+      }, undefined, function(){ /* keep the glow */ });
+    }catch(e){}
+    return tex;
+  }
+  function ringTexture(kind, size, seed){
+    const tex = new THREE.CanvasTexture(runeRing(kind, size, seed));
     tex.needsUpdate = true;
     return tex;
   }
+  function ringMaterial(tex, color, opacity, dir){
+    return new THREE.ShaderMaterial({
+      uniforms: { uMap: { value: tex }, uColor: { value: color }, uOpacity: { value: opacity }, uReveal: { value: 0 }, uFlash: { value: 0 }, uDir: { value: dir } },
+      vertexShader: RING_VERT, fragmentShader: RING_FRAG,
+      transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
+    });
+  }
+  function planeMaterial(tex, color, opacity){
+    return new THREE.ShaderMaterial({
+      uniforms: { uMap: { value: tex }, uColor: { value: color }, uOpacity: { value: opacity }, uFlash: { value: 0 } },
+      vertexShader: RING_VERT, fragmentShader: PLANE_FRAG,
+      transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide
+    });
+  }
+  // A pool of billboarded points with per-particle size / alpha / rotation, simulated on the CPU (≤ a few hundred).
+  function makeParticles(count, tex, color, pixelRatio){
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(count * 3), 3));
+    geo.setAttribute("aSize", new THREE.BufferAttribute(new Float32Array(count), 1));
+    geo.setAttribute("aAlpha", new THREE.BufferAttribute(new Float32Array(count), 1));
+    geo.setAttribute("aRot", new THREE.BufferAttribute(new Float32Array(count), 1));
+    const mat = new THREE.ShaderMaterial({
+      uniforms: { uMap: { value: tex }, uColor: { value: color }, uOpacity: { value: 1 }, uFlash: { value: 0 }, uPixelRatio: { value: pixelRatio }, uScale: { value: 6.2 } },
+      vertexShader: POINT_VERT, fragmentShader: POINT_FRAG,
+      transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending
+    });
+    const points = new THREE.Points(geo, mat);
+    points.frustumCulled = false;
+    const list = [];
+    for(let i=0;i<count;i++) list.push({ alive: false, life: 0, max: 1, alpha: 0, x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0, size: 1, rot: 0, rs: 0, sway: 0, seed: Math.random() });
+    return { points: points, geo: geo, mat: mat, list: list };
+  }
+  function writeParticles(sys){
+    const pos = sys.geo.attributes.position.array, sz = sys.geo.attributes.aSize.array, al = sys.geo.attributes.aAlpha.array, rt = sys.geo.attributes.aRot.array;
+    for(let i=0;i<sys.list.length;i++){
+      const p = sys.list[i];
+      pos[i*3] = p.x; pos[i*3+1] = p.y; pos[i*3+2] = p.z;
+      sz[i] = p.alive ? p.size : 0;
+      al[i] = p.alive ? p.alpha : 0;
+      rt[i] = p.rot;
+    }
+    sys.geo.attributes.position.needsUpdate = true;
+    sys.geo.attributes.aSize.needsUpdate = true;
+    sys.geo.attributes.aAlpha.needsUpdate = true;
+    sys.geo.attributes.aRot.needsUpdate = true;
+  }
+
   function disposeThree(){
     if(!threeState) return;
-    threeState.active = false;
-    if(threeState.raf) cancelAnimationFrame(threeState.raf);
-    if(threeState.onResize){
-      try{ window.removeEventListener("resize", threeState.onResize); }catch(e){}
-    }
-    if(threeState.glowMap){
-      try{ threeState.glowMap.dispose(); }catch(e){}
-    }
-    if(threeState.points){
-      try{
-        if(threeState.points.geometry) threeState.points.geometry.dispose();
-        if(threeState.points.material) threeState.points.material.dispose();
-      }catch(e){}
-    }
-    if(threeState.renderer){
-      try{ threeState.renderer.dispose(); }catch(e){}
-      if(threeState.renderer.domElement && threeState.renderer.domElement.parentNode){
-        threeState.renderer.domElement.parentNode.removeChild(threeState.renderer.domElement);
+    const st = threeState;
+    st.active = false;
+    if(st.raf) cancelAnimationFrame(st.raf);
+    if(st.director){ try{ st.director.pause(); }catch(e){} }
+    if(st.onResize){ try{ window.removeEventListener("resize", st.onResize); }catch(e){} }
+    try{
+      st.scene.traverse(function(o){
+        if(o.geometry) o.geometry.dispose();
+        if(o.material){
+          const u = o.material.uniforms;
+          if(u && u.uMap && u.uMap.value && u.uMap.value.userData && u.uMap.value.userData.ritualOwned) u.uMap.value.dispose();
+          o.material.dispose();
+        }
+      });
+    }catch(e){}
+    if(st.renderer){
+      try{ st.renderer.dispose(); }catch(e){}
+      if(st.renderer.domElement && st.renderer.domElement.parentNode){
+        st.renderer.domElement.parentNode.removeChild(st.renderer.domElement);
       }
     }
+    overlay.classList.remove("fx-three");
     threeState = null;
     canvas.style.display = "";
   }
@@ -1223,93 +1522,174 @@
       return false;
     }
     const dprCap = (coarsePtr || w < 500) ? 1.5 : 2;
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, dprCap));
+    const pixelRatio = Math.min(devicePixelRatio || 1, dprCap);
+    renderer.setPixelRatio(pixelRatio);
     renderer.setSize(w, h);
     renderer.setClearColor(0x070505, 1);
     renderer.domElement.className = "ritual-canvas";
     renderer.domElement.style.zIndex = "1";
     overlay.insertBefore(renderer.domElement, overlay.firstChild);
+    overlay.classList.add("fx-three");
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
-    camera.position.z = 6.2;
+    const CAM_Z = 6.2;
+    camera.position.z = CAM_Z;
+    const halfH = Math.tan(21 * Math.PI / 180) * CAM_Z;
+    const halfW = halfH * (w / h);
+    const R = Math.min(1.25, Math.max(0.85, halfW * 0.82));   // disc radius: nearly the phone's width, capped on desktop
+    const hard = powerId === "anathema", soft = powerId === "whisper";
+    const color = colorVec(fx.color);                                        // rings + heat: the power colour
+    const tint = colorVec(hard ? "#FFF3E6" : soft ? "#D9B0A6" : "#FFE0C4");    // sprites carry baked blood/ember; the tint only cools or heats them
+    const gold = colorVec("#C9A24A");
 
-    const color = new THREE.Color(fx.color || "#B3121F");
-    const baseOrb = 0.55 * (fx.orbScale || 1.15);
-    const orbGeo = new THREE.SphereGeometry(baseOrb, 32, 32);
-    const orbMat = new THREE.MeshBasicMaterial({
-      color: color,
-      transparent: true,
-      opacity: Math.min(0.95, 0.72 + fx.glow * 0.2)
-    });
-    const orb = new THREE.Mesh(orbGeo, orbMat);
-    orb.userData.scaleBoost = 1;
-    scene.add(orb);
+    // The altar disc: rings lie flat, tilted toward the viewer, floating in the upper part of the screen so the chant
+    // (pushed down by .overlay.fx-three) reads on plain soot.
+    const disc = new THREE.Group();
+    disc.position.y = 0.45;
+    disc.rotation.x = -1.02;
+    scene.add(disc);
+    const planeGeo = new THREE.PlaneGeometry(2, 2);
 
+    const glowTex = fxTexture("glow");
+    const underGlow = new THREE.Mesh(planeGeo, planeMaterial(glowTex, tint, 0));
+    underGlow.scale.setScalar(R * 1.35);
+    disc.add(underGlow);
+    const heatTex = new THREE.CanvasTexture(glowCanvas(128)); heatTex.userData.ritualOwned = true;
+    const heat = new THREE.Mesh(planeGeo, planeMaterial(heatTex, color, 0));
+    heat.scale.setScalar(R * 0.9);
+    disc.add(heat);
+
+    const ringSpecs = [
+      { kind: "runes", size: 1024, seed: 11, k: 1.0, spin: 0.10, dir: 1, op: 0.95 },
+      { kind: "star", size: 512, seed: 23, k: 0.66, spin: -0.17, dir: -1, op: 0.8 },
+      { kind: "ticks", size: 512, seed: 37, k: 0.44, spin: 0.26, dir: 1, op: 0.75 },
+      { kind: "runes", size: 512, seed: 53, k: 1.22, spin: -0.06, dir: -1, op: 0.35 }
+    ];
+    const nRings = hard ? 4 : soft ? 2 : 3;
     const rings = [];
-    const nRings = Math.max(1, fx.rings | 0);
     for(let i=0;i<nRings;i++){
-      const radius = 0.95 + i * 0.28;
-      const tube = 0.018 + (i % 2) * 0.01;
-      const torus = new THREE.Mesh(
-        new THREE.TorusGeometry(radius, tube, 12, 72),
-        new THREE.MeshBasicMaterial({
-          color: color,
-          transparent: true,
-          opacity: Math.max(0.28, 0.82 - i * 0.07)
-        })
-      );
-      torus.rotation.x = Math.PI / 2 + (i % 2 ? 0.18 : -0.12);
-      torus.rotation.y = i * 0.35;
-      torus.userData.spin = (0.004 + i * 0.0015) * fx.spin * (i % 2 ? -1 : 1);
-      torus.userData.spinY = (0.002 + i * 0.0008) * fx.spin;
-      scene.add(torus);
-      rings.push(torus);
+      const s = ringSpecs[i];
+      const tex = ringTexture(s.kind, s.size, s.seed); tex.userData.ritualOwned = true;
+      const m = new THREE.Mesh(planeGeo, ringMaterial(tex, color, s.op, s.dir));
+      m.scale.setScalar(R * s.k);
+      m.position.z = 0.002 * (i + 1);
+      m.userData.spin = s.spin * (fx.spin || 1);
+      m.userData.stagger = i * 0.16;
+      disc.add(m);
+      rings.push(m);
+    }
+    const crownTex = ringTexture("crown", 256, 5); crownTex.userData.ritualOwned = true;
+    const crown = new THREE.Mesh(planeGeo, ringMaterial(crownTex, gold, 0.95, 1));
+    crown.scale.setScalar(R * 0.26);
+    crown.position.z = 0.02;
+    disc.add(crown);
+
+    // Lightning cracks live in the disc plane and only exist for «Апокалипсис».
+    const cracks = [];
+    if(hard){
+      const crackTex = fxTexture("crack");
+      for(let i=0;i<4;i++){
+        const m = new THREE.Mesh(planeGeo, planeMaterial(crackTex, tint, 0));
+        m.scale.setScalar(R * 0.9);
+        m.position.z = 0.03;
+        m.userData.next = 0.6 + Math.random() * 0.8;
+        m.userData.until = 0;
+        disc.add(m);
+        cracks.push(m);
+      }
     }
 
-    const pCount = Math.max(8, fx.particles | 0);
-    const positions = new Float32Array(pCount * 3);
-    const velocities = [];
-    for(let pi=0;pi<pCount;pi++){
-      const rr = 1.2 + Math.random() * 2.8;
-      const th = Math.random() * Math.PI * 2;
-      const ph = (Math.random() - 0.5) * Math.PI;
-      positions[pi*3] = Math.cos(th) * Math.cos(ph) * rr;
-      positions[pi*3+1] = Math.sin(ph) * rr * 0.6;
-      positions[pi*3+2] = Math.sin(th) * Math.cos(ph) * rr;
-      velocities.push({ th: th, ph: ph, rr: rr, sp: (0.003 + Math.random() * 0.01) * fx.spin });
+    // Smoke: a few large billboards rising off the rim; the plane stays camera-facing because the camera never rotates.
+    const smoke = [];
+    const nSmoke = hard ? 8 : soft ? 4 : 6;
+    for(let i=0;i<nSmoke;i++){
+      const m = new THREE.Mesh(planeGeo, planeMaterial(fxTexture(i % 2 ? "smoke2" : "smoke"), tint, 0));
+      m.userData = { t: Math.random(), speed: 0.11 + Math.random() * 0.08, ang: Math.random() * Math.PI * 2, rot: (Math.random() - 0.5) * 0.4, size: R * (0.9 + Math.random() * 0.7), phase: Math.random() * 6 };
+      scene.add(m);
+      smoke.push(m);
     }
-    const pGeo = new THREE.BufferGeometry();
-    pGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    const glowMap = makeGlowTexture();
-    const pMat = new THREE.PointsMaterial({
-      color: color,
-      size: 0.14 + fx.glow * 0.1,
-      map: glowMap,
-      transparent: true,
-      opacity: 0.55 + fx.glow * 0.4,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
-    const points = new THREE.Points(pGeo, pMat);
-    scene.add(points);
+
+    const baseCount = Math.max(32, Math.min(240, Math.round((fx.particles | 0) * 1.6)));
+    const embers = makeParticles(baseCount, fxTexture("ember"), tint, pixelRatio);
+    const motes = makeParticles(Math.max(6, baseCount >> 2), fxTexture("mote"), tint, pixelRatio);
+    const ash = makeParticles(Math.max(6, baseCount >> 3), fxTexture("ash"), colorVec("#FFFFFF"), pixelRatio);
+    const sparks = makeParticles(hard ? 80 : soft ? 20 : 48, fxTexture("spark"), tint, pixelRatio);
+    scene.add(embers.points); scene.add(motes.points); scene.add(ash.points); scene.add(sparks.points);
+    ash.mat.uniforms.uOpacity.value = 0.3;   // soot puffs: large, faint, so the flecks stay flecks instead of mip-mapping into a blob
+
+    // Director: every value the render loop reads. anime.js animates these (castRitualFx); without anime a plain ramp does.
+    const dir = { reveal: 0, ringOpacity: 0, ringScale: 0.72, spin: 1, glow: 0, emit: 0, smoke: 0, camZ: CAM_Z, camY: 0, shake: 0, flash: 0, pulse: 0, cracks: 0, tilt: -1.02 };
+    const glowMax = soft ? 0.32 : hard ? 0.62 : 0.48;
+
+    const v = new THREE.Vector3();
+    function discPoint(rr, ang, zUp){
+      v.set(Math.cos(ang) * rr, Math.sin(ang) * rr, zUp || 0);
+      return disc.localToWorld(v);
+    }
+    function spawnEmber(p, burst){
+      const ang = Math.random() * Math.PI * 2;
+      const rr = burst ? R * (0.85 + Math.random() * 0.2) : R * (0.25 + Math.random() * 0.8);
+      const wp = discPoint(rr, ang);
+      p.alive = true; p.life = 0; p.alpha = 0; p.max = burst ? 0.6 + Math.random() * 0.6 : 1.6 + Math.random() * 1.8;
+      p.x = wp.x; p.y = wp.y; p.z = wp.z;
+      if(burst){
+        const sp = 1.6 + Math.random() * 2.2;
+        p.vx = Math.cos(ang) * sp; p.vy = 0.6 + Math.random() * 1.6; p.vz = Math.sin(ang) * sp * 0.5 + 0.4;
+      } else {
+        p.vx = (Math.random() - 0.5) * 0.12; p.vy = 0.22 + Math.random() * 0.45; p.vz = 0.04 + Math.random() * 0.14;
+      }
+      p.size = burst ? 8 + Math.random() * 12 : 6 + Math.random() * 14;
+      p.rot = Math.random() * Math.PI * 2; p.rs = (Math.random() - 0.5) * 2; p.sway = 0.6 + Math.random() * 1.4; p.seed = Math.random() * 6.28;
+    }
+    function spawnAsh(p){
+      p.alive = true; p.life = 0; p.alpha = 0; p.max = 3 + Math.random() * 3;
+      p.x = (Math.random() - 0.5) * halfW * 2.2; p.y = halfH * (-0.5 + Math.random() * 1.9); p.z = (Math.random() - 0.5) * 2;
+      p.vx = (Math.random() - 0.5) * 0.08; p.vy = -(0.18 + Math.random() * 0.22); p.vz = 0;
+      p.size = 36 + Math.random() * 30; p.rot = Math.random() * 6.28; p.rs = (Math.random() - 0.5) * 1.2; p.sway = 0.4 + Math.random(); p.seed = Math.random() * 6.28;
+    }
+    function spawnSpark(p){
+      const ang = Math.random() * Math.PI * 2;
+      const wp = discPoint(R * (0.9 + Math.random() * 0.15), ang);
+      p.alive = true; p.life = 0; p.alpha = 0; p.max = 0.35 + Math.random() * 0.5;
+      p.x = wp.x; p.y = wp.y; p.z = wp.z;
+      const sp = 2.2 + Math.random() * 3;
+      p.vx = Math.cos(ang) * sp; p.vy = 1 + Math.random() * 2.4; p.vz = Math.sin(ang) * sp * 0.4 + 0.6;
+      p.size = 14 + Math.random() * 22; p.rot = Math.random() * 6.28; p.rs = (Math.random() - 0.5) * 6; p.sway = 0; p.seed = 0;
+    }
+    function burst(strength){
+      const n = Math.round(sparks.list.length * Math.min(1, strength));
+      let k = 0;
+      for(let i=0;i<sparks.list.length && k<n;i++){ if(!sparks.list[i].alive){ spawnSpark(sparks.list[i]); k++; } }
+      let m = Math.round(embers.list.length * 0.35 * strength);
+      for(let i=0;i<embers.list.length && m>0;i++){ if(!embers.list[i].alive){ spawnEmber(embers.list[i], true); m--; } }
+      dir.flash = Math.max(dir.flash, 0.9 * strength);
+      dir.shake = Math.max(dir.shake, (hard ? 1 : 0.45) * strength);
+    }
+    function stepList(sys, dt, t, emit, spawnFn, rise){
+      for(let i=0;i<sys.list.length;i++){
+        const p = sys.list[i];
+        if(!p.alive){
+          if(emit > 0 && Math.random() < emit * dt * 1.6) spawnFn(p);
+          continue;
+        }
+        p.life += dt;
+        if(p.life >= p.max){ p.alive = false; continue; }
+        const e = p.life / p.max;
+        p.x += (p.vx + Math.sin(t * p.sway + p.seed) * 0.12 * (rise ? 1 : 0.4)) * dt;
+        p.y += p.vy * dt * (rise ? (1 + dir.spin * 0.2) : 1);
+        p.z += p.vz * dt;
+        if(rise) p.vy *= (1 - dt * 0.9);    // bursts slow down, drifting embers keep climbing
+        p.rot += p.rs * dt;
+        p.alpha = Math.min(1, e * 6) * (1 - e) * (rise ? 1 : 0.7);
+        if(!rise) p.size *= 1 - dt * 0.02;
+      }
+    }
 
     threeState = {
-      active: true,
-      renderer: renderer,
-      scene: scene,
-      camera: camera,
-      orb: orb,
-      orbMat: orbMat,
-      rings: rings,
-      points: points,
-      glowMap: glowMap,
-      velocities: velocities,
-      fx: fx,
-      shake: 0,
-      baseCam: { x: 0, y: 0, z: 6.2 },
-      raf: 0,
-      t0: performance.now()
+      active: true, renderer: renderer, scene: scene, camera: camera, fx: fx, dir: dir, rings: rings, crown: crown, disc: disc,
+      cracks: cracks, smoke: smoke, embers: embers, motes: motes, ash: ash, sparks: sparks, burst: burst, glowMax: glowMax,
+      director: null, stamped: false, raf: 0, t0: performance.now(), last: performance.now(), onResize: null
     };
 
     function onResize(){
@@ -1331,62 +1711,141 @@
       sealStage.classList.remove("three-mode");
       sealStage.classList.add("svg-fallback");
       canvas.style.display = "";
-      if(overlay.classList.contains("on")){
-        startAsh(savedFx);
-      }
+      if(overlay.classList.contains("on")) startAsh(savedFx);
     }
     function onContextRestored(){
       if(overlay.classList.contains("on") && casting && !threeState){
         const restartFx = fxTable[powerId] || fxTable.seal || fx;
         stopAsh();
-        startThreeRitual(restartFx);
+        if(startThreeRitual(restartFx)) castRitualFx(Math.max(1200, restartFx.duration | 0));
       }
     }
     renderer.domElement.addEventListener("webglcontextlost", onContextLost, false);
     renderer.domElement.addEventListener("webglcontextrestored", onContextRestored, false);
-    threeState.onContextLost = onContextLost;
-    threeState.onContextRestored = onContextRestored;
 
-    function tick(){
+    function tick(now){
       if(!threeState || !threeState.active) return;
-      const st = threeState;
-      const t = (performance.now() - st.t0) / 1000;
-      const pulse = 1 + Math.sin(t * (1.6 + st.fx.spin)) * (0.04 + st.fx.glow * 0.06);
-      st.orb.scale.setScalar(pulse * (st.orb.userData.scaleBoost || 1));
-      st.orbMat.opacity = Math.min(0.98, (0.7 + st.fx.glow * 0.18) * (0.82 + 0.18 * Math.sin(t * 3)));
+      const st = threeState, d = st.dir;
+      const dt = Math.min(0.05, (now - st.last) / 1000); st.last = now;
+      const t = (now - st.t0) / 1000;
+      if(!st.director){   // no anime.js: a plain ramp stands in for the cast timeline
+        d.reveal = Math.min(1, t / 1.3); d.ringOpacity = Math.min(1, t / 0.6); d.ringScale = 0.72 + 0.28 * Math.min(1, t / 0.9);
+        d.glow = glowMax * Math.min(1, t / 1.2); d.emit = Math.min(1, Math.max(0, (t - 0.3) / 0.8)); d.smoke = Math.min(1, t / 1.5);
+        if(hard) d.cracks = Math.min(1, Math.max(0, (t - 1) / 1.5));
+      }
+      d.flash *= 1 - dt * 6;
+      d.pulse *= 1 - dt * 4;
+      if(d.flash < 0.005) d.flash = 0;
+      const flash = d.flash + d.pulse * 0.35;
 
-      for(let i=0;i<st.rings.length;i++){
-        const r = st.rings[i];
-        r.rotation.z += r.userData.spin;
-        r.rotation.y += r.userData.spinY;
+      disc.scale.setScalar(d.ringScale);
+      disc.rotation.x = d.tilt;
+      disc.updateMatrixWorld();   // spawn points read the disc's world matrix before this frame renders
+      for(let i=0;i<rings.length;i++){
+        const m = rings[i], u = m.material.uniforms;
+        m.rotation.z += m.userData.spin * d.spin * dt * (0.6 + 0.4 * (1 + Math.sin(t * 0.7)));
+        const rv = (d.reveal - m.userData.stagger) / (1 - m.userData.stagger);
+        u.uReveal.value = Math.max(0, Math.min(1, rv));
+        u.uOpacity.value = d.ringOpacity * ringSpecs[i].op * (0.86 + 0.14 * Math.sin(t * 2.2 + i));
+        u.uFlash.value = flash;
+      }
+      crown.material.uniforms.uReveal.value = Math.max(0, Math.min(1, (d.reveal - 0.35) / 0.65));
+      crown.material.uniforms.uOpacity.value = d.ringOpacity * 0.95;
+      crown.material.uniforms.uFlash.value = flash * 0.6;
+      underGlow.material.uniforms.uOpacity.value = d.glow * (0.8 + 0.2 * Math.sin(t * 1.7)) + flash * 0.4;
+      underGlow.rotation.z -= dt * 0.05;
+      heat.material.uniforms.uOpacity.value = d.glow * 0.6 * (0.75 + 0.25 * Math.sin(t * 3.1)) + flash * 0.5;
+
+      for(let i=0;i<cracks.length;i++){
+        const c = cracks[i], ud = c.userData;
+        if(d.cracks > 0 && t > ud.next){
+          ud.until = t + 0.12 + Math.random() * 0.2;
+          ud.next = ud.until + (0.2 + Math.random() * 0.8) / Math.max(0.15, d.cracks);
+          const a = Math.random() * Math.PI * 2, rr = R * Math.random() * 0.55;
+          c.position.set(Math.cos(a) * rr, Math.sin(a) * rr, 0.03);
+          c.rotation.z = Math.random() * Math.PI * 2;
+          c.scale.setScalar(R * (0.6 + Math.random() * 0.7));
+          d.flash = Math.max(d.flash, 0.35 * d.cracks);
+        }
+        c.material.uniforms.uOpacity.value = t < ud.until ? 0.9 * d.cracks : 0;
       }
 
-      const pos = st.points.geometry.attributes.position.array;
-      for(let pi=0;pi<st.velocities.length;pi++){
-        const v = st.velocities[pi];
-        v.th += v.sp;
-        v.ph += v.sp * 0.35;
-        pos[pi*3] = Math.cos(v.th) * Math.cos(v.ph) * v.rr;
-        pos[pi*3+1] = Math.sin(v.ph) * v.rr * 0.6;
-        pos[pi*3+2] = Math.sin(v.th) * Math.cos(v.ph) * v.rr;
+      for(let i=0;i<smoke.length;i++){
+        const m = smoke[i], ud = m.userData;
+        ud.t += dt * ud.speed;
+        if(ud.t > 1){ ud.t -= 1; ud.ang = Math.random() * Math.PI * 2; }
+        const wp = discPoint(R * 0.95, ud.ang);
+        m.position.set(wp.x + Math.sin(t * 0.5 + ud.phase) * 0.15, wp.y + ud.t * 2.6, wp.z + 0.2);
+        m.rotation.z += ud.rot * dt;
+        const s = ud.size * (0.7 + ud.t * 0.8);
+        m.scale.set(s, s, 1);
+        m.material.uniforms.uOpacity.value = d.smoke * 0.22 * Math.sin(ud.t * Math.PI) * (soft ? 0.6 : 1);
       }
-      st.points.geometry.attributes.position.needsUpdate = true;
-      st.points.rotation.y += 0.002 * st.fx.spin;
 
-      const sh = st.shake || 0;
-      if(sh > 0.01){
-        st.camera.position.x = st.baseCam.x + (Math.random() - 0.5) * sh * 0.04;
-        st.camera.position.y = st.baseCam.y + (Math.random() - 0.5) * sh * 0.04;
-        st.shake *= 0.92;
-      } else {
-        st.camera.position.x = st.baseCam.x;
-        st.camera.position.y = st.baseCam.y;
-      }
-      st.renderer.render(st.scene, st.camera);
+      stepList(embers, dt, t, d.emit, function(p){ spawnEmber(p, false); }, true);
+      stepList(motes, dt, t, d.emit * 0.5, function(p){ spawnEmber(p, false); p.size *= 1.8; p.max *= 1.2; }, true);
+      stepList(ash, dt, t, d.emit * 0.6, spawnAsh, false);
+      stepList(sparks, dt, t, 0, spawnSpark, true);
+      writeParticles(embers); writeParticles(motes); writeParticles(ash); writeParticles(sparks);
+      embers.mat.uniforms.uFlash.value = motes.mat.uniforms.uFlash.value = sparks.mat.uniforms.uFlash.value = flash;
+
+      const sh = d.shake;
+      camera.position.z = d.camZ;
+      camera.position.x = sh > 0.005 ? (Math.random() - 0.5) * 0.09 * sh : 0;
+      camera.position.y = d.camY + (sh > 0.005 ? (Math.random() - 0.5) * 0.09 * sh : 0);
+      camera.rotation.z = sh > 0.005 ? (Math.random() - 0.5) * 0.012 * sh : 0;
+      if(!st.director || !st.director.shakeHeld) d.shake *= 1 - dt * 3.2;
+
+      renderer.render(scene, camera);
       st.raf = requestAnimationFrame(tick);
     }
-    tick();
+    threeState.raf = requestAnimationFrame(tick);
     return true;
+  }
+
+  // The cast, choreographed per power on top of the chant timeline (durations in ms, same clock as runRitual's `tl`).
+  //   Ехидно      — one slow sweep, a faint second ring, few embers, no shake: the seal barely warms.
+  //   Жёстко      — three rings counter-rotating, embers stream, a stamp at «Ставим печать» with a spark burst.
+  //   Апокалипсис — fast reveal, ember storm, lightning cracks, the camera creeps in and the stamp hits with a flash.
+  function castRitualFx(duration){
+    if(!threeState || !hasAnime) return;
+    const st = threeState, d = st.dir, fx = st.fx;
+    const hard = powerId === "anathema", soft = powerId === "whisper";
+    const stampAt = Math.round(duration * (soft ? 0.88 : 0.84));
+    const revealDur = soft ? Math.min(1800, duration * 0.7) : hard ? Math.min(900, duration * 0.3) : Math.min(1400, duration * 0.42);
+    const tl = anime.timeline({ autoplay: true });
+    st.director = tl;
+    tl.add({ targets: d, ringOpacity: 1, duration: 600, easing: "easeOutQuad" }, 0)
+      .add({ targets: d, reveal: 1, duration: revealDur, easing: soft ? "easeInOutSine" : "easeInOutCubic" }, 0)
+      .add({ targets: d, ringScale: 1, duration: 900, easing: "easeOutCubic" }, 0)
+      .add({ targets: d, glow: st.glowMax, duration: 1200, easing: "easeOutQuad" }, 200)
+      .add({ targets: d, emit: soft ? 0.5 : hard ? 1.4 : 1, duration: 800, easing: "easeOutQuad" }, 300)
+      .add({ targets: d, smoke: 1, duration: 1500, easing: "easeOutQuad" }, 400)
+      .add({ targets: d, spin: [fx.spin || 1, (fx.spin || 1) * (hard ? 1.8 : 1.25)], duration: stampAt, easing: "easeInQuad" }, 0);
+    if(hard){
+      tl.add({ targets: d, cracks: 1, duration: Math.max(600, stampAt - 900), easing: "easeInQuad" }, 900)
+        .add({ targets: d, camZ: 5.35, duration: stampAt, easing: "easeInSine" }, 0)
+        .add({ targets: d, shake: 0.35, duration: stampAt - 600, easing: "easeInQuad", begin: function(){ tl.shakeHeld = true; } }, 600);
+    } else if(!soft){
+      tl.add({ targets: d, camZ: 5.9, duration: stampAt, easing: "easeInOutSine" }, 0);
+    }
+    // The stamp: rings punch, a burst of sparks / embers, flash and (for the hard powers) a shake that then decays.
+    const peak = soft ? 1.05 : hard ? 1.16 : 1.1, punch = soft ? 600 : 460;
+    tl.add({
+      targets: d,
+      ringScale: [{ value: peak, duration: Math.round(punch * 0.4), easing: "easeOutQuad" }, { value: 1, duration: Math.round(punch * 0.6), easing: "easeInOutQuad" }],
+      begin: function(){ tl.shakeHeld = false; st.stamped = true; st.burst(soft ? 0.3 : hard ? 1 : 0.7); }
+    }, stampAt);
+    tl.add({ targets: d, tilt: hard ? -0.9 : -0.96, duration: Math.max(400, duration - stampAt), easing: "easeOutQuad" }, stampAt);
+  }
+  function ritualFxPulse(strength){
+    if(!threeState) return;
+    threeState.dir.pulse = Math.max(threeState.dir.pulse, strength || 0.5);
+  }
+  function ritualFxFinish(){
+    if(!threeState) return;
+    if(!threeState.stamped){ threeState.stamped = true; threeState.burst(powerId === "anathema" ? 1 : powerId === "whisper" ? 0.3 : 0.7); }
+    threeState.dir.emit *= 0.4;
   }
 
   function hardCloseOverlay(){
@@ -2194,10 +2653,7 @@
 
     function finish(){
       casting = false;
-      if(threeState && threeState.orb){
-        threeState.orb.userData.scaleBoost = 1.35;
-        threeState.shake = fx.shake;
-      }
+      ritualFxFinish();
       setTimeout(function(){ showResult(); }, reduced ? 60 : 220);
     }
 
@@ -2212,6 +2668,7 @@
     if(hasAnime){
       const prog = { w: 0 };
       const chantIdx = { i: 0 };
+      let shownChant = 0;
       const tl = anime.timeline({ easing: "easeOutQuad", complete: finish });
       ritualTimeline = tl;
       tl.add({ targets: overlay, opacity: [0, 1], duration: 280 })
@@ -2223,32 +2680,13 @@
           targets: chantIdx, i: chants.length - 1, duration: duration, easing: "linear", round: 1,
           update: function(){
             const idx = Math.min(chants.length - 1, chantIdx.i | 0);
+            if(idx !== shownChant){ shownChant = idx; ritualFxPulse(0.5); }   // every new chant line warms the sigil
             chant.textContent = fillChant(chants[idx], name, gender);
           }
         }, 0);
 
-      if(threeState && threeState.orb){
-        tl.add({
-          targets: threeState.orb.scale,
-          x: [0.7, 1], y: [0.7, 1], z: [0.7, 1],
-          duration: 600,
-          easing: "easeOutElastic(1, .6)"
-        }, 0);
-        anime({
-          targets: threeState.orb.userData,
-          scaleBoost: [1, 1.08, 1],
-          duration: Math.min(1200, duration / 2),
-          loop: Math.max(1, Math.floor(duration / 1200)),
-          easing: "easeInOutSine"
-        });
-        if(powerId === "anathema" || fx.shake > 8){
-          anime({
-            targets: threeState,
-            shake: [fx.shake, fx.shake * 0.4, fx.shake],
-            duration: duration,
-            easing: "easeInOutSine"
-          });
-        }
+      if(threeState){
+        castRitualFx(duration);
       } else {
         tl.add({
           targets: sealStage,

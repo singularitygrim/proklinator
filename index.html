@@ -474,6 +474,10 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
   flex-direction:column;gap:22px;background:rgba(7,5,5,.97);padding:24px;opacity:0;
 }
 .overlay.on{display:flex}
+/* v20.5 ritual FX: with the WebGL / 2D altar disc drawn in the upper part of the screen, the chant block drops to the lower
+   half so the words read on plain soot; the reduced-motion SVG seal keeps the centred layout. */
+.overlay.fx-three,.overlay.fx-canvas{justify-content:flex-start;padding-top:52vh;padding-top:52dvh}
+.overlay.fx-canvas .seal-stage{display:none}
 .ritual-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .seal-stage{
   width:168px;height:168px;position:relative;z-index:2;display:grid;place-items:center;
@@ -1581,15 +1585,23 @@ body.is-intro .tabbar{display:none}
 
 <div class="overlay" id="overlay" aria-hidden="true">
   <canvas class="ritual-canvas" id="ritualCanvas"></canvas>
+  <!-- v20.5: static sigil for prefers-reduced-motion (and the split second before WebGL takes over) — rune ring, heptagram, crown -->
   <div class="seal-stage svg-fallback" id="sealStage" aria-hidden="true">
-    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle class="spin" cx="60" cy="60" r="48" stroke="#B3121F" stroke-width="1.2" opacity=".8"/>
-      <circle cx="60" cy="60" r="32" stroke="#B3121F" stroke-width="1" opacity=".5"/>
-      <circle cx="60" cy="60" r="8" fill="#B3121F" opacity=".9"/>
-      <line x1="60" y1="12" x2="60" y2="24" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="60" y1="96" x2="60" y2="108" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="12" y1="60" x2="24" y2="60" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
-      <line x1="96" y1="60" x2="108" y2="60" stroke="#B3121F" stroke-width="1.2" opacity=".6"/>
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round">
+      <g class="spin" stroke="#B3121F">
+        <circle cx="60" cy="60" r="54" stroke-width="1.4" opacity=".9"/>
+        <circle cx="60" cy="60" r="46" stroke-width="1" opacity=".75"/>
+        <path stroke-width="1.1" opacity=".85" d="M60 8v5M60 107v5M8 60h5M107 60h5M23.2 23.2l3.5 3.5M93.3 93.3l3.5 3.5M23.2 96.8l3.5-3.5M93.3 26.7l3.5-3.5
+          M60 10.5l-2.4 3.8M60 10.5l2.4 3.8M109.5 60l-3.8-2.4M109.5 60l-3.8 2.4M60 109.5l-2.4-3.8M60 109.5l2.4-3.8M10.5 60l3.8-2.4M10.5 60l3.8 2.4
+          M84 17.5l-3 1.2-1-2.8M102.5 36l-1.2-3 2.8-1M102.5 84l-2.8-1 1.2-3M84 102.5l-1-2.8 3 1.2M36 102.5l3 1.2 1-2.8M17.5 84l1.2 3-2.8 1M17.5 36l2.8 1-1.2 3M36 17.5l1 2.8-3-1.2"/>
+      </g>
+      <circle cx="60" cy="60" r="38" stroke="#B3121F" stroke-width=".9" opacity=".6" stroke-dasharray="1.6 3.4"/>
+      <polygon points="60.0,22.0 76.5,94.2 30.3,36.3 97.0,68.5 23.0,68.5 89.7,36.3 43.5,94.2" stroke="#B3121F" stroke-width=".9" opacity=".55"/>
+      <circle cx="60" cy="60" r="18" stroke="#B3121F" stroke-width="1" opacity=".8"/>
+      <g transform="translate(60 61)">
+        <path d="M-11 4.6-8-4l4 3.2L0-7.4l4 6.6 4-3.2 3 8.6Z" fill="#C9A24A"/>
+        <rect x="-11" y="5.6" width="22" height="2" rx=".8" fill="#C9A24A"/>
+      </g>
     </svg>
   </div>
   <div class="chant" id="chant" aria-live="polite"></div>
