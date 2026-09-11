@@ -1,8 +1,8 @@
 {
   "app": "ПРОКЛИНАТОР",
-  "version": "v20.6",
+  "version": "v20.7",
   "url": "https://proklinator-static.vercel.app",
-  "deploymentId": "dpl_98RXX3fh636oKutKKMkno1CS88Tt",
+  "deploymentId": "dpl_9KZTrgKgA4mFecQosr3nmsMXWfDF",
   "sso": "off",
   "full": true,
   "target": "production",
@@ -12,21 +12,21 @@
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-static-d2ky5sb67-singularity16.vercel.app",
+  "deploymentUrl": "https://proklinator-static-5zway8v0g-singularity16.vercel.app",
   "aliases": [
     "https://proklinator-static.vercel.app",
     "https://proklinator-static-singularity16.vercel.app"
   ],
-  "inspector": "https://vercel.com/singularity16/proklinator-static/98RXX3fh636oKutKKMkno1CS88Tt",
-  "sourceCommit": "080a3a44cc8644b0b772d1ef0d44db8bb47db551",
-  "sourceRef": "origin/main (merge of PR #16, singularity/v20-6-punch-pack-v1)",
+  "inspector": "https://vercel.com/singularity16/proklinator-static/9KZTrgKgA4mFecQosr3nmsMXWfDF",
+  "sourceCommit": "5a5ecd3f4b1828d39470b6946868acacfda89fb3",
+  "sourceRef": "origin/main (merge of PR #18, singularity/v20-7-local-gamification-c9b0)",
   "sourceRepo": "https://github.com/singularitygrim/proklinator",
   "timestamp": {
-    "preDeployCheckAt": "2026-09-11T12:23:41Z (live public alias still v20.5: index 109439 B with app.js?v=20.5, sw VERSION v20.5, app.js 301816 B with 40 sins)",
-    "deployRequestedAt": "2026-09-11T12:24:07Z (deploy_to_vercel answered INITIALIZING with the deployment id and raw URL)",
-    "liveAt": "2026-09-11T12:26:44Z (first raw-URL poll; the build had already finished and served the verified v20.6 index, 109439 B, sha256 da421148…)",
-    "publicAliasObservedAt": "2026-09-11T12:27:08Z (first public-alias poll, already v20.6)",
-    "verifiedAt": "2026-09-11T12:32:55Z (HTTP sweep of all 73 files 12:27:46Z–12:27:47Z, then three headless Chrome ritual runs 12:31:04Z–12:32:55Z)"
+    "preDeployCheckAt": "2026-09-11T19:02:33Z (live public alias still v20.6: index 109439 B sha256 da421148… with app.js?v=20.6, sw VERSION v20.6, app.js 325508 B sha256 96879f52…, no «Дело дня» / «Атлас печатей» in the served app.js — exactly the v20.6 record)",
+    "deployRequestedAt": "2026-09-11T19:07Z (deploy_to_vercel issued right after a 19:06:57Z timestamp; it answered INITIALIZING with the deployment id, raw URL and inspector link)",
+    "liveAt": "2026-09-11T19:09:39Z (first raw-URL poll; the build had already finished and served the verified v20.7 index, 117090 B, sha256 fb3cdb75…)",
+    "publicAliasObservedAt": "2026-09-11T19:09:50Z (first public-alias poll, already v20.7 on the public alias, the -singularity16 alias and the raw URL alike)",
+    "verifiedAt": "2026-09-11T19:16:11Z (HTTP sweep of all 73 files 19:11:29Z–19:11:30Z, then two headless Chrome runs 19:14:44Z–19:15:09Z and 19:15:48Z–19:16:11Z)"
   },
   "files": {
     "ATTRIBUTIONS.md": {
@@ -34,9 +34,9 @@
       "sha256": "41287a5cb17cfbefb693dbbe8afaa1fe77a92a70c4bf143f4e99d3f76831371e"
     },
     "app.js": {
-      "bytes": 325508,
-      "sha256": "96879f528e8ffc0c4d6e981baa78ee0ff35990963651bd0f17316bb2804731fc",
-      "note": "changed in v20.6 (+23692 B): DATA.version v20.6 + release notes; PUNCH_PACK_v1 catalog appended — sins 41–60 (20 new office / household / relationship scenes, e.g. 41 status-созвон … 60 «Мы на связи»), verdicts.N N41–N60 (32 → 52, each with whisper / seal / anathema punch and its own «Снять:»), sinKeywords 41–60 for matchSin, shareCaptions.bySinId 40 → 60; What's new «Что нового в v20.6» (two v20.6 items, v20.5 folded to one line). No code paths changed — catalog data + copy only"
+      "bytes": 352739,
+      "sha256": "32b87f7d887f983e75b0909d028d88788b0fc6c3373f356ee129e734e51ca4aa",
+      "note": "changed in v20.7 (+27231 B, 325508 → 352739): DATA.version v20.7 + What's new «Что нового в v20.7»; game layer v1 (GAME_MECHANICS_v1 / UX_GAME_v1 / GAME_COPY_v1, copy version game-copy-2026-09-11, PR #18): «Серия» — the daily seal (any ritual seals the local day, soft streak with milestones 3 / 7 / 14, two-week calendar, no shame banner); «Атлас печатей» — the eight locked categories read as atlas slots behind a «Категории | Атлас» segment on the Categories tab (an empty slot opens the ritual with a hint); «Дело дня» — one situation per local day above the form, the chip fills only «Что случилось?», «×» hides it for the day; six new seals in Achievements (10 → 16) with quiet rarity labels; quiet karma bonuses (share tap / ritual without mat / new seal), a same-«кто» throttle («одно дело — не больше трёх ритуалов в сутки») and a karma legend under the parody leaderboard («Пародия. Сети нет.»). State is one schema-validated localStorage record pk_game, wiped with the rest. Catalog unchanged: 60 sins, verdicts N1–N60, sinKeywords, shareCaptions (the DROPIN_SHARE_CAPTIONS_41_60_FIX in PR #18 is docs-only; DATA is not touched by it). No auth, payments, analytics, network calls or tabbar changes"
     },
     "assets/avatars/hood.png": {
       "bytes": 191453,
@@ -307,9 +307,9 @@
       "sha256": "dec8254c223000f3a66c42ede3bfeebca72600fc3ddd2ba4201e6a3dbcd2b618"
     },
     "index.html": {
-      "bytes": 109439,
-      "sha256": "da421148a412bf0c7cd8fa421bd6ed4cc9115639f44655c7543e5a7f70579940",
-      "note": "changed in v20.6 (same 109439 B): <script src=\"app.js?v=20.6\"> and the CSP source comment now says v20.6; nothing else. The seven remaining «v20.5» strings are CSS / HTML source comments on the v20.5 FX, splash grain and empty-state rules, not references"
+      "bytes": 117090,
+      "sha256": "fb3cdb75b169e288e7bed19e10e6da4367b2933f1f636dd74010e50cc7a4ed3e",
+      "note": "changed in v20.7 (+7651 B, 109439 → 117090): <script src=\"app.js?v=20.7\"> and the CSP source comment now say v20.7; new «v20.7 GAME LAYER (UX_GAME_v1)» CSS block (case strip, seal card + 14-day calendar, atlas grid mode, rarity label, karma legend) and new markup — #caseStrip (#caseLabel / #caseChip / #caseDismiss) above the form on the Ritual tab, #catSeg segment on the Categories tab, #sealCard on the Profile home page, #badgeAtlasRow on Achievements, #lbLegend on the leaderboard. Zero «v20.6» strings remain; meta CSP unchanged"
     },
     "manifest.webmanifest": {
       "bytes": 820,
@@ -317,8 +317,8 @@
     },
     "sw.js": {
       "bytes": 6029,
-      "sha256": "ff83a9b76ddc26dbd076332596c3314d32f45ac1177a69807ea5441b27856e08",
-      "note": "changed in v20.6 (same 6029 B): VERSION v20.6, APP_JS app.js?v=20.6 (new cache proklinator-v20.6; the v20.5 cache is dropped on activate); header comment v20.6. REQUIRED / OPTIONAL / CDN precache lists unchanged (the one «v20.5» string is the comment over the FX sprite entries)"
+      "sha256": "b3662221b9df8ff257d3bedbf87a18db2e757c26eb213b2da9cf0de1a1298cbf",
+      "note": "changed in v20.7 (same 6029 B): VERSION v20.7, APP_JS app.js?v=20.7 (new cache proklinator-v20.7; the v20.6 cache is dropped on activate); header comment v20.7. REQUIRED / OPTIONAL / CDN precache lists unchanged (2 + 24 + 2 = 28 entries)"
     },
     "vercel.json": {
       "bytes": 721,
@@ -327,14 +327,14 @@
     }
   },
   "verification": {
-    "checkedAt": "2026-09-11T12:27:46Z",
+    "checkedAt": "2026-09-11T19:11:29Z",
     "publicUrlHttpStatus": 200,
     "publicUrlRedirect": null,
-    "publicUrlContentLength": 109439,
+    "publicUrlContentLength": 117090,
     "indexHtmlSha256MatchesRepo": true,
     "appJsHttpStatus": 200,
     "appJsSha256MatchesRepo": true,
-    "appJsContentLength": 325508,
+    "appJsContentLength": 352739,
     "appJsContentType": "application/javascript; charset=utf-8",
     "swJsHttpStatus": 200,
     "swJsSha256MatchesRepo": true,
@@ -346,76 +346,133 @@
     "allSeventyThreeFilesByteIdenticalToRepo": true,
     "servedFilesByteIdentical": "73/73 (index.html checked at / — /index.html itself is the cleanUrls 308)",
     "requiredChecks": {
-      "sw.js VERSION / APP_JS": "v20.6 / app.js?v=20.6 — served sw.js (6029 B) is byte-identical to the pinned blob and reads const VERSION = \"v20.6\", const APP_JS = \"app.js?v=20.6\"; no VERSION = \"v20.5\" leftover",
-      "app.js?v=20.6": "index.html at / carries exactly one <script src=\"app.js?v=20.6\" defer> and zero app.js?v=20.5; /app.js?v=20.6 is 200, 325508 B, application/javascript, sha256 96879f52… (matches)",
-      "DATA.version": "\"version\":\"v20.6\" appears once in the served app.js (the DATA literal); What's new title «Что нового в v20.6» present",
-      "sins 41–60": "served app.js holds 60 sins (ids 1–60, previously 40); ids 41–60 all present, verdicts N41–N60 all present, sinKeywords 41–60 present, shareCaptions.bySinId 60 entries; id 60 = {\"id\":60,\"category\":\"byt\",\"name\":\"Мы на связи\",\"blurb\":\"галочки без звонка\"}",
-      "HTTP 200, no SSO redirect": "public alias, -singularity16 alias and raw deployment URL all 200 with the same 109439-byte v20.6 page, Location header absent, no vercel.com/sso-api"
+      "sw.js VERSION / APP_JS": "v20.7 / app.js?v=20.7 — served sw.js (6029 B) is byte-identical to the pinned blob and reads const VERSION = \"v20.7\", const APP_JS = \"app.js?v=20.7\"; 0 VERSION = \"v20.6\" leftovers, 0 «v20.6» strings at all",
+      "app.js?v=20.7": "index.html at / carries exactly 1 <script src=\"app.js?v=20.7\" defer> and 0 app.js?v=20.6; /app.js?v=20.7 is 200, 352739 B, application/javascript; charset=utf-8, sha256 32b87f7d… (matches)",
+      "DATA.version": "\"version\":\"v20.7\" appears 1× in the served app.js (the DATA literal), \"version\":\"v20.6\" 0×; What's new title «Что нового в v20.7» present (1×)",
+      "markers «Дело дня» / «Атлас печатей» / «Серия» / «Пародия. Сети нет.»": "served app.js: «Дело дня» 5×, «Атлас печатей» 4×, «Серия» 5×, «Пародия. Сети нет.» 3× (karma.leaderboardSubtitle), pk_game 4×, GAME_COPY 11×; served index.html: «Дело дня» 3×, «Атлас печатей» 1×, «Серия» 3× (source comments over the new markup / CSS). All four rendered live in headless Chrome (see headlessChromeRender)",
+      "HTTP 200, no SSO redirect": "public alias, -singularity16 alias and raw deployment URL all 200 with the same 117090-byte v20.7 page, Location header absent, no vercel.com/sso-api"
     },
     "liveVersionMarkers": {
-      "DATA.version": "v20.6",
-      "sw VERSION": "v20.6",
-      "sw APP_JS": "app.js?v=20.6",
-      "index.html <script src>": "app.js?v=20.6",
+      "DATA.version": "v20.7",
+      "sw VERSION": "v20.7",
+      "sw APP_JS": "app.js?v=20.7",
+      "index.html <script src>": "app.js?v=20.7",
       "sinCount": 60,
-      "verdictCount_N": 52
+      "sealCount_achievements": 16,
+      "atlasSlots": 8,
+      "dailyCase": "one per local day (the 2026-09-11 case in both headless runs: «Временная схема», sin 29, «Времянка на годы, уже в паспорте.»)"
     },
     "markers": {
-      "indexHtml_v20.6": 1,
-      "indexHtml_scriptTag_app.js?v=20.6": 1,
-      "indexHtml_app.js?v=20.5_leftover": 0,
-      "indexHtml_v20.5_sourceComments": 7,
-      "appJs_DATA.version_v20.6": 1,
-      "appJs_v20.6": 3,
-      "appJs_whatsNew_title_v20.6": 1,
-      "appJs_PUNCH_PACK_v1_mentions": 2,
-      "appJs_v20.5_strings_releaseNotesAndComments": 4,
+      "indexHtml_scriptTag_app.js?v=20.7": 1,
+      "indexHtml_app.js?v=20.6_leftover": 0,
+      "indexHtml_v20.7_strings": 7,
+      "indexHtml_v20.6_strings": 0,
+      "indexHtml_«Дело дня»": 3,
+      "indexHtml_«Атлас печатей»": 1,
+      "indexHtml_«Серия»": 3,
+      "appJs_DATA.version_v20.7": 1,
+      "appJs_DATA.version_v20.6_leftover": 0,
+      "appJs_v20.7_strings": 24,
+      "appJs_whatsNew_title_v20.7": 1,
+      "appJs_«Дело дня»": 5,
+      "appJs_«Атлас печатей»": 4,
+      "appJs_«Серия»": 5,
+      "appJs_«Пародия. Сети нет.»": 3,
+      "appJs_pk_game": 4,
+      "appJs_GAME_COPY": 11,
       "appJs_sinIds_1to60": 60,
-      "appJs_sinIds_41to60_present": true,
-      "appJs_verdicts_N41toN60_present": true,
-      "swJs_VERSION_v20.6": 1,
-      "swJs_APP_JS_app.js?v=20.6": 1,
-      "swJs_v20.5_leftover_VERSION": 0,
-      "swJs_v20.5_sourceComment": 1
+      "swJs_VERSION_v20.7": 1,
+      "swJs_APP_JS_app.js?v=20.7": 1,
+      "swJs_v20.6_leftover_VERSION": 0,
+      "swJs_v20.6_strings": 0
     },
-    "headlessChromeRender": "google-chrome 148.0.7778.96 --headless=new driven over the DevTools protocol (plain Node 22 WebSocket, no puppeteer) on the live public URL, 430x932 @2x mobile emulation, fresh profile, cache disabled. Page load event at 276 ms; DOM 116948 B after app.js ran under the strict meta CSP; <html> has-splash-art, body is-splash is-intro, <script src=\"app.js?v=20.6\">. Same-origin requests: /, hero-altar.jpg, the four fonts, assets/splash/altar-9x16.jpg, assets/splash/paper-grain.jpg, manifest.webmanifest, app.js?v=20.6, icons/icon-192.png — all 200 with the right content types; jsDelivr three@0.160.0 and animejs@3.2.2 200 (SRI held). 14 responses per run, 0 non-2xx, 0 failed loads, 0 CSP violations, 0 uncaught exceptions. Service worker registered from /sw.js, state activated, exactly one cache «proklinator-v20.6» holding 28 entries (2 REQUIRED + 24 OPTIONAL + 2 CDN — the whole precache list). Console: only the known three.js r160 deprecation notice; the Log panel shows Chrome's «Blocked call to navigator.vibrate» intervention because the automation clicked without a user gesture (harmless).",
+    "headlessChromeRender": "google-chrome 148.0.7778.96 --headless=new driven over the DevTools protocol (plain Node 22 WebSocket, no puppeteer) on the live public URL, 430x932 @2x mobile emulation, fresh profile per run, cache disabled. Page load event at 344 ms / 257 ms; <html> has-splash-art, body is-splash is-intro, <script src=\"app.js?v=20.7\">. Splash faded on its own (≈2 s) → the three-step intro / age gate («Это юмор. Не ритуал.» → «Играйте зло, не делайте зла» → «Возрастной режим», CTA «Мне 18+ · дальше»; pk_intro_v20 written with age 18) → Ritual tab. Game strips, checked in the DOM before any ritual: Ritual — #caseStrip visible with label «Дело дня», chip «Временная схема» (data-sin 29, data-text «Времянка на годы, уже в паспорте.») and the «×» dismiss; tabbar unchanged (Ритуал · Категории · История · Ритуалы · Профиль). Categories — #catSeg renders «Категории | Атлас»; in atlas mode #catTitle «Атлас печатей», #catHint «0/8», #catGrid.atlas with 8 slots (first: «Люди — Ещё не жгли «Люди»»). Profile — #sealCard rendered: «Серия: 0 дн.», hint «Любой ритуал за день. Без упрёков.», 7 weekday labels, 14 calendar cells, «Запусти ритуал» CTA; counters 0 / 0 / 0. Same-origin requests: /, hero-altar.jpg, altar-9x16.jpg, paper-grain.jpg, the four fonts, manifest.webmanifest, app.js?v=20.7, icons/icon-192.png (all 200 straight from the edge), then avatars/hood.png and — on the WebGL run — the seven FX sprites, served 200 through the freshly activated service worker; jsDelivr three@0.160.0 and animejs@3.2.2 200 (SRI held). Both runs: 0 non-2xx, 0 failed loads, 0 uncaught exceptions, 0 CSP violations. Service worker registered from /sw.js, state activated, exactly one cache «proklinator-v20.7» holding 28 entries (2 REQUIRED + 24 OPTIONAL + 2 CDN — the whole precache list). Console: the known three.js r160 deprecation notice; on the --disable-gpu run three.js reports «A WebGL context could not be created» and the app falls back to the 2D canvas FX as designed; on the SwiftShader run the Log panel carries six ANGLE «GL_INVALID_VALUE: glTexSubImage2DRobustANGLE: Offset overflows texture dimensions» rendering warnings from the software renderer while three.js uploads the sprite textures (driver-level, not a page error; FX code unchanged since v20.5, ritual completed). Chrome's «Blocked call to navigator.vibrate» intervention appears because the automation clicks without a user gesture (harmless).",
     "ritualSmoke": {
-      "sin": "id 60 «Мы на связи» (new in v20.6, category byt)",
-      "flow": "splash faded on its own (≈2.0 s) → intro / age gate clicked through its three steps («Это юмор. Не ритуал.» → «Играйте зло, не делайте зла» → «Возрастной режим», CTA «Мне 18+ · дальше»; pk_intro_v20 gate record written, age 18) → #who = name, #what = «мы на связи — наберу позже, галочки без звонка» → #cast → overlay .on with chant + progress, cast button «Ритуал идёт…», body is-casting → body is-result, #result.verdict.screen-result.show",
+      "sin": "id 29 «Временная схема» — today's «Дело дня»; the chip filled «Что случилось?» with «Времянка на годы, уже в паспорте.» and left «Кто отличился?» alone",
+      "flow": "Ritual tab → #who = name → tap #caseChip («Дело дня») → #what filled → #cast → overlay .on with chant + progress, cast button «Ритуал идёт…», body is-casting → body is-result, #result.verdict.screen-result.show; toast «Печать «Первая печать» легла.»; then Profile → «Серия: 1 дн.», today's cell sealed; Categories → Atlas «1/8» with «Весь мир ×1»",
       "runs": [
         {
-          "at": "12:31:04Z–12:31:17Z",
+          "at": "19:14:44Z–19:15:09Z",
           "gpu": "--disable-gpu (no WebGL context)",
-          "fx": "overlay.fx-canvas — the 2D canvas fallback (three.js logged «A WebGL context could not be created» and the app fell back as designed)",
+          "fx": "overlay on fx-canvas — the 2D canvas fallback (three.js logged «A WebGL context could not be created» and the app fell back as designed)",
+          "loadEventMs": 344,
           "name": "Гриша",
-          "resultAfterMs": 3358,
-          "vSin": "Мы на связи",
-          "history": "sinId 60, verdId N60, matched true, powerId seal, stub false"
+          "whatFromCaseChip": "Времянка на годы, уже в паспорте.",
+          "resultAfterMs": 3813,
+          "vSin": "Временная схема",
+          "history": "sinId 29, verdId N29, matched true, powerId seal",
+          "toast": "Печать «Первая печать» легла.",
+          "pkGameAfter": {
+            "v": 1,
+            "seal": {
+              "count": 1,
+              "best": 1,
+              "last": "2026-09-11",
+              "days": [
+                "2026-09-11"
+              ]
+            },
+            "caseDismissed": "",
+            "karma": {
+              "bonus": 10,
+              "held": 0,
+              "log": [
+                {
+                  "ts": 1789154099992,
+                  "n": 10
+                }
+              ]
+            }
+          },
+          "profileAfter": "Серия: 1 дн. (data-streak 1, card .alive, today's cell «seal-day on today»)",
+          "atlasAfter": "Атлас печатей 1/8",
+          "network": "15 responses, 0 non-2xx, 0 failed loads, 0 uncaught exceptions, 0 CSP violations",
+          "serviceWorker": "activated from /sw.js, caches {\"proklinator-v20.7\":28}"
         },
         {
-          "at": "12:31:53Z–12:32:07Z",
+          "at": "19:15:48Z–19:16:11Z",
           "gpu": "--use-angle=swiftshader --enable-unsafe-swiftshader",
-          "fx": "overlay.fx-three — the three.js rune-ring path",
-          "name": "Марина",
-          "resultAfterMs": 2933,
-          "vSin": "Мы на связи",
-          "history": "sinId 60, verdId N60, matched true, powerId seal"
-        },
-        {
-          "at": "12:32:39Z–12:32:55Z",
-          "gpu": "SwiftShader",
-          "fx": "overlay.fx-three",
-          "name": "Олег",
-          "resultAfterMs": 3792,
-          "vSin": "Мы на связи",
-          "history": "sinId 60, verdId N60, matched true, gender M, powerId seal",
-          "screenshot": "result card after the punch typewriter finished: «Олег» / Жёстко / грех «Мы на связи» / setup «„Мы на связи“. Связь — серые галочки и «наберу позже» без позже.» / punch «Проклятие — «наберу позже» станет вечным статусом без звонка.» / lift «Снять: либо позвони, либо честное «не сегодня» — без «позже».», achievement toast «Достижение открыто: Первая печать»"
+          "fx": "overlay on fx-three — the three.js rune-ring path with the seven FX sprites loaded lazily through the service worker",
+          "loadEventMs": 257,
+          "name": "Гриша",
+          "whatFromCaseChip": "Времянка на годы, уже в паспорте.",
+          "resultAfterMs": 4755,
+          "vSin": "Временная схема",
+          "history": "sinId 29, verdId N29, matched true, powerId seal",
+          "toast": "Печать «Первая печать» легла.",
+          "pkGameAfter": {
+            "v": 1,
+            "seal": {
+              "count": 1,
+              "best": 1,
+              "last": "2026-09-11",
+              "days": [
+                "2026-09-11"
+              ]
+            },
+            "caseDismissed": "",
+            "karma": {
+              "bonus": 10,
+              "held": 0,
+              "log": [
+                {
+                  "ts": 1789154161995,
+                  "n": 10
+                }
+              ]
+            }
+          },
+          "profileAfter": "Серия: 1 дн. (data-streak 1, card .alive, today's cell «seal-day on today»)",
+          "atlasAfter": "Атлас печатей 1/8",
+          "network": "22 responses, 0 non-2xx, 0 failed loads, 0 uncaught exceptions, 0 CSP violations",
+          "serviceWorker": "activated from /sw.js, caches {\"proklinator-v20.7\":28}"
         }
       ],
-      "verdict": "PASS — a new-catalog sin is matched from free text, its N60 verdict renders with setup / punch / lift, the entry lands in proklinator.v19.history with sinId 60, both FX paths finish and hand over to the result screen"
+      "resultCard": "«Гриша» / Жёстко / грех «Временная схема» / setup «„Времянка на годы, уже в паспорте.“» / punch «Времянка «на неделю». Проклятие временной схемы — она впишется в паспорт навеки.» / lift «Снять: снять времянку, нормальный пуск.» — plus Копировать / Поделиться / В избранное / Ещё жёстче / Сохранить картинку / Ещё ритуал",
+      "verdict": "PASS — the Ritual («Дело дня»), Categories («Атлас печатей») and Profile («Серия») strips render with the GAME_COPY texts and no errors; a ritual started from the daily case is matched (sinId 29 / N29), lands in proklinator.v19.history, seals the day (pk_game.seal.count 1, karma bonus +10, profile karma 50, Достижения 1/16), fills one atlas slot (1/8) and both FX paths hand over to the result screen"
     },
-    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 109439-byte v20.6 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check at 12:27:08Z: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":109439,\"isV206\":true,\"ssoRedirect\":false}}",
-    "previousLiveVersion": "v20.5 (dpl_8xWfZ94NgxkmrZcF22a9jQioo6cT; index.html 109439 B with app.js?v=20.5, sw VERSION v20.5, app.js 301816 B with 40 sins, 73 files) — observed at 12:23:41Z, replaced.",
+    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 117090-byte v20.7 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check at 19:11:29Z: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":117090,\"sha256Matches\":true,\"isV207\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":117090,\"sha256Matches\":true,\"isV207\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":117090,\"sha256Matches\":true,\"isV207\":true,\"ssoRedirect\":false}}",
+    "previousLiveVersion": "v20.6 (dpl_98RXX3fh636oKutKKMkno1CS88Tt; index.html 109439 B with app.js?v=20.6, sw VERSION v20.6, app.js 325508 B, 73 files) — observed at 19:02:33Z, replaced.",
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
     "securityHeadersApplied": [
       "X-Frame-Options: DENY",
@@ -438,19 +495,24 @@
     "buildScaffoldingNotServed": [
       "build.mjs -> 404",
       "package.json -> 404",
+      "package-lock.json -> 404",
       "README.md -> 404",
       "DEPLOY_RESULT.json -> 404",
       ".gitignore -> 404",
       "tools/build_assets.py -> 404",
       "docs -> 404",
       "docs/index.html -> 308 -> /docs -> 404",
+      "docs/vercel.json -> 404",
       "docs/content/PUNCH_PACK_v1.md -> 404",
       "docs/content/DROPIN_PUNCH_PACK_v1.js -> 404",
+      "docs/content/DROPIN_SHARE_CAPTIONS_41_60_FIX.js -> 404",
+      "docs/content/DROPIN_SHARE_CAPTIONS_41_60_FIX.md -> 404",
       "docs/content/SAFETY_PASS_v1.md -> 404",
       "public/index.html -> 308 -> /public -> 404",
+      "node_modules/.package-lock.json -> 404",
       "assets/splash/altar-9x16.png (removed in v20.5) -> 404"
     ],
-    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main plus the new docs/content/ punch-pack sources: DROPIN_PUNCH_PACK_v1.js / .md, PUNCH_PACK_v1.md, SAFETY_PASS_v1.md) was intentionally excluded again; /docs -> 404 and the docs/content files -> 404. GitHub Pages was not touched. tools/build_assets.py and .gitignore are build/repo scaffolding, not site files, and were excluded the same way.",
+    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main plus docs/content/: DROPIN_PUNCH_PACK_v1.js / .md, PUNCH_PACK_v1.md, SAFETY_PASS_v1.md and the new DROPIN_SHARE_CAPTIONS_41_60_FIX.js / .md from PR #18) was intentionally excluded again; /docs -> 404 and every docs/content file -> 404. GitHub Pages was not touched. tools/build_assets.py and .gitignore are build/repo scaffolding, not site files, and were excluded the same way.",
     "assetsIcons": "assets/icons/*.svg (30 files) and assets/icons/categories/*.svg (8 files), all unchanged since v20.3, are served 200 as image/svg+xml and byte-identical.",
     "assetsArt": "assets/avatars/*.png (4), assets/fx/* (9), assets/splash/*.jpg (2), assets/empty/*.svg (4), fonts (5), icons (4), hero-altar.jpg — all unchanged since v20.5 and served 200 with the right content types, byte-identical; woff2 as font/woff2."
   },
@@ -466,11 +528,13 @@
       "package.json",
       "vercel.json"
     ],
-    "buildMjsSha256": "3c586871fc853e8748bdd7def2b859808e311f7a4c603fef4284e0cb1b11f205",
-    "packageJsonSha256": "50821e11914e7f682a08f840f88f92a04b20e7c745a2151a282627de49fd4b48",
-    "description": "build.mjs fetches the 73 site files (2825976 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source on network errors / non-2xx / 30 s timeouts, 8 in flight; a hash or length mismatch is never retried on the same source) at the pinned commit 080a3a4 and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public and re-checks that the output tree holds exactly the manifest (nothing missing, nothing extra, sizes exact, total exact). The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20 … v20.5 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == 080a3a4 after a fresh fetch and fast-forward, clean tree, every blob cross-checked against the working tree, 0 mismatches) and the script was dry-run locally before deploying with Node 22.14 (73/73 files fetched from raw.githubusercontent.com in 1.6 s and byte-identical to the checkout, output tree == manifest, no README / DEPLOY_RESULT / docs / tools / .gitignore in the output), together with a negative test (one tampered hash for app.js -> both sources rejected, the build aborts with exit 1 after 72/73) and a fallback test (raw host replaced by an unreachable name -> all 73 files come from cdn.jsdelivr.net in 37.7 s, still byte-identical). The Vercel build finished in under 2.5 minutes; the raw deployment URL served the verified v20.6 index at the first poll (12:26:44Z) and the public alias followed by 12:27:08Z."
+    "buildMjsSha256": "6278706ae8453c697e22efdf81a410cf5c85256a3efdb535108a5bafe7151914",
+    "buildMjsBytes": 15300,
+    "packageJsonSha256": "2d6e0973aedb75123cec80c92b5642f12bf94308b59d0abd5e4ab55044fda07d",
+    "packageJsonBytes": 276,
+    "description": "build.mjs fetches the 73 site files (2860858 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source on network errors / non-2xx / 30 s timeouts, 8 in flight; a hash or length mismatch is never retried on the same source and moves straight to the next one) at the pinned commit 5a5ecd3 and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public and re-reads the output tree to prove it holds exactly the manifest (nothing missing, nothing extra, sizes and hashes exact, total exact). The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20 … v20.6 deploys. The manifest was generated from the pinned commit's git blobs (git ls-tree -r -l + git cat-file blob; HEAD == origin/main == 5a5ecd3 after a fresh fetch and fast-forward from 44719fc, clean tree, every blob cross-checked against the working tree, 0 mismatches) and the script was dry-run locally before deploying with Node 22.14 (73/73 files fetched from raw.githubusercontent.com in 2.9 s and byte-identical to the checkout, output tree == manifest, no README / DEPLOY_RESULT / docs / tools / .gitignore / build.mjs / package.json in the output), together with a negative test (one tampered hash for app.js -> both sources rejected, public/app.js never written, the build aborts with exit 1 after 72/73) and a fallback test (raw host replaced by an unreachable name -> all 73 files come from cdn.jsdelivr.net in 23.8 s, still byte-identical). The Vercel build finished in under 2.5 minutes: the raw deployment URL served the verified v20.7 index at the first poll (19:09:39Z) and the public alias was already on v20.7 at 19:09:50Z."
   },
-  "changesSinceV205": {
+  "changesSinceV206": {
     "newFiles": [],
     "removedFiles": [],
     "changedFiles": [
@@ -480,25 +544,25 @@
     ],
     "unchangedFiles": 70,
     "fileCount": "73 (unchanged; includes vercel.json)",
-    "totalBytes": "2825976 B (up from 2802284 B: app.js +23692 B; index.html and sw.js changed content at identical sizes 109439 B / 6029 B)",
+    "totalBytes": "2860858 B (up from 2825976 B: app.js +27231 B, index.html +7651 B; sw.js changed content at the identical size 6029 B)",
     "notDeployedButChangedOnMain": [
       "README.md",
       "docs/content/DROPIN_PUNCH_PACK_v1.js",
-      "docs/content/DROPIN_PUNCH_PACK_v1.md",
-      "docs/content/PUNCH_PACK_v1.md",
-      "docs/content/SAFETY_PASS_v1.md",
-      "DEPLOY_RESULT.json (v20.5 record)"
+      "docs/content/DROPIN_SHARE_CAPTIONS_41_60_FIX.js (new)",
+      "docs/content/DROPIN_SHARE_CAPTIONS_41_60_FIX.md (new)",
+      "DEPLOY_RESULT.json (v20.6 record)"
     ],
-    "summary": "PUNCH_PACK_v1 catalog (PR #16): twenty new sins 41–60 across office, household and relationship scenes (status-созвон, reply-all, unmuted microphone, «пылесос потом», … «Мы на связи»), each with a verdict N41–N60 carrying whisper / seal / anathema punches and its own «Снять:», matcher keywords and share captions; SAFETY_PASS_v1 GREEN (mat only in «Апокалипсис» with «Без мата» off, 18+). Version bump to v20.6 in DATA.version, sw VERSION / APP_JS and the index.html script tag; What's new entry; README + docs/content sources (not deployed). No code paths, assets, FX, tabbar, auth or payments changed."
+    "summary": "Local-only gamification (PR #18, GAME_MECHANICS_v1 / UX_GAME_v1 / GAME_COPY_v1): «Серия» daily-seal card with a two-week calendar in the profile, «Атлас печатей» mode on the Categories tab (eight slots), «Дело дня» strip above the ritual form (one situation per local day, fills only «Что случилось?»), six new seals in Achievements (16 total) with quiet rarity labels, quiet karma bonuses with a legend under the parody leaderboard, a same-«кто» throttle; one validated localStorage record pk_game. Version bump to v20.7 in DATA.version, sw VERSION / APP_JS and the index.html script tag; What's new entry; README + docs/content caption fix (not deployed, DATA unchanged). No accounts, network calls, payments, analytics, assets, FX or tabbar changes."
   },
   "notes": [
     "The task described the repository as private; gh reports visibility PUBLIC (isPrivate false), which is what makes the unauthenticated pinned-commit fetch in build.mjs possible. If the repo is ever made private, this deploy method needs a token or an inline file tree.",
-    "The local checkout booted at c32a5d1 (merge of PR #15, v20.5 record); origin/main was fetched first and fast-forwarded to 080a3a4 (merge of PR #16) before the manifest was generated, so the pinned SHA is the one named in the task.",
+    "The local checkout booted at 44719fc (merge of PR #17, v20.6 record); origin/main was fetched first and fast-forwarded to 5a5ecd3 (merge of PR #18) before the manifest was generated, so the pinned SHA is the one named in the task.",
     "Git-linked auto-deploy was not used, for the same reasons as before: create_git_project requires teamId (the 403 trigger) and cannot re-link the existing unlinked project proklinator-static.",
-    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment_build_logs with the known team id returned 404 'Deployment not found' for this token) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints were not usable for this token (get_deployment with the known team id or slug -> 404 'Deployment not found', list_deployments -> 403 forbidden), so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
     "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened. Auth stays NO-GO.",
-    "README.md, DEPLOY_RESULT.json, docs/ (including the new docs/content punch-pack sources), .gitignore and tools/build_assets.py stay out of the deployment; ATTRIBUTIONS.md and assets/fx/LICENSE-kenney.txt stay in so the CC0 / ISC / OFL attributions travel with the served files.",
-    "The headless ritual smoke wrote only to the headless browser's own throwaway profile (localStorage gate record, one history entry); the site has no backend and nothing was sent anywhere.",
+    "README.md, DEPLOY_RESULT.json, docs/ (including docs/content), .gitignore and tools/build_assets.py stay out of the deployment; ATTRIBUTIONS.md and assets/fx/LICENSE-kenney.txt stay in so the CC0 / ISC / OFL attributions travel with the served files.",
+    "The headless smoke wrote only to the headless browser's own throwaway profiles (pk_intro_v20 gate record, one history entry, one pk_game record per run); the site has no backend and nothing was sent anywhere.",
+    "The game layer is local-only by design: pk_game never leaves localStorage, the karma table stays a parody («Пародия. Сети нет.»), and the daily case is derived from the local date — no new network requests appeared in either headless run beyond the v20.6 set plus the lazily loaded FX sprites.",
     "No app code was changed for this deploy; this commit updates DEPLOY_RESULT.json only.",
     "HUGINN was not touched."
   ]
