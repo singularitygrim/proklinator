@@ -14,7 +14,7 @@
 
 - `index.html` — разметка, стили, meta CSP (скрипты: только свой origin + jsDelivr с SRI; `worker-src 'self'` — только для `sw.js`). OG/Twitter-превью указывают на абсолютный адрес `https://proklinator-static.vercel.app/`.
 - `app.js` — всё приложение (данные, движок ритуала, оболочка v19, вступление/документы/безопасность v20, тексты Фрейи и Тюра v20.1, аватар и ярлык «На экран „Домой“» v20.2 — строки Фрейи в `AVATAR_A2HS_COPY`, версия `avatar-a2hs-2026-09-11`).
-- `sw.js` — лёгкий service worker (v20.3): кэш оболочки (страница, `app.js`, манифест, иконки, шрифты, герой, образы и алтарь 9:16) для работы без сети. Регистрируется только в secure context; любая ошибка — тихая. При релизе поднимать `VERSION` и `APP_JS` вместе с `?v=` в `index.html`.
+- `sw.js` — лёгкий service worker (v20.4): кэш оболочки (страница, `app.js`, манифест, иконки, шрифты, герой, образы и алтарь 9:16) для работы без сети. Регистрируется только в secure context; любая ошибка — тихая. При релизе поднимать `VERSION` и `APP_JS` вместе с `?v=` в `index.html`.
 - `manifest.webmanifest`, `icons/` — PWA.
 - `assets/icons/` — SVG-иконки (стиль Lucide, `currentColor`) таббара, действий и вступления. Источник дизайна для инлайновых иконок в `app.js`/`index.html` (инлайн оставлен намеренно: наследует цвет активной вкладки, ноль запросов).
 - `assets/icons/categories/` — значки восьми категорий (v20.3): файлы Lucide v0.469.0 как есть (ISC, заголовок лицензии внутри каждого файла): `users`, `briefcase`, `heart-crack`, `graduation-cap`, `home` (в Lucide — `house`), `smartphone`, `zap`, `globe`. Та же геометрия заинлайнена в `ICO` в `app.js` по `id` категории (`people`, `work`, `relations`, `study`, `home`, `tech`, `situations`, `world`); карточка PRO «Авторские» — свой значок.
