@@ -536,8 +536,9 @@ body:not([data-tab="ritual"]) .hero-bg,body:not([data-tab="ritual"]) .close-btn{
    - fully opaque flat soot (--soot), no gradient, no backdrop-filter: the old .94/.985 gradient + blur let the cards
      scroll through the bar, most visibly in the empty safe-area strip under the buttons (home indicator / gesture bar),
      which read as another part of the app;
-   - 56px tall + env(safe-area-inset-bottom) as its own bottom padding, so the strip is painted by the bar itself; the
-     five buttons stretch to the 55px row (44px touch minimum kept);
+   - LOCKED «height 56px + padding-bottom env(safe-area-inset-bottom)»: the sheet is border-box, so that is written as
+     height:calc(56px + env(…)) with the inset as the bar's own bottom padding — 56px of bar (border included), the
+     safe-area strip painted by the bar itself; the five buttons stretch to the 55px row (44px touch minimum kept);
    - its own stacking context: content (z 1) stays under it, overlays (overlay 50, sheet 68, toast 70, intro 65,
      splash 80) above; is-intro / is-splash / is-casting hide it;
    - ::after is a soot curtain hanging below the viewport edge: while a browser animates its toolbar or gesture inset
