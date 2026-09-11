@@ -593,9 +593,22 @@ html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x
     radial-gradient(ellipse 70% 46% at 50% 44%,rgba(179,18,31,.32),transparent 66%),
     linear-gradient(180deg,rgba(7,5,5,.55) 0,rgba(7,5,5,.1) 36%,rgba(7,5,5,.9) 76%,#070505 100%);
 }
+/* v20.5: paper grain — ambientCG Paper001 (CC0) high-passed to neutral grey by tools/build_assets.py; `overlay` keeps the soot black
+   and only textures the lit reds, 6 % is the ceiling set by ASSETS_UPGRADE. */
+.splash-grain{position:absolute;inset:0;background:url("assets/splash/paper-grain.jpg") 0 0/320px 188px repeat;opacity:.06;mix-blend-mode:overlay;pointer-events:none}
 .splash-sigil{position:relative;width:min(58vw,224px);height:auto;margin:0 0 20px;filter:drop-shadow(0 0 34px rgba(179,18,31,.5))}
 .splash-sigil .spin{animation:sealSpin 16s linear infinite;transform-origin:center}
 .splash-sigil .spin-r{animation:sealSpin 24s linear infinite reverse;transform-origin:center}
+/* splash-seal-draw: each stroke is one dash the length of its own perimeter (r86 → 541, r64 → 403, triangle → 302, r40 → 252) pulled in
+   over 1.4 s; explicit lengths instead of pathLength so browsers that ignore it never show a dotted ring. */
+.splash-sigil .draw{animation:sealDraw 1.4s cubic-bezier(.4,0,.2,1) both}
+.splash-sigil .d-541{stroke-dasharray:541;stroke-dashoffset:541}
+.splash-sigil .d-403{stroke-dasharray:403;stroke-dashoffset:403;animation-delay:.2s}
+.splash-sigil .d-302{stroke-dasharray:302;stroke-dashoffset:302;animation-delay:.45s}
+.splash-sigil .d-252{stroke-dasharray:252;stroke-dashoffset:252;animation-delay:.7s}
+.splash-sigil .fade-in{animation:sealFade .9s ease-out .9s both}
+@keyframes sealDraw{to{stroke-dashoffset:0}}
+@keyframes sealFade{from{opacity:0}}
 .splash-brand{
   position:relative;font-family:var(--serif);font-size:clamp(30px,9.2vw,38px);letter-spacing:.14em;text-transform:uppercase;
   color:var(--bone);text-shadow:0 2px 26px rgba(0,0,0,.75);line-height:1;
@@ -1161,6 +1174,7 @@ body.is-intro .tabbar{display:none}
 @media(prefers-reduced-motion:reduce){
   .splash-sigil .spin,.splash-sigil .spin-r,.pay-hero::before{animation:none!important}
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .splash-sigil .draw{stroke-dasharray:none!important;stroke-dashoffset:0!important}   /* no draw-in: the seal is simply there */
   .seal-stage .spin{animation:none!important}
   .pow[data-id="anathema"].on,.pow.on::after{animation:none!important;transform:none!important}
   .progress-wrap.power-anathema .progress-bar{animation:none!important}
@@ -1503,6 +1517,8 @@ body.is-intro .tabbar{display:none}
   <div class="splash-art" aria-hidden="true"></div>
   <div class="splash-art splash-art-alt" aria-hidden="true"></div>
   <div class="splash-veil" aria-hidden="true"></div>
+  <!-- v20.5 WOW-2: paper grain (ambientCG Paper001, CC0) at 6 % over the lit areas only; the rings below draw themselves in (splash-seal-draw) -->
+  <div class="splash-grain" aria-hidden="true"></div>
   <svg class="splash-sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <radialGradient id="spG" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#E5262F" stop-opacity=".55"/><stop offset="1" stop-color="#B3121F" stop-opacity="0"/></radialGradient>
@@ -1510,16 +1526,16 @@ body.is-intro .tabbar{display:none}
     </defs>
     <circle cx="100" cy="100" r="96" fill="url(#spG)"/>
     <g class="spin">
-      <circle cx="100" cy="100" r="86" stroke="#D6202B" stroke-width="1.2" opacity=".9"/>
-      <circle cx="100" cy="100" r="80" stroke="#FF5A4F" stroke-width=".6" opacity=".7" stroke-dasharray="3 6"/>
-      <path d="M100 14 108 30 92 30Z M100 186 92 170 108 170Z M14 100 30 92 30 108Z M186 100 170 108 170 92Z" fill="#FF5A4F" opacity=".8"/>
+      <circle class="draw d-541" cx="100" cy="100" r="86" stroke="#D6202B" stroke-width="1.2" opacity=".9"/>
+      <circle class="fade-in" cx="100" cy="100" r="80" stroke="#FF5A4F" stroke-width=".6" opacity=".7" stroke-dasharray="3 6"/>
+      <path class="fade-in" d="M100 14 108 30 92 30Z M100 186 92 170 108 170Z M14 100 30 92 30 108Z M186 100 170 108 170 92Z" fill="#FF5A4F" opacity=".8"/>
     </g>
     <g class="spin-r">
-      <circle cx="100" cy="100" r="64" stroke="#D6202B" stroke-width="1" opacity=".8"/>
-      <polygon points="100,42 150,129 50,129" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
-      <polygon points="100,158 50,71 150,71" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+      <circle class="draw d-403" cx="100" cy="100" r="64" stroke="#D6202B" stroke-width="1" opacity=".8"/>
+      <polygon class="draw d-302" points="100,42 150,129 50,129" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
+      <polygon class="draw d-302" points="100,158 50,71 150,71" stroke="#FF5A4F" stroke-width=".9" opacity=".75"/>
     </g>
-    <circle cx="100" cy="100" r="40" stroke="#D6202B" stroke-width="1.4" opacity=".95"/>
+    <circle class="draw d-252" cx="100" cy="100" r="40" stroke="#D6202B" stroke-width="1.4" opacity=".95"/>
     <g transform="translate(100 102)">
       <path d="M-24 10 -19-8l8 7L0-14l11 13 8-7 5 18Z" fill="url(#spGold)"/>
       <rect x="-24" y="12" width="48" height="4" rx="1.6" fill="url(#spGold)"/>
