@@ -191,6 +191,16 @@
       nickSaved: "Ник записан кровью.",
       proTag: "Легенда",
       proBanner: { title: SC.pro.title, sub: SC.pro.fine, cta: "PRO" },
+      // v20.2 avatar presets («образ» — no anglicism in the UI). ids are the persisted pk_avatar values; hood is the default «Тёмный пользователь».
+      avatar: {
+        label: "Образ", change: "Сменить образ", saved: "Образ сменён.",
+        presets: [
+          { id: "hood", title: SC.profile.defaultNick, src: "assets/avatars/hood.png" },
+          { id: "seal", title: "Восковая печать", src: "assets/avatars/seal.png" },
+          { id: "raven", title: "Ворон", src: "assets/avatars/raven.png" },
+          { id: "pack3", title: "Триптих", src: "assets/avatars/pack-3.png" }
+        ]
+      },
       menu: [
         { id: "badges", label: "Достижения" },
         { id: "stats", label: "Статистика" },
@@ -3101,6 +3111,9 @@
     docs.innerHTML = "";
     SHELL.profile.docs.forEach(function(m){ docs.appendChild(menuItem(m.id, m.label, "", false)); });
     $("nickForm").classList.remove("on");
+    renderAvatar();
+    closeAvatarPicker();
+    renderInstallTip();
   }
   function menuItem(pageId, label, val, gold){
     const b = document.createElement("button");
@@ -3132,6 +3145,90 @@
     renderProfileHome();
   });
   $("proBanner").addEventListener("click", function(){ vibe(VIBE.light); showPage("profile", "premium"); });
+
+  /* ---------- v20.2 avatar presets: pk_avatar = hood|seal|raven|pack3 (bare string; anything else → hood) ----------
+     The PNG covers the circle (object-fit cover, 50% radius) over the SVG hood, which stays visible until the file loads and
+     for good if it is missing. The gold ring is CSS on body.is-pro — i.e. only when the local PRO demo flag is already set. */
+  const AVATARS = SHELL.profile.avatar.presets;
+  const AVATAR_GLYPHS = { hood: ICO.user, seal: ICO.waxseal, raven: ICO.feather, pack3: ICO.grid };
+  function avatarById(id){ for(let i=0;i<AVATARS.length;i++) if(AVATARS[i].id === id) return AVATARS[i]; return null; }
+  function currentAvatar(){ return avatarById(lsRaw(AVATAR_KEY)) || AVATARS[0]; }
+  function setAvatar(id){
+    const a = avatarById(id);
+    if(!a) return false;
+    lsRawSet(AVATAR_KEY, a.id);
+    renderAvatar();
+    if(!$("avatarPicker").hidden) renderAvatarPicker();
+    return true;
+  }
+  // has-img / no-img on the host follows the <img>: a broken or absent PNG leaves the glyph in place.
+  function bindAvatarImg(img, host){
+    img.addEventListener("load", function(){ host.classList.toggle("has-img", img.naturalWidth > 0); host.classList.toggle("no-img", img.naturalWidth === 0); });
+    img.addEventListener("error", function(){ host.classList.remove("has-img"); host.classList.add("no-img"); });
+  }
+  function setAvatarSrc(img, host, src){
+    if(img.getAttribute("src") === src){   // same file: no new load event — read the state the element already has
+      host.classList.toggle("has-img", img.complete && img.naturalWidth > 0);
+      host.classList.toggle("no-img", img.complete && img.naturalWidth === 0);
+      return;
+    }
+    host.classList.remove("has-img", "no-img");
+    img.src = src;
+  }
+  function renderAvatar(){
+    const btn = $("avatarBtn"), img = $("avatarImg");
+    if(!btn || !img) return;
+    const a = currentAvatar();
+    btn.dataset.avatar = a.id;
+    btn.setAttribute("aria-label", SHELL.profile.avatar.change + " — " + a.title);
+    setAvatarSrc(img, btn, a.src);
+  }
+  function renderAvatarPicker(){
+    const row = $("avatarOptions"), name = $("avatarName"), picker = $("avatarPicker");
+    if(!row) return;
+    const cur = currentAvatar();
+    picker.setAttribute("aria-label", SHELL.profile.avatar.label);
+    row.innerHTML = "";
+    AVATARS.forEach(function(a){
+      const on = a.id === cur.id;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "av-opt" + (on ? " on" : "");
+      b.dataset.avatar = a.id;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.setAttribute("aria-label", a.title);
+      b.title = a.title;
+      const img = document.createElement("img");
+      img.alt = "";
+      img.decoding = "async";
+      b.appendChild(img);
+      b.insertAdjacentHTML("beforeend", AVATAR_GLYPHS[a.id] || ICO.user);
+      bindAvatarImg(img, b);
+      img.src = a.src;
+      b.addEventListener("click", function(){
+        if(a.id === currentAvatar().id) return;
+        setAvatar(a.id);
+        vibe(VIBE.light);
+        showToast(SHELL.profile.avatar.saved);
+      });
+      row.appendChild(b);
+    });
+    if(name) name.textContent = cur.title;
+  }
+  function closeAvatarPicker(){
+    const picker = $("avatarPicker"), btn = $("avatarBtn");
+    if(picker) picker.hidden = true;
+    if(btn) btn.setAttribute("aria-expanded", "false");
+  }
+  bindAvatarImg($("avatarImg"), $("avatarBtn"));
+  $("avatarBtn").addEventListener("click", function(){
+    const picker = $("avatarPicker");
+    const open = picker.hidden;
+    if(open) renderAvatarPicker();
+    picker.hidden = !open;
+    this.setAttribute("aria-expanded", open ? "true" : "false");
+    vibe(VIBE.light);
+  });
 
   /* ---------- badges ---------- */
   function renderBadges(){
@@ -3843,6 +3940,7 @@
       shareCard: shareCard, buildCurseText: buildCurseText,
       introAccepted: introAccepted, introAge: introAge, matLocked: matLocked, showIntro: showIntro, resetIntro: resetIntro, acceptIntro: acceptIntro,
       exportHistory: exportHistory, mergeHistory: mergeHistory, sanitizeEntry: sanitizeEntry, cleanStr: cleanStr, wipeAll: wipeAll,
+      avatars: AVATARS.slice(), currentAvatar: currentAvatar, setAvatar: setAvatar, installMode: installMode, renderInstallTip: renderInstallTip,
       get history(){ return history; }, get stats(){ return stats; }, get profile(){ return profile; },
       get state(){ return { tab: curTab, page: pageOf.profile, powerId: powerId, noMat: noMat, categoryId: categoryId, ritualId: ritualId, casting: casting }; }
     };
