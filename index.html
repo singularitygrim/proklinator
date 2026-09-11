@@ -812,10 +812,11 @@ body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
 .av-opt.on{border-color:var(--bone);box-shadow:0 0 0 2px #0B0908,0 0 0 4px rgba(237,228,214,.75)}
 body.is-pro .av-opt.on{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0 0 4px var(--gold),0 0 18px rgba(201,162,74,.35)}
 .av-opt:focus-visible{outline:2px solid var(--blood-hot);outline-offset:5px}
-.av-name{display:block;margin:12px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-mute)}
-.av-name:empty{display:none}
-.av-hint{display:block;margin:6px 0 0;font-size:11.5px;line-height:1.4;color:var(--bone-mute)}
+.av-hint{display:block;margin:12px 0 0;font-size:11.5px;line-height:1.4;color:var(--bone-mute);text-wrap:balance}
 .av-hint:empty{display:none}
+/* the gold-ring explanation is only meaningful while the ring is gold */
+.av-pro-hint{display:none;margin-top:4px;color:var(--gold-dim)}
+body.is-pro .av-pro-hint:not(:empty){display:block}
 /* A2HS (UX_V202): the quiet row reuses .btn-row (label + sub, ≥44px); the sheet is a bottom dialog below the toast (70), above the app */
 #a2hsRowBox{margin:12px 0 0}
 #a2hsRowBox .btn-row{margin:0}
@@ -832,9 +833,10 @@ body.is-pro .av-opt.on{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0
 .sheet-title{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.15;color:var(--bone);margin:0}
 .sheet-x{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--bone-dim);background:rgba(237,228,214,.06);border:1px solid var(--line)}
 .sheet-x svg{width:16px;height:16px}
-.sheet-note{margin:8px 0 0;font-size:12.5px;line-height:1.45;color:var(--bone-mute)}
-.sheet-lead{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--bone-dim);text-wrap:pretty}
+.sheet-lead{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--bone-dim);text-wrap:pretty}
 .sheet-lead:empty{display:none}
+.sheet-fine{margin:12px 0 0;text-align:center;font-size:11px;line-height:1.5;color:var(--bone-mute)}
+.sheet-fine:empty{display:none}
 .a2hs-os{margin:14px 0 0;padding:12px 14px;border-radius:var(--r-card);border:1px solid var(--line);background:rgba(237,228,214,.03)}
 .a2hs-os b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone);margin:0 0 6px}
 .a2hs-os ol{margin:0;padding:0 0 0 20px;font-size:13.5px;line-height:1.5;color:var(--bone-dim)}
@@ -1336,8 +1338,8 @@ body.is-intro .tabbar{display:none}
         <div class="avatar-picker" id="avatarPicker" role="group" aria-labelledby="avatarLabel" hidden>
           <div class="group-label av-label" id="avatarLabel"></div>
           <div class="av-row" id="avatarOptions"></div>
-          <small class="av-name" id="avatarName"></small>
           <small class="av-hint" id="avatarHint"></small>
+          <small class="av-hint av-pro-hint" id="avatarProHint"></small>
         </div>
         <div class="nick-row">
           <h2 class="nick" id="nickText"></h2>
@@ -1529,7 +1531,7 @@ body.is-intro .tabbar{display:none}
 </div>
 
 <!-- UX_V202 A2HS sheet: opened only from the Profile row (no auto-modal). Focus stays inside, Esc / veil / buttons close it, closing records a2hsTipSeen=1. -->
-<div class="sheet hidden" id="a2hsSheet" role="dialog" aria-modal="true" aria-labelledby="a2hsTitle" aria-describedby="a2hsNote" tabindex="-1">
+<div class="sheet hidden" id="a2hsSheet" role="dialog" aria-modal="true" aria-labelledby="a2hsTitle" aria-describedby="a2hsLead" tabindex="-1">
   <div class="sheet-veil" id="a2hsVeil" aria-hidden="true"></div>
   <div class="sheet-card">
     <div class="sheet-grip" aria-hidden="true"></div>
@@ -1537,11 +1539,11 @@ body.is-intro .tabbar{display:none}
       <h2 class="sheet-title" id="a2hsTitle"></h2>
       <button type="button" class="sheet-x" id="a2hsClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </header>
-    <p class="sheet-note" id="a2hsNote"></p>
     <p class="sheet-lead" id="a2hsLead"></p>
     <div id="a2hsSteps"></div>
     <button type="button" class="sheet-install hidden" id="a2hsInstall"></button>
     <button type="button" class="sheet-done" id="a2hsDone"></button>
+    <p class="sheet-fine" id="a2hsDisclaimer"></p>
   </div>
 </div>
 
