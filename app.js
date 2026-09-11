@@ -3691,6 +3691,22 @@
   }
   window.addEventListener("offline", function(){ showToast(SHELL.net.offline); });
 
+  /* ---------- PWA: light service worker (sw.js caches the shell so the app opens without a network) ----------
+     Registered only over https/localhost (secure context) after `load`, so it never competes with the first paint.
+     Every failure is swallowed: a blocked or unsupported worker leaves the app exactly as it was in v20. */
+  (function(){
+    try{
+      if(!("serviceWorker" in navigator) || !window.isSecureContext || !/^https?:$/.test(location.protocol)) return;
+      const register = function(){
+        try{
+          navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(function(){});
+        }catch(e){}
+      };
+      if(document.readyState === "complete") register();
+      else window.addEventListener("load", register, { once: true });
+    }catch(e){}
+  })();
+
   /* ---------- boot ---------- */
   document.body.dataset.tab = curTab;
   renderTabbar();

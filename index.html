@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <!-- The CSP ships in the document so it holds on any static host; vercel.json adds the header-only protections (X-Frame-Options, Permissions-Policy, nosniff, HSTS).
-     Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. v21 (Supabase) must extend connect-src here. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'"/>
+     Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. worker-src 'self' admits only our own sw.js
+     (the light offline shell cache, v20.1); no other workers. v21 (Supabase) must extend connect-src here. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'self'; base-uri 'self'; form-action 'self'"/>
 <meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#0B0908"/>
