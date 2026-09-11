@@ -515,12 +515,13 @@ body.is-result .overlay{display:none!important;opacity:0!important;pointer-event
 /* =========================================================
    v19 PRODUCT SHELL — tabs, splash, lists, profile, paywall
    ========================================================= */
-/* v20.4: one source of truth for the bar's own height (8px + 52px buttons + 10px + 1px border; the safe-area inset is
-   added on top of it by both the bar and the content), so the scroll content always clears the fixed bar — last cards
-   are never hidden under it, and the toast keeps floating above it. */
-:root{--tabbar-h:71px}
-.app{padding-bottom:calc(var(--tabbar-h) + 25px + var(--safe-b))}
-.toast{bottom:calc(var(--tabbar-h) + 23px + var(--safe-b))}
+/* v20.4 (UX_TABBAR.md): the bar is exactly 56px + env(safe-area-inset-bottom) tall (border included, see .tabbar), the
+   bar lives outside the scrolling container (window scrolls main.app; the <nav> is its sibling), and the scroll content
+   clears it by 8px: padding-bottom = 56px + safe-area + 8px — the last cards are never hidden under the bar, and the
+   toast keeps floating above it. */
+:root{--tabbar-h:56px}
+.app{padding-bottom:calc(56px + env(safe-area-inset-bottom, 0px) + 8px)}
+.toast{bottom:calc(var(--tabbar-h) + 24px + var(--safe-b))}
 body.is-casting .toast,body.is-splash .toast{bottom:calc(24px + var(--safe-b))}
 .tab{position:relative;z-index:1}
 .tab.hidden,.page.hidden{display:none}
@@ -532,26 +533,30 @@ body:not([data-tab="ritual"]) .hero-bg,body:not([data-tab="ritual"]) .close-btn{
    - pinned to the viewport bottom with left/right + auto margins — no transform. WebKit mispositions and re-rasterises a
      fixed box that carries transform + backdrop-filter while the page scrolls (the bar lagged and looked unpinned) and a
      translateX(-50%) on odd widths lands on a half pixel;
-   - opaque soot, no backdrop-filter: the old .94/.985 gradient + blur let the cards scroll through the bar, most visibly
-     in the empty safe-area strip under the buttons (home indicator / gesture bar), which read as another part of the app;
-   - the safe-area inset is part of the bar's own padding, so the strip is painted by the bar itself;
-   - its own stacking context: content (z 1) stays under it, overlays (sheet 68, toast 70, intro 65, splash 80) above;
+   - fully opaque flat soot (--soot), no gradient, no backdrop-filter: the old .94/.985 gradient + blur let the cards
+     scroll through the bar, most visibly in the empty safe-area strip under the buttons (home indicator / gesture bar),
+     which read as another part of the app;
+   - 56px tall + env(safe-area-inset-bottom) as its own bottom padding, so the strip is painted by the bar itself; the
+     five buttons stretch to the 55px row (44px touch minimum kept);
+   - its own stacking context: content (z 1) stays under it, overlays (overlay 50, sheet 68, toast 70, intro 65,
+     splash 80) above; is-intro / is-splash / is-casting hide it;
    - ::after is a soot curtain hanging below the viewport edge: while a browser animates its toolbar or gesture inset
      (iOS Safari, Chrome Android edge-to-edge) the layout viewport's bottom sits above the visible bottom for a few frames;
      the curtain covers that strip instead of the page. Fixed boxes never extend the scrollable area, so it costs nothing. */
 .tabbar{
   position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:430px;z-index:40;isolation:isolate;
+  height:calc(56px + env(safe-area-inset-bottom, 0px));
   display:grid;grid-template-columns:repeat(5,1fr);gap:2px;
-  padding:8px 8px calc(10px + var(--safe-b));
-  background:linear-gradient(180deg,#100B0A,#090706);
+  padding:0 8px env(safe-area-inset-bottom, 0px);
+  background:var(--soot);
   border-top:1px solid var(--line);
   box-shadow:0 -14px 34px rgba(0,0,0,.5);
 }
 .tabbar::before{content:"";position:absolute;left:8%;right:8%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(237,228,214,.22),transparent);pointer-events:none}
-.tabbar::after{content:"";position:absolute;left:0;right:0;top:100%;height:160px;background:#090706;pointer-events:none}
+.tabbar::after{content:"";position:absolute;left:0;right:0;top:100%;height:160px;background:var(--soot);pointer-events:none}
 .tab-btn{
-  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  min-height:52px;padding:6px 2px 4px;border-radius:14px;color:var(--bone-mute);
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-height:44px;padding:4px 2px 6px;border-radius:14px;color:var(--bone-mute);
   font-size:10px;letter-spacing:.02em;font-weight:600;transition:color var(--dur),background var(--dur);
 }
 .tab-btn svg{width:22px;height:22px;display:block}
