@@ -127,8 +127,7 @@
     }
   };
   const SHELL = {
-    splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200,
-      art: "assets/splash/altar-9x16.png" },   // v20.2 portrait altar behind the splash and the intro gate (hero-altar.jpg stays the fallback)
+    splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200 },
     nav: [
       { id: "ritual", label: "Ритуал" },
       { id: "categories", label: "Категории" },
@@ -408,17 +407,26 @@
     img.addEventListener("error", bad);
     if(img.complete && img.naturalWidth === 0) bad();
   })();
-  /* ---------- v20.2 portrait altar (SHELL.splash.art) for the splash and the intro gate ----------
-     Probed once; the CSS references the file only under `html.has-splash-art`, which is added after the image has decoded —
-     a missing or blocked asset costs one failed request and leaves hero-altar.jpg in place. */
+  /* ---------- v20.2 altar behind the intro gate (UX_V202): full-bleed <img alt="" aria-hidden> under a 50% soot scrim ----------
+     The same load doubles as the probe for the splash cross-fade: once assets/splash/altar-9x16.png has decoded, html.has-splash-art
+     switches the splash art too. A missing or broken file swaps hero-altar.jpg into the intro (no class → the splash keeps its hero). */
   (function(){
-    if(!SHELL.splash.art) return;
-    try{
-      const probe = new Image();
-      probe.decoding = "async";
-      probe.addEventListener("load", function(){ if(probe.naturalWidth > 0) document.documentElement.classList.add("has-splash-art"); });
-      probe.src = SHELL.splash.art;
-    }catch(e){}
+    const box = $("introArt"), img = $("introArtImg");
+    if(!box || !img) return;
+    let fallback = false;
+    const bad = function(){
+      if(fallback){ box.classList.remove("ready"); return; }
+      fallback = true;
+      img.src = "hero-altar.jpg";
+    };
+    const ready = function(){
+      if(img.naturalWidth === 0){ bad(); return; }
+      box.classList.add("ready");
+      if(!fallback) document.documentElement.classList.add("has-splash-art");
+    };
+    img.addEventListener("load", ready);
+    img.addEventListener("error", bad);
+    if(img.complete && img.getAttribute("src")){ if(img.naturalWidth > 0) ready(); else bad(); }   // already settled before app.js ran
   })();
 
   /* ---------- storage: v19 namespace (v18 prefs migrate silently) ---------- */

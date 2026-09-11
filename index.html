@@ -557,10 +557,10 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
   -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
   mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
 }
-/* v20.2: the portrait altar (assets/splash/altar-9x16.png) fades in over the fallback once app.js has confirmed it loads —
-   `html.has-splash-art` is the only thing that references the file, so a missing asset costs no request and leaves the old hero. */
+/* v20.2: the altar (assets/splash/altar-9x16.png) fades in over the fallback once the intro's <img> of the same file has decoded —
+   `html.has-splash-art` is the only CSS reference to it, so a missing asset leaves the old hero (the file is 1280×720: crown biased into view). */
 .splash-art-alt{background-image:none;opacity:0;transition:opacity 600ms ease}
-html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:center 40%;opacity:.55}
+html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:42% 50%;opacity:.55}
 .splash-veil{
   position:absolute;inset:0;
   background:
@@ -1004,22 +1004,18 @@ body.is-pro .av-opt.on{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0
   padding:calc(16px + var(--safe-t)) 16px calc(18px + var(--safe-b));background:var(--soot-950);overflow:auto;
 }
 .intro.hidden{display:none!important}
-/* v20.2: full-bleed altar behind the gate — the hero-altar.jpg fallback by default, the portrait 9:16 once it is known to load.
-   Sits under the veil and the card; the card keeps its near-opaque body, so Freya's copy is untouched and stays legible. */
-.intro-art{
-  position:fixed;inset:0;pointer-events:none;background:url("hero-altar.jpg") center 100%/auto 170% no-repeat;opacity:.62;filter:saturate(.85) contrast(1.06);
-  -webkit-mask-image:radial-gradient(ellipse 100% 90% at 50% 35%,#000 20%,transparent 92%);
-  mask-image:radial-gradient(ellipse 100% 90% at 50% 35%,#000 20%,transparent 92%);
-}
-/* the altar is enlarged (170% of the viewport height) and pinned to the bottom, so the crown and the rune circle rise above the card
-   instead of hiding behind it — the gate reads as a document lying on the altar; the same framing suits the 9:16 asset */
-html.has-splash-art .intro-art{background-image:url("assets/splash/altar-9x16.png")}
+/* v20.2 (UX_V202): full-bleed altar <img> behind the gate under a flat 50% soot scrim, then the original veil; the card keeps its
+   near-opaque body, so Freya's copy is untouched and legible. The shipped file is a 1280×720 frame — object-fit cover with the
+   crown biased into view; a failed load swaps in hero-altar.jpg (app.js), and until either decodes the layer stays invisible. */
+.intro-art{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 600ms ease}
+.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:42% 55%;filter:saturate(.9) contrast(1.04)}
+.intro-art.ready{opacity:1}
+.intro-scrim{position:fixed;inset:0;pointer-events:none;background:rgba(7,5,5,.5)}
 .intro-veil{
   position:fixed;inset:0;pointer-events:none;
   background:
     radial-gradient(ellipse 80% 48% at 50% 18%,rgba(179,18,31,.30),transparent 66%),
-    radial-gradient(ellipse 100% 60% at 50% 104%,rgba(0,0,0,.6),transparent 70%),
-    linear-gradient(180deg,rgba(7,5,5,.35) 0,rgba(7,5,5,.1) 40%,rgba(7,5,5,.55) 100%);
+    radial-gradient(ellipse 100% 60% at 50% 104%,rgba(0,0,0,.6),transparent 70%);
 }
 .intro-card{
   position:relative;width:100%;max-width:400px;text-align:center;padding:24px 20px 18px;border-radius:26px;
@@ -1487,7 +1483,9 @@ body.is-intro .tabbar{display:none}
 </div>
 
 <div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
-  <div class="intro-art" aria-hidden="true"></div>
+  <!-- UX_V202: full-bleed altar behind the gate (decorative: alt="" + aria-hidden) under a 50% soot scrim; app.js swaps in hero-altar.jpg if the file fails -->
+  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.png" alt="" aria-hidden="true" decoding="async"/></div>
+  <div class="intro-scrim" aria-hidden="true"></div>
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
     <div class="intro-brand" aria-hidden="true">
