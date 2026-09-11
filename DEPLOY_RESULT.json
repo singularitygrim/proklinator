@@ -1,8 +1,8 @@
 {
   "app": "ПРОКЛИНАТОР",
-  "version": "v20.2",
+  "version": "v20.3",
   "url": "https://proklinator-static.vercel.app",
-  "deploymentId": "dpl_98f54nSrQ4AXxSVBc6Uq5zBABRXJ",
+  "deploymentId": "dpl_8YDvDM3rNZbytcXEnsDnrsT1TUAe",
   "sso": "off",
   "full": true,
   "target": "production",
@@ -12,23 +12,24 @@
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-static-2ky3ukcu3-singularity16.vercel.app",
+  "deploymentUrl": "https://proklinator-static-18suntcjj-singularity16.vercel.app",
   "aliases": [
     "https://proklinator-static.vercel.app",
     "https://proklinator-static-singularity16.vercel.app"
   ],
-  "inspector": "https://vercel.com/singularity16/proklinator-static/98f54nSrQ4AXxSVBc6Uq5zBABRXJ",
-  "sourceCommit": "48cf269c05d6fcb43a0b5269bb14ca7f3bf51c21",
-  "sourceRef": "origin/main (merge of PR #8, singularity/v20-2-assets-avatar-splash-ea3d)",
+  "inspector": "https://vercel.com/singularity16/proklinator-static/8YDvDM3rNZbytcXEnsDnrsT1TUAe",
+  "sourceCommit": "906c90e3181ce808dacfa82a9fc8a50fe8164ec2",
+  "sourceRef": "origin/main (merge of PR #10, singularity/v20-3-category-icons-attributions-f6d4)",
   "sourceRepo": "https://github.com/singularitygrim/proklinator",
   "timestamp": {
-    "liveAt": "2026-09-11T09:18:42Z",
-    "verifiedAt": "2026-09-11T09:20:03Z"
+    "liveAt": "2026-09-11T10:16:50Z",
+    "publicAliasObservedAt": "2026-09-11T10:17:01Z",
+    "verifiedAt": "2026-09-11T10:18:18Z"
   },
   "files": {
     "app.js": {
-      "bytes": 265217,
-      "sha256": "f85a660642e3e5288efd1038877f8f9df687b12fb8e7944a96eeba3a233b0ee7"
+      "bytes": 267064,
+      "sha256": "4065efff8700735c059da8fe318b676e3c8e163d96dafe8942ef9e9bfdebaf0b"
     },
     "assets/avatars/hood.png": {
       "bytes": 191453,
@@ -53,6 +54,46 @@
     "assets/icons/categories.svg": {
       "bytes": 386,
       "sha256": "510192f821a1adc97a9e0aeb6321a0a83f41ac6258d06ac4015327e7b37429ac"
+    },
+    "assets/icons/categories/briefcase.svg": {
+      "bytes": 400,
+      "sha256": "461cc36e967e599b6bed72bc6e58f02dab61db8db452048adc914231e4a55529",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/globe.svg": {
+      "bytes": 408,
+      "sha256": "a30abd71cbf7dd86974e375cc78b139e8222e2477b8f34d2f9bdad162832d4fe",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/graduation-cap.svg": {
+      "bytes": 498,
+      "sha256": "4bc55a2bce4c355d685614f22ee6cd53fe30b2ac7df17f983959eb2059b55fc2",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/heart-crack.svg": {
+      "bytes": 481,
+      "sha256": "567fdd910f89585db69f3b4d936d8a43892d36d3bef0d629bd85a9e37fd8a736",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/home.svg": {
+      "bytes": 468,
+      "sha256": "9c2b09fa8956f5bd18f504e0f94e192dac5d5b1b15799afd74ccff3ba3f679b4",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/smartphone.svg": {
+      "bytes": 376,
+      "sha256": "3f5c0abee4967ef4e8cbd19d5b163c34ec8ebed838cf8b9a5848416d56901a33",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/users.svg": {
+      "bytes": 458,
+      "sha256": "782feb8b390ecabe2f7c8ced20370c3ec8427ba759f8f24466cb8f8dcd9a8f5c",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+    },
+    "assets/icons/categories/zap.svg": {
+      "bytes": 454,
+      "sha256": "482cca44c39fafc7769a7454dd9a5ade7a0cda8056aacbf9271951bb084c0390",
+      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
     },
     "assets/icons/clock.svg": {
       "bytes": 362,
@@ -170,6 +211,11 @@
       "bytes": 319691,
       "sha256": "8af4f21f506830e00bdb72fa8b28730e0b5410f798735b025655299c11503c7a"
     },
+    "ATTRIBUTIONS.md": {
+      "bytes": 5662,
+      "sha256": "1ec47fd0607ee6fdb19b37d619fd0690c5df7b894220500b0d18da4fb95a3c95",
+      "note": "new in v20.3 (optional for the deploy per the task); included so the ISC / OFL / CDN attributions are reachable on the same origin as the self-hosted Lucide SVGs; served 200 as text/markdown at /ATTRIBUTIONS.md"
+    },
     "fonts/OFL.txt": {
       "bytes": 4449,
       "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e"
@@ -212,7 +258,7 @@
     },
     "index.html": {
       "bytes": 103831,
-      "sha256": "f30caf67da29adc692f8d614047012678ee28b54f9c843290a34051381225014"
+      "sha256": "e0be0c718bdc98a283932d8f427283a8ac6b82cc9fe603eff76f559ef5cd2d2d"
     },
     "manifest.webmanifest": {
       "bytes": 820,
@@ -220,16 +266,16 @@
     },
     "sw.js": {
       "bytes": 5600,
-      "sha256": "91be3c2161ef6dfa7a1b7c36fb488e9d2d2b9cdeda0bb41c58c41a2f1bfd4366"
+      "sha256": "efefb3a422e904598d45f530c79c9521a17a6cf7bf9111ef0d09eaa5e16f2827"
     },
     "vercel.json": {
       "bytes": 721,
       "sha256": "b32cc59627e5361fc3ceb0496a1b0a633fe26e06e62e6fd78fde67f4548b283f",
-      "note": "unchanged since v20.1; included verbatim in the deployment source; applied as project config (cleanUrls, security headers, immutable cache for /fonts and /icons), not served"
+      "note": "unchanged since v20.1; included verbatim in the deployment source and applied as project config (cleanUrls, security headers, immutable cache for /fonts and /icons); build.mjs also writes it into ./public, so /vercel.json is served 200 (721 B, byte-identical) — it is public configuration with no secrets, identical to the file on GitHub"
     }
   },
   "verification": {
-    "checkedAt": "2026-09-11T09:20:03Z",
+    "checkedAt": "2026-09-11T10:18:18Z",
     "publicUrlHttpStatus": 200,
     "publicUrlRedirect": null,
     "publicUrlContentLength": 103831,
@@ -240,36 +286,43 @@
     "swJsHttpStatus": 200,
     "swJsSha256MatchesRepo": true,
     "swJsContentType": "application/javascript; charset=utf-8",
-    "avatarHoodPngHttpStatus": 200,
-    "avatarHoodPngSha256MatchesRepo": true,
-    "avatarHoodPngContentType": "image/png",
-    "splashAltar9x16PngHttpStatus": 200,
-    "splashAltar9x16PngSha256MatchesRepo": true,
-    "splashAltar9x16PngContentType": "image/png",
-    "allFortyNineFilesByteIdenticalToRepo": true,
-    "markers": {
-      "indexHtml_v20.2": 6,
-      "indexHtml_scriptTag_app.js?v=20.2": 1,
-      "indexHtml_altar-9x16": 3,
-      "indexHtml_introArtImg": 1,
-      "appJs_v20.2": 12,
-      "appJs_AVATAR_A2HS_COPY": 6,
-      "appJs_avatarA2hsCopy": 1,
-      "appJs_avatar-a2hs-2026-09-11": 3,
-      "appJs_avatarId": 6,
-      "appJs_AVATAR_KEY_avatarId": 1,
-      "appJs_altar-9x16": 2,
-      "appJs_age16_badge_16+": 1,
-      "appJs_16+": 8,
-      "appJs_intro-2026-09-11": 4,
-      "swJs_VERSION_v20.2": 1,
-      "swJs_APP_JS_app.js?v=20.2": 1,
-      "swJs_altar-9x16": 1,
-      "swJs_avatars": 4
+    "manifestWebmanifestContentType": "application/manifest+json; charset=utf-8",
+    "categorySvgsHttpStatus": {
+      "briefcase.svg": 200,
+      "globe.svg": 200,
+      "graduation-cap.svg": 200,
+      "heart-crack.svg": 200,
+      "home.svg": 200,
+      "smartphone.svg": 200,
+      "users.svg": 200,
+      "zap.svg": 200
     },
-    "headlessChromeRender": "app.js executes under the strict meta CSP on the live URL (google-chrome --headless=new --dump-dom, 430x932): the rendered DOM grows from 103831 B to 111339 B and contains the intro gate (16 .intro* nodes, 4 .intro-cta) with the «Запустить ритуал» CTA and 4 «Шутка / розыгрыш» occurrences; <html> carries class has-splash-art and the intro holds <img id=\"introArtImg\" src=\"assets/splash/altar-9x16.png\">, i.e. the v20.2 portrait altar decoded on the live origin. No CSP or SRI violations in the console — the only console line is the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0. The avatar picker lives on the Profile tab behind the intro gate and is not part of the first-paint DOM.",
-    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 103831-byte v20.2 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched.",
-    "previousLiveVersion": "v20.1 (dpl_ARthTDRCsGQ9NYoebuAc1cUtkPhh; index.html 94020 B, app.js?v=20.1, 33 files; assets/avatars/* and assets/splash/* were 404) — replaced.",
+    "categorySvgsContentType": "image/svg+xml",
+    "categorySvgsSha256MatchRepo": true,
+    "categorySvgsCarryIscHeader": true,
+    "categoryGlyphsInlinedInLiveAppJs": "all 8 (every <path d> of assets/icons/categories/{briefcase,globe,graduation-cap,heart-crack,home,smartphone,users,zap}.svg is present verbatim in the served app.js ICO map: people/work/relations/study/home/tech/situations/world)",
+    "attributionsMdHttpStatus": 200,
+    "attributionsMdContentType": "text/markdown; charset=utf-8",
+    "attributionsMdSha256MatchesRepo": true,
+    "allFiftyNineFilesByteIdenticalToRepo": true,
+    "servedFilesByteIdentical": "59/59",
+    "markers": {
+      "indexHtml_v20.3": 1,
+      "indexHtml_scriptTag_app.js?v=20.3": 1,
+      "appJs_DATA.version_v20.3": 1,
+      "appJs_v20.3": 4,
+      "appJs_Lucide_v0.469.0": 2,
+      "appJs_assets/icons/categories/": 2,
+      "appJs_ATTRIBUTIONS.md": 2,
+      "appJs_whatsNew_title_v20.3": 1,
+      "appJs_intro-2026-09-11": 5,
+      "swJs_VERSION_v20.3": 1,
+      "swJs_APP_JS_app.js?v=20.3": 1,
+      "swJs_v20.2_leftover_VERSION": 0
+    },
+    "headlessChromeRender": "app.js executes under the strict meta CSP on the live URL (google-chrome --headless=new --dump-dom, 430x932): the rendered DOM grows from 103831 B to 111304 B and contains the intro gate (16 .intro* nodes, 4 .intro-cta) with the «Запустить ритуал» CTA and 4 «Шутка / розыгрыш» occurrences; <html> carries class has-splash-art and the intro holds <img id=\"introArtImg\" src=\"assets/splash/altar-9x16.png\">. No CSP or SRI violations in the console — the only console line is the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0. The Categories tab (where the eight v20.3 Lucide glyphs render) lives behind the intro gate and is not part of the first-paint DOM; its glyph geometry was verified in the served app.js instead (see categoryGlyphsInlinedInLiveAppJs).",
+    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 103831-byte v20.3 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false}}",
+    "previousLiveVersion": "v20.2 (dpl_98f54nSrQ4AXxSVBc6Uq5zBABRXJ; index.html 103831 B with app.js?v=20.2, sw VERSION v20.2, 49 files; assets/icons/categories/*.svg and ATTRIBUTIONS.md were 404) — replaced.",
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
     "securityHeadersApplied": [
       "X-Frame-Options: DENY",
@@ -283,21 +336,25 @@
       "/icons/*"
     ],
     "mustRevalidateOn": {
-      "note": "vercel.json (unchanged) only marks /fonts and /icons immutable; the new v20.2 art under /assets is served with Vercel's default and the service worker caches it best-effort",
+      "note": "vercel.json (unchanged) only marks /fonts and /icons immutable; everything else, including the new /assets/icons/categories/*.svg, is served with Vercel's default and the service worker caches the shell best-effort",
+      "assets/icons/categories/*.svg": "public, max-age=0, must-revalidate",
       "assets/avatars/*": "public, max-age=0, must-revalidate",
-      "assets/splash/*": "public, max-age=0, must-revalidate"
+      "app.js": "public, max-age=0, must-revalidate",
+      "sw.js": "public, max-age=0, must-revalidate",
+      "/": "public, max-age=0, must-revalidate"
     },
     "buildScaffoldingNotServed": [
-      "build.mjs",
-      "package.json",
-      "vercel.json",
-      "README.md",
-      "DEPLOY_RESULT.json",
-      "docs/"
+      "build.mjs -> 404",
+      "package.json -> 404",
+      "README.md -> 404",
+      "DEPLOY_RESULT.json -> 404",
+      "docs -> 404",
+      "docs/index.html -> 308 -> /docs -> 404",
+      "public/index.html -> 308 -> /public -> 404"
     ],
-    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main) was intentionally excluded; /docs -> 404 and /docs/index.html -> 308 -> /docs -> 404. GitHub Pages was not touched.",
-    "assetsIcons": "assets/icons/*.svg (30 files in v20.2, up from 19) are served 200 and byte-identical; per app.js they are the design source of the icon set inlined in app.js and are not fetched at runtime.",
-    "assetsArt": "assets/avatars/{hood,seal,raven,pack-3}.png (4 files) and assets/splash/altar-9x16.png are served 200 as image/png and byte-identical; they are new in v20.2 and are fetched at runtime (avatar presets on the Profile tab, the altar behind the splash and the intro gate) and pre-cached by sw.js."
+    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main) was intentionally excluded again; /docs -> 404 and /docs/index.html -> 308 -> /docs -> 404. GitHub Pages was not touched.",
+    "assetsIcons": "assets/icons/*.svg (30 files, unchanged from v20.2) plus the new assets/icons/categories/*.svg (8 files) are served 200 as image/svg+xml and byte-identical; per app.js they are the design source of the icon set inlined in app.js and are not fetched at runtime.",
+    "assetsArt": "assets/avatars/{hood,seal,raven,pack-3}.png and assets/splash/altar-9x16.png (unchanged from v20.2) are served 200 as image/png and byte-identical."
   },
   "method": {
     "tool": "Vercel MCP deploy_to_vercel (target=production, name=proklinator-static, teamId omitted)",
@@ -311,15 +368,37 @@
       "package.json",
       "vercel.json"
     ],
-    "buildMjsSha256": "f1ab1a243dc232ff855d5a4b1f4f23f70ec4204fc5d175400a33e2402528c202",
-    "packageJsonSha256": "8e13ea99fbba085f8a05070ed4b0778f7c17aa9a5d8711d1cd5497f572d77364",
-    "description": "build.mjs fetches the 49 site files from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh) at the pinned commit 48cf269 and aborts unless each file byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20 and v20.1 deploys. The manifest was generated from the local checkout of 48cf269 (HEAD == origin/main, clean tree) and the script was dry-run locally (49/49 files byte-identical) before deploying. The build finished within about a minute; the raw deployment URL already served the verified v20.2 index on the first poll."
+    "buildMjsSha256": "801c477b581f53b6dab2f037dff5163890ab035a3b4585aa1cbf9463a7b3a85a",
+    "packageJsonSha256": "99619f9ca383a211385d5e8b3b876edc4cb949f8fc730f84c04d7ccc66f6b574",
+    "description": "build.mjs fetches the 59 site files (2494290 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source, 8 in flight) at the pinned commit 906c90e and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20, v20.1 and v20.2 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == 906c90e, clean tree, blobs cross-checked against the working tree) and the script was dry-run locally before deploying (59/59 files fetched from raw.githubusercontent.com and byte-identical to the checkout, no extraneous output files) together with a negative test (one tampered hash -> the build aborts with exit 1). The Vercel build finished in about a minute; the raw deployment URL served the verified v20.3 index at 10:16:50Z and the public alias followed at 10:17:01Z."
+  },
+  "changesSinceV202": {
+    "newFiles": [
+      "assets/icons/categories/briefcase.svg",
+      "assets/icons/categories/globe.svg",
+      "assets/icons/categories/graduation-cap.svg",
+      "assets/icons/categories/heart-crack.svg",
+      "assets/icons/categories/home.svg",
+      "assets/icons/categories/smartphone.svg",
+      "assets/icons/categories/users.svg",
+      "assets/icons/categories/zap.svg",
+      "ATTRIBUTIONS.md"
+    ],
+    "changedFiles": [
+      "app.js",
+      "index.html",
+      "sw.js"
+    ],
+    "fileCount": "59 (up from 50 in the v20.2 manifest; both counts include vercel.json, which the v20.2 record left out of its «49 served files»)",
+    "totalBytes": "2494290 B"
   },
   "notes": [
-    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~2.4 MB site tree (49 files, 2482517 B — the v20.2 avatar/splash PNGs and the redrawn PWA icons account for most of the growth from 665 KB) was therefore not inlined into the MCP request.",
+    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~2.5 MB site tree (59 files, 2494290 B) was therefore not inlined into the MCP request.",
     "Git-linked auto-deploy was not used, for the same reasons as before: create_git_project requires teamId (the 403 trigger) and cannot re-link the existing unlinked project proklinator-static.",
-    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment, get_deployment_build_logs) still return 404 for this token, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment requires teamId and returns 404 'Deployment not found' for this token even with the known team id) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
     "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened.",
+    "ATTRIBUTIONS.md was optional for this deploy and was included (5662 B, text/markdown) because the self-hosted Lucide SVGs are ISC-licensed and the attribution file is the natural companion on the same origin; README.md, DEPLOY_RESULT.json and docs/ stay out of the deployment as before.",
+    "The eight category icons are inlined in app.js (ICO map, currentColor, zero requests); the SVG folder assets/icons/categories/ is deployed alongside as the self-hosted source and is served 200.",
     "No app code was changed for this deploy; this commit updates DEPLOY_RESULT.json only.",
     "HUGINN was not touched."
   ]
