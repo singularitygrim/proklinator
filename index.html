@@ -995,7 +995,12 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
 .intro-list li::before{content:"";position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--blood);box-shadow:0 0 8px rgba(229,38,47,.5)}
 .intro-note{margin:12px auto 0;max-width:320px;font-size:12px;line-height:1.45;color:var(--bone-mute)}
 .intro-note:empty{display:none}
+/* age step: the consent statement of each option sits right above its button (canon optionA/optionB.label) */
+.intro-opt{margin:18px auto 0;max-width:320px;font-size:12.5px;line-height:1.45;color:var(--bone-dim);text-wrap:pretty}
+.intro-opt:empty{display:none}
 .intro-cta{margin:22px 0 10px;min-height:58px;font-size:20px;padding:0 52px}
+.intro-opt:not(:empty) + .intro-cta{margin-top:10px;font-size:19px}
+.intro-opt:not(:empty) + .intro-alt{margin-top:10px}
 .intro-cta .arrow{right:20px}
 .intro-alt{
   width:100%;min-height:48px;border-radius:var(--r-pill);font-size:14px;font-weight:600;color:var(--bone);
@@ -1409,7 +1414,7 @@ body.is-intro .tabbar{display:none}
   </div>
 </div>
 
-<div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody" tabindex="-1">
+<div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
     <div class="intro-brand" aria-hidden="true">
@@ -1423,10 +1428,12 @@ body.is-intro .tabbar{display:none}
     <p class="intro-body" id="introBody"></p>
     <ul class="intro-list" id="introList"></ul>
     <p class="intro-note" id="introNote"></p>
+    <p class="intro-opt" id="introCtaLabel"></p>
     <button type="button" class="cta intro-cta" id="introNext">
       <span id="introNextText"></span>
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </button>
+    <p class="intro-opt" id="introAltLabel"></p>
     <button type="button" class="intro-alt" id="introAlt"></button>
     <button type="button" class="link-btn intro-under" id="introUnder"></button>
   </div>
