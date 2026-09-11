@@ -127,7 +127,8 @@
     }
   };
   const SHELL = {
-    splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200 },
+    splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200,
+      art: "assets/splash/altar-9x16.png" },   // v20.2 portrait altar behind the splash and the intro gate (hero-altar.jpg stays the fallback)
     nav: [
       { id: "ritual", label: "Ритуал" },
       { id: "categories", label: "Категории" },
@@ -405,6 +406,18 @@
     img.addEventListener("load", ok);
     img.addEventListener("error", bad);
     if(img.complete && img.naturalWidth === 0) bad();
+  })();
+  /* ---------- v20.2 portrait altar (SHELL.splash.art) for the splash and the intro gate ----------
+     Probed once; the CSS references the file only under `html.has-splash-art`, which is added after the image has decoded —
+     a missing or blocked asset costs one failed request and leaves hero-altar.jpg in place. */
+  (function(){
+    if(!SHELL.splash.art) return;
+    try{
+      const probe = new Image();
+      probe.decoding = "async";
+      probe.addEventListener("load", function(){ if(probe.naturalWidth > 0) document.documentElement.classList.add("has-splash-art"); });
+      probe.src = SHELL.splash.art;
+    }catch(e){}
   })();
 
   /* ---------- storage: v19 namespace (v18 prefs migrate silently) ---------- */

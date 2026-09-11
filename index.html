@@ -557,6 +557,10 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
   -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
   mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
 }
+/* v20.2: the portrait altar (assets/splash/altar-9x16.png) fades in over the fallback once app.js has confirmed it loads —
+   `html.has-splash-art` is the only thing that references the file, so a missing asset costs no request and leaves the old hero. */
+.splash-art-alt{background-image:none;opacity:0;transition:opacity 600ms ease}
+html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:center 40%;opacity:.55}
 .splash-veil{
   position:absolute;inset:0;
   background:
@@ -995,11 +999,20 @@ body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
   padding:calc(16px + var(--safe-t)) 16px calc(18px + var(--safe-b));background:var(--soot-950);overflow:auto;
 }
 .intro.hidden{display:none!important}
+/* v20.2: full-bleed altar behind the gate — the hero-altar.jpg fallback by default, the portrait 9:16 once it is known to load.
+   Sits under the veil and the card; the card keeps its near-opaque body, so Freya's copy is untouched and stays legible. */
+.intro-art{
+  position:fixed;inset:0;pointer-events:none;background:url("hero-altar.jpg") center 30%/cover no-repeat;opacity:.34;filter:saturate(.8) contrast(1.06);
+  -webkit-mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 15%,transparent 88%);
+  mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 15%,transparent 88%);
+}
+html.has-splash-art .intro-art{background-image:url("assets/splash/altar-9x16.png");background-position:center 42%;opacity:.42}
 .intro-veil{
   position:fixed;inset:0;pointer-events:none;
   background:
     radial-gradient(ellipse 80% 48% at 50% 18%,rgba(179,18,31,.30),transparent 66%),
-    radial-gradient(ellipse 100% 60% at 50% 104%,rgba(0,0,0,.6),transparent 70%);
+    radial-gradient(ellipse 100% 60% at 50% 104%,rgba(0,0,0,.6),transparent 70%),
+    linear-gradient(180deg,rgba(7,5,5,.35) 0,rgba(7,5,5,.1) 40%,rgba(7,5,5,.55) 100%);
 }
 .intro-card{
   position:relative;width:100%;max-width:400px;text-align:center;padding:24px 20px 18px;border-radius:26px;
@@ -1429,6 +1442,7 @@ body.is-intro .tabbar{display:none}
 
 <div class="splash" id="splash" aria-label="Заставка">
   <div class="splash-art" aria-hidden="true"></div>
+  <div class="splash-art splash-art-alt" aria-hidden="true"></div>
   <div class="splash-veil" aria-hidden="true"></div>
   <svg class="splash-sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
@@ -1464,6 +1478,7 @@ body.is-intro .tabbar{display:none}
 </div>
 
 <div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
+  <div class="intro-art" aria-hidden="true"></div>
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
     <div class="intro-brand" aria-hidden="true">
