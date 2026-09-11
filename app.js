@@ -2937,7 +2937,6 @@
     scroll: svgo('<path d="M7 3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7"/><path d="M7 3a3 3 0 0 0-3 3v1.5h6V6a3 3 0 0 0-3-3Z"/><path d="M7 21a3 3 0 0 1-3-3v-1.5h6V18a3 3 0 0 1-3 3Z"/><path d="M11 9h5M11 13h5"/>'),
     age18: ageBadge("18+"),
     age16: ageBadge("16+"),   // the under-16 refusal view: the badge follows Freya's «ПРОКЛИНАТОР с 16 лет.»
-    sig: '<svg class="sig" viewBox="0 0 64 48" fill="none" aria-hidden="true"><ellipse cx="32" cy="30" rx="30" ry="12" stroke="#B3121F" stroke-width="1.4"/><ellipse cx="32" cy="30" rx="21" ry="8.4" stroke="#B3121F" stroke-width="1" opacity=".75"/><path d="M20 24 23 12l6 5.5L32 6l3 11.5 6-5.5 3 12Z" fill="#C9A24A"/><rect x="20" y="25" width="24" height="2.4" rx="1" fill="#C9A24A"/></svg>',
     crownGold: '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>'
   };
   ICO.flame = ICO.fire;
@@ -3157,12 +3156,20 @@
       el.appendChild(b);
     });
   }
-  // copy = { title, body, cta } (Freya's SHELL_COPY.empty.*)
-  function emptyState(copy, onCta){
+  // v20.5 (WOW-3) in-house empty-state art — the same markup is kept as files in assets/empty/ (design source): quiet-candle,
+  // hollow-heart, unlit-altar, cold-ash. Inlined here so an empty list costs zero requests.
+  const EMPTY_ART = {
+    history: '<svg class="art" aria-hidden="true" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="48" cy="59" rx="24" ry="5.5" opacity=".75"/><path d="M24 59v3.5c0 3 10.7 5.5 24 5.5s24-2.5 24-5.5V59" opacity=".75"/><path d="M38 57V31c0-2.2 1.3-3.5 3.5-3.5h13c2.2 0 3.5 1.3 3.5 3.5v26"/><path d="M41.5 31v8.5M54.5 32.5v5.5M45 27.5v-2" opacity=".55"/><path d="M48 27.5v-4.5" stroke="#8C7E76"/><path d="M48 20c-3.2-2.6-3.2-5.4 0-7.5s3.2-4.6 0-7" stroke="#8C7E76" opacity=".8" stroke-dasharray="2 3"/></svg>',
+    favorites: '<svg class="art" aria-hidden="true" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M48 63 25.6 40.4C21.2 36 21.2 28.6 26 24.4c4.4-3.8 11-3.4 15 .6l7 7 7-7c4-4 10.6-4.4 15-.6 4.8 4.2 4.8 11.6.4 16Z"/><path d="M48 51.5 36.4 39.9c-2.3-2.3-2.3-6.2.2-8.4 2.3-2 5.7-1.8 7.8.3L48 35.4l3.6-3.6c2.1-2.1 5.5-2.3 7.8-.3 2.5 2.2 2.5 6.1.2 8.4Z" opacity=".45" stroke-dasharray="2 3"/><path d="m48 32-3.2 6.2 4.4 4.2-3.4 6.4" stroke="#C9A24A" opacity=".85"/></svg>',
+    rituals: '<svg class="art" aria-hidden="true" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M71 9a8.5 8.5 0 1 0 9.5 11A7 7 0 0 1 71 9Z" stroke="#C9A24A" opacity=".8"/><ellipse cx="44" cy="50" rx="30" ry="10"/><ellipse cx="44" cy="50" rx="21" ry="7" opacity=".5" stroke-dasharray="2 3"/><path d="M14 50v4c0 5.5 13.4 10 30 10s30-4.5 30-10v-4" opacity=".75"/><path d="m34 47 2-9.5 5 4.2 3-8.2 3 8.2 5-4.2 2 9.5Z" stroke="#C9A24A" opacity=".55"/><path d="M34 48.5h20" stroke="#C9A24A" opacity=".55"/></svg>',
+    default: '<svg class="art" aria-hidden="true" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 59c6-11 14-15 28-15s22 4 28 15"/><path d="M14 59h68" opacity=".75"/><path d="M30 56c3-4 6-6 10-7M66 56c-3-4-6-6-10-7" opacity=".45"/><circle cx="41" cy="37" r="1.5" fill="#B3121F" stroke="none" opacity=".85"/><circle cx="53" cy="29" r="1.2" fill="#B3121F" stroke="none" opacity=".6"/><circle cx="47" cy="20" r="1" fill="#C9A24A" stroke="none" opacity=".75"/><path d="M45 43c-2.2-3.6-.4-6 1.8-8.2s2.6-5 .2-8" stroke="#8C7E76" opacity=".75" stroke-dasharray="2 3"/><path d="M56 45c2-3.6.4-6-1.6-8" stroke="#8C7E76" opacity=".5" stroke-dasharray="2 3"/></svg>'
+  };
+  // copy = { title, body, cta } (Freya's SHELL_COPY.empty.*); art = EMPTY_ART key (history | favorites | rituals), cold ash otherwise
+  function emptyState(copy, onCta, art){
     copy = copy || {};
     const d = document.createElement("div");
     d.className = "card empty";
-    d.innerHTML = ICO.sig + '<b></b><div class="body"></div>';
+    d.innerHTML = (EMPTY_ART[art] || EMPTY_ART.default) + '<b></b><div class="body"></div>';
     d.querySelector("b").textContent = copy.title || "";
     d.querySelector(".body").textContent = copy.body || "";
     if(copy.cta && onCta){
@@ -3460,8 +3467,8 @@
     list.innerHTML = "";
     const items = histFilter === "fav" ? history.filter(function(h){ return h.fav; }) : history;
     if(!items.length){
-      if(histFilter === "fav") list.appendChild(emptyState(SHELL.empty.favorites, function(){ histFilter = "all"; histExpanded = null; renderHistory(); }));
-      else list.appendChild(emptyState(SHELL.empty.history, function(){ showTab("ritual"); }));
+      if(histFilter === "fav") list.appendChild(emptyState(SHELL.empty.favorites, function(){ histFilter = "all"; histExpanded = null; renderHistory(); }, "favorites"));
+      else list.appendChild(emptyState(SHELL.empty.history, function(){ showTab("ritual"); }, "history"));
       return;
     }
     items.forEach(function(h){ list.appendChild(histItem(h)); });
@@ -3568,7 +3575,7 @@
     const feat = favOnly ? null : items.filter(function(r){ return r.pro; })[0];
     if(feat) fwrap.appendChild(featuredCard(feat));
     const rest = items.filter(function(r){ return r !== feat; });
-    if(!rest.length && !feat){ list.appendChild(emptyState(SHELL.empty.ritualFav, function(){ ritFilter = "all"; renderRituals(); })); return; }
+    if(!rest.length && !feat){ list.appendChild(emptyState(SHELL.empty.ritualFav, function(){ ritFilter = "all"; renderRituals(); }, "rituals")); return; }
     rest.forEach(function(r){ list.appendChild(ritualItem(r)); });
   }
 

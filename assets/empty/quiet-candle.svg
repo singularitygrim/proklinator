@@ -1,0 +1,9 @@
+<!-- ПРОКЛИНАТОР v20.5 — in-house empty-state art («Пока тихо», history). Lucide-style strokes, 96×72 grid. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="48" cy="59" rx="24" ry="5.5" opacity=".75"/>
+  <path d="M24 59v3.5c0 3 10.7 5.5 24 5.5s24-2.5 24-5.5V59" opacity=".75"/>
+  <path d="M38 57V31c0-2.2 1.3-3.5 3.5-3.5h13c2.2 0 3.5 1.3 3.5 3.5v26"/>
+  <path d="M41.5 31v8.5M54.5 32.5v5.5M45 27.5v-2" opacity=".55"/>
+  <path d="M48 27.5v-4.5" stroke="#8C7E76"/>
+  <path d="M48 20c-3.2-2.6-3.2-5.4 0-7.5s3.2-4.6 0-7" stroke="#8C7E76" opacity=".8" stroke-dasharray="2 3"/>
+</svg>

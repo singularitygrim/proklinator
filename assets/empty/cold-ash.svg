@@ -1,0 +1,11 @@
+<!-- ПРОКЛИНАТОР v20.5 — in-house empty-state art (default: nothing here yet). Lucide-style strokes, 96×72 grid. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 72" fill="none" stroke="#B3121F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M20 59c6-11 14-15 28-15s22 4 28 15"/>
+  <path d="M14 59h68" opacity=".75"/>
+  <path d="M30 56c3-4 6-6 10-7M66 56c-3-4-6-6-10-7" opacity=".45"/>
+  <circle cx="41" cy="37" r="1.5" fill="#B3121F" stroke="none" opacity=".85"/>
+  <circle cx="53" cy="29" r="1.2" fill="#B3121F" stroke="none" opacity=".6"/>
+  <circle cx="47" cy="20" r="1" fill="#C9A24A" stroke="none" opacity=".75"/>
+  <path d="M45 43c-2.2-3.6-.4-6 1.8-8.2s2.6-5 .2-8" stroke="#8C7E76" opacity=".75" stroke-dasharray="2 3"/>
+  <path d="M56 45c2-3.6.4-6-1.6-8" stroke="#8C7E76" opacity=".5" stroke-dasharray="2 3"/>
+</svg>
