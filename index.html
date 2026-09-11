@@ -794,9 +794,11 @@ body.is-pro .avatar .crown-badge{display:grid}
 .avatar[aria-expanded="true"] .avatar-edit{border-color:rgba(229,38,47,.55);color:#F2A7A7}
 body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0 0 4px var(--gold),0 0 36px rgba(201,162,74,.3)}
 body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
-/* picker: four circular presets under the avatar; the chosen one wears the blood ring */
+/* picker (UX_V202): section «Аватар», four circular presets ≥44px, hint. Rings: bone on the selected preset, gold only when the
+   local PRO demo flag is on AND the preset is selected; nothing on the rest. */
 .avatar-picker{margin:-2px 0 14px}
 .avatar-picker[hidden]{display:none}
+.av-label{margin:0 0 10px;text-align:center}
 .av-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .av-opt{
   width:56px;height:56px;border-radius:50%;position:relative;overflow:hidden;display:grid;place-items:center;color:var(--bone-dim);
@@ -807,10 +809,13 @@ body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
 .av-opt.has-img img{opacity:1}
 .av-opt svg{width:24px;height:24px;position:relative;transition:opacity 200ms}
 .av-opt.has-img svg{opacity:0}
-.av-opt.on{border-color:var(--blood-hot);box-shadow:0 0 0 2px rgba(229,38,47,.55),0 0 18px rgba(179,18,31,.4)}
-.av-opt:focus-visible{outline-offset:2px}
-.av-name{display:block;margin:10px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-mute)}
+.av-opt.on{border-color:var(--bone);box-shadow:0 0 0 2px #0B0908,0 0 0 4px rgba(237,228,214,.75)}
+body.is-pro .av-opt.on{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0 0 4px var(--gold),0 0 18px rgba(201,162,74,.35)}
+.av-opt:focus-visible{outline:2px solid var(--blood-hot);outline-offset:5px}
+.av-name{display:block;margin:12px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-mute)}
 .av-name:empty{display:none}
+.av-hint{display:block;margin:6px 0 0;font-size:11.5px;line-height:1.4;color:var(--bone-mute)}
+.av-hint:empty{display:none}
 /* install tip (A2HS): one quiet card at the end of the profile, never a banner */
 .install-tip{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 10px 12px 12px;margin:12px 0 0;color:var(--bone)}
 .install-tip .toggle-text b{display:block;font-size:14px;font-weight:600;line-height:1.25}
@@ -1314,9 +1319,11 @@ body.is-intro .tabbar{display:none}
           <span class="crown-badge" aria-hidden="true"><svg viewBox="0 0 32 24"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg></span>
           <span class="avatar-edit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
         </button>
-        <div class="avatar-picker" id="avatarPicker" role="group" hidden>
+        <div class="avatar-picker" id="avatarPicker" role="group" aria-labelledby="avatarLabel" hidden>
+          <div class="group-label av-label" id="avatarLabel"></div>
           <div class="av-row" id="avatarOptions"></div>
           <small class="av-name" id="avatarName"></small>
+          <small class="av-hint" id="avatarHint"></small>
         </div>
         <div class="nick-row">
           <h2 class="nick" id="nickText"></h2>
