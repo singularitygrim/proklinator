@@ -578,10 +578,11 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
   -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
   mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
 }
-/* v20.2: the altar (assets/splash/altar-9x16.png) fades in over the fallback once the intro's <img> of the same file has decoded —
-   `html.has-splash-art` is the only CSS reference to it, so a missing asset leaves the old hero (the file is 1280×720: crown biased into view). */
+/* v20.2: the altar fades in over the fallback once the intro's <img> of the same file has decoded — `html.has-splash-art` is the only
+   CSS reference to it, so a missing asset leaves the old hero. v20.5: the file is a true 9:16 (1080×1920, cropped from hero-altar.jpg by
+   tools/build_assets.py), so it is simply centred — no more biasing a 1280×720 frame. */
 .splash-art-alt{background-image:none;opacity:0;transition:opacity 600ms ease}
-html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:42% 50%;opacity:.55}
+html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.jpg");background-position:50% 50%;opacity:.55}
 .splash-veil{
   position:absolute;inset:0;
   background:
@@ -1052,7 +1053,7 @@ body.is-sheet{overflow:hidden}
    near-opaque body, so Freya's copy is untouched and legible. The shipped file is a 1280×720 frame — object-fit cover with the
    crown biased into view; a failed load swaps in hero-altar.jpg (app.js), and until either decodes the layer stays invisible. */
 .intro-art{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 600ms ease}
-.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:42% 55%;filter:saturate(.9) contrast(1.04)}
+.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 50%;filter:saturate(.9) contrast(1.04)}   /* v20.5: true 9:16 file, centred */
 .intro-art.ready{opacity:1}
 .intro-scrim{position:fixed;inset:0;pointer-events:none;background:rgba(7,5,5,.5)}
 .intro-veil{
@@ -1533,7 +1534,7 @@ body.is-intro .tabbar{display:none}
 
 <div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
   <!-- UX_V202: full-bleed altar behind the gate (decorative: alt="" + aria-hidden) under a 50% soot scrim; app.js swaps in hero-altar.jpg if the file fails -->
-  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.png" alt="" aria-hidden="true" decoding="async"/></div>
+  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.jpg" alt="" aria-hidden="true" decoding="async"/></div>
   <div class="intro-scrim" aria-hidden="true"></div>
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">

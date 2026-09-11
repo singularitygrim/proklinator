@@ -30,7 +30,7 @@ const OPTIONAL = [
   "./icons/maskable-512.png",
   "./icons/apple-touch-icon.png",
   // v20.2 art: the portrait altar (splash + intro) and the four avatar presets — best effort like the rest of this list
-  "./assets/splash/altar-9x16.png",
+  "./assets/splash/altar-9x16.jpg",
   "./assets/avatars/hood.png",
   "./assets/avatars/seal.png",
   "./assets/avatars/raven.png",

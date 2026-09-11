@@ -455,7 +455,7 @@
     if(img.complete && img.naturalWidth === 0) bad();
   })();
   /* ---------- v20.2 altar behind the intro gate (UX_V202): full-bleed <img alt="" aria-hidden> under a 50% soot scrim ----------
-     The same load doubles as the probe for the splash cross-fade: once assets/splash/altar-9x16.png has decoded, html.has-splash-art
+     The same load doubles as the probe for the splash cross-fade: once assets/splash/altar-9x16.jpg has decoded, html.has-splash-art
      switches the splash art too. A missing or broken file swaps hero-altar.jpg into the intro (no class → the splash keeps its hero). */
   (function(){
     const box = $("introArt"), img = $("introArtImg");
