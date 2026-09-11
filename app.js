@@ -1907,6 +1907,20 @@
   }
 
   /* ---------- share poster (1080×1920, Meta Stories safe band) ---------- */
+  // SAFETY_SHOW_RULES v1.2 (staff safety floor): the satire line is burned into the pixels of every shared image — inside the
+  // frame and inside the Stories safe band, so no crop, caption loss or re-upload can strip it. Exact wording, never localised away.
+  const SAFETY_BURN_IN = "Шутка, не угроза";
+  function drawSafetyLine(ctx, cx, y, size){
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.fillStyle = "rgba(237,228,214,.84)";
+    ctx.font = "600 " + size + "px " + SANS_CANVAS;
+    setSpacing(ctx, Math.round(size * 0.15));
+    ctx.fillText(SAFETY_BURN_IN, cx, y);
+    setSpacing(ctx, 0);
+    ctx.restore();
+  }
   function wrapText(ctx, text, maxW){
     const words = String(text || "").split(/\s+/);
     const lines = [];
@@ -2076,7 +2090,8 @@
     const pad = Math.max(64, Math.floor(W * 0.06));
     const contentSafeTop = Math.floor(H * 0.14);
     const contentSafeBot = Math.floor(H * 0.65);
-    const maxY = contentSafeBot;
+    const SAFETY_H = 64;                      // room for the burned-in satire line at the foot of the frame
+    const maxY = contentSafeBot - SAFETY_H;
 
     const innerPad = pad + 56;
     const textW = W - innerPad * 2;
@@ -2223,7 +2238,7 @@
     }
 
     // Ornamental frame hugs the content (blood outer, gold hairline inner); never leaves the safe band
-    const frameBot = Math.min(contentSafeBot, Math.max(y + 64, contentSafeTop + Math.floor(H * 0.34)));
+    const frameBot = Math.min(contentSafeBot, Math.max(y + 64 + SAFETY_H - 24, contentSafeTop + Math.floor(H * 0.34)));
     ctx.save();
     ctx.strokeStyle = "rgba(179,18,31,.75)";
     ctx.lineWidth = 3;
@@ -2234,6 +2249,8 @@
     drawRoundedRect(ctx, pad + 14, contentSafeTop + 14, W - pad * 2 - 28, frameBot - contentSafeTop - 28, 34);
     ctx.stroke();
     ctx.restore();
+    // «Шутка, не угроза» — burned in at the foot of the frame, still inside the 65 % Stories floor
+    drawSafetyLine(ctx, W/2, frameBot - 44, 20);
 
     // Footer may sit in the platform-chrome zone (non-critical)
     ctx.fillStyle = "rgba(201,162,74,.45)";
@@ -2317,8 +2334,9 @@
     ctx.fillStyle = "rgba(201,162,74,.5)";
     ctx.font = "400 16px " + SERIF_CANVAS;
     setSpacing(ctx, 5);
-    ctx.fillText(String(DATA.footer || "").toUpperCase(), W/2, H - 70);
+    ctx.fillText(String(DATA.footer || "").toUpperCase(), W/2, H - 96);
     setSpacing(ctx, 0);
+    drawSafetyLine(ctx, W/2, H - 66, 18);   // same burn-in as the poster (SAFETY_SHOW_RULES v1.2)
 
     return ogCanvas;
   }
