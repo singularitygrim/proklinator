@@ -1,8 +1,8 @@
 {
   "app": "ПРОКЛИНАТОР",
-  "version": "v20.3",
+  "version": "v20.4",
   "url": "https://proklinator-static.vercel.app",
-  "deploymentId": "dpl_8YDvDM3rNZbytcXEnsDnrsT1TUAe",
+  "deploymentId": "dpl_5jk2zD7TNENwKKFgKuRyqLAwhCNR",
   "sso": "off",
   "full": true,
   "target": "production",
@@ -12,24 +12,26 @@
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-static-18suntcjj-singularity16.vercel.app",
+  "deploymentUrl": "https://proklinator-static-iabhbvdyz-singularity16.vercel.app",
   "aliases": [
     "https://proklinator-static.vercel.app",
     "https://proklinator-static-singularity16.vercel.app"
   ],
-  "inspector": "https://vercel.com/singularity16/proklinator-static/8YDvDM3rNZbytcXEnsDnrsT1TUAe",
-  "sourceCommit": "906c90e3181ce808dacfa82a9fc8a50fe8164ec2",
-  "sourceRef": "origin/main (merge of PR #10, singularity/v20-3-category-icons-attributions-f6d4)",
+  "inspector": "https://vercel.com/singularity16/proklinator-static/5jk2zD7TNENwKKFgKuRyqLAwhCNR",
+  "sourceCommit": "b19a15def44e7450538161b40d0ff97a348b97a9",
+  "sourceRef": "origin/main (merge of PR #12, singularity/v20-4-sticky-tabbar-safe-area-aa9f)",
   "sourceRepo": "https://github.com/singularitygrim/proklinator",
   "timestamp": {
-    "liveAt": "2026-09-11T10:16:50Z",
-    "publicAliasObservedAt": "2026-09-11T10:17:01Z",
-    "verifiedAt": "2026-09-11T10:18:18Z"
+    "deployRequestedAt": "~2026-09-11T11:23Z (between the 11:21:53Z pre-deploy check of the live v20.3 and the first raw-URL poll)",
+    "liveAt": "2026-09-11T11:24:44Z (first raw-URL poll; the build had already finished and served the verified v20.4 index)",
+    "publicAliasObservedAt": "2026-09-11T11:24:53Z",
+    "verifiedAt": "2026-09-11T11:27:21Z"
   },
   "files": {
     "app.js": {
-      "bytes": 267064,
-      "sha256": "4065efff8700735c059da8fe318b676e3c8e163d96dafe8942ef9e9bfdebaf0b"
+      "bytes": 268550,
+      "sha256": "ac9335c85728fe0ec8fca41a8130d66a717983913c70be5f71373d1354f18e7f",
+      "note": "changed in v20.4: DATA.version v20.4, DATA.notes for the sticky-tabbar hotfix, What's new «Что нового в v20.4» (tabbar item first, v20.3 icons folded into one line)"
     },
     "assets/avatars/hood.png": {
       "bytes": 191453,
@@ -57,43 +59,35 @@
     },
     "assets/icons/categories/briefcase.svg": {
       "bytes": 400,
-      "sha256": "461cc36e967e599b6bed72bc6e58f02dab61db8db452048adc914231e4a55529",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "461cc36e967e599b6bed72bc6e58f02dab61db8db452048adc914231e4a55529"
     },
     "assets/icons/categories/globe.svg": {
       "bytes": 408,
-      "sha256": "a30abd71cbf7dd86974e375cc78b139e8222e2477b8f34d2f9bdad162832d4fe",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "a30abd71cbf7dd86974e375cc78b139e8222e2477b8f34d2f9bdad162832d4fe"
     },
     "assets/icons/categories/graduation-cap.svg": {
       "bytes": 498,
-      "sha256": "4bc55a2bce4c355d685614f22ee6cd53fe30b2ac7df17f983959eb2059b55fc2",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "4bc55a2bce4c355d685614f22ee6cd53fe30b2ac7df17f983959eb2059b55fc2"
     },
     "assets/icons/categories/heart-crack.svg": {
       "bytes": 481,
-      "sha256": "567fdd910f89585db69f3b4d936d8a43892d36d3bef0d629bd85a9e37fd8a736",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "567fdd910f89585db69f3b4d936d8a43892d36d3bef0d629bd85a9e37fd8a736"
     },
     "assets/icons/categories/home.svg": {
       "bytes": 468,
-      "sha256": "9c2b09fa8956f5bd18f504e0f94e192dac5d5b1b15799afd74ccff3ba3f679b4",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "9c2b09fa8956f5bd18f504e0f94e192dac5d5b1b15799afd74ccff3ba3f679b4"
     },
     "assets/icons/categories/smartphone.svg": {
       "bytes": 376,
-      "sha256": "3f5c0abee4967ef4e8cbd19d5b163c34ec8ebed838cf8b9a5848416d56901a33",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "3f5c0abee4967ef4e8cbd19d5b163c34ec8ebed838cf8b9a5848416d56901a33"
     },
     "assets/icons/categories/users.svg": {
       "bytes": 458,
-      "sha256": "782feb8b390ecabe2f7c8ced20370c3ec8427ba759f8f24466cb8f8dcd9a8f5c",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "782feb8b390ecabe2f7c8ced20370c3ec8427ba759f8f24466cb8f8dcd9a8f5c"
     },
     "assets/icons/categories/zap.svg": {
       "bytes": 454,
-      "sha256": "482cca44c39fafc7769a7454dd9a5ade7a0cda8056aacbf9271951bb084c0390",
-      "note": "new in v20.3: Lucide v0.469.0 glyph, self-hosted verbatim with the ISC license header; served 200 as image/svg+xml; not fetched at runtime (the same geometry is inlined in app.js ICO)"
+      "sha256": "482cca44c39fafc7769a7454dd9a5ade7a0cda8056aacbf9271951bb084c0390"
     },
     "assets/icons/clock.svg": {
       "bytes": 362,
@@ -213,8 +207,7 @@
     },
     "ATTRIBUTIONS.md": {
       "bytes": 5662,
-      "sha256": "1ec47fd0607ee6fdb19b37d619fd0690c5df7b894220500b0d18da4fb95a3c95",
-      "note": "new in v20.3 (optional for the deploy per the task); included so the ISC / OFL / CDN attributions are reachable on the same origin as the self-hosted Lucide SVGs; served 200 as text/markdown at /ATTRIBUTIONS.md"
+      "sha256": "1ec47fd0607ee6fdb19b37d619fd0690c5df7b894220500b0d18da4fb95a3c95"
     },
     "fonts/OFL.txt": {
       "bytes": 4449,
@@ -257,8 +250,9 @@
       "sha256": "de124b9dd2bdda166fde7a2b3da8071aa9733fdeeefbe2aa90b56d3effbb3fcb"
     },
     "index.html": {
-      "bytes": 103831,
-      "sha256": "e0be0c718bdc98a283932d8f427283a8ac6b82cc9fe603eff76f559ef5cd2d2d"
+      "bytes": 106440,
+      "sha256": "446fe8dc1ca7d921a21ad51d9a2c8aad2b8478f40d757863a54c503ffde13612",
+      "note": "changed in v20.4: .tabbar fixed with left/right + auto margins (no transform), flat opaque --soot background (no gradient, no backdrop-filter), height:calc(56px + env(safe-area-inset-bottom)) with the inset as the bar's own bottom padding, isolation:isolate, ::after soot curtain (160px) below the viewport edge; .app padding-bottom = 56px + safe-area + 8px; .toast above the bar; .sheet gets isolation + the same ::after curtain; CSP comment and <script src=\"app.js?v=20.4\">"
     },
     "manifest.webmanifest": {
       "bytes": 820,
@@ -266,19 +260,20 @@
     },
     "sw.js": {
       "bytes": 5600,
-      "sha256": "efefb3a422e904598d45f530c79c9521a17a6cf7bf9111ef0d09eaa5e16f2827"
+      "sha256": "14d23d867f5f09cd08ba8746d6c86024f8bc827921edccf336658c86dec557ba",
+      "note": "changed in v20.4: VERSION v20.4, APP_JS app.js?v=20.4 (new cache proklinator-v20.4; the v20.3 cache is dropped on activate)"
     },
     "vercel.json": {
       "bytes": 721,
       "sha256": "b32cc59627e5361fc3ceb0496a1b0a633fe26e06e62e6fd78fde67f4548b283f",
-      "note": "unchanged since v20.1; included verbatim in the deployment source and applied as project config (cleanUrls, security headers, immutable cache for /fonts and /icons); build.mjs also writes it into ./public, so /vercel.json is served 200 (721 B, byte-identical) — it is public configuration with no secrets, identical to the file on GitHub"
+      "note": "unchanged since v20.1; included verbatim in the deployment source and applied as project config (cleanUrls, security headers, immutable cache for /fonts and /icons); build.mjs also writes it into ./public, so /vercel.json is served 200 (721 B, byte-identical) — public configuration with no secrets, identical to the file on GitHub"
     }
   },
   "verification": {
-    "checkedAt": "2026-09-11T10:18:18Z",
+    "checkedAt": "2026-09-11T11:27:21Z",
     "publicUrlHttpStatus": 200,
     "publicUrlRedirect": null,
-    "publicUrlContentLength": 103831,
+    "publicUrlContentLength": 106440,
     "indexHtmlSha256MatchesRepo": true,
     "appJsHttpStatus": 200,
     "appJsSha256MatchesRepo": true,
@@ -287,42 +282,80 @@
     "swJsSha256MatchesRepo": true,
     "swJsContentType": "application/javascript; charset=utf-8",
     "manifestWebmanifestContentType": "application/manifest+json; charset=utf-8",
-    "categorySvgsHttpStatus": {
-      "briefcase.svg": 200,
-      "globe.svg": 200,
-      "graduation-cap.svg": 200,
-      "heart-crack.svg": 200,
-      "home.svg": 200,
-      "smartphone.svg": 200,
-      "users.svg": 200,
-      "zap.svg": 200
-    },
     "categorySvgsContentType": "image/svg+xml",
-    "categorySvgsSha256MatchRepo": true,
-    "categorySvgsCarryIscHeader": true,
-    "categoryGlyphsInlinedInLiveAppJs": "all 8 (every <path d> of assets/icons/categories/{briefcase,globe,graduation-cap,heart-crack,home,smartphone,users,zap}.svg is present verbatim in the served app.js ICO map: people/work/relations/study/home/tech/situations/world)",
     "attributionsMdHttpStatus": 200,
     "attributionsMdContentType": "text/markdown; charset=utf-8",
-    "attributionsMdSha256MatchesRepo": true,
     "allFiftyNineFilesByteIdenticalToRepo": true,
     "servedFilesByteIdentical": "59/59",
-    "markers": {
-      "indexHtml_v20.3": 1,
-      "indexHtml_scriptTag_app.js?v=20.3": 1,
-      "appJs_DATA.version_v20.3": 1,
-      "appJs_v20.3": 4,
-      "appJs_Lucide_v0.469.0": 2,
-      "appJs_assets/icons/categories/": 2,
-      "appJs_ATTRIBUTIONS.md": 2,
-      "appJs_whatsNew_title_v20.3": 1,
-      "appJs_intro-2026-09-11": 5,
-      "swJs_VERSION_v20.3": 1,
-      "swJs_APP_JS_app.js?v=20.3": 1,
-      "swJs_v20.2_leftover_VERSION": 0
+    "liveVersionMarkers": {
+      "DATA.version": "v20.4",
+      "sw VERSION": "v20.4",
+      "sw APP_JS": "app.js?v=20.4",
+      "index.html <script src>": "app.js?v=20.4"
     },
-    "headlessChromeRender": "app.js executes under the strict meta CSP on the live URL (google-chrome --headless=new --dump-dom, 430x932): the rendered DOM grows from 103831 B to 111304 B and contains the intro gate (16 .intro* nodes, 4 .intro-cta) with the «Запустить ритуал» CTA and 4 «Шутка / розыгрыш» occurrences; <html> carries class has-splash-art and the intro holds <img id=\"introArtImg\" src=\"assets/splash/altar-9x16.png\">. No CSP or SRI violations in the console — the only console line is the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0. The Categories tab (where the eight v20.3 Lucide glyphs render) lives behind the intro gate and is not part of the first-paint DOM; its glyph geometry was verified in the served app.js instead (see categoryGlyphsInlinedInLiveAppJs).",
-    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 103831-byte v20.3 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":103831,\"isV203\":true,\"ssoRedirect\":false}}",
-    "previousLiveVersion": "v20.2 (dpl_98f54nSrQ4AXxSVBc6Uq5zBABRXJ; index.html 103831 B with app.js?v=20.2, sw VERSION v20.2, 49 files; assets/icons/categories/*.svg and ATTRIBUTIONS.md were 404) — replaced.",
+    "markers": {
+      "indexHtml_v20.4": 4,
+      "indexHtml_scriptTag_app.js?v=20.4": 1,
+      "indexHtml_app.js?v=20.3_leftover": 0,
+      "appJs_DATA.version_v20.4": 1,
+      "appJs_v20.4": 3,
+      "appJs_whatsNew_title_v20.4": 1,
+      "appJs_whatsNew_tabbar_item": 1,
+      "swJs_VERSION_v20.4": 1,
+      "swJs_APP_JS_app.js?v=20.4": 1,
+      "swJs_v20.3_leftover_VERSION": 0
+    },
+    "tabbarCssInServedIndexHtml": {
+      "rule": ".tabbar{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:100%;max-width:430px;z-index:40;isolation:isolate;height:calc(56px + env(safe-area-inset-bottom, 0px));display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:0 8px env(safe-area-inset-bottom, 0px);background:var(--soot);border-top:1px solid var(--line);box-shadow:0 -14px 34px rgba(0,0,0,.5)}",
+      "--soot": "#0B0908 (opaque hex, no alpha channel)",
+      "backdropFilterPresent": false,
+      "transformPresent": false,
+      "gradientPresent": false,
+      "after": ".tabbar::after{content:\"\";position:absolute;left:0;right:0;top:100%;height:160px;background:var(--soot);pointer-events:none}",
+      "appPaddingBottom": ".app{padding-bottom:calc(56px + env(safe-area-inset-bottom, 0px) + 8px)}"
+    },
+    "tabbarComputedStyleHeadlessChrome": {
+      "how": "google-chrome 148 --headless=new via the DevTools protocol on the live public URL, 430x932 @2x mobile emulation; the page loads under its strict meta CSP and renders the intro gate (body.is-intro, 18 .intro* nodes, CTA «Дальше», <script src=\"app.js?v=20.4\">). The .tabbar is display:none behind the gate, so for the measurement the is-intro class was removed client-side (nothing persisted) and the bar was measured before and after scrolling 400px.",
+      "backgroundColor": "rgb(11, 9, 8)",
+      "backgroundImage": "none",
+      "opacity": "1",
+      "backdropFilter": "none",
+      "transform": "none",
+      "position": "fixed",
+      "zIndex": "40",
+      "isolation": "isolate",
+      "height": "56px (safe-area inset is 0 in headless; on a device it grows by env(safe-area-inset-bottom))",
+      "paddingBottom": "0px",
+      "borderTop": "1px solid",
+      "rect": {
+        "top": 876,
+        "bottom": 932,
+        "left": 0,
+        "width": 430,
+        "height": 56
+      },
+      "innerHeight": 932,
+      "pinnedToViewportBottom": true,
+      "rectAfterScroll400": {
+        "top": 876,
+        "bottom": 932
+      },
+      "stillPinnedAfterScroll": true,
+      "afterCurtain": {
+        "content": "\"\"",
+        "position": "absolute",
+        "height": "160px",
+        "backgroundColor": "rgb(11, 9, 8)",
+        "top": "55px"
+      },
+      "tabButtons": "5 x 81x55 px (>= 44px touch minimum)",
+      "appPaddingBottom": "64px",
+      "toastBottom": "80px",
+      "opaque": true
+    },
+    "headlessChromeRender": "app.js executes under the strict meta CSP on the live URL: the rendered DOM grows from 106440 B to 111264 B, <html> carries class has-splash-art, body is-intro, 18 intro nodes. No CSP or SRI violations and no uncaught exceptions — the console holds only the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0 and Chrome's informational «Banner not shown: beforeinstallpromptevent.preventDefault() called» line (the A2HS row defers the prompt by design).",
+    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 106440-byte v20.4 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched. Raw check: {\"publicAlias\":{\"status\":200,\"location\":null,\"bytes\":106440,\"isV204\":true,\"ssoRedirect\":false},\"scopedAlias\":{\"status\":200,\"location\":null,\"bytes\":106440,\"isV204\":true,\"ssoRedirect\":false},\"rawDeploymentUrl\":{\"status\":200,\"location\":null,\"bytes\":106440,\"isV204\":true,\"ssoRedirect\":false}}",
+    "previousLiveVersion": "v20.3 (dpl_8YDvDM3rNZbytcXEnsDnrsT1TUAe; index.html 103831 B with app.js?v=20.3, sw VERSION v20.3, app.js 267064 B with DATA.version v20.3, 59 files) — observed at 11:21:53Z, replaced.",
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
     "securityHeadersApplied": [
       "X-Frame-Options: DENY",
@@ -336,7 +369,7 @@
       "/icons/*"
     ],
     "mustRevalidateOn": {
-      "note": "vercel.json (unchanged) only marks /fonts and /icons immutable; everything else, including the new /assets/icons/categories/*.svg, is served with Vercel's default and the service worker caches the shell best-effort",
+      "note": "vercel.json (unchanged) only marks /fonts and /icons immutable; everything else is served with Vercel's default and the service worker caches the shell best-effort",
       "assets/icons/categories/*.svg": "public, max-age=0, must-revalidate",
       "assets/avatars/*": "public, max-age=0, must-revalidate",
       "app.js": "public, max-age=0, must-revalidate",
@@ -353,7 +386,7 @@
       "public/index.html -> 308 -> /public -> 404"
     ],
     "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main) was intentionally excluded again; /docs -> 404 and /docs/index.html -> 308 -> /docs -> 404. GitHub Pages was not touched.",
-    "assetsIcons": "assets/icons/*.svg (30 files, unchanged from v20.2) plus the new assets/icons/categories/*.svg (8 files) are served 200 as image/svg+xml and byte-identical; per app.js they are the design source of the icon set inlined in app.js and are not fetched at runtime.",
+    "assetsIcons": "assets/icons/*.svg (30 files) and assets/icons/categories/*.svg (8 files), all unchanged from v20.3, are served 200 as image/svg+xml and byte-identical.",
     "assetsArt": "assets/avatars/{hood,seal,raven,pack-3}.png and assets/splash/altar-9x16.png (unchanged from v20.2) are served 200 as image/png and byte-identical."
   },
   "method": {
@@ -368,37 +401,28 @@
       "package.json",
       "vercel.json"
     ],
-    "buildMjsSha256": "801c477b581f53b6dab2f037dff5163890ab035a3b4585aa1cbf9463a7b3a85a",
-    "packageJsonSha256": "99619f9ca383a211385d5e8b3b876edc4cb949f8fc730f84c04d7ccc66f6b574",
-    "description": "build.mjs fetches the 59 site files (2494290 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source, 8 in flight) at the pinned commit 906c90e and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20, v20.1 and v20.2 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == 906c90e, clean tree, blobs cross-checked against the working tree) and the script was dry-run locally before deploying (59/59 files fetched from raw.githubusercontent.com and byte-identical to the checkout, no extraneous output files) together with a negative test (one tampered hash -> the build aborts with exit 1). The Vercel build finished in about a minute; the raw deployment URL served the verified v20.3 index at 10:16:50Z and the public alias followed at 10:17:01Z."
+    "buildMjsSha256": "c7150c19039f13963ebb1ef886afac027103846460da8544f2e8206935a79524",
+    "packageJsonSha256": "e2c154768245bb857e6fb6336b5f9434cb218c6a683dfb42cc38c4ae155bf0e0",
+    "description": "build.mjs fetches the 59 site files (2498385 B) from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh, 3 attempts per source, 8 in flight, 30 s timeout per request) at the pinned commit b19a15d and aborts with exit 1 unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20, v20.1, v20.2 and v20.3 deploys. The manifest was generated from the pinned commit's git blobs (HEAD == origin/main == b19a15d, clean tree, blobs cross-checked against the working tree, 0 mismatches) and the script was dry-run locally before deploying with Node 22 (59/59 files fetched from raw.githubusercontent.com in 1.3 s and byte-identical to the checkout, no extraneous output files), together with a negative test (one tampered hash -> the build aborts with exit 1 after 58/59) and a fallback test (raw host unreachable -> all 59 files come from cdn.jsdelivr.net, still byte-identical). The Vercel build finished in under two minutes; the raw deployment URL served the verified v20.4 index at the first poll (11:24:44Z) and the public alias followed at 11:24:53Z."
   },
-  "changesSinceV202": {
-    "newFiles": [
-      "assets/icons/categories/briefcase.svg",
-      "assets/icons/categories/globe.svg",
-      "assets/icons/categories/graduation-cap.svg",
-      "assets/icons/categories/heart-crack.svg",
-      "assets/icons/categories/home.svg",
-      "assets/icons/categories/smartphone.svg",
-      "assets/icons/categories/users.svg",
-      "assets/icons/categories/zap.svg",
-      "ATTRIBUTIONS.md"
-    ],
+  "changesSinceV203": {
+    "newFiles": [],
     "changedFiles": [
       "app.js",
       "index.html",
       "sw.js"
     ],
-    "fileCount": "59 (up from 50 in the v20.2 manifest; both counts include vercel.json, which the v20.2 record left out of its «49 served files»)",
-    "totalBytes": "2494290 B"
+    "fileCount": "59 (unchanged from the v20.3 manifest; includes vercel.json)",
+    "totalBytes": "2498385 B (up from 2494290 B: index.html +2609 B, app.js +1486 B, sw.js same length)",
+    "summary": "Sticky tabbar / safe-area hotfix (PR #12): the bottom nav is truly fixed (no transform), fully opaque flat --soot (no gradient, no backdrop-filter), exactly 56px + env(safe-area-inset-bottom) tall with the inset painted by the bar itself, own stacking context, and a soot ::after curtain below the viewport edge; scroll content clears it by 8px; the A2HS sheet gets the same curtain. Version bump to v20.4 in DATA.version, sw VERSION/APP_JS and the index.html script tag; What's new entry."
   },
   "notes": [
-    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~2.5 MB site tree (59 files, 2494290 B) was therefore not inlined into the MCP request.",
+    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~2.5 MB site tree (59 files, 2498385 B) was therefore not inlined into the MCP request.",
     "Git-linked auto-deploy was not used, for the same reasons as before: create_git_project requires teamId (the 403 trigger) and cannot re-link the existing unlinked project proklinator-static.",
-    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment requires teamId and returns 404 'Deployment not found' for this token even with the known team id) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment_build_logs with the known team id returns 404 'Deployment not found' for this token) were not usable, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
     "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened.",
-    "ATTRIBUTIONS.md was optional for this deploy and was included (5662 B, text/markdown) because the self-hosted Lucide SVGs are ISC-licensed and the attribution file is the natural companion on the same origin; README.md, DEPLOY_RESULT.json and docs/ stay out of the deployment as before.",
-    "The eight category icons are inlined in app.js (ICO map, currentColor, zero requests); the SVG folder assets/icons/categories/ is deployed alongside as the self-hosted source and is served 200.",
+    "The tabbar spot check asked for by the task (CSS opacity) was done twice: statically in the served index.html (background:var(--soot) with --soot:#0B0908, no backdrop-filter, no gradient, no transform) and dynamically with headless Chrome on the live URL (computed background-color rgb(11, 9, 8), opacity 1, backdrop-filter none, background-image none, position fixed and pinned to the viewport bottom before and after scrolling).",
+    "README.md, DEPLOY_RESULT.json and docs/ stay out of the deployment as before; ATTRIBUTIONS.md (unchanged) stays in.",
     "No app code was changed for this deploy; this commit updates DEPLOY_RESULT.json only.",
     "HUGINN was not touched."
   ]
