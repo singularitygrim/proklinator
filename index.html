@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <!-- The CSP ships in the document so it holds on any static host; vercel.json adds the header-only protections (X-Frame-Options, Permissions-Policy, nosniff, HSTS).
-     Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. v21 (Supabase) must extend connect-src here. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'"/>
+     Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. worker-src 'self' admits only our own sw.js
+     (the light offline shell cache, v20.1); no other workers. v21 (Supabase) must extend connect-src here. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'self'; base-uri 'self'; form-action 'self'"/>
 <meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="theme-color" content="#0B0908"/>
@@ -16,14 +17,27 @@
 <meta name="application-name" content="ПРОКЛИНАТОР"/>
 <meta name="description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота. Один ритуал — одна картинка на телефон."/>
 <meta property="og:title" content="ПРОКЛИНАТОР — Новый ритуал"/>
-<meta property="og:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота."/>
+<meta property="og:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота. Шутка / розыгрыш. Не угроза."/>
 <meta property="og:type" content="website"/>
-<!-- Production domain is not fixed yet (Vercel). Relative image URLs resolve against the page for most scrapers; switch to absolute once the domain is final. -->
-<meta property="og:image" content="hero-altar.jpg"/>
+<meta property="og:site_name" content="ПРОКЛИНАТОР"/>
+<meta property="og:locale" content="ru_RU"/>
+<!-- Link previews need absolute URLs: scrapers (Telegram, VK, WhatsApp, X) do not resolve relative og:image against the page.
+     Production origin = the Vercel alias below. The app itself never reads these tags — share captions, the poster and the
+     contact card derive the URL from `location` at runtime, so previews and custom domains stay in sync with the deployment.
+     Fallback if the origin ever changes: relative "hero-altar.jpg" still works for browsers, not for most scrapers. -->
+<meta property="og:url" content="https://proklinator-static.vercel.app/"/>
+<meta property="og:image" content="https://proklinator-static.vercel.app/hero-altar.jpg"/>
+<meta property="og:image:secure_url" content="https://proklinator-static.vercel.app/hero-altar.jpg"/>
+<meta property="og:image:type" content="image/jpeg"/>
+<meta property="og:image:width" content="864"/>
+<meta property="og:image:height" content="1152"/>
+<meta property="og:image:alt" content="Алтарь ПРОКЛИНАТОРА: золотая корона на каменном круге с красными рунами, свечи, череп и книги «Sarcasm omnia vincit». Шутка / розыгрыш. Не угроза."/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="ПРОКЛИНАТОР — Новый ритуал"/>
-<meta name="twitter:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота."/>
-<meta name="twitter:image" content="hero-altar.jpg"/>
+<meta name="twitter:description" content="Слова тоже имеют власть. Опиши ситуацию — остальное наша забота. Шутка / розыгрыш. Не угроза."/>
+<meta name="twitter:image" content="https://proklinator-static.vercel.app/hero-altar.jpg"/>
+<meta name="twitter:image:alt" content="Алтарь ПРОКЛИНАТОРА: золотая корона на каменном круге с красными рунами, свечи, череп и книги «Sarcasm omnia vincit». Шутка / розыгрыш. Не угроза."/>
+<link rel="canonical" href="https://proklinator-static.vercel.app/"/>
 <title>ПРОКЛИНАТОР — Новый ритуал</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0908'/%3E%3Cpath d='M12 44 16.5 22l11 9.6L32 14l4.5 17.6 11-9.6L52 44Z' fill='%23C9A24A'/%3E%3Crect x='12' y='46' width='40' height='4.5' rx='2' fill='%23C9A24A'/%3E%3C/svg%3E"/>
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
@@ -132,7 +146,7 @@ body::after{
 }
 button,input,textarea{font:inherit;color:inherit}
 button{border:0;cursor:pointer;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;padding:0}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--blood-hot);outline-offset:3px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--blood-hot);outline-offset:3px}
 button:active:not(:disabled){transform:scale(.97);transition:transform 150ms var(--ease)}
 
 .app{
@@ -973,9 +987,20 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
   font-family:var(--serif);font-weight:400;font-size:clamp(28px,8vw,34px);line-height:1.1;color:var(--bone);margin:0 0 12px;letter-spacing:-.01em;
 }
 .intro-body{margin:0 auto;max-width:320px;font-size:15px;line-height:1.5;color:var(--bone-dim);text-wrap:pretty}
+.intro-body:empty{display:none}
+/* rules step: the four «play evil, do no evil» bullets, left-aligned under the lead sentence */
+.intro-list{margin:12px auto 0;max-width:320px;padding:0;list-style:none;text-align:left}
+.intro-list:empty{display:none}
+.intro-list li{position:relative;padding:6px 0 6px 18px;font-size:13.5px;line-height:1.45;color:var(--bone-dim);text-wrap:pretty}
+.intro-list li::before{content:"";position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--blood);box-shadow:0 0 8px rgba(229,38,47,.5)}
 .intro-note{margin:12px auto 0;max-width:320px;font-size:12px;line-height:1.45;color:var(--bone-mute)}
 .intro-note:empty{display:none}
+/* age step: the consent statement of each option sits right above its button (canon optionA/optionB.label) */
+.intro-opt{margin:18px auto 0;max-width:320px;font-size:12.5px;line-height:1.45;color:var(--bone-dim);text-wrap:pretty}
+.intro-opt:empty{display:none}
 .intro-cta{margin:22px 0 10px;min-height:58px;font-size:20px;padding:0 52px}
+.intro-opt:not(:empty) + .intro-cta{margin-top:10px;font-size:19px}
+.intro-opt:not(:empty) + .intro-alt{margin-top:10px}
 .intro-cta .arrow{right:20px}
 .intro-alt{
   width:100%;min-height:48px;border-radius:var(--r-pill);font-size:14px;font-weight:600;color:var(--bone);
@@ -1389,7 +1414,7 @@ body.is-intro .tabbar{display:none}
   </div>
 </div>
 
-<div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody" tabindex="-1">
+<div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
     <div class="intro-brand" aria-hidden="true">
@@ -1401,11 +1426,14 @@ body.is-intro .tabbar{display:none}
     <div class="intro-ico" id="introIco" aria-hidden="true"></div>
     <h2 class="intro-title" id="introTitle"></h2>
     <p class="intro-body" id="introBody"></p>
+    <ul class="intro-list" id="introList"></ul>
     <p class="intro-note" id="introNote"></p>
+    <p class="intro-opt" id="introCtaLabel"></p>
     <button type="button" class="cta intro-cta" id="introNext">
       <span id="introNextText"></span>
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </button>
+    <p class="intro-opt" id="introAltLabel"></p>
     <button type="button" class="intro-alt" id="introAlt"></button>
     <button type="button" class="link-btn intro-under" id="introUnder"></button>
   </div>
@@ -1433,6 +1461,6 @@ body.is-intro .tabbar{display:none}
 
 <canvas id="exportCanvas" width="1080" height="1920" style="display:none" aria-hidden="true"></canvas>
 
-<script src="app.js?v=20" defer></script>
+<script src="app.js?v=20.1" defer></script>
 </body>
 </html>

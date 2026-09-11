@@ -12,15 +12,17 @@
 
 ## Файлы
 
-- `index.html` — разметка, стили, meta CSP (скрипты: только свой origin + jsDelivr с SRI).
-- `app.js` — всё приложение (данные, движок ритуала, оболочка v19, вступление/документы/безопасность v20).
+- `index.html` — разметка, стили, meta CSP (скрипты: только свой origin + jsDelivr с SRI; `worker-src 'self'` — только для `sw.js`). OG/Twitter-превью указывают на абсолютный адрес `https://proklinator-static.vercel.app/`.
+- `app.js` — всё приложение (данные, движок ритуала, оболочка v19, вступление/документы/безопасность v20, тексты Фрейи и Тюра v20.1).
+- `sw.js` — лёгкий service worker (v20.1): кэш оболочки (страница, `app.js`, манифест, иконки, шрифты, герой) для работы без сети. Регистрируется только в secure context; любая ошибка — тихая. При релизе поднимать `VERSION` и `APP_JS` вместе с `?v=` в `index.html`.
 - `manifest.webmanifest`, `icons/` — PWA.
+- `assets/icons/` — SVG-иконки (стиль Lucide, `currentColor`) таббара, действий и вступления. Источник дизайна для инлайновых иконок в `app.js`/`index.html` (инлайн оставлен намеренно: наследует цвет активной вкладки, ноль запросов).
 - `fonts/` — Playfair Display (SIL OFL, см. `fonts/OFL.txt`), самохостинг.
-- `hero-altar.jpg` — герой формы и заставки.
+- `hero-altar.jpg` — герой формы и заставки, он же картинка превью ссылки.
 
 ## Локально
 
 ```bash
 python3 -m http.server 8090
-# http://127.0.0.1:8090/
+# http://127.0.0.1:8090/  (localhost — secure context, service worker регистрируется)
 ```
