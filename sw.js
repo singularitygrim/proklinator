@@ -1,4 +1,4 @@
-/* ПРОКЛИНАТОР — light service worker, v20.6.
+/* ПРОКЛИНАТОР — light service worker, v20.7.
    Caches the app shell so the page opens without a network. Nothing the user types is ever cached: answers, nick,
    history and settings live in localStorage only; this worker only sees GET requests for the app's own files
    (plus the two pinned jsDelivr libraries the page loads with SRI).
@@ -10,9 +10,9 @@
    Every failure is soft — a blocked or failed worker leaves the app exactly as it was without one. */
 "use strict";
 
-const VERSION = "v20.6";
+const VERSION = "v20.7";
 const CACHE = "proklinator-" + VERSION;
-const APP_JS = "app.js?v=20.6";
+const APP_JS = "app.js?v=20.7";
 const NAV_TIMEOUT = 4000;
 
 // The folder sw.js lives in is the app root; index.html is served at the folder URL (Vercel cleanUrls).
