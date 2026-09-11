@@ -1,8 +1,8 @@
 {
   "app": "ПРОКЛИНАТОР",
-  "version": "v20",
+  "version": "v20.1",
   "url": "https://proklinator-static.vercel.app",
-  "deploymentId": "dpl_5UKG9zyD6FiaGoZTNechrcZWYyjC",
+  "deploymentId": "dpl_ARthTDRCsGQ9NYoebuAc1cUtkPhh",
   "sso": "off",
   "full": true,
   "target": "production",
@@ -12,69 +12,227 @@
     "teamId": "team_9A6kPxSgwyImFWwEzrJ0tMbi",
     "plan": "hobby"
   },
-  "deploymentUrl": "https://proklinator-static-q4yi2kgcx-singularity16.vercel.app",
+  "deploymentUrl": "https://proklinator-static-doy1rlx4a-singularity16.vercel.app",
   "aliases": [
     "https://proklinator-static.vercel.app",
     "https://proklinator-static-singularity16.vercel.app"
   ],
-  "inspector": "https://vercel.com/singularity16/proklinator-static/5UKG9zyD6FiaGoZTNechrcZWYyjC",
-  "sourceCommit": "f87ee40d4f4dd3888654eda8d36b74f184201519",
-  "sourceRef": "origin/main (merge of PR #3, singularity/v20-production-complete-5942)",
+  "inspector": "https://vercel.com/singularity16/proklinator-static/ARthTDRCsGQ9NYoebuAc1cUtkPhh",
+  "sourceCommit": "812de1516629e0b466f814f454d8a987a22cd4d2",
+  "sourceRef": "origin/main (merge of PR #6, singularity/v20-1-production-polish-6dcf)",
   "sourceRepo": "https://github.com/singularitygrim/proklinator",
+  "timestamp": {
+    "liveAt": "2026-09-11T07:57:07Z",
+    "verifiedAt": "2026-09-11T07:59:41Z"
+  },
   "files": {
-    "index.html": { "bytes": 91190, "sha256": "e07832bba795ba4a3c13884d142da3ca4df72af355ad2e869f3dece1d449a1e7" },
-    "app.js": { "bytes": 241275, "sha256": "907457e4d4127e167a14fe54ef144271aace55d717b07b41bceee01c22a2093f" },
-    "manifest.webmanifest": { "bytes": 820, "sha256": "926e7e1434856e93ae3b237fa553df99c8cc98ee3d3aaba61e7abea8f5e84adb" },
-    "hero-altar.jpg": { "bytes": 97618, "sha256": "7b145496fbd6aac18189c5087265e0db0b461e06f944e2324e36a7cb347156b4" },
-    "fonts/OFL.txt": { "bytes": 4449, "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e" },
-    "fonts/playfair-display-cyrillic.woff2": { "bytes": 21152, "sha256": "c108681cba6a9820bff52f4a1a4a1d9edf356b347bd79b7c61e916028e8a8b54" },
-    "fonts/playfair-display-italic-cyrillic.woff2": { "bytes": 23304, "sha256": "51b2dac698333379dc3a3486393fba787d17f1dcbcb50f46582ca759d53c25fc" },
-    "fonts/playfair-display-italic-latin.woff2": { "bytes": 38804, "sha256": "54af24bd0f911f0fd7399d5445ea2023ff501d6a69f2d728f1213072f977ab14" },
-    "fonts/playfair-display-latin.woff2": { "bytes": 38404, "sha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2" },
-    "icons/apple-touch-icon.png": { "bytes": 8406, "sha256": "b44eb4fde0f2ed86437aa4de6c2f309d41bac2287a932a42a95430f563a90494" },
-    "icons/icon-192.png": { "bytes": 10519, "sha256": "36b6bf852a5e211fc490319f38027640a970a30315e4c0cb22fe3e6b26ceaea4" },
-    "icons/icon-512.png": { "bytes": 43228, "sha256": "842e7f42361bbb38930331cba9b4687251fbc9ef44130961c3eb80a31111a50d" },
-    "icons/maskable-512.png": { "bytes": 25334, "sha256": "e7daa167a4620fcac5ba66424ce7529394d2c9894b63bd89c9756e92371fbd45" },
-    "vercel.json": { "bytes": 721, "sha256": "b32cc59627e5361fc3ceb0496a1b0a633fe26e06e62e6fd78fde67f4548b283f", "note": "included verbatim in the deployment source; applied as project config, not served" }
+    "index.html": {
+      "bytes": 94020,
+      "sha256": "9124007fba39ab1443df6ff9b353ab8239e4fdc0687b7a019c54dd66b82dfde9"
+    },
+    "app.js": {
+      "bytes": 247286,
+      "sha256": "4c6a6cf82eb171dc36e9b98d470f4488d16e23ee7c11af44e6fa9932d7216de8"
+    },
+    "sw.js": {
+      "bytes": 5314,
+      "sha256": "10d7b7aab7507e8530fd741b65cca8d7ac1cd26df748a87a5edaa1b7a1fcb576"
+    },
+    "manifest.webmanifest": {
+      "bytes": 820,
+      "sha256": "926e7e1434856e93ae3b237fa553df99c8cc98ee3d3aaba61e7abea8f5e84adb"
+    },
+    "hero-altar.jpg": {
+      "bytes": 97618,
+      "sha256": "7b145496fbd6aac18189c5087265e0db0b461e06f944e2324e36a7cb347156b4"
+    },
+    "fonts/OFL.txt": {
+      "bytes": 4449,
+      "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e"
+    },
+    "fonts/playfair-display-cyrillic.woff2": {
+      "bytes": 21152,
+      "sha256": "c108681cba6a9820bff52f4a1a4a1d9edf356b347bd79b7c61e916028e8a8b54"
+    },
+    "fonts/playfair-display-italic-cyrillic.woff2": {
+      "bytes": 23304,
+      "sha256": "51b2dac698333379dc3a3486393fba787d17f1dcbcb50f46582ca759d53c25fc"
+    },
+    "fonts/playfair-display-italic-latin.woff2": {
+      "bytes": 38804,
+      "sha256": "54af24bd0f911f0fd7399d5445ea2023ff501d6a69f2d728f1213072f977ab14"
+    },
+    "fonts/playfair-display-latin.woff2": {
+      "bytes": 38404,
+      "sha256": "e0c764a8e9e1cce92163c55bac4b2ad6cd4cf8c696ce2289ab5c41565e65b7e2"
+    },
+    "icons/apple-touch-icon.png": {
+      "bytes": 8406,
+      "sha256": "b44eb4fde0f2ed86437aa4de6c2f309d41bac2287a932a42a95430f563a90494"
+    },
+    "icons/icon-192.png": {
+      "bytes": 10519,
+      "sha256": "36b6bf852a5e211fc490319f38027640a970a30315e4c0cb22fe3e6b26ceaea4"
+    },
+    "icons/icon-512.png": {
+      "bytes": 43228,
+      "sha256": "842e7f42361bbb38930331cba9b4687251fbc9ef44130961c3eb80a31111a50d"
+    },
+    "icons/maskable-512.png": {
+      "bytes": 25334,
+      "sha256": "e7daa167a4620fcac5ba66424ce7529394d2c9894b63bd89c9756e92371fbd45"
+    },
+    "assets/icons/age-18.svg": {
+      "bytes": 356,
+      "sha256": "d57e110eb2f22f8947334e65ba879ab61242133f0208b36f5b00f6a0d2d729cf"
+    },
+    "assets/icons/categories.svg": {
+      "bytes": 386,
+      "sha256": "510192f821a1adc97a9e0aeb6321a0a83f41ac6258d06ac4015327e7b37429ac"
+    },
+    "assets/icons/copy.svg": {
+      "bytes": 327,
+      "sha256": "a9ad54f98038514321c004f566ae1137118da0d1b8becd74cf196a63f68029ca"
+    },
+    "assets/icons/download.svg": {
+      "bytes": 283,
+      "sha256": "dc41dc7d48537937d6d78044112a01713afe16f6bce97beb6dbe196764996e7c"
+    },
+    "assets/icons/feather.svg": {
+      "bytes": 289,
+      "sha256": "8deefd999070668a702260ef637867694f7d505637ff66855fa4fcfba76b581f"
+    },
+    "assets/icons/flame.svg": {
+      "bytes": 367,
+      "sha256": "849a0746d1b08aabe12fa0a3a8d70ed9915261421377a8ac4ddeaa8643ddf270"
+    },
+    "assets/icons/heart.svg": {
+      "bytes": 286,
+      "sha256": "0f1bb7379512a81d509495291139535a5dfb77e01408431a964965fcc89a3919"
+    },
+    "assets/icons/history.svg": {
+      "bytes": 240,
+      "sha256": "75d169a47c8d219fa2c655c5e8a2e1aaec9d3110bd9779b8d888719ce8e31552"
+    },
+    "assets/icons/info.svg": {
+      "bytes": 256,
+      "sha256": "b47985971d870bf1bc385234287d1ac27e13a0d26abec193949ee1a6e0d746e2"
+    },
+    "assets/icons/mask.svg": {
+      "bytes": 387,
+      "sha256": "f750ebd603f6640ab951ccb44a7b9d7224a02b8816d7357e4ae8e65d6cb03596"
+    },
+    "assets/icons/no-mat.svg": {
+      "bytes": 288,
+      "sha256": "6833dc320af306d49ae4e514d10258cfcfba8b90738031f930d9d6556fc5f45a"
+    },
+    "assets/icons/profile.svg": {
+      "bytes": 248,
+      "sha256": "3538c3a8d252f3d107c850c964f2d585ca64a204f54e50c9fbad3caadcbf87c5"
+    },
+    "assets/icons/ritual.svg": {
+      "bytes": 434,
+      "sha256": "4e98ca8e427463234eb9163018cd73faba7ad1f27a50a3f3a61a07d8ea12bca8"
+    },
+    "assets/icons/rituals.svg": {
+      "bytes": 242,
+      "sha256": "18753c3cb081ccc9bdf97448a3fccfe0d2f5412daf19610d6b16798efed67d1f"
+    },
+    "assets/icons/scroll.svg": {
+      "bytes": 374,
+      "sha256": "3b3cd2230bc0e13259ee24c849f41795cbfe25903cf8620f382eaa84c7619777"
+    },
+    "assets/icons/settings.svg": {
+      "bytes": 368,
+      "sha256": "0f6423577e5541155ba132d54e805d88c722d289c3f392bb6d62388ee5606913"
+    },
+    "assets/icons/share.svg": {
+      "bytes": 282,
+      "sha256": "4fbd3a0b256ebf181ccf8f13e79084c1d80340ae5b50ef5a5e136eaae46a7415"
+    },
+    "assets/icons/shield.svg": {
+      "bytes": 273,
+      "sha256": "ccea1466061576d592864bc83a8cd7046521d47ee5d25609ce195077e922c29c"
+    },
+    "assets/icons/wifi-off.svg": {
+      "bytes": 447,
+      "sha256": "e885252e082db41ef28fa85957ddf720c5d3f65529404c65ac669046bf5774b7"
+    },
+    "vercel.json": {
+      "bytes": 721,
+      "sha256": "b32cc59627e5361fc3ceb0496a1b0a633fe26e06e62e6fd78fde67f4548b283f",
+      "note": "included verbatim in the deployment source; applied as project config (cleanUrls, security headers, immutable cache for /fonts and /icons), not served"
+    }
   },
   "verification": {
-    "checkedAt": "2026-09-10T23:32:41Z",
+    "checkedAt": "2026-09-11T07:57:07Z",
     "publicUrlHttpStatus": 200,
     "publicUrlRedirect": null,
-    "publicUrlContentLength": 91190,
+    "publicUrlContentLength": 94020,
     "indexHtmlSha256MatchesRepo": true,
     "appJsHttpStatus": 200,
     "appJsSha256MatchesRepo": true,
     "appJsContentType": "application/javascript; charset=utf-8",
-    "allThirteenFilesByteIdenticalToRepo": true,
+    "swJsHttpStatus": 200,
+    "swJsSha256MatchesRepo": true,
+    "swJsContentType": "application/javascript; charset=utf-8",
+    "allThirtyThreeFilesByteIdenticalToRepo": true,
     "markers": {
-      "indexHtml_Intro": 1,
-      "indexHtml_scriptTag_app.js?v=20": 1,
-      "appJs_pk_intro": 3,
-      "appJs_singularitygrimnir@gmail.com": 2,
-      "appJs_ЗапуститьРитуал": 1
+      "indexHtml_v20.1": 1,
+      "indexHtml_scriptTag_app.js?v=20.1": 1,
+      "indexHtml_ШуткаРозыгрыш": 4,
+      "appJs_v20.1": 6,
+      "appJs_intro-2026-09-11": 3,
+      "appJs_ШуткаРозыгрыш": 4,
+      "swJs_v20.1": 2,
+      "swJs_app.js?v=20.1": 1
     },
-    "headlessChromeRender": "app.js executes under the strict meta CSP (script-src 'self' https://cdn.jsdelivr.net + SRI): the rendered DOM grows from 91190 B to ~98.6 KB and contains the intro gate (.intro, .intro-brand, .intro-body, .intro-cta) with the «Запустить ритуал» CTA; no CSP or SRI violations in the console.",
-    "ssoCheck": "All three URLs of the project (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 91190-byte v20 page and no vercel.com/sso-api redirect, so Vercel Authentication remains off at the project level. No protection settings were changed.",
-    "previousLiveVersion": "v21 monolith (index.html 288261 B, sha256 8169dfc4…, no app.js) — replaced.",
+    "headlessChromeRender": "app.js executes under the strict meta CSP on the live URL: the rendered DOM grows from 94020 B to 101486 B and contains the intro gate (14 .intro* nodes, 4 .intro-cta) with the «Запустить ритуал» CTA and 4 «Шутка / розыгрыш» occurrences; no CSP or SRI violations in the console — the only console line is the known three.js r160 deprecation notice from cdn.jsdelivr.net/npm/three@0.160.0.",
+    "ssoCheck": "All three hostnames (public alias, -singularity16 alias, raw deployment URL) return HTTP 200 with the full 94020-byte v20.1 page and no redirect (no vercel.com/sso-api), so Vercel Authentication / Deployment Protection remains off. No protection, auth or SSO settings were touched.",
+    "previousLiveVersion": "v20 (dpl_5UKG9zyD6FiaGoZTNechrcZWYyjC; index.html 91190 B, app.js?v=20, no sw.js) — replaced.",
     "cleanUrlsRedirect": "/index.html -> 308 -> /",
-    "securityHeadersApplied": ["X-Frame-Options: DENY", "X-Content-Type-Options: nosniff", "Referrer-Policy: no-referrer", "Permissions-Policy: camera=(), microphone=(), geolocation=()", "Strict-Transport-Security: max-age=63072000; includeSubDomains"],
-    "immutableCacheOn": ["/fonts/*", "/icons/*"],
-    "buildScaffoldingNotServed": ["build.mjs", "package.json", "vercel.json", "README.md", "docs/"],
-    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy of v21 on main) was intentionally excluded from the deployment; /docs -> 404."
+    "securityHeadersApplied": [
+      "X-Frame-Options: DENY",
+      "X-Content-Type-Options: nosniff",
+      "Referrer-Policy: no-referrer",
+      "Permissions-Policy: camera=(), microphone=(), geolocation=()",
+      "Strict-Transport-Security: max-age=63072000; includeSubDomains"
+    ],
+    "immutableCacheOn": [
+      "/fonts/*",
+      "/icons/*"
+    ],
+    "buildScaffoldingNotServed": [
+      "build.mjs",
+      "package.json",
+      "vercel.json",
+      "README.md",
+      "DEPLOY_RESULT.json",
+      "docs/"
+    ],
+    "docsDirectoryNotDeployed": "docs/ (GitHub Pages copy on main) was intentionally excluded; /docs -> 404. GitHub Pages was not touched.",
+    "assetsIcons": "assets/icons/*.svg (19 files) are served 200 and byte-identical; per app.js they are the design source of the icon set inlined in app.js and are not fetched at runtime."
   },
   "method": {
     "tool": "Vercel MCP deploy_to_vercel (target=production, name=proklinator-static, teamId omitted)",
-    "projectSettings": { "framework": null, "buildCommand": "node build.mjs", "outputDirectory": "public" },
-    "sourceFilesInRequest": ["build.mjs", "package.json", "vercel.json"],
-    "buildMjsSha256": "7f0ede67ed2b65a73148441dd4a56f779931a62fa397a1d957b0864e2fc1c3aa",
-    "description": "build.mjs fetches the 13 site files from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh) at the pinned commit f87ee40 and aborts unless each file's byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit."
+    "projectSettings": {
+      "framework": null,
+      "buildCommand": "node build.mjs",
+      "outputDirectory": "public"
+    },
+    "sourceFilesInRequest": [
+      "build.mjs",
+      "package.json",
+      "vercel.json"
+    ],
+    "buildMjsSha256": "d113f70ee44b706e3459121d3675e4938aa29d43f3f2d4e27d3f894f846b5241",
+    "description": "build.mjs fetches the 33 site files from raw.githubusercontent.com (fallback: cdn.jsdelivr.net/gh) at the pinned commit 812de15 and aborts unless each file byte length and SHA-256 match the values in `files` above, then writes them to ./public. The deployment therefore contains exactly the repo bytes of the pinned commit; this is the same pattern as the v20 deploy. The script was generated from the local checkout and dry-run locally (33/33 files byte-identical) before deploying."
   },
   "notes": [
-    "PR #3 was already merged into main (f87ee40) at deploy time, so main was used as the source rather than the branch singularity/v20-production-complete-5942 (same tree: 5ef7313 is the branch head and the second parent of f87ee40).",
-    "teamId was omitted from deploy_to_vercel, as in the prior successful deploy; the deployment landed in the singularity16 scope. Team-scoped read endpoints (get_project, list_projects, get_deployment) return 404 / empty for this token, so verification was done over HTTP against the public alias, the -singularity16 alias and the raw deployment URL.",
-    "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/protection settings were touched.",
-    "Site files were not inlined in the MCP request (payload was 4.6 KB of build scaffolding); the ~644 KB of site bytes were fetched and SHA-256-verified during the Vercel build.",
+    "The repository is public (gh: visibility PUBLIC), which is what makes the pinned-commit fetch possible; the ~665 KB site tree was therefore not inlined into the MCP request (a single inlined payload with base64 binaries would have been ~750 KB and error-prone).",
+    "Git-linked auto-deploy was not used: get_git_deployment_context shows no linked Git projects in the singularity16 team, and create_git_project requires teamId (the 403 trigger) and cannot re-link an existing unlinked project such as proklinator-static.",
+    "teamId was omitted from deploy_to_vercel, as in the prior successful deploys; no 403 occurred. Team-scoped read endpoints (get_deployment) still return 404 for this token, so the build was followed and verified over HTTP against the raw deployment URL and the public alias.",
+    "The existing project proklinator-static was reused (protection already off); no new project was created and no auth/SSO/protection settings were touched. Registration and payments were not opened.",
     "HUGINN was not touched."
   ]
 }
