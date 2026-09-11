@@ -1171,6 +1171,87 @@ body.is-intro .tabbar{display:none}
 .btn-row.gold .toggle-ico{color:var(--gold-hot);border-color:rgba(201,162,74,.35)}
 .btn-row:disabled{opacity:.55;cursor:default}
 
+/* =========================================================
+   v20.7 GAME LAYER (UX_GAME_v1) — «Дело дня» strip, profile «Серия», atlas mode, seal rarity, karma legend.
+   Same soot / blood / gold as the rest of the shell; nothing new in the tabbar, nothing floats, no banners.
+   ========================================================= */
+/* Ritual tab: «Дело дня» — one line above the context pills; the chip is a pop-chip, the label is the pop-label */
+.case-strip{display:flex;align-items:center;gap:10px;margin:-6px 0 14px;position:relative;z-index:1;min-width:0}
+.case-strip.hidden{display:none}
+.case-label{
+  flex:none;font-family:var(--serif);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-dim);
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.case-label::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.85;flex:none;box-shadow:0 0 8px rgba(201,162,74,.5)}
+.case-chip{
+  flex:1;min-width:0;min-height:34px;padding:0 13px;border-radius:var(--r-pill);font-size:12.5px;font-weight:600;text-align:left;
+  color:var(--bone-dim);background:linear-gradient(180deg,#1B1615,#151110);border:1px solid var(--line-strong);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 4px 12px rgba(0,0,0,.25);transition:color var(--dur),border-color var(--dur),background var(--dur);
+}
+.case-chip.on{color:var(--bone);border-color:rgba(201,162,74,.5);background:linear-gradient(180deg,#2A2114,#1B140F)}
+.case-x{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute);background:rgba(237,228,214,.06);border:1px solid var(--line)}
+.case-x svg{width:11px;height:11px}
+.case-x:hover{color:var(--bone)}
+
+/* Profile: «Серия» card — count, milestone caption, hint, 14-day calendar, CTA while today is unsealed */
+.seal-card{padding:14px 16px 14px;margin:0 0 12px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.seal-card.alive::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(179,18,31,.12),transparent 70%)}
+.seal-top{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;position:relative;z-index:1}
+.seal-ico{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin-top:2px;
+  background:rgba(237,228,214,.04);border:1px solid var(--line);color:var(--bone-mute);transition:color var(--dur),border-color var(--dur),background var(--dur);
+}
+.seal-ico svg{width:22px;height:22px}
+.seal-card.alive .seal-ico{color:var(--bone);border-color:rgba(229,38,47,.55);background:rgba(179,18,31,.16);box-shadow:0 0 18px rgba(179,18,31,.35)}
+.seal-text{min-width:0}
+.seal-count{display:block;font-family:var(--serif);font-weight:400;font-size:21px;line-height:1.15;color:var(--bone);font-variant-numeric:tabular-nums}
+.seal-mile{margin:5px 0 0;font-size:12px;line-height:1.4;color:var(--gold-hot);font-weight:600}
+.seal-hint{margin:4px 0 0;font-size:12px;line-height:1.4;color:var(--bone-mute)}
+.seal-cal{position:relative;z-index:1}
+.seal-wd,.seal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;justify-items:center}
+.seal-wd{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--bone-mute);margin:0 0 6px}
+.seal-day{
+  width:100%;max-width:38px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-style:normal;
+  font-size:11px;font-variant-numeric:tabular-nums;color:var(--bone-mute);border:1px solid var(--line);background:rgba(237,228,214,.03);
+}
+.seal-day.on{color:var(--bone);border-color:rgba(229,38,47,.55);background:radial-gradient(120% 110% at 50% 0%,#3A1013,#1A0B0C);box-shadow:0 0 12px rgba(179,18,31,.35)}
+.seal-day.today{border-color:rgba(201,162,74,.6);box-shadow:0 0 0 1px rgba(201,162,74,.35)}
+.seal-day.today.on{border-color:var(--gold);box-shadow:0 0 0 1px rgba(201,162,74,.5),0 0 12px rgba(179,18,31,.35)}
+.seal-cta{
+  position:relative;z-index:1;align-self:flex-start;min-height:40px;padding:0 18px;border-radius:var(--r-pill);
+  background:rgba(179,18,31,.14);border:1px solid rgba(229,38,47,.45);color:var(--bone);font-weight:600;font-size:13px;
+}
+
+/* Categories tab in atlas mode: the same grid, eight slots — sealed = blood ring + count, empty = dashed, muted */
+.page-sub.atlas-progress{font-family:var(--serif);font-size:20px;letter-spacing:.06em;color:var(--gold-hot);margin:-10px 0 16px}
+.atlas-slot .mark{position:absolute;top:8px;right:8px;width:18px;height:18px;display:none;color:var(--gold-hot);filter:drop-shadow(0 0 6px rgba(201,162,74,.5))}
+.atlas-slot .mark svg{width:18px;height:18px}
+.atlas-slot.sealed .mark{display:block}
+.atlas-slot.sealed .ico{color:var(--bone);border-color:rgba(229,38,47,.55);background:rgba(179,18,31,.18);box-shadow:0 0 18px rgba(179,18,31,.3)}
+.atlas-slot.sealed small{color:var(--bone-dim);font-weight:600;letter-spacing:.06em}
+.atlas-slot.empty-slot{border-style:dashed;border-color:var(--line-strong);background:linear-gradient(180deg,#120F0E,#0E0B0A)}
+.atlas-slot.empty-slot .ico{color:var(--bone-mute);border-style:dashed}
+.atlas-slot.empty-slot b{color:var(--bone-dim)}
+
+/* Achievements: quiet rarity label + the atlas row above the grid */
+.badge .rarity{font-style:normal;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-mute);opacity:.75;margin-top:2px}
+.badge[data-rarity="rare"] .rarity{color:var(--ash-rose)}
+.badge[data-rarity="legendary"] .rarity{color:var(--gold-dim)}
+.badge.on[data-rarity="legendary"] .rarity{color:var(--gold-hot)}
+.badge.on .rarity{opacity:1}
+.atlas-row{margin:0 0 12px}
+.atlas-row:empty{display:none}
+
+/* Leaderboard: karma legend */
+.lb-legend{padding:14px 16px 10px;margin:0 0 12px}
+.lb-legend .group-label{margin:0 0 6px}
+.lb-legend ul{margin:0;padding:0;list-style:none}
+.lb-legend li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line);font-size:12.5px;line-height:1.4;color:var(--bone-dim)}
+.lb-legend li:first-child{border-top:0}
+.lb-legend li b{font-variant-numeric:tabular-nums;color:#F2A7A7;font-weight:600;white-space:nowrap;min-width:52px}
+.lb-legend li:last-child b{color:var(--bone-mute)}
+
 @media(prefers-reduced-motion:reduce){
   .splash-sigil .spin,.splash-sigil .spin-r,.pay-hero::before{animation:none!important}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -1242,6 +1323,15 @@ body.is-intro .tabbar{display:none}
     <h1 class="title" id="title"></h1>
     <p class="sub" id="subhead"></p>
     <div class="altar-space" aria-hidden="true"></div>
+
+    <!-- v20.7 (UX_GAME_v1): «Дело дня» — one line, one situation per local day; the chip fills «Что случилось?» only, «×» hides it for the day -->
+    <div class="case-strip hidden" id="caseStrip">
+      <span class="case-label" id="caseLabel"></span>
+      <button type="button" class="case-chip" id="caseChip"></button>
+      <button type="button" class="case-x" id="caseDismiss" aria-label="Скрыть на сегодня">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
 
     <div class="ctx-row" id="ctxRow"></div>
 
@@ -1351,6 +1441,8 @@ body.is-intro .tabbar{display:none}
   <section class="tab hidden" data-tab="categories" id="tabCategories">
     <header class="page-head"><h1 class="page-title" id="catTitle"></h1></header>
     <p class="page-sub" id="catHint"></p>
+    <!-- v20.7 (UX_GAME_v1): «Категории | Атлас» — the same 2×4 grid read as eight atlas slots -->
+    <div class="seg" data-n="2" id="catSeg" role="tablist"></div>
     <div class="cat-grid" id="catGrid"></div>
     <div class="cat-pro" id="catPro"></div>
   </section>
@@ -1402,6 +1494,8 @@ body.is-intro .tabbar{display:none}
         <p class="since"><span class="tag gold hidden" id="proTag"></span><span id="since"></span></p>
       </div>
       <div class="counters" id="profCounters"></div>
+      <!-- v20.7 (UX_GAME_v1): «Серия» — the daily seal calendar; a soft streak, no shame banner -->
+      <div class="card seal-card" id="sealCard"></div>
       <div class="card worse" id="profWorse">
         <div class="worse-label"><span id="worseText"></span></div>
         <div class="worse-bar"><i id="worseBar"></i></div>
@@ -1424,6 +1518,8 @@ body.is-intro .tabbar{display:none}
         <h1 class="page-title" id="badgesTitle"></h1>
       </header>
       <p class="page-sub" id="badgesProgress"></p>
+      <!-- v20.7: «Атлас печатей n/8» → Categories tab in atlas mode -->
+      <div class="card menu atlas-row" id="badgeAtlasRow"></div>
       <div class="badge-grid" id="badgeGrid"></div>
     </div>
 
@@ -1444,6 +1540,8 @@ body.is-intro .tabbar{display:none}
       <div class="seg" data-n="3" id="lbSeg" role="tablist"></div>
       <div class="lb-head" id="lbHead" aria-hidden="true"></div>
       <div class="card lb" id="lbList"></div>
+      <!-- v20.7: where the karma comes from — the quiet bonuses are named here, never toasted -->
+      <div class="card lb-legend" id="lbLegend"></div>
     </div>
 
     <div class="page hidden" data-page="premium">

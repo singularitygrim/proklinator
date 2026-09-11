@@ -168,6 +168,68 @@
     }
   };
   const AC = AVATAR_A2HS_COPY;
+  /* ---------- v20.7 GAME copy — GAME_COPY_v1 (game-copy-2026-09-11), local-only gamification (GAME_MECHANICS_v1 / UX_GAME_v1).
+     Everything the layer says lives here. Locked canon strings are verbatim; the few strings the canon sheet only names
+     (atlas 4/8 toasts, the six new badge blurbs, the quiet karma labels, rarity labels) are listed in each section's
+     `draft` array so the editors can swap them without touching logic. No network, no accounts, no foreign feeds: the leaderboard stays
+     the seeded parody + You, the case of the day prefills «Что случилось?» only — never «Кто отличился?». ---------- */
+  const GAME_COPY = {
+    version: "game-copy-2026-09-11",
+    dailySeal: {
+      title: "Серия",
+      count: "Серия: {n} дн.",
+      zero: "Серия: 0 дн.",
+      hint: "Любой ритуал за день. Без упрёков.",
+      cta: "Запусти ритуал",
+      milestones: { 3: "Печать на три дня. Дежурный смены.", 7: "Неделя печатей. Канцелярия кивает.", 14: "Две недели подряд. Тихий рекорд." },
+      calendarDays: 14
+    },
+    atlas: {
+      title: "Атлас печатей",
+      progress: "{n}/8",
+      emptySlot: "Ещё не жгли «{category}»",
+      segLabel: "Атлас",
+      // draft — GAME_COPY_v1 names the two toasts, the sheet in this repo carries no text for them
+      toast4: "Четыре угла атласа. Чертёж зла набросан.",
+      toast8: "Атлас закрыт. Восемь категорий, ни одного белого пятна.",
+      draft: ["toast4", "toast8"]
+    },
+    badges: {
+      empty: "Печати появятся после первого ритуала.",
+      unlockedToast: "Печать «{title}» легла.",
+      // rarity — quiet labels under the title (draft wording)
+      rarity: { common: "обычная", rare: "редкая", legendary: "легендарная" },
+      // titles are canon; blurbs are draft in the badge voice (GAME_COPY_v1 blurbs to be pasted over)
+      items: [
+        { id: "streak-3", title: "Дежурный смены", blurb: "Три дня подряд. Смена принята, дежурный на месте.", icon: "flame3", rarity: "common" },
+        { id: "streak-7", title: "Неделя печати", blurb: "Семь дней без пропуска. Канцелярия кивает.", icon: "calendar", rarity: "rare" },
+        { id: "atlas-4", title: "Чертёж зла", blurb: "Четыре категории из восьми. Чертёж набросан.", icon: "compass", rarity: "rare" },
+        { id: "atlas-8", title: "Картограф зла", blurb: "Все восемь категорий. Карта без белых пятен.", icon: "map", rarity: "legendary" },
+        { id: "power-balance", title: "Три силы", blurb: "Ехидно, Жёстко и Апокалипсис — по разу. Баланс соблюдён.", icon: "scale", rarity: "common" },
+        { id: "sealed-week", title: "Закрытая неделя", blurb: "Календарная неделя без пропуска, с понедельника по воскресенье.", icon: "weekseal", rarity: "legendary" }
+      ],
+      draft: ["rarity", "items[].blurb"]
+    },
+    dailyCase: {
+      title: "Дело дня",
+      dismiss: "Скрыть на сегодня",
+      // situation prompts only — the tap fills «Что случилось?»; «Кто отличился?» is never touched
+      pool: ["Ответил «ок»", "Пятиминутка", "Уже выхожу", "Прочитал — молчит", "Голосовое на три минуты", "Скинул в общий чат", "Правки после «да»", "Временная схема", "Чужой контейнер", "Будильник орёт — спит"]
+    },
+    karma: {
+      leaderboardSubtitle: "Пародия. Сети нет.",
+      throttleSameWho: "Канцелярия устала от одного дела.",
+      // quiet bonuses: never a toast, just the legend under the table (draft wording)
+      shareBonusQuiet: "карточка ушла в чат",
+      noMatBonusQuiet: "ритуал без мата",
+      badgeBonusQuiet: "новая печать",
+      legendTitle: "Откуда карма",
+      legendRituals: "ритуал — по силе сарказма",
+      legendHeld: "четвёртый ритуал по одному делу за сутки — без кармы",
+      draft: ["shareBonusQuiet", "noMatBonusQuiet", "badgeBonusQuiet", "legendTitle", "legendRituals", "legendHeld"]
+    }
+  };
+  const GC = GAME_COPY;
   const SHELL = {
     splash: { taglines: SC.splash.taglines, progress: SC.splash.progress, skip: SC.splash.skip, hint: SC.splash.hint, duration: 2200 },
     nav: [
@@ -262,10 +324,17 @@
     badges: {
       title: "Достижения",
       progress: "Открыто {n} из {total}",
-      unlocked: "Достижение открыто: {title}",
+      unlocked: GC.badges.unlockedToast,   // v20.7: «Печать «{title}» легла.»
+      empty: GC.badges.empty,
       locked: "Закрыто",
-      items: SC.badges,
-      icons: { "first-curse": "drop", "ten-curses": "skull", "fav-collector": "heart", "apocalypse": "bolt", "no-mat-saint": "shield", "category-hopper": "grid", "ritual-connoisseur": "star", "legend-local": "crown", "night-owl": "moon", "share-menace": "share" }
+      // v20.7: Freya's ten + the six GAME_COPY_v1 seals (streak-3/7, atlas-4/8, power-balance, sealed-week) — 16 in the v1 grid
+      items: SC.badges.concat(GC.badges.items),
+      icons: { "first-curse": "drop", "ten-curses": "skull", "fav-collector": "heart", "apocalypse": "bolt", "no-mat-saint": "shield", "category-hopper": "grid", "ritual-connoisseur": "star", "legend-local": "crown", "night-owl": "moon", "share-menace": "share",
+        "streak-3": "flame3", "streak-7": "calendar", "atlas-4": "compass", "atlas-8": "map", "power-balance": "scale", "sealed-week": "weekseal" },
+      // quiet rarity labels (GAME_MECHANICS_v1): the ten v19 seals are tiered here, the six new ones carry their tier in GAME_COPY
+      rarity: { "first-curse": "common", "night-owl": "common", "no-mat-saint": "common", "ten-curses": "rare", "fav-collector": "rare", "apocalypse": "rare",
+        "category-hopper": "rare", "ritual-connoisseur": "rare", "share-menace": "rare", "legend-local": "legendary" },
+      rarityLabels: GC.badges.rarity
     },
     stats: {
       title: "Статистика",
@@ -350,7 +419,7 @@
     }),
     leaderboard: {
       title: SC.leaderboard.title,
-      subtitle: SC.leaderboard.subtitle,
+      subtitle: GC.karma.leaderboardSubtitle,   // v20.7 GAME_COPY_v1: always «Пародия. Сети нет.»
       you: SC.leaderboard.youLabel,
       metric: SC.leaderboard.metric,
       tabs: ["Неделя", "Месяц", "Всё время"],
@@ -358,8 +427,20 @@
       seeds: SC.leaderboard.seeds
     },
     // Rescaled to Freya's seed range (520–980): a few dozen rituals put a regular user on the board.
-    karma: { whisper: 25, seal: 40, anathema: 65, fav: 10, ritual: 5 },
+    // v20.7 quiet bonuses (GAME_MECHANICS_v1): share tap / ritual without mat / new seal — small, never toasted.
+    karma: { whisper: 25, seal: 40, anathema: 65, fav: 10, ritual: 5, share: 5, noMat: 3, badge: 10 },
     worseK: 75,
+    // v20.7 game layer (GAME_MECHANICS_v1 / UX_GAME_v1): the copy is GAME_COPY, the state is one schema-validated
+    // localStorage record (pk_game). sameWhoMax: rituals on one «кто» within 24h that still earn karma — the next
+    // ones run as usual (the CTA is never blocked), earn nothing and get the quiet throttle toast.
+    game: {
+      key: "pk_game",
+      sameWhoMax: 3,
+      sameWhoWindow: 864e5,
+      categoriesTabs: ["Категории", GC.atlas.segLabel],
+      // the atlas is the eight shell categories (Freya's list, in order); the PRO «Авторские» card is not a slot
+      atlasCategoryIds: SC.categories.map(function(c){ return c.id; })
+    },
     common: { back: "Назад", close: "Закрыть" }
   };
 
@@ -612,6 +693,39 @@
   }
   const stats = sanitizeStats(lsGet(LS.stats, null));
   function saveStats(){ lsSet(LS.stats, stats); }
+
+  /* ---------- v20.7 game state (GAME_MECHANICS_v1) — one local record, pk_game, validated like the rest ----------
+     seal:  the soft daily streak — count / best / last sealed local day / the sealed day keys the calendar paints
+     caseDismissed: the local day «Дело дня» was hidden for (the prompt itself is derived from the date, not stored)
+     karma: quiet bonuses (share tap, ritual without mat, new seal), held points (a fourth ritual on one «кто» within
+            24h) and a short dated log so the week / month views of the parody table can add them up
+     Nothing here names a «кто»: the throttle reads the history record and keeps only a total. Wiped with the rest (pk_ prefix). */
+  const GAME_KEY = SHELL.game.key;
+  const GAME_DAYS_CAP = 42;    // six weeks of sealed days: enough for the 14-day calendar and the Mon–Sun «Закрытая неделя» check
+  const GAME_LOG_CAP = 120;
+  const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
+  function isDayKey(v){ return typeof v === "string" && DAY_RE.test(v); }
+  function sanitizeGame(raw){
+    const g = isObj(raw) ? raw : {};
+    const seal = isObj(g.seal) ? g.seal : {};
+    const karma = isObj(g.karma) ? g.karma : {};
+    const days = [];
+    (Array.isArray(seal.days) ? seal.days : []).forEach(function(d){ if(isDayKey(d) && days.indexOf(d) < 0) days.push(d); });
+    days.sort();
+    const log = (Array.isArray(karma.log) ? karma.log : []).map(function(e){
+      if(!isObj(e)) return null;
+      const n = Math.floor(Number(e.n));
+      return (isFinite(n) && n && Math.abs(n) <= 1000) ? { ts: toTs(e.ts, 0), n: n } : null;
+    }).filter(function(e){ return e && e.ts; });
+    return {
+      v: 1,
+      seal: { count: toCount(seal.count), best: toCount(seal.best), last: isDayKey(seal.last) ? seal.last : "", days: days.slice(-GAME_DAYS_CAP) },
+      caseDismissed: isDayKey(g.caseDismissed) ? g.caseDismissed : "",
+      karma: { bonus: toCount(karma.bonus), held: toCount(karma.held), log: log.slice(-GAME_LOG_CAP) }
+    };
+  }
+  const game = sanitizeGame(lsGet(GAME_KEY, null));
+  function saveGame(){ lsSet(GAME_KEY, game); }
 
   const HISTORY_CAP = SHELL.history.cap || 100;
   // One history record → validated copy, or null when it cannot be displayed (no name / no punch).
@@ -1091,11 +1205,31 @@
   const updateWhat = bindField(what, whatCtl, $("whatCount"), WHAT_MAX);
   who.addEventListener("input", function(){ emptyHint.classList.remove("show"); });
 
+  const TOAST_MS = 2600, TOAST_GAP = 350;
+  let toastUntil = 0;
   function showToast(msg){
     toast.textContent = msg;
     toast.classList.add("show");
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, 2600);
+    toastUntil = Date.now() + TOAST_MS;
+    showToast._t = setTimeout(function(){ toast.classList.remove("show"); }, TOAST_MS);
+  }
+  // v20.7: game toasts (seal milestone, atlas, throttle, new badge) can land together with «Ритуал завершён.» — they queue
+  // behind whatever is showing instead of overwriting it. The first pump is deferred a tick so a toast fired later in the
+  // same call stack (showResult ends with toastOk) still goes first.
+  const toastQueue = [];
+  function queueToast(msg){
+    if(!msg) return;
+    toastQueue.push(String(msg));
+    clearTimeout(pumpToasts._t);
+    pumpToasts._t = setTimeout(pumpToasts, 0);
+  }
+  function pumpToasts(){
+    if(!toastQueue.length) return;
+    const wait = toastUntil + TOAST_GAP - Date.now();
+    if(wait > 0){ pumpToasts._t = setTimeout(pumpToasts, wait); return; }
+    showToast(toastQueue.shift());
+    if(toastQueue.length) pumpToasts._t = setTimeout(pumpToasts, TOAST_MS + TOAST_GAP);
   }
   function failEmpty(){
     emptyHint.classList.add("show");
@@ -2406,9 +2540,12 @@
   // 1) Share File: Web Share with the PNG attached (text-only sheet where files can't be shared).
   // 2) Fallback (no Web Share, or it failed for a reason other than the user dismissing it): save the PNG + copy the caption,
   //    and the toast states exactly what happened. The blob is reused for the download so the export canvas can never be stale.
+  const sharedOnce = Object.create(null);   // v20.7: the quiet share bonus lands once per card per session, on the tap itself
   async function shareCard(v){
     v = v || lastVerdict;
     if(!v) return;
+    const shareKey = v.hid || "";
+    if(shareKey && !sharedOnce[shareKey]){ sharedOnce[shareKey] = 1; karmaBonus(K.share); }
     const isCurrent = v === lastVerdict;
     const shareText = buildCurseText(v, true);
     let blob = isCurrent ? shareBlob : null;
@@ -2958,6 +3095,14 @@
     scroll: svgo('<path d="M7 3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7"/><path d="M7 3a3 3 0 0 0-3 3v1.5h6V6a3 3 0 0 0-3-3Z"/><path d="M7 21a3 3 0 0 1-3-3v-1.5h6V18a3 3 0 0 1-3 3Z"/><path d="M11 9h5M11 13h5"/>'),
     age18: ageBadge("18+"),
     age16: ageBadge("16+"),   // the under-16 refusal view: the badge follows Freya's «ПРОКЛИНАТОР с 16 лет.»
+    // v20.7 game glyphs (same Lucide-style stroke): the six new seals + the atlas / seal marks
+    flame3: svgo('<path d="M12 22c-3.9 0-6.5-2.6-6.5-6 0-2.4 1.2-4.2 2.4-5.6.3 1.3 1 2.3 2.1 2.6-.4-2.6.6-5.4 3-7.5 0 2.9 1.6 4.3 3 5.8 1.4 1.4 2.5 2.8 2.5 4.7 0 3.4-2.6 6-6.5 6Z"/><path d="M12 22c-1.6 0-2.8-1.2-2.8-2.9 0-1.3.9-2.2 1.6-3 .5 1 1.2 1.4 1.2 1.4s.4-1.7 1.2-2.7c.7 1.3 1.6 2.3 1.6 4.3 0 1.7-1.2 2.9-2.8 2.9Z"/>'),
+    calendar: svgo('<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/>'),
+    compass: svgo('<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/><circle cx="12" cy="12" r="1" fill="currentColor"/>'),
+    map: svgo('<path d="M3 6.5 9 4l6 2.5 6-2.5v13.5L15 20l-6-2.5-6 2.5Z"/><path d="M9 4v13.5M15 6.5V20"/>'),
+    scale: svgo('<path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 7a3.5 3.5 0 0 0 6 0Z"/><path d="m19 7-3 7a3.5 3.5 0 0 0 6 0Z"/><path d="M8 21h8"/>'),
+    weekseal: svgo('<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="2.6"/><path d="M12 12.9v-1M12 19.1v-1"/>'),
+    sealmark: svgo('<path d="M12 3.5l2.1 1.4 2.5-.3.9 2.4 2.3 1.1-.4 2.5 1.6 2-1.6 2 .4 2.5-2.3 1.1-.9 2.4-2.5-.3L12 21.5l-2.1-1.4-2.5.3-.9-2.4-2.3-1.1.4-2.5-1.6-2 1.6-2-.4-2.5 2.3-1.1.9-2.4 2.5.3Z"/><path d="m9.2 12.6 1.9 1.9 3.7-4"/>', 2),
     crownGold: '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg>'
   };
   ICO.flame = ICO.fire;
@@ -2973,6 +3118,86 @@
     + '<text x="40" y="61" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" letter-spacing="1" fill="currentColor" stroke="none" opacity=".85">03:00</text></svg>';
   const MENU_ICONS = { badges: ICO.award, stats: ICO.chart, leaderboard: ICO.trophy, premium: ICO.crown, settings: ICO.gear, about: ICO.info, privacy: ICO.shield, terms: ICO.scroll };
   const K = SHELL.karma;
+
+  /* ---------- v20.7 game mechanics (GAME_MECHANICS_v1) — daily seal, atlas, karma bonuses / same-«кто» throttle, case of the day ---------- */
+  function parseDay(key){ const p = String(key).split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function shiftDay(key, delta){ const d = parseDay(key); d.setDate(d.getDate() + delta); return dayKey(d); }
+  function todayKey(){ return dayKey(new Date()); }
+  function isSealed(key){ return game.seal.days.indexOf(key) >= 0; }
+  function sealedToday(){ return game.seal.last === todayKey(); }
+  // Soft streak: alive while the last seal is today or yesterday, otherwise it reads 0 — nothing is written, nothing is said.
+  function streakNow(){
+    const t = todayKey();
+    return (game.seal.last === t || game.seal.last === shiftDay(t, -1)) ? game.seal.count : 0;
+  }
+  // One successful ritual per device-local day seals the day; the first one of a new day moves the streak. Returns the
+  // milestone line when the count has just reached 3 / 7 / 14, "" otherwise. A day older than the last seal (clock moved
+  // back) is only painted on the calendar.
+  function tickSeal(ts){
+    const key = dayKey(new Date(ts));
+    let milestone = "";
+    if(key > game.seal.last){
+      game.seal.count = (game.seal.last === shiftDay(key, -1)) ? game.seal.count + 1 : 1;
+      game.seal.last = key;
+      game.seal.best = Math.max(game.seal.best | 0, game.seal.count);
+      milestone = GC.dailySeal.milestones[game.seal.count] || "";
+    }
+    if(!isSealed(key)){
+      game.seal.days.push(key);
+      game.seal.days.sort();
+      if(game.seal.days.length > GAME_DAYS_CAP) game.seal.days.splice(0, game.seal.days.length - GAME_DAYS_CAP);
+    }
+    saveGame();
+    return milestone;
+  }
+  // «Закрытая неделя»: one calendar week, Monday to Sunday, with every day sealed.
+  function sealedWeek(){
+    const days = game.seal.days;
+    for(let i=0;i<days.length;i++){
+      if(parseDay(days[i]).getDay() !== 0) continue;
+      let full = true;
+      for(let j=1;j<7 && full;j++) if(!isSealed(shiftDay(days[i], -j))) full = false;
+      if(full) return true;
+    }
+    return false;
+  }
+  // Atlas: the eight shell categories, a slot is sealed once any ritual landed there (chosen or inferred) — read from stats,
+  // so it survives «Очистить историю» like the rest of the counters.
+  function atlasSealed(catId){ return (stats.byCategory[catId] | 0) > 0; }
+  function atlasCount(){ return SHELL.game.atlasCategoryIds.filter(atlasSealed).length; }
+  // Rituals on the same «кто» inside the window (history only — nothing is stored per name).
+  function sameWhoRecent(name, ts){
+    const key = norm(name).trim();
+    let n = 0;
+    for(let i=0;i<history.length;i++){
+      const h = history[i];
+      if(h.ts > ts || ts - h.ts > SHELL.game.sameWhoWindow) continue;
+      if(norm(h.name).trim() === key) n++;
+    }
+    return n;
+  }
+  function karmaLog(n, ts){
+    game.karma.log.push({ ts: ts || Date.now(), n: n });
+    const cutoff = Date.now() - 32 * 864e5;   // the month view is the longest period that reads the log
+    game.karma.log = game.karma.log.filter(function(e){ return e.ts >= cutoff; });
+    if(game.karma.log.length > GAME_LOG_CAP) game.karma.log.splice(0, game.karma.log.length - GAME_LOG_CAP);
+  }
+  function karmaBonus(n){ n = n | 0; if(n <= 0) return; game.karma.bonus += n; karmaLog(n); saveGame(); }
+  function karmaHold(n){ n = n | 0; if(n <= 0) return; game.karma.held += n; karmaLog(-n); saveGame(); }
+  function karmaLogSince(sinceTs){
+    let n = 0;
+    game.karma.log.forEach(function(e){ if(e.ts >= sinceTs) n += e.n; });
+    return n;
+  }
+  // «Дело дня»: one situation prompt per local day, derived from the date (consecutive days walk the pool). The text that
+  // lands in «Что случилось?» is the sin's own blurb when the label is a catalog sin (matchSin lands on it), else the label.
+  function dailyCase(){
+    const key = todayKey(), d = parseDay(key), pool = GC.dailyCase.pool;
+    const dayNo = Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5);
+    const label = pool[((dayNo % pool.length) + pool.length) % pool.length];
+    const sin = sinByName(label);
+    return { key: key, label: label, text: sin ? popularText(sin) : label, sinId: sin ? sin.id : 0, dismissed: game.caseDismissed === key };
+  }
 
   /* ---------- records: history entry + stats + badges ---------- */
   function entryFromVerdict(v){
@@ -2997,6 +3222,9 @@
   function recordRitual(v){
     const entry = entryFromVerdict(v);
     v.hid = entry.id;
+    // v20.7: read before the push — the new entry must not count against itself; the atlas is compared after the stats move
+    const repeats = sameWhoRecent(entry.name, entry.ts);
+    const atlasBefore = atlasCount();
     historyPush(entry);
     const d = new Date(entry.ts);
     stats.total = (stats.total | 0) + 1;
@@ -3011,6 +3239,19 @@
     if(d.getHours() < 4) stats.night = (stats.night | 0) + 1;
     stats.lastAt = entry.ts;
     saveStats();
+    // v20.7 game layer. The ritual itself is never blocked: a fourth ritual on one «кто» within 24h runs as usual, just
+    // earns no karma and gets the quiet «Канцелярия устала» line; a ritual without mat earns the quiet no-mat bonus.
+    const throttled = repeats >= SHELL.game.sameWhoMax;
+    if(throttled) karmaHold(K[v.powerId] || K.seal);
+    else if(v.clean) karmaBonus(K.noMat);
+    const milestone = tickSeal(entry.ts);
+    const atlasAfter = atlasCount();
+    if(throttled) queueToast(GC.karma.throttleSameWho);
+    if(milestone) queueToast(milestone);
+    if(atlasAfter > atlasBefore){
+      if(atlasAfter === SHELL.game.atlasCategoryIds.length) queueToast(GC.atlas.toast8);
+      else if(atlasAfter >= 4 && atlasBefore < 4) queueToast(GC.atlas.toast4);
+    }
     checkBadges();
   }
   function ritualUses(){
@@ -3018,9 +3259,11 @@
     for(const k in stats.byRitual) n += stats.byRitual[k] | 0;
     return n;
   }
+  // v20.7: + quiet bonuses − held points (same-«кто» throttle), never below zero
   function karmaAll(){
-    return (stats.byPower.whisper | 0) * K.whisper + (stats.byPower.seal | 0) * K.seal + (stats.byPower.anathema | 0) * K.anathema
+    const base = (stats.byPower.whisper | 0) * K.whisper + (stats.byPower.seal | 0) * K.seal + (stats.byPower.anathema | 0) * K.anathema
       + favCount() * K.fav + ritualUses() * K.ritual;
+    return Math.max(0, base + (game.karma.bonus | 0) - (game.karma.held | 0));
   }
   function karmaSince(sinceTs){
     let n = 0;
@@ -3029,7 +3272,7 @@
       if(h.ts < sinceTs) continue;
       n += (K[h.powerId] || K.seal) + (h.fav ? K.fav : 0) + (h.ritualId ? K.ritual : 0);
     }
-    return n;
+    return Math.max(0, n + karmaLogSince(sinceTs));
   }
   function worsePct(){
     if(!stats.total) return 0;
@@ -3055,9 +3298,18 @@
     "ritual-connoisseur": function(){ return profile.favRituals.length >= 2; },
     "legend-local": function(){ return !!profile.pro; },
     "night-owl": function(){ return (stats.night | 0) >= 1; },
-    "share-menace": function(){ return (stats.shares | 0) >= 3; }
+    "share-menace": function(){ return (stats.shares | 0) >= 3; },
+    // v20.7 GAME_MECHANICS_v1 seals — streak from the daily seal's best run, atlas from the eight category slots,
+    // three powers each used once, one full Monday–Sunday week sealed
+    "streak-3": function(){ return (game.seal.best | 0) >= 3; },
+    "streak-7": function(){ return (game.seal.best | 0) >= 7; },
+    "atlas-4": function(){ return atlasCount() >= 4; },
+    "atlas-8": function(){ return atlasCount() >= SHELL.game.atlasCategoryIds.length; },
+    "power-balance": function(){ return (stats.byPower.whisper | 0) >= 1 && (stats.byPower.seal | 0) >= 1 && (stats.byPower.anathema | 0) >= 1; },
+    "sealed-week": function(){ return sealedWeek(); }
   };
-  // opts.silent: grant without the toast (boot re-check for users whose stats predate the current badge ids)
+  // opts.silent: grant without the toast (boot re-check for users whose stats predate the current badge ids).
+  // v20.7: every new seal is one queued «Печать «…» легла.» and a quiet karma bonus.
   function checkBadges(opts){
     const newly = [];
     SHELL.badges.items.forEach(function(b){
@@ -3067,7 +3319,8 @@
     });
     if(newly.length){
       saveProfile();
-      if(!(opts && opts.silent)) setTimeout(function(){ showToast(fmt(SHELL.badges.unlocked, { title: newly[0].title })); }, 2000);
+      karmaBonus(K.badge * newly.length);
+      if(!(opts && opts.silent)) newly.forEach(function(b){ queueToast(fmt(SHELL.badges.unlocked, { title: b.title })); });
     }
     return newly;
   }
@@ -3140,7 +3393,7 @@
     showPage("profile", pageId);
   }
   function renderTab(id){
-    if(id === "ritual") renderCtxRow();
+    if(id === "ritual"){ renderCtxRow(); renderCaseStrip(); }
     else if(id === "categories") renderCategories();
     else if(id === "history") renderHistory();
     else if(id === "rituals") renderRituals();
@@ -3372,6 +3625,52 @@
   }
   what.addEventListener("input", syncPopStrip);
 
+  /* ---------- v20.7 ritual tab: «Дело дня» top strip (UX_GAME_v1) — one line, one situation per local day.
+     A tap fills «Что случилось?» only; «Кто отличился?» is never written (the caret just moves there when it is empty).
+     «×» hides the strip for the rest of the day (pk_game.caseDismissed). ---------- */
+  function syncCaseStrip(){
+    const chip = $("caseChip");
+    if(!chip) return;
+    const cur = (what.value || "").trim();
+    chip.classList.toggle("on", !!cur && cur === chip.dataset.text);
+  }
+  function renderCaseStrip(){
+    const strip = $("caseStrip");
+    if(!strip) return;
+    const c = dailyCase();
+    strip.classList.toggle("hidden", c.dismissed);
+    if(c.dismissed) return;
+    $("caseLabel").textContent = GC.dailyCase.title;
+    const chip = $("caseChip");
+    chip.textContent = c.label;
+    chip.dataset.text = c.text;
+    chip.dataset.sin = c.sinId || "";
+    $("caseDismiss").setAttribute("aria-label", GC.dailyCase.dismiss);
+    syncCaseStrip();
+  }
+  function fillCase(){
+    if(casting) return;
+    const c = dailyCase();
+    if(c.dismissed) return;
+    what.value = c.text.slice(0, WHAT_MAX);
+    updateWhat();
+    syncPopStrip();
+    syncCaseStrip();
+    vibe(VIBE.light);
+    try{ if(!(who.value || "").trim()) who.focus(); else what.focus(); }catch(e){}
+  }
+  function dismissCase(){
+    game.caseDismissed = todayKey();
+    saveGame();
+    vibe(VIBE.light);
+    renderCaseStrip();
+  }
+  if($("caseChip")){
+    $("caseChip").addEventListener("click", fillCase);
+    $("caseDismiss").addEventListener("click", dismissCase);
+    what.addEventListener("input", syncCaseStrip);
+  }
+
   /* ---------- categories ---------- */
   function categoryLocked(c){ return !!(c && c.pro && !profile.pro); }
   function selectCategory(id){
@@ -3395,13 +3694,55 @@
     vibe(VIBE.light);
     showToast(SHELL.categories.cleared);
   }
+  // v20.7 (UX_GAME_v1): the Categories tab has two modes — the picker and «Атлас печатей», the same 2×4 grid read as eight
+  // atlas slots. A sealed slot shows how many rituals landed there; an empty one says «Ещё не жгли «…»» and, like every
+  // slot, opens the Ritual with that category preselected. The PRO card is not a slot and stays in picker mode only.
+  let catMode = "cats";
+  function setCatMode(mode){
+    catMode = mode === "atlas" ? "atlas" : "cats";
+    if(curTab === "categories") renderCategories();
+  }
+  function openAtlas(){
+    catMode = "atlas";
+    if(curTab === "categories") renderCategories(); else showTab("categories");
+  }
   function renderCategories(){
-    $("catTitle").textContent = SHELL.categories.title;
-    $("catHint").textContent = SHELL.categories.hint;
+    const atlas = catMode === "atlas";
+    const seg = $("catSeg");
+    if(seg) renderSeg(seg, SHELL.game.categoriesTabs, ["cats", "atlas"], catMode, function(v){ catMode = v; renderCategories(); });
+    const hint = $("catHint");
+    hint.classList.toggle("atlas-progress", atlas);
+    if(atlas){
+      $("catTitle").textContent = GC.atlas.title;
+      hint.textContent = fmt(GC.atlas.progress, { n: atlasCount() });
+    } else {
+      $("catTitle").textContent = SHELL.categories.title;
+      hint.textContent = SHELL.categories.hint;
+    }
     // The 8 locked categories are the 2×4 grid; the PRO category renders as its own full-width card below it.
     const grid = $("catGrid"), pro = $("catPro");
     grid.innerHTML = "";
     pro.innerHTML = "";
+    grid.classList.toggle("atlas", atlas);
+    if(atlas){
+      SHELL.game.atlasCategoryIds.forEach(function(id){
+        const c = catById(id);
+        if(!c) return;
+        const n = stats.byCategory[id] | 0, sealed = n > 0;
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "card cat-card atlas-slot" + (sealed ? " sealed" : " empty-slot");
+        b.dataset.id = c.id;
+        b.dataset.sealed = sealed ? "1" : "0";
+        b.innerHTML = '<span class="mark" aria-hidden="true">' + ICO.sealmark + '</span><span class="ico" aria-hidden="true">' + (ICO[c.id] || ICO.grid) + '</span><b></b><small></small>';
+        b.querySelector("b").textContent = c.title;
+        b.querySelector("small").textContent = sealed ? ("×" + n) : fmt(GC.atlas.emptySlot, { category: c.title });
+        b.setAttribute("aria-label", c.title + (sealed ? " — ×" + n : " — " + fmt(GC.atlas.emptySlot, { category: c.title })));
+        b.addEventListener("click", function(){ selectCategory(c.id); });
+        grid.appendChild(b);
+      });
+      return;
+    }
     CATS.forEach(function(c){
       const isPro = !!c.pro, locked = categoryLocked(c), on = c.id === categoryId;
       const b = document.createElement("button");
@@ -3630,6 +3971,8 @@
       counters.appendChild(d);
     });
 
+    renderSealCard();
+
     const pct = worsePct();
     $("worseText").textContent = fmt(SHELL.profile.worldWorse, { x: pct });
     requestAnimationFrame(function(){ $("worseBar").style.width = pct + "%"; });
@@ -3658,6 +4001,50 @@
     renderAvatar();
     closeAvatarPicker();
     renderA2hsRow();
+  }
+  /* ---------- v20.7 profile «Серия» (UX_GAME_v1 / GAME_COPY_v1.dailySeal) ----------
+     The count line, the highest milestone the live streak has reached (a caption, not a push), Freya's hint, a two-week
+     calendar (sealed day = blood, today = gold ring, a missed day is just unlit — no red marks, no banner) and the
+     «Запусти ритуал» button only while today is still unsealed. */
+  function renderSealCard(){
+    const card = $("sealCard");
+    if(!card) return;
+    const T = GC.dailySeal, n = streakNow(), today = todayKey();
+    card.innerHTML = '<div class="seal-top"><span class="seal-ico" aria-hidden="true">' + ICO.sealmark + '</span><div class="seal-text"><b class="seal-count"></b><p class="seal-mile" hidden></p><p class="seal-hint"></p></div></div><div class="seal-cal"><div class="seal-wd" aria-hidden="true"></div><div class="seal-days"></div></div>';
+    card.dataset.streak = n;
+    card.classList.toggle("alive", n > 0);
+    card.querySelector(".seal-count").textContent = n ? fmt(T.count, { n: n }) : T.zero;
+    let mile = "";
+    Object.keys(T.milestones).map(Number).sort(function(a, b){ return a - b; }).forEach(function(m){ if(n >= m) mile = T.milestones[m]; });
+    const mileEl = card.querySelector(".seal-mile");
+    mileEl.textContent = mile;
+    mileEl.hidden = !mile;
+    card.querySelector(".seal-hint").textContent = T.hint;
+    const total = T.calendarDays || 14, first = shiftDay(today, -(total - 1));
+    const wd = card.querySelector(".seal-wd"), days = card.querySelector(".seal-days");
+    for(let i=0;i<7;i++){
+      const l = document.createElement("span");
+      l.textContent = WEEKDAYS[parseDay(shiftDay(first, i)).getDay()];
+      wd.appendChild(l);
+    }
+    for(let i=0;i<total;i++){
+      const key = shiftDay(first, i);
+      const cell = document.createElement("i");
+      cell.className = "seal-day" + (isSealed(key) ? " on" : "") + (key === today ? " today" : "");
+      cell.textContent = parseDay(key).getDate();
+      cell.dataset.day = key;
+      days.appendChild(cell);
+    }
+    days.setAttribute("role", "img");
+    days.setAttribute("aria-label", n ? fmt(T.count, { n: n }) : T.zero);
+    if(!sealedToday()){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "seal-cta";
+      b.textContent = T.cta;
+      b.addEventListener("click", function(){ vibe(VIBE.light); showTab("ritual"); });
+      card.appendChild(b);
+    }
   }
   function menuItem(pageId, label, val, gold){
     const b = document.createElement("button");
@@ -3781,20 +4168,39 @@
   });
 
   /* ---------- badges ---------- */
+  // v20.7: «Печати появятся после первого ритуала.» while nothing is unlocked, a quiet rarity label on every seal and a
+  // row that opens «Атлас печатей» (the Categories tab in atlas mode).
+  function badgeRarity(b){ return b.rarity || SHELL.badges.rarity[b.id] || "common"; }
   function renderBadges(){
     $("badgesTitle").textContent = SHELL.badges.title;
     const items = SHELL.badges.items;
-    $("badgesProgress").textContent = fmt(SHELL.badges.progress, { n: profile.badges.length, total: items.length });
+    const n = profile.badges.length;
+    $("badgesProgress").textContent = n ? fmt(SHELL.badges.progress, { n: n, total: items.length }) : SHELL.badges.empty;
+    const atlasRow = $("badgeAtlasRow");
+    if(atlasRow){
+      atlasRow.innerHTML = "";
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = "menu-item";
+      row.innerHTML = '<span class="mi" aria-hidden="true">' + ICO.map + '</span><span class="lbl"></span><span class="val gold"></span><span class="chev" aria-hidden="true">' + ICO.chevron + '</span>';
+      row.querySelector(".lbl").textContent = GC.atlas.title;
+      row.querySelector(".val").textContent = fmt(GC.atlas.progress, { n: atlasCount() });
+      row.addEventListener("click", function(){ vibe(VIBE.light); openAtlas(); });
+      atlasRow.appendChild(row);
+    }
     const grid = $("badgeGrid");
     grid.innerHTML = "";
     items.forEach(function(b){
       const on = profile.badges.indexOf(b.id) >= 0;
+      const rarity = badgeRarity(b);
       const d = document.createElement("div");
       d.className = "card badge" + (on ? " on" : "");
       d.dataset.id = b.id;
-      d.innerHTML = '<span class="lock" aria-hidden="true">' + ICO.lock + '</span><span class="bi" aria-hidden="true">' + (ICO[SHELL.badges.icons[b.id]] || ICO.star) + '</span><b></b><small></small>';
+      d.dataset.rarity = rarity;
+      d.innerHTML = '<span class="lock" aria-hidden="true">' + ICO.lock + '</span><span class="bi" aria-hidden="true">' + (ICO[SHELL.badges.icons[b.id]] || ICO.star) + '</span><b></b><small></small><em class="rarity"></em>';
       d.querySelector("b").textContent = b.title;
       d.querySelector("small").textContent = b.blurb;
+      d.querySelector(".rarity").textContent = SHELL.badges.rarityLabels[rarity] || "";
       d.setAttribute("aria-label", b.title + " — " + (on ? b.blurb : SHELL.badges.locked));
       grid.appendChild(d);
     });
@@ -3921,6 +4327,27 @@
       row.querySelector(".kv").textContent = fmtK(r.karma);
       list.appendChild(row);
     });
+    // v20.7: where the karma comes from — the quiet bonuses are only ever named here, never toasted
+    const legend = $("lbLegend");
+    if(legend){
+      const G = GC.karma;
+      legend.innerHTML = '<div class="group-label"></div><ul></ul>';
+      legend.querySelector(".group-label").textContent = G.legendTitle;
+      const ul = legend.querySelector("ul");
+      [
+        ["+" + K.whisper + " / +" + K.seal + " / +" + K.anathema, G.legendRituals],
+        ["+" + K.share, G.shareBonusQuiet],
+        ["+" + K.noMat, G.noMatBonusQuiet],
+        ["+" + K.badge, G.badgeBonusQuiet],
+        ["0", G.legendHeld]
+      ].forEach(function(l){
+        const li = document.createElement("li");
+        li.innerHTML = "<b></b><span></span>";
+        li.querySelector("b").textContent = l[0];
+        li.querySelector("span").textContent = l[1];
+        ul.appendChild(li);
+      });
+    }
   }
 
   /* ---------- PRO mock paywall («Стать легендой» — local flag only, no payments) ---------- */
@@ -4524,6 +4951,7 @@
   renderTabbar();
   renderCtxRow();
   renderPopStrip();
+  renderCaseStrip();
   checkBadges({ silent: true });   // re-grant from stats for users whose badges predate the current ids
   if(!introAccepted()) showIntro();
   else if($("splash")) onSplashDone = afterGate;
@@ -4547,8 +4975,12 @@
       exportHistory: exportHistory, mergeHistory: mergeHistory, sanitizeEntry: sanitizeEntry, cleanStr: cleanStr, wipeAll: wipeAll,
       avatars: AVATARS.slice(), currentAvatar: currentAvatar, setAvatar: setAvatar,
       openA2hs: openA2hs, closeA2hs: closeA2hs, a2hsSeen: a2hsSeen, get a2hsInstallable(){ return !!installPrompt; }, avatarA2hsCopy: AVATAR_A2HS_COPY,
+      // v20.7 game layer
+      gameCopy: GAME_COPY, get game(){ return game; }, streakNow: streakNow, sealedToday: sealedToday, tickSeal: tickSeal, sealedWeek: sealedWeek,
+      atlasCount: atlasCount, atlasSealed: atlasSealed, dailyCase: dailyCase, fillCase: fillCase, dismissCase: dismissCase,
+      setCatMode: setCatMode, openAtlas: openAtlas, sameWhoRecent: sameWhoRecent, karmaSince: karmaSince, queueToast: queueToast,
       get history(){ return history; }, get stats(){ return stats; }, get profile(){ return profile; },
-      get state(){ return { tab: curTab, page: pageOf.profile, powerId: powerId, noMat: noMat, categoryId: categoryId, ritualId: ritualId, casting: casting }; }
+      get state(){ return { tab: curTab, page: pageOf.profile, powerId: powerId, noMat: noMat, categoryId: categoryId, ritualId: ritualId, casting: casting, catMode: catMode }; }
     };
   }catch(e){}
 })();
