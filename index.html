@@ -973,6 +973,12 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
   font-family:var(--serif);font-weight:400;font-size:clamp(28px,8vw,34px);line-height:1.1;color:var(--bone);margin:0 0 12px;letter-spacing:-.01em;
 }
 .intro-body{margin:0 auto;max-width:320px;font-size:15px;line-height:1.5;color:var(--bone-dim);text-wrap:pretty}
+.intro-body:empty{display:none}
+/* rules step: the four «play evil, do no evil» bullets, left-aligned under the lead sentence */
+.intro-list{margin:12px auto 0;max-width:320px;padding:0;list-style:none;text-align:left}
+.intro-list:empty{display:none}
+.intro-list li{position:relative;padding:6px 0 6px 18px;font-size:13.5px;line-height:1.45;color:var(--bone-dim);text-wrap:pretty}
+.intro-list li::before{content:"";position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--blood);box-shadow:0 0 8px rgba(229,38,47,.5)}
 .intro-note{margin:12px auto 0;max-width:320px;font-size:12px;line-height:1.45;color:var(--bone-mute)}
 .intro-note:empty{display:none}
 .intro-cta{margin:22px 0 10px;min-height:58px;font-size:20px;padding:0 52px}
@@ -1401,6 +1407,7 @@ body.is-intro .tabbar{display:none}
     <div class="intro-ico" id="introIco" aria-hidden="true"></div>
     <h2 class="intro-title" id="introTitle"></h2>
     <p class="intro-body" id="introBody"></p>
+    <ul class="intro-list" id="introList"></ul>
     <p class="intro-note" id="introNote"></p>
     <button type="button" class="cta intro-cta" id="introNext">
       <span id="introNextText"></span>
@@ -1433,6 +1440,6 @@ body.is-intro .tabbar{display:none}
 
 <canvas id="exportCanvas" width="1080" height="1920" style="display:none" aria-hidden="true"></canvas>
 
-<script src="app.js?v=20" defer></script>
+<script src="app.js?v=20.1" defer></script>
 </body>
 </html>
