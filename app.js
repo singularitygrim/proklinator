@@ -2046,17 +2046,43 @@
   /* ---------- share poster (1080×1920, Meta Stories safe band) ---------- */
   // SAFETY_SHOW_RULES v1.2 (staff safety floor): the satire line is burned into the pixels of every shared image — inside the
   // frame and inside the Stories safe band, so no crop, caption loss or re-upload can strip it. Exact wording, never localised away.
+  // v20.7.1: QA on live v20.7 could not find the line on the exported PNG — 20 px bone @ .84 sat in the busy frame foot, at a Y
+  // that followed the content. Now it owns a band: a near-opaque soot bar (no grain, no haze, nothing else is painted there)
+  // under a gold hairline, at a fixed Y, and the line itself is bold near-opaque bone. drawSafetyBand() is the one place that
+  // paints it, for the poster and the OG card alike.
   const SAFETY_BURN_IN = "Шутка, не угроза";
+  const SAFETY_INK = "rgba(237,228,214,.96)";
+  const SAFETY_SOOT = "rgba(6,4,4,.94)";
+  const SAFETY_RULE = "rgba(201,162,74,.34)";
   function drawSafetyLine(ctx, cx, y, size){
     ctx.save();
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
-    ctx.fillStyle = "rgba(237,228,214,.84)";
-    ctx.font = "600 " + size + "px " + SANS_CANVAS;
-    setSpacing(ctx, Math.round(size * 0.15));
+    ctx.fillStyle = SAFETY_INK;
+    ctx.font = "700 " + size + "px " + SANS_CANVAS;
+    setSpacing(ctx, Math.round(size * 0.12));
     ctx.fillText(SAFETY_BURN_IN, cx, y);
     setSpacing(ctx, 0);
     ctx.restore();
+  }
+  // Soot bar `x..x+w` × `top..top+h` (optionally clipped to the frame path so its corners follow the frame), a hairline along
+  // its top edge, and the satire line centred in the `h - inset` px above the inner frame stroke. Painted after the content,
+  // so whatever might have strayed below the content floor is covered rather than colliding with the line.
+  function drawSafetyBand(ctx, x, top, w, h, size, inset, clipPath){
+    ctx.save();
+    if(clipPath){ clipPath(ctx); ctx.clip(); }
+    ctx.fillStyle = SAFETY_SOOT;
+    ctx.fillRect(x, top, w, h);
+    ctx.restore();
+    ctx.save();
+    ctx.strokeStyle = SAFETY_RULE;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x + inset, top);
+    ctx.lineTo(x + w - inset, top);
+    ctx.stroke();
+    ctx.restore();
+    drawSafetyLine(ctx, x + w / 2, top + Math.round((h - inset - size) / 2), size);
   }
   function wrapText(ctx, text, maxW){
     const words = String(text || "").split(/\s+/);
@@ -2227,8 +2253,13 @@
     const pad = Math.max(64, Math.floor(W * 0.06));
     const contentSafeTop = Math.floor(H * 0.14);
     const contentSafeBot = Math.floor(H * 0.65);
-    const SAFETY_H = 64;                      // room for the burned-in satire line at the foot of the frame
-    const maxY = contentSafeBot - SAFETY_H;
+    // The frame always runs down to the Stories floor; its last SAFETY_H px are the burn-in band — a fixed Y on every poster,
+    // whatever the punch length. The content floor sits a breath above the band and nothing is painted below it.
+    const SAFETY_H = 96;
+    const SAFETY_SIZE = 26;
+    const FRAME_INSET = 14;                   // outer blood stroke → inner gold hairline
+    const bandTop = contentSafeBot - SAFETY_H;
+    const maxY = bandTop - 16;
 
     const innerPad = pad + 56;
     const textW = W - innerPad * 2;
@@ -2354,12 +2385,12 @@
     ctx.font = "600 40px " + SERIF_CANVAS;
     const nameLines = wrapText(ctx, String(lastVerdict.name || ""), textW);
     for(let ni=0; ni<Math.min(nameLines.length, 2); ni++){
-      if(y + 50 > maxY + 8) break;
+      if(y + 50 > maxY) break;
       ctx.fillText(nameLines[ni], W/2, y);
       y += 50;
     }
     y += 6;
-    if(y + 28 <= maxY + 12){
+    if(y + 30 <= maxY){
       ctx.fillStyle = powerColor;
       ctx.font = "700 20px " + SANS_CANVAS;
       setSpacing(ctx, 5);
@@ -2374,20 +2405,24 @@
       ctx.stroke();
     }
 
-    // Ornamental frame hugs the content (blood outer, gold hairline inner); never leaves the safe band
-    const frameBot = Math.min(contentSafeBot, Math.max(y + 64 + SAFETY_H - 24, contentSafeTop + Math.floor(H * 0.34)));
+    // Burn-in band first (its soot bar covers anything that strayed below the content floor), then the ornamental frame
+    // (blood outer, gold hairline inner) on top so the strokes stay crisp — the frame runs from the safe-zone top to the
+    // Stories floor on every poster.
+    const frameBot = contentSafeBot;
+    const frameW = W - pad * 2, frameH = frameBot - contentSafeTop;
+    drawSafetyBand(ctx, pad, bandTop, frameW, SAFETY_H, SAFETY_SIZE, FRAME_INSET, function(c){
+      drawRoundedRect(c, pad, contentSafeTop, frameW, frameH, 44);
+    });
     ctx.save();
     ctx.strokeStyle = "rgba(179,18,31,.75)";
     ctx.lineWidth = 3;
-    drawRoundedRect(ctx, pad, contentSafeTop, W - pad * 2, frameBot - contentSafeTop, 44);
+    drawRoundedRect(ctx, pad, contentSafeTop, frameW, frameH, 44);
     ctx.stroke();
     ctx.strokeStyle = "rgba(201,162,74,.28)";
     ctx.lineWidth = 1.5;
-    drawRoundedRect(ctx, pad + 14, contentSafeTop + 14, W - pad * 2 - 28, frameBot - contentSafeTop - 28, 34);
+    drawRoundedRect(ctx, pad + FRAME_INSET, contentSafeTop + FRAME_INSET, frameW - FRAME_INSET * 2, frameH - FRAME_INSET * 2, 34);
     ctx.stroke();
     ctx.restore();
-    // «Шутка, не угроза» — burned in at the foot of the frame, still inside the 65 % Stories floor
-    drawSafetyLine(ctx, W/2, frameBot - 44, 20);
 
     // Footer may sit in the platform-chrome zone (non-critical)
     ctx.fillStyle = "rgba(201,162,74,.45)";
@@ -2426,6 +2461,12 @@
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
     addGrain(ctx, 0, 0, W, H, 2200);
+    // Same burn-in band as the poster (SAFETY_SHOW_RULES v1.2): the foot of the frame, painted before the frame stroke.
+    const OG_SAFETY_H = 64;
+    const ogBandTop = H - 28 - OG_SAFETY_H;
+    drawSafetyBand(ctx, 28, ogBandTop, W - 56, OG_SAFETY_H, 20, 0, function(c){
+      drawRoundedRect(c, 28, 28, W - 56, H - 56, 28);
+    });
     ctx.strokeStyle = "rgba(179,18,31,.7)";
     ctx.lineWidth = 2.5;
     drawRoundedRect(ctx, 28, 28, W - 56, H - 56, 28);
@@ -2471,9 +2512,8 @@
     ctx.fillStyle = "rgba(201,162,74,.5)";
     ctx.font = "400 16px " + SERIF_CANVAS;
     setSpacing(ctx, 5);
-    ctx.fillText(String(DATA.footer || "").toUpperCase(), W/2, H - 96);
+    ctx.fillText(String(DATA.footer || "").toUpperCase(), W/2, ogBandTop - 34);   // just above the burn-in band
     setSpacing(ctx, 0);
-    drawSafetyLine(ctx, W/2, H - 66, 18);   // same burn-in as the poster (SAFETY_SHOW_RULES v1.2)
 
     return ogCanvas;
   }
