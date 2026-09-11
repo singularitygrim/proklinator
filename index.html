@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <!-- The CSP ships in the document so it holds on any static host; vercel.json adds the header-only protections (X-Frame-Options, Permissions-Policy, nosniff, HSTS).
      Scripts: same origin + pinned jsDelivr (SRI on each tag); no inline script, no eval, no remote fonts. worker-src 'self' admits only our own sw.js
-     (the light offline shell cache, v20.1); no other workers. v21 (Supabase) must extend connect-src here. -->
+     (the light offline shell cache, v20.2); no other workers. v21 (Supabase) must extend connect-src here. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'self'; base-uri 'self'; form-action 'self'"/>
 <meta name="referrer" content="no-referrer"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
@@ -557,6 +557,10 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
   -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
   mask-image:radial-gradient(ellipse 85% 70% at 50% 40%,#000 25%,transparent 82%);
 }
+/* v20.2: the altar (assets/splash/altar-9x16.png) fades in over the fallback once the intro's <img> of the same file has decoded —
+   `html.has-splash-art` is the only CSS reference to it, so a missing asset leaves the old hero (the file is 1280×720: crown biased into view). */
+.splash-art-alt{background-image:none;opacity:0;transition:opacity 600ms ease}
+html.has-splash-art .splash-art-alt{background-image:url("assets/splash/altar-9x16.png");background-position:42% 50%;opacity:.55}
 .splash-veil{
   position:absolute;inset:0;
   background:
@@ -775,7 +779,72 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
 }
 .avatar .crown-badge svg{width:17px;height:13px}
 body.is-pro .avatar .crown-badge{display:grid}
-body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74,.3)}
+/* v20.2 preset avatar: the PNG covers the circle (object-fit cover, 50% radius); until it loads — and if it is missing — the SVG hood stays.
+   The gold ring is PRO-only (body.is-pro comes from the local demo flag); everyone else keeps the thin bone line. */
+.avatar{overflow:visible;color:var(--bone-dim);cursor:pointer}
+.avatar:active:not(:disabled){transform:scale(.98)}
+.avatar .avatar-img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;opacity:0;transition:opacity 320ms ease}
+.avatar.has-img .avatar-img{opacity:1}
+.avatar.has-img svg.hood{opacity:0}
+.avatar .avatar-edit{
+  position:absolute;right:-4px;bottom:-2px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:#0B0908;border:1px solid var(--line-strong);color:var(--bone-dim);box-shadow:0 4px 12px rgba(0,0,0,.45);
+}
+.avatar .avatar-edit svg{width:12px;height:12px}
+.avatar[aria-expanded="true"] .avatar-edit{border-color:rgba(229,38,47,.55);color:#F2A7A7}
+body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0 0 4px var(--gold),0 0 36px rgba(201,162,74,.3)}
+body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
+/* picker (UX_V202): section «Аватар», four circular presets ≥44px, hint. Rings: bone on the selected preset, gold only when the
+   local PRO demo flag is on AND the preset is selected; nothing on the rest. */
+.avatar-picker{margin:-2px 0 14px}
+.avatar-picker[hidden]{display:none}
+.av-label{margin:0 0 10px;text-align:center}
+.av-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.av-opt{
+  width:56px;height:56px;border-radius:50%;position:relative;overflow:hidden;display:grid;place-items:center;color:var(--bone-dim);
+  background:radial-gradient(120% 120% at 50% 0%,#2C1614,#120D0C);border:1px solid var(--line-strong);
+  transition:border-color var(--dur),box-shadow var(--dur),transform 150ms var(--ease);
+}
+.av-opt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;opacity:0;transition:opacity 320ms ease}
+.av-opt.has-img img{opacity:1}
+.av-opt svg{width:24px;height:24px;position:relative;transition:opacity 200ms}
+.av-opt.has-img svg{opacity:0}
+.av-opt.on{border-color:var(--bone);box-shadow:0 0 0 2px #0B0908,0 0 0 4px rgba(237,228,214,.75)}
+body.is-pro .av-opt.on{border-color:var(--gold);box-shadow:0 0 0 2px #0B0908,0 0 0 4px var(--gold),0 0 18px rgba(201,162,74,.35)}
+.av-opt:focus-visible{outline:2px solid var(--blood-hot);outline-offset:5px}
+.av-hint{display:block;margin:12px 0 0;font-size:11.5px;line-height:1.4;color:var(--bone-mute);text-wrap:balance}
+.av-hint:empty{display:none}
+/* the gold-ring explanation is only meaningful while the ring is gold */
+.av-pro-hint{display:none;margin-top:4px;color:var(--gold-dim)}
+body.is-pro .av-pro-hint:not(:empty){display:block}
+/* A2HS (UX_V202): the quiet row reuses .btn-row (label + sub, ≥44px); the sheet is a bottom dialog below the toast (70), above the app */
+#a2hsRowBox{margin:12px 0 0}
+#a2hsRowBox .btn-row{margin:0}
+.sheet{position:fixed;inset:0;z-index:68;display:flex;align-items:flex-end;justify-content:center}
+.sheet.hidden{display:none!important}
+.sheet-veil{position:absolute;inset:0;background:rgba(7,5,5,.72)}
+.sheet-card{
+  position:relative;width:100%;max-width:430px;max-height:calc(100dvh - 24px);overflow:auto;border-radius:26px 26px 0 0;
+  padding:10px 20px calc(18px + var(--safe-b));background:linear-gradient(180deg,#171312,#100D0C);
+  border:1px solid var(--line-strong);border-bottom:0;box-shadow:0 -20px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.sheet-grip{width:40px;height:4px;border-radius:2px;background:rgba(237,228,214,.18);margin:0 auto 12px}
+.sheet-head{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:center;gap:8px}
+.sheet-title{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.15;color:var(--bone);margin:0}
+.sheet-x{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--bone-dim);background:rgba(237,228,214,.06);border:1px solid var(--line)}
+.sheet-x svg{width:16px;height:16px}
+.sheet-lead{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--bone-dim);text-wrap:pretty}
+.sheet-lead:empty{display:none}
+.sheet-fine{margin:12px 0 0;text-align:center;font-size:11px;line-height:1.5;color:var(--bone-mute)}
+.sheet-fine:empty{display:none}
+.a2hs-os{margin:14px 0 0;padding:12px 14px;border-radius:var(--r-card);border:1px solid var(--line);background:rgba(237,228,214,.03)}
+.a2hs-os b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone);margin:0 0 6px}
+.a2hs-os ol{margin:0;padding:0 0 0 20px;font-size:13.5px;line-height:1.5;color:var(--bone-dim)}
+.a2hs-os li{padding:2px 0}
+.sheet-install{width:100%;min-height:48px;margin:16px 0 0;border-radius:var(--r-pill);font-size:15px;font-weight:600;color:#fff;background:linear-gradient(180deg,#D21B26,#9F0F1A);box-shadow:0 8px 24px rgba(179,18,31,.28)}
+.sheet-done{width:100%;min-height:48px;margin:10px 0 0;border-radius:var(--r-pill);font-size:14px;font-weight:600;color:var(--bone);background:rgba(237,228,214,.06);border:1px solid var(--line-strong)}
+.sheet-done:active,.sheet-x:active{background:rgba(237,228,214,.14)}
+body.is-sheet{overflow:hidden}
 .nick-row{display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;flex-wrap:wrap}
 .nick{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--bone);margin:0;word-break:break-word;font-weight:400}
 .nick-edit-btn{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute);background:rgba(237,228,214,.06);border:1px solid var(--line)}
@@ -955,6 +1024,13 @@ body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74
   padding:calc(16px + var(--safe-t)) 16px calc(18px + var(--safe-b));background:var(--soot-950);overflow:auto;
 }
 .intro.hidden{display:none!important}
+/* v20.2 (UX_V202): full-bleed altar <img> behind the gate under a flat 50% soot scrim, then the original veil; the card keeps its
+   near-opaque body, so Freya's copy is untouched and legible. The shipped file is a 1280×720 frame — object-fit cover with the
+   crown biased into view; a failed load swaps in hero-altar.jpg (app.js), and until either decodes the layer stays invisible. */
+.intro-art{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity 600ms ease}
+.intro-art img{width:100%;height:100%;display:block;object-fit:cover;object-position:42% 55%;filter:saturate(.9) contrast(1.04)}
+.intro-art.ready{opacity:1}
+.intro-scrim{position:fixed;inset:0;pointer-events:none;background:rgba(7,5,5,.5)}
 .intro-veil{
   position:fixed;inset:0;pointer-events:none;
   background:
@@ -1031,6 +1107,11 @@ body.is-intro .tabbar{display:none}
 .req-head b{font-family:var(--serif);font-weight:400;font-size:15px;line-height:1.25;color:var(--gold-hot);letter-spacing:.01em}
 .req-head .tag{flex:none}
 .contact p.pending span{color:var(--bone-mute);font-style:italic}
+/* a requisites row that already carries the owner's draft value (the e-mail): filled, but tagged so it is not read as approved */
+.contact p.draft .draft-tag{display:inline-block;margin-left:6px;padding:2px 6px;border-radius:var(--r-pill);font-style:normal;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dim);border:1px solid rgba(201,162,74,.35);vertical-align:1px}
+/* label + tag take the width of a phone row — the value gets its own full-width line instead of wrapping letter by letter */
+.contact p.draft{flex-wrap:wrap;row-gap:4px}
+.contact p.draft span{flex:1 0 100%;text-align:right;overflow-wrap:anywhere}
 .contact .req-note{display:block;padding:8px 0 10px;border-top:0;font-size:11.5px;line-height:1.45;color:var(--gold-dim);text-align:left}
 .contact .req-note + p{border-top:1px solid rgba(201,162,74,.22)}
 .draft-note{margin:0 0 12px;padding:10px 14px;border-radius:14px;border:1px dashed rgba(201,162,74,.4);background:rgba(201,162,74,.06);font-size:12px;line-height:1.45;color:var(--gold-hot);text-align:center}
@@ -1252,9 +1333,18 @@ body.is-intro .tabbar{display:none}
     <div class="page" data-page="home">
       <header class="page-head"><h1 class="page-title" id="profTitle"></h1></header>
       <div class="prof-head">
-        <div class="avatar" aria-hidden="true">
-          <svg class="hood" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 58c0-16 4-30 18-38 14 8 18 22 18 38"/><path d="M14 58h36"/><path d="M24 40c2-8 5-12 8-14 3 2 6 6 8 14"/><path d="M26 44c2 3 4 4 6 4s4-1 6-4"/><circle cx="28" cy="38" r="1.2" fill="currentColor"/><circle cx="36" cy="38" r="1.2" fill="currentColor"/></svg>
-          <span class="crown-badge"><svg viewBox="0 0 32 24"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg></span>
+        <!-- v20.2: the avatar is a button that opens the preset picker; the PNG preset sits over the SVG hood, which stays as the fallback glyph -->
+        <button type="button" class="avatar" id="avatarBtn" aria-expanded="false" aria-controls="avatarPicker">
+          <img class="avatar-img" id="avatarImg" alt="" decoding="async"/>
+          <svg class="hood" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 58c0-16 4-30 18-38 14 8 18 22 18 38"/><path d="M14 58h36"/><path d="M24 40c2-8 5-12 8-14 3 2 6 6 8 14"/><path d="M26 44c2 3 4 4 6 4s4-1 6-4"/><circle cx="28" cy="38" r="1.2" fill="currentColor"/><circle cx="36" cy="38" r="1.2" fill="currentColor"/></svg>
+          <span class="crown-badge" aria-hidden="true"><svg viewBox="0 0 32 24"><path d="M3 19 5.4 7.2l6.1 5.3L16 3l4.5 9.5 6.1-5.3L29 19Z" fill="#C9A24A"/><rect x="3" y="20" width="26" height="2.6" rx="1" fill="#C9A24A"/></svg></span>
+          <span class="avatar-edit" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+        </button>
+        <div class="avatar-picker" id="avatarPicker" role="group" aria-labelledby="avatarLabel" hidden>
+          <div class="group-label av-label" id="avatarLabel"></div>
+          <div class="av-row" id="avatarOptions"></div>
+          <small class="av-hint" id="avatarHint"></small>
+          <small class="av-hint av-pro-hint" id="avatarProHint"></small>
         </div>
         <div class="nick-row">
           <h2 class="nick" id="nickText"></h2>
@@ -1281,6 +1371,8 @@ body.is-intro .tabbar{display:none}
       <div class="card menu" id="profMenu"></div>
       <div class="group-label" id="profDocsLabel"></div>
       <div class="card menu" id="profDocsMenu"></div>
+      <!-- v20.2 (UX_V202): quiet A2HS row «На экран Домой» — always present outside the installed app; opens the sheet below, never a modal on its own -->
+      <div id="a2hsRowBox"></div>
     </div>
 
     <div class="page hidden" data-page="badges">
@@ -1380,6 +1472,7 @@ body.is-intro .tabbar{display:none}
 
 <div class="splash" id="splash" aria-label="Заставка">
   <div class="splash-art" aria-hidden="true"></div>
+  <div class="splash-art splash-art-alt" aria-hidden="true"></div>
   <div class="splash-veil" aria-hidden="true"></div>
   <svg class="splash-sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
@@ -1415,6 +1508,9 @@ body.is-intro .tabbar{display:none}
 </div>
 
 <div class="intro hidden" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-describedby="introBody introList introNote" tabindex="-1">
+  <!-- UX_V202: full-bleed altar behind the gate (decorative: alt="" + aria-hidden) under a 50% soot scrim; app.js swaps in hero-altar.jpg if the file fails -->
+  <div class="intro-art" id="introArt" aria-hidden="true"><img id="introArtImg" src="assets/splash/altar-9x16.png" alt="" aria-hidden="true" decoding="async"/></div>
+  <div class="intro-scrim" aria-hidden="true"></div>
   <div class="intro-veil" aria-hidden="true"></div>
   <div class="intro-card">
     <div class="intro-brand" aria-hidden="true">
@@ -1436,6 +1532,23 @@ body.is-intro .tabbar{display:none}
     <p class="intro-opt" id="introAltLabel"></p>
     <button type="button" class="intro-alt" id="introAlt"></button>
     <button type="button" class="link-btn intro-under" id="introUnder"></button>
+  </div>
+</div>
+
+<!-- UX_V202 A2HS sheet: opened only from the Profile row (no auto-modal). Focus stays inside, Esc / veil / buttons close it, closing records a2hsTipSeen=1. -->
+<div class="sheet hidden" id="a2hsSheet" role="dialog" aria-modal="true" aria-labelledby="a2hsTitle" aria-describedby="a2hsLead" tabindex="-1">
+  <div class="sheet-veil" id="a2hsVeil" aria-hidden="true"></div>
+  <div class="sheet-card">
+    <div class="sheet-grip" aria-hidden="true"></div>
+    <header class="sheet-head">
+      <h2 class="sheet-title" id="a2hsTitle"></h2>
+      <button type="button" class="sheet-x" id="a2hsClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </header>
+    <p class="sheet-lead" id="a2hsLead"></p>
+    <div id="a2hsSteps"></div>
+    <button type="button" class="sheet-install hidden" id="a2hsInstall"></button>
+    <button type="button" class="sheet-done" id="a2hsDone"></button>
+    <p class="sheet-fine" id="a2hsDisclaimer"></p>
   </div>
 </div>
 
@@ -1461,6 +1574,6 @@ body.is-intro .tabbar{display:none}
 
 <canvas id="exportCanvas" width="1080" height="1920" style="display:none" aria-hidden="true"></canvas>
 
-<script src="app.js?v=20.1" defer></script>
+<script src="app.js?v=20.2" defer></script>
 </body>
 </html>
