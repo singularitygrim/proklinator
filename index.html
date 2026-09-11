@@ -1002,11 +1002,13 @@ body.is-pro .avatar .avatar-edit{border-color:rgba(201,162,74,.5)}
 /* v20.2: full-bleed altar behind the gate — the hero-altar.jpg fallback by default, the portrait 9:16 once it is known to load.
    Sits under the veil and the card; the card keeps its near-opaque body, so Freya's copy is untouched and stays legible. */
 .intro-art{
-  position:fixed;inset:0;pointer-events:none;background:url("hero-altar.jpg") center 30%/cover no-repeat;opacity:.34;filter:saturate(.8) contrast(1.06);
-  -webkit-mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 15%,transparent 88%);
-  mask-image:radial-gradient(ellipse 95% 80% at 50% 40%,#000 15%,transparent 88%);
+  position:fixed;inset:0;pointer-events:none;background:url("hero-altar.jpg") center 100%/auto 170% no-repeat;opacity:.62;filter:saturate(.85) contrast(1.06);
+  -webkit-mask-image:radial-gradient(ellipse 100% 90% at 50% 35%,#000 20%,transparent 92%);
+  mask-image:radial-gradient(ellipse 100% 90% at 50% 35%,#000 20%,transparent 92%);
 }
-html.has-splash-art .intro-art{background-image:url("assets/splash/altar-9x16.png");background-position:center 42%;opacity:.42}
+/* the altar is enlarged (170% of the viewport height) and pinned to the bottom, so the crown and the rune circle rise above the card
+   instead of hiding behind it — the gate reads as a document lying on the altar; the same framing suits the 9:16 asset */
+html.has-splash-art .intro-art{background-image:url("assets/splash/altar-9x16.png")}
 .intro-veil{
   position:fixed;inset:0;pointer-events:none;
   background:
