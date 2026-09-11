@@ -273,6 +273,16 @@
       cdn: "Библиотеки эффектов не загрузились — сеть или блокировка. Ритуал пройдёт в упрощённом режиме.",
       offline: "Нет сети. Приложение работает, история — на устройстве."
     },
+    // v20.2 A2HS tip (Profile): shown only when the browser says the app is installable (or on iOS Safari, where it can only be done by hand),
+    // never inside the installed app, and hidden for good after one tap on the cross. Copy stays in Freya's register: short, no pressure.
+    install: {
+      title: "На экран «Домой»",
+      desc: "Откроется как приложение, без адресной строки. Данные — по-прежнему только на устройстве.",
+      ios: "В Safari: «Поделиться» → «На экран „Домой“».",
+      cta: "Установить",
+      dismiss: "Скрыть подсказку",
+      done: "Готово. Печать теперь под рукой."
+    },
     pro: Object.assign({}, SC.pro, {
       perkIcons: ["fire", "star", "shield", "crown", "trophy"],
       unlocked: SC.pro.ctaDone
@@ -397,6 +407,10 @@
     splash: "proklinator.v19.splash"
   };
   const INTRO_KEY = SHELL.intro.key;   // "pk_intro_v20" — first-launch gate record { v, age, at }
+  // v20.2 local-only prefs (bare strings, no JSON): pk_avatar = hood|seal|raven|pack3, pk_install_tip = "off" once dismissed.
+  // Everything under the pk_ prefix is wiped by «Стереть все данные» together with the proklinator.* records.
+  const AVATAR_KEY = "pk_avatar";
+  const INSTALL_KEY = "pk_install_tip";
   function lsGet(key, fallback){
     try{
       const raw = localStorage.getItem(key);
@@ -409,6 +423,11 @@
   function lsSet(key, val){
     if(wiping) return false;
     try{ localStorage.setItem(key, JSON.stringify(val)); return true; }catch(e){ return false; }
+  }
+  function lsRaw(key){ try{ return localStorage.getItem(key); }catch(e){ return null; } }
+  function lsRawSet(key, val){
+    if(wiping) return false;
+    try{ localStorage.setItem(key, String(val)); return true; }catch(e){ return false; }
   }
   let onSplashDone = null;   // one-shot hook the splash fires when it fades (intro focus / post-gate toasts)
 
@@ -2388,6 +2407,7 @@
     noMat: svgo('<path d="M21 15V5a2 2 0 0 0-2-2H9"/><path d="M3.6 3.6A2 2 0 0 0 3 5v16l4-4h10"/><path d="m2 2 20 20"/>'),
     fileDown: svgo('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M12 12v6"/><path d="m9.5 15.5 2.5 2.5 2.5-2.5"/>'),
     fileUp: svgo('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M12 18v-6"/><path d="m9.5 14.5 2.5-2.5 2.5 2.5"/>'),
+    phone: svgo('<rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 17.5h2"/><path d="M12 6v5"/><path d="m9.8 8.8 2.2 2.2 2.2-2.2"/>'),
     mask: svgo('<path d="M4 5.5c2.6 1.4 5.3 2 8 2s5.4-.6 8-2v5.5c0 5.2-3.6 9.5-8 9.5s-8-4.3-8-9.5Z"/><path d="M8.6 10.6h.01M15.4 10.6h.01" stroke-width="2.6"/><path d="M8.3 14.2c1 1.4 2.3 2.1 3.7 2.1s2.7-.7 3.7-2.1"/>'),
     scroll: svgo('<path d="M7 3h10a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7"/><path d="M7 3a3 3 0 0 0-3 3v1.5h6V6a3 3 0 0 0-3-3Z"/><path d="M7 21a3 3 0 0 1-3-3v-1.5h6V18a3 3 0 0 1-3 3Z"/><path d="M11 9h5M11 13h5"/>'),
     age18: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><text x="12" y="15" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" font-size="7.4" font-weight="700" fill="currentColor" stroke="none">18+</text></svg>',
@@ -3694,7 +3714,7 @@
       const keys = [];
       for(let i=0;i<localStorage.length;i++){
         const k = localStorage.key(i);
-        if(k && (k.indexOf("proklinator.") === 0 || k === INTRO_KEY)) keys.push(k);
+        if(k && (k.indexOf("proklinator.") === 0 || k.indexOf("pk_") === 0)) keys.push(k);
       }
       keys.forEach(function(k){ localStorage.removeItem(k); });
     }catch(e){}
@@ -3713,6 +3733,73 @@
     else if(navigator.onLine === false) showToast(SHELL.net.offline);
   }
   window.addEventListener("offline", function(){ showToast(SHELL.net.offline); });
+
+  /* ---------- v20.2 A2HS: one quiet card at the end of the Profile, no banner, no repeat ----------
+     Shown only when (a) the browser offered `beforeinstallprompt` (we hold the event and defer the mini-infobar, so the browser
+     itself does not nag) or (b) iOS Safari, where the only path is Share → «На экран „Домой“»; never inside the installed app;
+     hidden for good once dismissed (pk_install_tip = "off", wiped with everything else). */
+  let installPrompt = null;
+  function isStandalone(){
+    try{ return matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; }catch(e){ return false; }
+  }
+  function isIosSafari(){
+    const ua = navigator.userAgent || "";
+    return /iP(hone|ad|od)/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|YaBrowser/.test(ua);
+  }
+  function installMode(){
+    if(isStandalone() || lsRaw(INSTALL_KEY) === "off") return null;
+    if(installPrompt) return "prompt";
+    if(isIosSafari()) return "ios";
+    return null;
+  }
+  function renderInstallTip(){
+    const box = $("installTip");
+    if(!box) return;
+    const T = SHELL.install, mode = installMode();
+    box.innerHTML = "";
+    box.classList.toggle("hidden", !mode);
+    if(!mode) return;
+    box.innerHTML = '<span class="toggle-ico" aria-hidden="true">' + ICO.phone + '</span><span class="toggle-text"><b></b><small></small></span><span class="it-actions"></span>';
+    box.querySelector("b").textContent = T.title;
+    box.querySelector("small").textContent = mode === "ios" ? T.ios : T.desc;
+    const actions = box.querySelector(".it-actions");
+    if(mode === "prompt"){
+      const go = document.createElement("button");
+      go.type = "button";
+      go.className = "it-go";
+      go.textContent = T.cta;
+      go.addEventListener("click", function(){
+        const ev = installPrompt;
+        if(!ev) return;
+        installPrompt = null;
+        vibe(VIBE.light);
+        try{
+          ev.prompt();
+          Promise.resolve(ev.userChoice).then(function(choice){
+            if(choice && choice.outcome === "accepted"){ lsRawSet(INSTALL_KEY, "off"); showToast(T.done); }
+          }).catch(function(){}).then(renderInstallTip);
+        }catch(e){ renderInstallTip(); }
+      });
+      actions.appendChild(go);
+    }
+    const x = document.createElement("button");
+    x.type = "button";
+    x.className = "it-x";
+    x.setAttribute("aria-label", T.dismiss);
+    x.innerHTML = ICO.x;
+    x.addEventListener("click", function(){ lsRawSet(INSTALL_KEY, "off"); vibe(VIBE.light); renderInstallTip(); });
+    actions.appendChild(x);
+  }
+  window.addEventListener("beforeinstallprompt", function(e){
+    try{ e.preventDefault(); }catch(err){}
+    installPrompt = e;
+    if(curTab === "profile" && pageOf.profile === "home") renderInstallTip();
+  });
+  window.addEventListener("appinstalled", function(){
+    installPrompt = null;
+    lsRawSet(INSTALL_KEY, "off");
+    renderInstallTip();
+  });
 
   /* ---------- PWA: light service worker (sw.js caches the shell so the app opens without a network) ----------
      Registered only over https/localhost (secure context) after `load`, so it never competes with the first paint.

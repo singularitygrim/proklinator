@@ -776,6 +776,15 @@ body.is-splash .tabbar,body.is-casting .tabbar{display:none}
 .avatar .crown-badge svg{width:17px;height:13px}
 body.is-pro .avatar .crown-badge{display:grid}
 body.is-pro .avatar{border-color:var(--gold);box-shadow:0 0 36px rgba(201,162,74,.3)}
+/* install tip (A2HS): one quiet card at the end of the profile, never a banner */
+.install-tip{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 10px 12px 12px;margin:12px 0 0;color:var(--bone)}
+.install-tip .toggle-text b{display:block;font-size:14px;font-weight:600;line-height:1.25}
+.install-tip .toggle-text small{display:block;font-size:11px;color:var(--bone-mute);margin-top:3px;line-height:1.35;text-wrap:pretty}
+.install-tip .it-actions{display:flex;align-items:center;gap:6px}
+.install-tip .it-go{min-height:34px;padding:0 14px;border-radius:var(--r-pill);font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--bone);background:rgba(237,228,214,.07);border:1px solid var(--line-strong)}
+.install-tip .it-go:active{background:rgba(237,228,214,.14)}
+.install-tip .it-x{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute)}
+.install-tip .it-x svg{width:14px;height:14px}
 .nick-row{display:inline-flex;align-items:center;justify-content:center;gap:8px;max-width:100%;flex-wrap:wrap}
 .nick{font-family:var(--serif);font-size:24px;line-height:1.15;color:var(--bone);margin:0;word-break:break-word;font-weight:400}
 .nick-edit-btn{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--bone-mute);background:rgba(237,228,214,.06);border:1px solid var(--line)}
@@ -1281,6 +1290,8 @@ body.is-intro .tabbar{display:none}
       <div class="card menu" id="profMenu"></div>
       <div class="group-label" id="profDocsLabel"></div>
       <div class="card menu" id="profDocsMenu"></div>
+      <!-- v20.2: discreet A2HS tip — rendered only when the app is installable and not already standalone; one tap hides it for good -->
+      <div class="card install-tip hidden" id="installTip"></div>
     </div>
 
     <div class="page hidden" data-page="badges">
