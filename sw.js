@@ -1,4 +1,4 @@
-/* ПРОКЛИНАТОР — light service worker, v20.4.
+/* ПРОКЛИНАТОР — light service worker, v20.5.
    Caches the app shell so the page opens without a network. Nothing the user types is ever cached: answers, nick,
    history and settings live in localStorage only; this worker only sees GET requests for the app's own files
    (plus the two pinned jsDelivr libraries the page loads with SRI).
@@ -10,9 +10,9 @@
    Every failure is soft — a blocked or failed worker leaves the app exactly as it was without one. */
 "use strict";
 
-const VERSION = "v20.4";
+const VERSION = "v20.5";
 const CACHE = "proklinator-" + VERSION;
-const APP_JS = "app.js?v=20.4";
+const APP_JS = "app.js?v=20.5";
 const NAV_TIMEOUT = 4000;
 
 // The folder sw.js lives in is the app root; index.html is served at the folder URL (Vercel cleanUrls).
@@ -35,6 +35,16 @@ const OPTIONAL = [
   "./assets/avatars/seal.png",
   "./assets/avatars/raven.png",
   "./assets/avatars/pack-3.png",
+  // v20.5 ritual FX sprites (Kenney CC0, recoloured) and the splash paper grain — the ritual runs without them (procedural glow), so best effort too
+  "./assets/fx/ember-01.png",
+  "./assets/fx/ember-02.png",
+  "./assets/fx/spark-01.png",
+  "./assets/fx/ash-01.png",
+  "./assets/fx/smoke-01.png",
+  "./assets/fx/smoke-02.png",
+  "./assets/fx/crack-01.png",
+  "./assets/fx/sigil-glow.png",
+  "./assets/splash/paper-grain.jpg",
   "./fonts/playfair-display-cyrillic.woff2",
   "./fonts/playfair-display-latin.woff2",
   "./fonts/playfair-display-italic-cyrillic.woff2",
